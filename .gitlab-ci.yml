@@ -1,0 +1,48 @@
+stages:
+  - build
+  - deploy
+
+build:
+  stage: build
+  image: composer
+  script:
+    - composer install -on --ignore-platform-reqs --no-progress --no-dev
+  artifacts:
+    paths:
+      - vendor/
+    when: on_success
+    expire_in: 1h
+  only:
+    - develop
+
+deploy:
+  stage: deploy
+  script:
+    - apt-get update && apt-get install -y
+      ssh
+      rsync
+
+    - mkdir -p ~/.ssh
+    - echo -e "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+    - chmod 600 ~/.ssh/id_rsa
+
+    - sed -i -e "s/%server_name%/${SERVER_HOST}/g" ./docker/nginx.conf
+    - sed -i -e "s/%server_name%/${SERVER_HOST}/g" ./docker/nginx_ssl.conf
+
+    - mkdir ./ssl
+    - echo "$SSL_CERTIFICATE" > ./ssl/certificate.crt
+    - echo "$SSL_PRIVATE_KEY" > ./ssl/private.key
+
+    - cp docker-compose.yml.develop docker-compose.yml
+    - rm docker-compose.yml.*
+
+    - echo -e "$ENV" > ./.env
+
+    - rm -rf ./.git
+    - rm -rf ./tests
+
+    - ssh -o StrictHostKeyChecking=no $SSH_USER@$SSH_SERVER_HOST -p $SSH_PORT "mkdir -p /var/www/wish"
+    - rsync -az --exclude-from=.gitlab-ci-exclude --no-perms --no-owner --no-group --delete-during -e "ssh -o StrictHostKeyChecking=no -p $SSH_PORT" . $SSH_USER@$SSH_SERVER_HOST:/var/www/wish
+    - ssh -o StrictHostKeyChecking=no $SSH_USER@$SSH_SERVER_HOST -p $SSH_PORT "cd /var/www/wish && docker-compose up -d --force-recreate --remove-orphans && docker exec wish_php /bin/bash ./init_dev.sh"
+  only:
+    - develop

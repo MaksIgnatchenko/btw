@@ -1,0 +1,6 @@
+web/storage/logs/*
+web/storage/framework/views/*
+web/storage/app/images/*
+web/storage/app/resize/*
+web/storage/app/temp/*
+web/storage/app/upload/*

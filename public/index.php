@@ -7,9 +7,6 @@
  * @author   Taylor Otwell <taylor@laravel.com>
  */
 
-use MarcL\AmazonAPI;
-use MarcL\AmazonUrlBuilder;
-
 define('LARAVEL_START', microtime(true));
 
 /*
@@ -58,20 +55,6 @@ $response = $kernel->handle(
     $request = Illuminate\Http\Request::capture()
 );
 
-$urlBuilder = new AmazonUrlBuilder(
-    'AKIAIVTY7RQ4SM7DQ4UA',
-    'i7/a+QSDs824hx70+TlLy/zD0uIBlSThZAEmvUw8',
-    'pitchingon081-20',
-    'us'
-);
-//
-$amazonAPI = new AmazonAPI($urlBuilder, 'simple');
-//
-$items = $amazonAPI->ItemSearch('iphone');
+$response->send();
 
-var_dump($items);
-//dd($urlBuilder);
-
-//$response->send();
-//
-//$kernel->terminate($request, $response);
+$kernel->terminate($request, $response);
