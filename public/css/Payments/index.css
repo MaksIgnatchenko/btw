@@ -1,0 +1,13 @@
+.circle {
+    padding: 0 10px 0;
+    border-radius: 50%;
+}
+
+.payment-search, #status-filter {
+    float: right;
+    padding: 6px;
+}
+
+table.dataTable thead .sorting_asc:first-child {
+    cursor: auto;
+}

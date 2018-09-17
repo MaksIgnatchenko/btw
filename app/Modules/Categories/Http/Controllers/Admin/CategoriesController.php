@@ -1,0 +1,227 @@
+<?php
+/**
+ * Created by Artem Petrov, Appus Studio LP on 20.11.2017
+ */
+
+namespace App\Modules\Categories\Http\Controllers\Admin;
+
+use App\Http\Controllers\Controller;
+use App\Modules\Categories\Models\Category;
+use App\Modules\Categories\Repositories\CategoryRepository;
+use App\Modules\Categories\Requests\Admin\SaveRootCategoryRequest;
+use App\Modules\Categories\Requests\Admin\SaveSubcategoryRequest;
+use App\Modules\Categories\Requests\Admin\UpdateCategoryRequest;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\View\View;
+use Laracasts\Flash\Flash;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+
+class CategoriesController extends Controller
+{
+    /** @var CategoryRepository */
+    protected $categoryRepository;
+    /** @var Category */
+    protected $categoryModel;
+
+    /**
+     * @return mixed
+     */
+    protected function guard()
+    {
+        return Auth::guard('web');
+    }
+
+    /**
+     * CategoriesController constructor.
+     *
+     * @param CategoryRepository $categoriesRepository
+     * @param Category $categoryModel
+     */
+    public function __construct(
+        CategoryRepository $categoriesRepository,
+        Category $categoryModel
+    ) {
+        $this->categoryRepository = $categoriesRepository;
+        $this->categoryModel = $categoryModel;
+    }
+
+
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function index(): View
+    {
+        $categories = $this->categoryRepository->all();
+        $categoriesTree = $this->categoryModel->buildCategoriesTree($categories);
+
+        return view('index')
+            ->with('categories', $categoriesTree);
+    }
+
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function add(): View
+    {
+        return view('add');
+    }
+
+
+    /**
+     * @param int $id
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector|View
+     */
+    public function addSubcategory(int $id)
+    {
+        try {
+            $category = $this->categoryRepository->find($id);
+        } catch (\Exception $e) {
+            Flash::error('Category not found');
+
+            return redirect(route('categories.index'));
+        }
+
+        if ($category->is_final) {
+            Flash::error('Category can\'t have subcategories');
+
+            return redirect(route('categories.index'));
+        }
+
+        return view('add-subcategory', ['category' => $category]);
+    }
+
+    /**
+     * @param SaveRootCategoryRequest $request
+     *
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @throws \Prettus\Validator\Exceptions\ValidatorException
+     */
+    public function saveCategory(SaveRootCategoryRequest $request)
+    {
+        $this->categoryRepository->create([
+            'name'     => $request->get('name'),
+            'is_final' => false,
+        ]);
+
+        Flash::success('Root category created successfully');
+
+        return redirect(route('categories.index'));
+    }
+
+    /**
+     * @param SaveSubcategoryRequest $request
+     *
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @throws \Prettus\Validator\Exceptions\ValidatorException
+     */
+    public function saveSubcategory(SaveSubcategoryRequest $request)
+    {
+        $attributes = [
+            'name'     => $request->get('name'),
+            'is_final' => $request->get('is_final', false),
+
+            'parent_category_id' => $request->get('parent_category_id')
+        ];
+
+        // TODO вынести в общий метод
+        if ($request->get('is_final')) {
+            $attributes += [
+                'attributes' => $request->get('attributes'),
+                'parameters' => $request->get('parameters'),
+            ];
+        }
+
+        $this->categoryRepository->create($attributes);
+
+        Flash::success('Subcategory created successfully');
+
+        return redirect(route('categories.index'));
+    }
+
+    /**
+     * @param int $id
+     *
+     * @return $this
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     */
+    public function edit(int $id)
+    {
+        $category = $this->checkCategory($id);
+
+        return view('edit')
+            ->with('category', $category);
+    }
+
+    /**
+     * @param UpdateCategoryRequest $request
+     * @param int $id
+     *
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     * @throws \Prettus\Validator\Exceptions\ValidatorException
+     */
+    public function update(UpdateCategoryRequest $request, int $id)
+    {
+        $category = $this->checkCategory($id);
+
+        $attributes = [
+            'name'     => $request->get('name'),
+            'is_final' => $category->is_final,
+        ];
+
+        if ($category->is_final) {
+            $attributes += [
+                'attributes' => $request->get('attributes'),
+                'parameters' => $request->get('parameters'),
+            ];
+        }
+
+        $this->categoryRepository->update($attributes, $id);
+
+        Flash::success('Category updated successfully');
+
+        return redirect(route('categories.index'));
+    }
+
+    /**
+     * @param int $id
+     *
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     * @throws \Prettus\Validator\Exceptions\ValidatorException
+     */
+    public function delete(int $id)
+    {
+        $category = $this->checkCategory($id);
+
+        if (!$category->products->isEmpty()) {
+            Flash::error('This category already has products or subcategories');
+
+            return redirect(route('categories.index'));
+        }
+
+        $this->categoryRepository->delete($id);
+
+        Flash::success('Category deleted successfully');
+
+        return redirect(route('categories.index'));
+    }
+
+    /**
+     * @param int $id
+     *
+     * @return Category
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     */
+    protected function checkCategory(int $id): Category
+    {
+        $category = $this->categoryRepository->find($id);
+
+        if (!$category) {
+            throw new NotFoundHttpException();
+        }
+
+        return $category;
+    }
+}

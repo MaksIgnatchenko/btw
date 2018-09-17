@@ -1,0 +1,4 @@
+# example
+# * * * * * echo 'OK' >> /crontest.log
+
+# don-t remove its comment

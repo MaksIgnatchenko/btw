@@ -1,0 +1,15 @@
+.box, .box.box-default {
+    border-radius: 0;
+    border-top: 1px solid #d2d6de;
+    border-left: 1px solid #d2d6de;
+    border-right: 1px solid #d2d6de;
+}
+
+.box.collapsed-box, .box.box-default {
+    margin-bottom: 0;
+}
+
+button.btn.btn-box-tool.collapse-category {
+    padding: 0;
+    margin-top: -1px;
+}

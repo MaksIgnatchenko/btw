@@ -1,0 +1,19 @@
+.dataTables_wrapper .dataTables_paginate .paginate_button {
+    padding: 0;
+    margin: 0;
+    display: initial;
+    border: 0;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+    border: 0;
+}
+
+table.dataTable thead .sorting_desc:after, table.dataTable thead .sorting_asc:after, table.dataTable thead .sorting:after {
+    content: '';
+}
+
+.navbar-nav>.user-menu>.dropdown-menu>li.user-header {
+    height: auto;
+    text-align: left;
+}
