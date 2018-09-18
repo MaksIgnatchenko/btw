@@ -9,32 +9,14 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
-class UsersTableSeeder extends Seeder
+class AdminTableSeeder extends Seeder
 {
     public function run()
     {
-        DB::table('users')->insert([
-            'username' => 'customer1',
-            'email'    => 'customer@pitch.com',
-            'password' => Hash::make('customer1!'),
-        ]);
-
-        DB::table('users')->insert([
-            'username' => 'merchant1',
-            'email'    => 'merchant@pitch.com',
-            'password' => Hash::make('merchant'),
-        ]);
-
-        $user = User::find(1);
-        $user->attachRole(RolesEnum::CUSTOMER);
-
-        $user = User::find(2);
-        $user->attachRole(RolesEnum::MERCHANT);
-
-
         DB::table('admins')->insert([
-            'username'       => 'administrator',
-            'password'       => Hash::make('administrator'),
+            'username' => 'admin',
+            'email' => 'admin@wish.com',
+            'password' => Hash::make('admin'),
             'remember_token' => str_random(10),
         ]);
     }

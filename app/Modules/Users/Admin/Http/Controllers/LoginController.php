@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Modules\Users\Admin\Http\Controllers\Admin;
+namespace App\Modules\Users\Admin\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
@@ -12,11 +12,18 @@ class LoginController extends Controller
     use AuthenticatesUsers;
 
     /**
+     * Where to redirect users after login.
+     *
+     * @var string
+     */
+    protected $redirectTo = '/admin';
+
+    /**
      * @return mixed
      */
     protected function guard()
     {
-        return Auth::guard('web');
+        return Auth::guard('admin');
     }
 
     /**
@@ -35,12 +42,6 @@ class LoginController extends Controller
         return redirect('/admin/login');
     }
 
-    /**
-     * Where to redirect users after login.
-     *
-     * @var string
-     */
-    protected $redirectTo = '/admin';
 
     /**
      * @return string

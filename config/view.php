@@ -14,16 +14,13 @@ return [
     */
 
     'paths' => [
-        app_path('Modules/Users/Resources/views'),
-        app_path('Modules/Content/Resources/views'),
-        app_path('Modules/Categories/Resources/views'),
-        app_path('Modules/Review/Resources/views'),
-        app_path('Modules/Orders/Resources/views'),
-        app_path('Modules/Advert/Resources/views'),
-        app_path('Modules/WebOffers/Resources/views'),
-        app_path('Modules/Csv/Resources/views'),
-
         base_path('resources/views'),
+
+        app_path('Modules/Users/Admin/Resources/views'),
+//        app_path('Modules/Content/Resources/views'),
+//        app_path('Modules/Categories/Resources/views'),
+//        app_path('Modules/Orders/Resources/views'),
+
     ],
 
     /*

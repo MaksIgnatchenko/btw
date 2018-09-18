@@ -3,7 +3,7 @@
  * Created by Artem Petrov, Appus Studio LP on 10.11.2017
  */
 
-namespace App\Modules\Users\Models;
+namespace App\Modules\Users\Admin\Models;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Facades\Hash;
@@ -22,7 +22,7 @@ class Admin extends Authenticatable
     /**
      * @param string $password
      */
-    public function setPasswordAttribute(string $password)
+    public function setPasswordAttribute(string $password): void
     {
         $this->attributes['password'] = Hash::make($password);
     }

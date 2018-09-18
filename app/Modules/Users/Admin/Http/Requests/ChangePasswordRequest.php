@@ -8,7 +8,7 @@ namespace App\Modules\Users\Http\Requests\Admin;
 use App\Modules\Users\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 
-class ChangeAdminPasswordRequest extends FormRequest
+class ChangePasswordRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

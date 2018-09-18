@@ -3,41 +3,39 @@
  * Created by Artem Petrov, Appus Studio LP on 23.02.2018
  */
 
-namespace App\Modules\Users\Dto;
-
-use Illuminate\Support\Collection;
+namespace App\Modules\Users\Admin\Dto;
 
 class HomeStatisticDto
 {
-    /** @var Collection */
+    /** @var iterable */
     protected $merchantMarkers;
     /** @var int */
-    protected $pendingMerchantsCount;
+    protected $pendingMerchantsCount = 0;
     /** @var int */
-    protected $merchantsCount;
-    /** @var Collection */
-    protected $productsStatistic;
+    protected $merchantsCount = 0;
+    /** @var iterable */
+    protected $productsStatistic = [];
     /** @var int */
-    protected $productsCount;
+    protected $productsCount = 0;
     /** @var int */
-    protected $reviewsToApproveCount;
+    protected $reviewsToApproveCount = 0;
     /** @var float */
-    protected $overallIncome;
+    protected $overallIncome = 0.0;
 
     /**
-     * @return Collection
+     * @return iterable
      */
-    public function getMerchantMarkers(): Collection
+    public function getMerchantMarkers()
     {
         return $this->merchantMarkers;
     }
 
     /**
-     * @param Collection $merchantMarkers
+     * @param iterable $merchantMarkers
      *
      * @return HomeStatisticDto
      */
-    public function setMerchantMarkers(Collection $merchantMarkers): HomeStatisticDto
+    public function setMerchantMarkers(iterable $merchantMarkers): HomeStatisticDto
     {
         $this->merchantMarkers = $merchantMarkers;
 
@@ -85,19 +83,19 @@ class HomeStatisticDto
     }
 
     /**
-     * @return Collection
+     * @return iterable
      */
-    public function getProductsStatistic(): Collection
+    public function getProductsStatistic(): iterable
     {
         return $this->productsStatistic;
     }
 
     /**
-     * @param Collection $productsStatistic
+     * @param iterable $productsStatistic
      *
      * @return HomeStatisticDto
      */
-    public function setProductsStatistic(Collection $productsStatistic): HomeStatisticDto
+    public function setProductsStatistic(iterable $productsStatistic): HomeStatisticDto
     {
         $this->productsStatistic = $productsStatistic;
 

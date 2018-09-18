@@ -2,10 +2,10 @@
 
 return [
 
-	/*
-	 * Theme color
-	 * blue|green|red
-	 */
-	'thema_color' => 'green',
+    /*
+     * Theme color
+     * blue|green|red
+     */
+    'thema_color' => 'green',
 
 ];
