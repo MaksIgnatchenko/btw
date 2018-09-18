@@ -187,8 +187,8 @@ return [
 //        App\Modules\Orders\Providers\OrderApiRouteServiceProvider::class,
 //        App\Modules\Orders\Providers\OrderAdminRouteServiceProvider::class,
 
-        Edujugon\PushNotification\Providers\PushNotificationServiceProvider::class,
-        Maatwebsite\Excel\ExcelServiceProvider::class,
+//        Edujugon\PushNotification\Providers\PushNotificationServiceProvider::class,
+//        Maatwebsite\Excel\ExcelServiceProvider::class,
 //        App\Modules\Users\Providers\UsersEventServiceProvider::class
 
 
