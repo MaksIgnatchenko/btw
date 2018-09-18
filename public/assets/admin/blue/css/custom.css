@@ -1,0 +1,42 @@
+table.dataTable thead th, table.dataTable thead td {
+    border-bottom-color: #eceeef;
+    background: #fff;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover,
+.dataTables_wrapper .dataTables_paginate .paginate_button.active {
+    border: 1px solid #d2d2d2;
+    background: #e1e3e9;
+}
+
+table.dataTable.no-footer {
+    border-bottom: 1px solid #eceeef;
+}
+
+table.dataTable thead .sorting_desc:after,
+table.dataTable thead .sorting_asc:after,
+table.dataTable thead .sorting:after {
+    content: "";
+}
+
+.custom-dd-category {
+    max-width: none;
+}
+
+.dd-handle {
+    cursor: default;
+}
+
+.custom-dd-category form a {
+    margin-left: 10px;
+}
+
+.category-color-preview {
+    display: inline-block;
+    vertical-align: middle;
+    width: 1em;
+    height: 1em;
+    border-radius: 50%;
+    margin-right: 5px;
+    background-color: transparent;
+}
