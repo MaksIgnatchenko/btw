@@ -41,8 +41,8 @@ deploy:
     - rm -rf ./.git
     - rm -rf ./tests
 
-    - ssh -o StrictHostKeyChecking=no $SSH_USER@$SSH_SERVER_HOST -p $SSH_PORT "mkdir -p /var/www/wish"
-    - rsync -az --exclude-from=.gitlab-ci-exclude --no-perms --no-owner --no-group --delete-during -e "ssh -o StrictHostKeyChecking=no -p $SSH_PORT" . $SSH_USER@$SSH_SERVER_HOST:/var/www/wish
-    - ssh -o StrictHostKeyChecking=no $SSH_USER@$SSH_SERVER_HOST -p $SSH_PORT "cd /var/www/wish && docker-compose up -d --force-recreate --remove-orphans && docker exec wish_php /bin/bash ./init_dev.sh"
+    - ssh -o StrictHostKeyChecking=no $SSH_USER@$SSH_SERVER_HOST "mkdir -p /var/www/wish"
+    - rsync -az --exclude-from=.gitlab-ci-exclude --no-perms --no-owner --no-group --delete-during -e "ssh -o StrictHostKeyChecking=no . $SSH_USER@$SSH_SERVER_HOST:/var/www/wish
+    - ssh -o StrictHostKeyChecking=no $SSH_USER@$SSH_SERVER_HOST "cd /var/www/wish && docker-compose up -d --force-recreate --remove-orphans && docker exec wish_php /bin/bash ./init_dev.sh"
   only:
     - develop
