@@ -4,11 +4,11 @@
  */
 
 Route::group([
-    'middleware' => 'api',
+    'middleware' => 'web',
     'prefix' => 'auth',
 ], function () {
     $this->get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request');
-//    $this->get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.reset');
-//    $this->post('password/reset', 'Auth\ResetPasswordController@reset');
-//    $this->get('password/success', 'Auth\ResetPasswordController@success');
+    $this->get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.reset');
+    $this->post('password/reset', 'Auth\ResetPasswordController@reset');
+    $this->get('password/success', 'Auth\ResetPasswordController@success');
 });
