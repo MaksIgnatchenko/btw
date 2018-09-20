@@ -15,6 +15,20 @@ build:
   only:
     - develop
 
+js_build:
+  stage: js_build
+  image: node:8.11.2
+  script:
+    - npm install apidoc -g
+    - apidoc -i docs/ -o public/apidoc/
+  artifacts:
+    paths:
+      - public/apidoc/
+    when: on_success
+    expire_in: 1h
+  only:
+    - develop
+
 deploy:
   stage: deploy
   script:
