@@ -3,22 +3,22 @@
  * Created by Artem Petrov, Appus Studio LP on 28.11.2017
  */
 
-namespace App\Modules\Users\Requests\Api;
+namespace App\Modules\Users\Customer\Http\Requests\Api;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class SetSettingRequest extends FormRequest
+class ChangePasswordRequest extends FormRequest
 {
     /**
      * Get the password reset validation rules.
      *
      * @return array
      */
-    public function rules(): array
+    public function rules()
     {
         return [
-            'setting' => 'required|string|max:100',
-            'value'   => 'required|boolean',
+            'old_password' => 'required|min:6|max:50',
+            'new_password' => 'required|min:6|max:50',
         ];
     }
 

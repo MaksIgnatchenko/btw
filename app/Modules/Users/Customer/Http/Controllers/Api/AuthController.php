@@ -19,7 +19,17 @@ class AuthController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth:api', ['except' => ['login']]);
+        $this->middleware('auth:customer', ['except' => ['login']]);
+    }
+
+    /**
+     * Get the guard to be used during authentication.
+     *
+     * @return \Illuminate\Contracts\Auth\Guard
+     */
+    public function guard(): Guard
+    {
+        return Auth::guard();
     }
 
     /**
@@ -31,7 +41,7 @@ class AuthController extends Controller
      */
     public function login(LoginRequest $request): JsonResponse
     {
-        $credentials = $request->only('username', 'password');
+        $credentials = $request->only('email', 'password');
 
         if ($token = $this->guard()->attempt($credentials)) {
             $user = $this->guard()->user();
@@ -39,7 +49,7 @@ class AuthController extends Controller
             return $this->respondWithToken($token, $user);
         }
 
-        return response()->json(['message' => 'No such username or password'], 401);
+        return response()->json(['message' => 'No such email or password'], 401);
     }
 
     /**
@@ -75,16 +85,6 @@ class AuthController extends Controller
     public function refresh(): JsonResponse
     {
         return $this->respondWithToken($this->guard()->refresh());
-    }
-
-    /**
-     * Get the guard to be used during authentication.
-     *
-     * @return \Illuminate\Contracts\Auth\Guard
-     */
-    public function guard(): Guard
-    {
-        return Auth::guard();
     }
 
     /**

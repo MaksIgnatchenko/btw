@@ -3,25 +3,27 @@
  * Created by Artem Petrov, Appus Studio LP on 15.11.2017
  */
 
-namespace App\Modules\Users\Requests;
+namespace App\Modules\Users\Customer\Http\Api\Requests;
 
-use App\Modules\Users\RequestsTraits\PasswordRulesTrait;
+use App\Rules\PasswordRule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class LoginRequest extends FormRequest
 {
-    use PasswordRulesTrait;
-
     /**
      * @return array
      */
     public function rules(): array
     {
-        $rules = [
-            'username'    => 'required|string|min:6|max:50',
+        return [
+            'email' => 'required|email|max:100',
+            'password' => [
+                'required',
+                'min:6',
+                'max:50',
+                new PasswordRule(),
+            ]
         ];
-
-        return array_merge($this->getPasswordRules(), $rules);
     }
 
     /**

@@ -3,10 +3,10 @@
  * Created by Artem Petrov, Appus Studio LP on 10.11.2017
  */
 
-namespace App\Modules\Users\Http\Controllers\Api\Auth;
+namespace App\Modules\Users\Customer\Http\Controllers\Api\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Modules\Users\Requests\ChangePasswordRequest;
+use App\Modules\Users\Customer\Http\Requests\Api\ChangePasswordRequest;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;

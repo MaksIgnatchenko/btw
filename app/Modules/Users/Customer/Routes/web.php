@@ -5,7 +5,7 @@
 
 Route::group([
     'middleware' => 'web',
-    'prefix'     => 'auth'
+    'prefix' => 'auth',
 ], function () {
     $this->get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request');
     $this->get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.reset');
