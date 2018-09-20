@@ -5,6 +5,7 @@
 
 namespace App\Modules\Users\Customer\Http\Requests\Api;
 
+use App\Rules\PasswordRule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class ChangePasswordRequest extends FormRequest
@@ -17,8 +18,18 @@ class ChangePasswordRequest extends FormRequest
     public function rules()
     {
         return [
-            'old_password' => 'required|min:6|max:50',
-            'new_password' => 'required|min:6|max:50',
+            'old_password' => [
+                'required',
+                'min:6',
+                'max:50',
+                new PasswordRule(),
+            ],
+            'new_password' => [
+                'required',
+                'min:6',
+                'max:50',
+                new PasswordRule(),
+            ],
         ];
     }
 
