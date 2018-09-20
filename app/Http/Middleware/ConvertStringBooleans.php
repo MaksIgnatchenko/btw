@@ -3,7 +3,6 @@
  * Created by Artem Petrov, Appus Studio LP on 23.11.2017
  */
 
-
 namespace App\Http\Middleware;
 
 use Illuminate\Foundation\Http\Middleware\TransformsRequest;

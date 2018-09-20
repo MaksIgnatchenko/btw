@@ -3,8 +3,6 @@
  * Created by Artem Petrov, Appus Studio LP on 09.11.2017
  */
 
-use App\Modules\Rbac\Enum\RolesEnum;
-use App\Modules\Users\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;

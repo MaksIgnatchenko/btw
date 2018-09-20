@@ -13,4 +13,10 @@ php artisan view:clear
 php artisan config:clear
 php artisan cache:clear
 
+service supervisor start
+supervisorctl reread
+supervisorctl update
+supervisorctl restart all
+php artisan queue:restart
+
 php artisan up
