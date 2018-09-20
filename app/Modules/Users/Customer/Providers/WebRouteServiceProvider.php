@@ -8,7 +8,7 @@ namespace App\Modules\Users\Customer\Providers;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Route;
 
-class ApiRouteServiceProvider extends ServiceProvider
+class WebRouteServiceProvider extends ServiceProvider
 {
     /**
      * This namespace is applied to your controller routes.
@@ -17,7 +17,7 @@ class ApiRouteServiceProvider extends ServiceProvider
      *
      * @var string
      */
-    protected $namespace = 'App\Modules\Users\Customer\Http\Controllers\Api';
+    protected $namespace = 'App\Modules\Users\Customer\Http\Controllers\Web';
 
     /**
      * Define the routes for the application.
@@ -26,9 +26,9 @@ class ApiRouteServiceProvider extends ServiceProvider
      */
     public function map()
     {
-        Route::prefix('api/customer')
-            ->middleware('api')
+        Route::prefix('')
+            ->middleware('web')
             ->namespace($this->namespace)
-            ->group(__DIR__ . './../Routes/api.php');
+            ->group(__DIR__ . './../Routes/web.php');
     }
 }

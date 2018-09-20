@@ -6,7 +6,7 @@
 namespace App\Modules\Users\Customer\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Modules\Users\Requests\LoginRequest;
+use App\Modules\Users\Customer\Http\Api\Requests\LoginRequest;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
@@ -99,7 +99,7 @@ class AuthController extends Controller
         return response()->json([
             'token' => $token,
             'token_type' => 'bearer',
-            'expires_in' => $this->guard()->factory()->getTTL() * 60
+            'expires_in' => $this->guard('customer')->factory()->getTTL() * 60
         ]);
     }
 }

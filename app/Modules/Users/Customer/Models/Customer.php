@@ -5,6 +5,7 @@
 
 namespace App\Modules\Users\Customer\Models;
 
+use Illuminate\Support\Facades\Hash;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -13,7 +14,9 @@ class Customer extends Authenticatable implements JWTSubject
 {
     use Notifiable;
 
-    // Rest omitted for brevity
+    protected $hidden = [
+        'password',
+    ];
 
     /**
      * Get the identifier that will be stored in the subject claim of the JWT.
@@ -33,5 +36,13 @@ class Customer extends Authenticatable implements JWTSubject
     public function getJWTCustomClaims()
     {
         return [];
+    }
+
+    /**
+     * @param string $password
+     */
+    public function setPasswordAttribute(string $password): void
+    {
+        $this->attributes['password'] = Hash::make($password);
     }
 }

@@ -193,6 +193,9 @@ return [
 
 
         App\Modules\Users\Admin\Providers\RouteServiceProvider::class,
+        App\Modules\Users\Customer\Providers\ApiRouteServiceProvider::class,
+        App\Modules\Users\Customer\Providers\WebRouteServiceProvider::class,
+
     ],
 
     /*
