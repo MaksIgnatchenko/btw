@@ -27,7 +27,10 @@ RUN apt-get update && \
         wget \
         git \
         cron \
-        nano
+        nano \
+        mc \
+        supervisor
+
 
 #####################################
 # GD:
