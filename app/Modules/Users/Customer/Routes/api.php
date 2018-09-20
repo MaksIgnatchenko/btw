@@ -4,8 +4,7 @@
  */
 
 $this->group([
-    'middleware' => 'api',
-    'prefix'     => 'auth',
+    'prefix' => 'auth',
 ], function () {
     $this->post('login', 'AuthController@login');
     $this->post('logout', 'AuthController@logout');
@@ -14,11 +13,10 @@ $this->group([
 });
 
 $this->group([
-    'middleware' => 'api',
     'prefix' => 'password',
 ], function () {
     $this->post('change', 'Auth\ChangePasswordController@change')->name('password.change');
+    $this->post('email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
 });
 
-$this->post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
 $this->post('register', 'RegisterController@register');

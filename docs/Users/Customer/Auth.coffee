@@ -116,3 +116,25 @@ HTTP/1.1 400 Error
     "message":"Wrong old password. Please try again",
 }
 ###
+
+###
+@api {post} /api/customer/register Register customer
+@apiName Register customer
+@apiGroup Auth
+@apiPermission Guest
+@apiVersion 0.1.0
+
+@apiSuccessExample Success-Response:
+HTTP/1.1 200 OK
+{
+  "token": "token",
+  "customer": {
+    "email": "test@wish.net",
+    "first_name": "Test",
+    "last_name": "Test",
+    "updated_at": "2018-09-20 15:55:31",
+    "created_at": "2018-09-20 15:55:31",
+    "id": 5
+  }
+}
+###
