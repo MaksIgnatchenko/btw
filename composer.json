@@ -5,7 +5,7 @@
     "license": "MIT",
     "type": "project",
     "require": {
-        "php": "^7.1",
+        "php": ">=7.2.0",
         "braintree/braintree_php": "^3.26",
         "davejamesmiller/laravel-breadcrumbs": "^4.2",
         "doctrine/dbal": "^2.6",
