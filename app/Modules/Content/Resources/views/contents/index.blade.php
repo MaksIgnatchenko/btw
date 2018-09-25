@@ -3,7 +3,7 @@
 @section('content')
     <section class="content-header">
         <h1>Terms & Conditions</h1>
-        {{Breadcrumbs::render('content')}}
+
     </section>
     <div class="content">
         <div class="clearfix"></div>

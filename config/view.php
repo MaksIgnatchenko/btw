@@ -18,6 +18,7 @@ return [
 
         app_path('Modules/Users/Customer/Resources/views'),
         app_path('Modules/Users/Admin/Resources/views'),
+        app_path('Modules/Content/Resources/views'),
 
 //        app_path('Modules/Content/Resources/views'),
 //        app_path('Modules/Categories/Resources/views'),
