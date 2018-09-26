@@ -146,7 +146,7 @@ HTTP/1.1 200 OK
 ###
 
 ###
-@api {post} /api/customer/auth/:service/login Login customer via Social services. Available values: <code>facebook</code>, <code>google</code>
+@api {get} /api/customer/auth/:service/login Login customer via Social services. Available values: facebook, google
 @apiName Login customer via Social services
 @apiGroup Auth
 @apiPermission Guest
