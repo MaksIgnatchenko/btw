@@ -10,6 +10,8 @@ $this->group([
     $this->post('logout', 'AuthController@logout');
     $this->post('refresh', 'AuthController@refresh');
     $this->post('me', 'AuthController@me');
+    $this->get('{service}/login', 'AuthController@redirectToProvider')->where(['service' => '^(facebook|google)$']);
+    $this->get('{service}/callback', 'AuthController@handleProviderCallback');
 });
 
 $this->group([

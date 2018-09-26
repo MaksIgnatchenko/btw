@@ -144,3 +144,19 @@ HTTP/1.1 200 OK
   }
 }
 ###
+
+###
+@api {post} /api/customer/auth/:service/login Login customer via Social services. Available values: <code>facebook</code>, <code>google</code>
+@apiName Login customer via Social services
+@apiGroup Auth
+@apiPermission Guest
+@apiVersion 0.1.0
+
+@apiSuccessExample Success-Response:
+HTTP/1.1 200 OK
+{
+    'token': 'token'
+    'token_type': 'bearer',
+    'expires_in': 3600,
+}
+###

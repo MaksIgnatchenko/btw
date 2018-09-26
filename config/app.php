@@ -199,6 +199,8 @@ return [
         App\Modules\Content\Providers\ContentAdminRouteServiceProvider::class,
         App\Modules\Content\Providers\ContentApiRouteServiceProvider::class,
 
+        Laravel\Socialite\SocialiteServiceProvider::class,
+
     ],
 
     /*
@@ -265,5 +267,6 @@ return [
         'OrderChecker' => App\Modules\Orders\Helpers\OrderChecker::class,
         'Outcome' => App\Modules\Orders\Models\Outcome::class,
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
+        'Socialite' => Laravel\Socialite\Facades\Socialite::class,
     ],
 ];

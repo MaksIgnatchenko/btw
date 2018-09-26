@@ -7,9 +7,12 @@ namespace App\Modules\Users\Customer\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Modules\Users\Customer\Http\Api\Requests\LoginRequest;
+use App\Modules\Users\Customer\Models\Customer;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Laravel\Socialite\Facades\Socialite;
 
 class AuthController extends Controller
 {
@@ -19,7 +22,9 @@ class AuthController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth:customer', ['except' => ['login']]);
+        $this->middleware('auth:customer', ['except' => [
+            'login', 'redirectToProvider', 'handleProviderCallback',
+        ]]);
     }
 
     /**
@@ -99,7 +104,47 @@ class AuthController extends Controller
         return response()->json([
             'token' => $token,
             'token_type' => 'bearer',
-            'expires_in' => $this->guard('customer')->factory()->getTTL() * 60
+            'expires_in' => $this->guard('customer')->factory()->getTTL() * 60,
         ]);
+    }
+
+    /**
+     * @param string $service
+     *
+     * @return mixed
+     */
+    public function redirectToProvider(string $service)
+    {
+        return Socialite::driver($service)
+            ->stateless()
+            ->redirect();
+    }
+
+    /**
+     * @param string $service
+     *
+     * @return JsonResponse
+     */
+    public function handleProviderCallback(string $service)
+    {
+        $socialUser = Socialite::driver($service)->stateless()->user();
+        list($firstName, $lastName) = explode(' ', $socialUser->name);
+
+        $user = Customer::firstOrCreate([
+            'email' => $socialUser->email,
+        ], [
+            'email' => $socialUser->email,
+            'first_name' => $firstName,
+            'last_name' => $lastName,
+            'password' => Hash::make(str_random(30)),
+        ]);
+
+        $token = Auth::login($user);
+
+        if (!$token) {
+            return response()->json(['message' => 'Couldn\'t log in'], 401);
+        }
+
+        return $this->respondWithToken($token);
     }
 }
