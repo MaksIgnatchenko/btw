@@ -124,6 +124,12 @@ HTTP/1.1 400 Error
 @apiPermission Guest
 @apiVersion 0.1.0
 
+@apiParam {String} first_name
+@apiParam {String} last_name
+@apiParam {String} email
+@apiParam {String} password
+@apiParam {String} password_confirmation
+
 @apiSuccessExample Success-Response:
 HTTP/1.1 200 OK
 {

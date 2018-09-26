@@ -1,5 +1,5 @@
 ###
-@api {post} /api/content/get/:key Get Content by Key
+@api {post} /api/content/get/:key Get Content by Key. Available values: <code>terms_and_conditions</code>, <code>privacy_policy</code>
 @apiName Get Content by Key
 @apiGroup Content
 @apiPermission Guest
