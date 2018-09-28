@@ -12,6 +12,9 @@ $this->group([
     $this->post('me', 'AuthController@me');
     $this->get('{service}/login', 'AuthController@redirectToProvider')->where(['service' => '^(facebook|google)$']);
     $this->get('{service}/callback', 'AuthController@handleProviderCallback');
+
+    $this->post('login/google', 'AuthController@googleLogin');
+    $this->post('login/facebook', 'AuthController@facebookLogin');
 });
 
 $this->group([

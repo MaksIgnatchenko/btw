@@ -7,15 +7,27 @@ namespace App\Modules\Users\Customer\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Modules\Users\Customer\Http\Api\Requests\LoginRequest;
+use App\Modules\Users\Customer\Http\Requests\Api\LoginSocialRequest;
 use App\Modules\Users\Customer\Models\Customer;
+use Facebook\FacebookApp;
+use Facebook\FacebookClient;
+use Facebook\FacebookRequest;
+use GuzzleHttp\Client;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Laravel\Socialite\Facades\Socialite;
+use League\OAuth2\Client\Provider\Google;
+use League\OAuth2\Client\Token\AccessToken;
 
 class AuthController extends Controller
 {
+
+    /**
+     * @var string
+     */
+    protected $facebookFields = 'id,first_name,last_name,name,gender,email,birthday,location';
 
     /**
      * Create a new AuthController instance.
@@ -23,7 +35,7 @@ class AuthController extends Controller
     public function __construct()
     {
         $this->middleware('auth:customer', ['except' => [
-            'login', 'redirectToProvider', 'handleProviderCallback',
+            'login', 'redirectToProvider', 'handleProviderCallback', 'googleLogin', 'facebookLogin'
         ]]);
     }
 
@@ -118,6 +130,64 @@ class AuthController extends Controller
         return Socialite::driver($service)
             ->stateless()
             ->redirect();
+    }
+
+    public function facebookLogin(LoginSocialRequest $request)
+    {
+        $appId = env('FACEBOOK_CLIENT_ID');
+        $appSecret = env('FACEBOOK_CLIENT_SECRET');
+
+        $token = $request->get('token');
+
+        $app = new FacebookApp($appId, $appSecret);
+        $fbRequest = new FacebookRequest($app, $token, 'GET', '/me?fields=' . $this->facebookFields);
+        $client = new FacebookClient();
+
+        $response = $client->sendRequest($fbRequest);
+
+        $result = $response->getDecodedBody();
+
+        $token = $this->authSocialUser($result);
+
+        if (!$token) {
+            return response()->json(['message' => 'Couldn\'t log in'], 401);
+        }
+
+        return $this->respondWithToken($token);
+    }
+
+    public function googleLogin(LoginSocialRequest $request)
+    {
+        $client = new Client(['headers' => [
+            'Authorization' => 'Bearer ' . $request->get('token'),
+        ]]);
+
+        $res = $client->get('https://www.googleapis.com/oauth2/v1/userinfo');
+        $result = json_decode($res->getBody()->getContents(), true);
+
+        $token = $this->authSocialUser($result);
+
+        if (!$token) {
+            return response()->json(['message' => 'Couldn\'t log in'], 401);
+        }
+
+        return $this->respondWithToken($token);
+    }
+
+    public function authSocialUser($socialUserData)
+    {
+        [$firstName, $lastName] = explode(' ', $socialUserData['name']);
+
+        $user = Customer::firstOrCreate([
+            'email' => $socialUserData['email'],
+        ], [
+            'email' => $socialUserData['email'],
+            'first_name' => $firstName,
+            'last_name' => $lastName,
+            'password' => Hash::make(str_random(30)),
+        ]);
+
+        return Auth::login($user);
     }
 
     /**
