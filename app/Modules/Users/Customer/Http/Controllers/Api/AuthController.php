@@ -35,7 +35,7 @@ class AuthController extends Controller
     public function __construct()
     {
         $this->middleware('auth:customer', ['except' => [
-            'login', 'redirectToProvider', 'handleProviderCallback', 'googleLogin', 'facebookLogin'
+            'login', 'redirectToProvider', 'handleProviderCallback', 'googleLogin', 'facebookLogin', 'socialLogin',
         ]]);
     }
 
@@ -132,15 +132,27 @@ class AuthController extends Controller
             ->redirect();
     }
 
-    public function facebookLogin(LoginSocialRequest $request)
+    public function socialLogin(LoginSocialRequest $request, $service)
+    {
+        switch ($service) {
+            case 'facebook':
+                $response = $this->facebookLogin($request->get('token'));
+                break;
+            case 'google':
+                $response = $this->googleLogin($request->get('token'));
+                break;
+        }
+
+        return $response;
+    }
+
+    public function facebookLogin($serviceToken)
     {
         $appId = env('FACEBOOK_CLIENT_ID');
         $appSecret = env('FACEBOOK_CLIENT_SECRET');
 
-        $token = $request->get('token');
-
         $app = new FacebookApp($appId, $appSecret);
-        $fbRequest = new FacebookRequest($app, $token, 'GET', '/me?fields=' . $this->facebookFields);
+        $fbRequest = new FacebookRequest($app, $serviceToken, 'GET', '/me?fields=' . $this->facebookFields);
         $client = new FacebookClient();
 
         $response = $client->sendRequest($fbRequest);
@@ -156,10 +168,10 @@ class AuthController extends Controller
         return $this->respondWithToken($token);
     }
 
-    public function googleLogin(LoginSocialRequest $request)
+    public function googleLogin($serviceToken)
     {
         $client = new Client(['headers' => [
-            'Authorization' => 'Bearer ' . $request->get('token'),
+            'Authorization' => 'Bearer ' . $serviceToken,
         ]]);
 
         $res = $client->get('https://www.googleapis.com/oauth2/v1/userinfo');

@@ -146,11 +146,13 @@ HTTP/1.1 200 OK
 ###
 
 ###
-@api {get} /api/customer/auth/:service/login Login customer via Social services. Available values: facebook, google
+@api {post} /api/customer/auth/:service/login Login customer via Social services. Available values: facebook, google
 @apiName Login customer via Social services
 @apiGroup Auth
 @apiPermission Guest
 @apiVersion 0.1.0
+
+@apiParam {String} token
 
 @apiSuccessExample Success-Response:
 HTTP/1.1 200 OK
