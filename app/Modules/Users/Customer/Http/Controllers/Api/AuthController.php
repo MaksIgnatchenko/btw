@@ -33,7 +33,7 @@ class AuthController extends Controller
     public function __construct()
     {
         $this->middleware('auth:customer', ['except' => [
-            'login', 'redirectToProvider', 'handleProviderCallback', 'googleLogin', 'facebookLogin', 'socialLogin',
+            'login', 'redirectToProvider', 'handleProviderCallback', 'socialLogin',
         ]]);
     }
 
