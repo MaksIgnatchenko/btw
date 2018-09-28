@@ -18,8 +18,6 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Laravel\Socialite\Facades\Socialite;
-use League\OAuth2\Client\Provider\Google;
-use League\OAuth2\Client\Token\AccessToken;
 
 class AuthController extends Controller
 {
