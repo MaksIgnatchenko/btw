@@ -16,7 +16,6 @@
 
     <section class="content-header">
         <h1>Categories</h1>
-        {{ Breadcrumbs::render('categories') }}
     </section>
     <div class="content">
         @include('flash::message')

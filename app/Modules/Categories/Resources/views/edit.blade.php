@@ -4,7 +4,6 @@
 
     <section class="content-header">
         <h1>Edit category {{$category->name}}</h1>
-        {{ Breadcrumbs::render('edit-category', $category) }}
     </section>
     <section class="content">
         <div class="clearfix"></div>

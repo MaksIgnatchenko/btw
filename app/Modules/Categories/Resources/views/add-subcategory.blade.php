@@ -5,7 +5,6 @@
 
     <section class="content-header">
         <h1>Add subcategory to {{$category->name}}</h1>
-        {{ Breadcrumbs::render('add-subcategory', $category) }}
     </section>
     <section class="content">
         <div class="clearfix"></div>

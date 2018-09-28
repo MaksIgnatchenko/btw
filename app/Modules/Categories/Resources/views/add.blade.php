@@ -4,7 +4,6 @@
 
     <section class="content-header">
         <h1>Add root category</h1>
-        {{ Breadcrumbs::render('add-category') }}
     </section>
     <section class="content">
         <div class="clearfix"></div>
