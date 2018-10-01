@@ -132,7 +132,7 @@ class AuthController extends Controller
         return $this->respondWithToken($token);
     }
 
-    public function authSocialUser($socialUserData)
+    protected function authSocialUser($socialUserData)
     {
         $customer = Customer::firstOrCreate([
             'email' => $socialUserData['email'],

@@ -26,10 +26,8 @@ class SocialServiceFactory
         switch ($service) {
             case SocialServiceEnum::SERVICE_FACEBOOK:
                 return new SocialServiceFacebook($token);
-                break;
             case  SocialServiceEnum::SERVICE_GOOGLE:
                 return new SocialServiceGoogle($token);
-                break;
             default:
                 throw new SocialServiceFactoryException("Illegal service name: $service");
         }
