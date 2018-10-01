@@ -24,4 +24,11 @@ class CategoriesStrategy
 
         return $strategy->getCategories($parentId);
     }
+
+    public function getAllCategories(int $parentId = null): Collection
+    {
+
+        $strategy = new GetAllCategories();
+        return $strategy->getCategories($parentId);
+    }
 }
