@@ -5,7 +5,7 @@
 
 namespace App\Modules\Users\Customer\Exceptions;
 
-class SocialServiceFactoryException extends \Exception
+class SocialServiceGoogleException extends SocialServiceException
 {
 
 }

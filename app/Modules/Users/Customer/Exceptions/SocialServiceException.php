@@ -5,7 +5,6 @@
 
 namespace App\Modules\Users\Customer\Exceptions;
 
-
 class SocialServiceException extends \Exception
 {
 

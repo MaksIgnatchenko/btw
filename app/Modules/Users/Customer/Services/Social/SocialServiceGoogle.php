@@ -5,23 +5,20 @@
 
 namespace App\Modules\Users\Customer\Services\Social;
 
+use App\Helpers\ArrayHelper;
 use App\Modules\Users\Customer\Exceptions\SocialServiceException;
+use App\Modules\Users\Customer\Exceptions\SocialServiceGoogleException;
 use App\Modules\Users\Customer\Services\SocialServiceInterface;
 use GuzzleHttp\Client;
 
 class SocialServiceGoogle extends SocialServiceAbstract implements SocialServiceInterface
 {
-    const getUserDataRequestUrl = 'https://www.googleapis.com/oauth2/v1/userinfo';
+    protected const GET_USER_DATA_REQUEST_URL = 'https://www.googleapis.com/oauth2/v1/userinfo';
 
-    /**
-     * SocialServiceGoogle constructor.
-     *
-     * @param $token
-     */
-    public function __construct($token)
-    {
-        parent::__construct($token);
-    }
+    protected const KEYS_TO_REPLACE = [
+        'given_name' => 'first_name',
+        'family_name' => 'last_name',
+    ];
 
     /**
      * @return array
@@ -33,12 +30,13 @@ class SocialServiceGoogle extends SocialServiceAbstract implements SocialService
             'Authorization' => 'Bearer ' . $this->token,
         ]]);
 
-        $res = $client->get($this::getUserDataRequestUrl);
+        $res = $client->get(self::GET_USER_DATA_REQUEST_URL);
 
-        if ($res->getStatusCode() == 200) {
-            return json_decode($res->getBody()->getContents(), true);
+        if (200 === $res->getStatusCode()) {
+            $userData = json_decode($res->getBody()->getContents(), true);
+            return ArrayHelper::replace_keys($userData, self::KEYS_TO_REPLACE);
         }
 
-        throw new SocialServiceException("Response returned with code: {$res->getStatusCode()}");
+        throw new SocialServiceGoogleException("Response returned with code: {$res->getStatusCode()}");
     }
 }

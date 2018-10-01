@@ -5,13 +5,13 @@
 
 namespace App\Modules\Users\Customer\Factories;
 
+use App\Modules\Users\Customer\Enums\SocialServiceEnum;
 use App\Modules\Users\Customer\Exceptions\SocialServiceFactoryException;
 use App\Modules\Users\Customer\Services\Social\SocialServiceFacebook;
 use App\Modules\Users\Customer\Services\Social\SocialServiceGoogle;
 
 class SocialServiceFactory
 {
-    protected $socialServiceInstance;
 
     /**
      * @param $service
@@ -21,20 +21,18 @@ class SocialServiceFactory
      * @throws SocialServiceFactoryException
      * @throws \Facebook\Exceptions\FacebookSDKException
      */
-    public function getSocialServiceInstance($service, $token)
+    public static function getSocialServiceInstance($service, $token)
     {
         switch ($service) {
-            case 'facebook':
-                $this->socialServiceInstance = new SocialServiceFacebook($token);
+            case SocialServiceEnum::SERVICE_FACEBOOK:
+                return new SocialServiceFacebook($token);
                 break;
-            case 'google':
-                $this->socialServiceInstance = new SocialServiceGoogle($token);
+            case  SocialServiceEnum::SERVICE_GOOGLE:
+                return new SocialServiceGoogle($token);
                 break;
             default:
                 throw new SocialServiceFactoryException("Illegal service name: $service");
         }
-
-        return $this->socialServiceInstance;
     }
 
 }
