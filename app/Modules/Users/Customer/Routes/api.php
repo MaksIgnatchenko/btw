@@ -11,13 +11,12 @@ $this->group([
     $this->post('refresh', 'AuthController@refresh');
     $this->post('me', 'AuthController@me');
     /* --- Uses only as debug for server side social login --- */
-    $this->get('login/{service}', 'AuthController@redirectToProvider')->where(['service' => '^(facebook|google)$']);
+    if (\Illuminate\Support\Facades\App::environment(['local'])) {
+        $this->get('{service}/login', 'AuthController@redirectToProvider')->where(['service' => '^(facebook|google)$']);
+        $this->get('{service}/callback', 'AuthController@handleProviderCallback');
+    }
     /* -------------------------------------------------------- */
-    $this->post('{service}/login', 'AuthController@socialLogin')->where(['service' => '^(facebook|google)$']);
-    $this->get('{service}/callback', 'AuthController@handleProviderCallback');
-
-    $this->post('login/google', 'AuthController@googleLogin');
-    $this->post('login/facebook', 'AuthController@facebookLogin');
+    $this->post('login/{service}', 'AuthController@socialLogin')->where(['service' => '^(facebook|google)$']);
 });
 
 $this->group([

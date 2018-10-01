@@ -6,6 +6,7 @@
 namespace App\Modules\Users\Customer\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Modules\Users\Customer\Factories\SocialServiceFactory;
 use App\Modules\Users\Customer\Http\Api\Requests\LoginRequest;
 use App\Modules\Users\Customer\Http\Requests\Api\LoginSocialRequest;
 use App\Modules\Users\Customer\Models\Customer;
@@ -21,12 +22,6 @@ use Laravel\Socialite\Facades\Socialite;
 
 class AuthController extends Controller
 {
-
-    /**
-     * @var string
-     */
-    protected $facebookFields = 'id,first_name,last_name,name,gender,email,birthday,location';
-
     /**
      * Create a new AuthController instance.
      */
@@ -132,54 +127,11 @@ class AuthController extends Controller
 
     public function socialLogin(LoginSocialRequest $request, $service)
     {
-        switch ($service) {
-            case 'facebook':
-                $response = $this->facebookLogin($request->get('token'));
-                break;
-            case 'google':
-                $response = $this->googleLogin($request->get('token'));
-                break;
-        }
+        $serviceInstance = (new SocialServiceFactory)->getSocialServiceInstance($service, $request->get('token'));
 
-        return $response;
-    }
+        $userData = $serviceInstance->getUserData();
 
-    public function facebookLogin($serviceToken)
-    {
-        $appId = env('FACEBOOK_CLIENT_ID');
-        $appSecret = env('FACEBOOK_CLIENT_SECRET');
-
-        $app = new FacebookApp($appId, $appSecret);
-        $fbRequest = new FacebookRequest($app, $serviceToken, 'GET', '/me?fields=' . $this->facebookFields);
-        $client = new FacebookClient();
-
-        $response = $client->sendRequest($fbRequest);
-
-        $result = $response->getDecodedBody();
-
-        $token = $this->authSocialUser($result);
-
-        if (!$token) {
-            return response()->json(['message' => 'Couldn\'t log in'], 401);
-        }
-
-        return $this->respondWithToken($token);
-    }
-
-    public function googleLogin($serviceToken)
-    {
-        $client = new Client(['headers' => [
-            'Authorization' => 'Bearer ' . $serviceToken,
-        ]]);
-
-        $res = $client->get('https://www.googleapis.com/oauth2/v1/userinfo');
-        $result = json_decode($res->getBody()->getContents(), true);
-
-        $token = $this->authSocialUser($result);
-
-        if (!$token) {
-            return response()->json(['message' => 'Couldn\'t log in'], 401);
-        }
+        $token = $this->authSocialUser($userData);
 
         return $this->respondWithToken($token);
     }
