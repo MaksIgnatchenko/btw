@@ -19,24 +19,28 @@ class GetCompositeCategories extends AbstractGetCategories implements GetCategor
     public function getCategories(int $parentId = null): Collection
     {
         if (!$parentId) {
-            $root = $this->categoryRepository->findRootCategories();
+            $categories = $this->categoryRepository->findRootCategories();
         } else {
-            $root = $this->categoryRepository->findById($parentId);
+            $categories = $this->categoryRepository->findById($parentId);
         }
 
-        foreach ($root as $category) {
+        foreach ($categories as $category) {
             $this->build($category);
         }
 
-        return $root;
+        return $categories;
     }
 
-    public function build($category)
+    /**
+     * @param $category
+     */
+    protected function build($category)
     {
         $children = $this->categoryRepository->findChildCategories($category->id);
 
+        $category->children = $children;
+
         foreach ($children as $child) {
-            $category->children = $children;
             $this->build($child);
         }
     }

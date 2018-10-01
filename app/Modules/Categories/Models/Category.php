@@ -46,17 +46,6 @@ class Category extends Model
         'is_final'   => 'boolean',
     ];
 
-    /** @var Collection */
-    protected $children;
-
-    /**
-     * @return array
-     */
-    public function toArray()
-    {
-        return array_merge($this->children ?? [], $this->attributesToArray(), $this->relationsToArray());
-    }
-
     /**
      * @param Collection $categories
      *
