@@ -6,8 +6,14 @@
 namespace App\Modules\Users\Customer\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Modules\Users\Customer\Factories\SocialServiceFactory;
 use App\Modules\Users\Customer\Http\Api\Requests\LoginRequest;
+use App\Modules\Users\Customer\Http\Requests\Api\LoginSocialRequest;
 use App\Modules\Users\Customer\Models\Customer;
+use Facebook\FacebookApp;
+use Facebook\FacebookClient;
+use Facebook\FacebookRequest;
+use GuzzleHttp\Client;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
@@ -16,14 +22,13 @@ use Laravel\Socialite\Facades\Socialite;
 
 class AuthController extends Controller
 {
-
     /**
      * Create a new AuthController instance.
      */
     public function __construct()
     {
         $this->middleware('auth:customer', ['except' => [
-            'login', 'redirectToProvider', 'handleProviderCallback',
+            'login', 'redirectToProvider', 'handleProviderCallback', 'socialLogin',
         ]]);
     }
 
@@ -118,6 +123,33 @@ class AuthController extends Controller
         return Socialite::driver($service)
             ->stateless()
             ->redirect();
+    }
+
+    public function socialLogin(LoginSocialRequest $request, $service)
+    {
+        $serviceInstance = (new SocialServiceFactory)->getSocialServiceInstance($service, $request->get('token'));
+
+        $userData = $serviceInstance->getUserData();
+
+        $token = $this->authSocialUser($userData);
+
+        return $this->respondWithToken($token);
+    }
+
+    public function authSocialUser($socialUserData)
+    {
+        [$firstName, $lastName] = explode(' ', $socialUserData['name']);
+
+        $user = Customer::firstOrCreate([
+            'email' => $socialUserData['email'],
+        ], [
+            'email' => $socialUserData['email'],
+            'first_name' => $firstName,
+            'last_name' => $lastName,
+            'password' => Hash::make(str_random(30)),
+        ]);
+
+        return Auth::login($user);
     }
 
     /**
