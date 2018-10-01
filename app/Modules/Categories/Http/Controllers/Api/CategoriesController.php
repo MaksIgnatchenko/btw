@@ -38,13 +38,5 @@ class CategoriesController extends Controller
             'categories' => $categories,
         ]);
     }
-
-    public function getAllCategoriesAction($id = null): JsonResponse
-    {
-        $categories = $this->categoriesStrategy->getAllCategories($id);
-
-        return response()->json([
-            'categories' => $categories,
-        ]);
-    }
 }
+

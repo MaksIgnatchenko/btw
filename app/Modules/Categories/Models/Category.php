@@ -43,8 +43,11 @@ class Category extends Model
     protected $casts = [
         'attributes' => 'array',
         'parameters' => 'array',
-        'is_final'   => 'boolean',
+        'is_final' => 'boolean',
     ];
+
+    /** @var array */
+    public $children = [];
 
     /**
      * @param Collection $categories
@@ -168,7 +171,7 @@ class Category extends Model
             ->with('user.device')
             ->whereHas('pushSettings', function ($query) {
                 return $query->where([
-                    'enabled'   => true,
+                    'enabled' => true,
                     'wish_list' => true,
                 ]);
             });
@@ -210,7 +213,7 @@ class Category extends Model
 
         return collect([
             'count' => collect($productsStatistic['count'])->values(),
-            'name'  => collect($productsStatistic['name'])->values(),
+            'name' => collect($productsStatistic['name'])->values(),
         ]);
     }
 }
