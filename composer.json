@@ -9,6 +9,7 @@
         "braintree/braintree_php": "^3.26",
         "davejamesmiller/laravel-breadcrumbs": "^4.2",
         "doctrine/dbal": "^2.6",
+        "facebook/graph-sdk": "^5.6",
         "fideloper/proxy": "~3.3",
         "guzzlehttp/guzzle": "^6.3",
         "infyomlabs/adminlte-templates": "5.5.x-dev",
