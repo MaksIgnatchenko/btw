@@ -5,5 +5,4 @@
 
 
 Route::get('/categories', 'CategoriesController@getCategoriesAction');
-//Route::get('/categories/{id}', 'CategoriesController@getCategoriesAction');
-Route::get('/categories/all/{id?}', 'CategoriesController@getAllCategoriesAction');
+Route::get('/categories/{id}', 'CategoriesController@getCategoriesAction');

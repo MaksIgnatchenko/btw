@@ -23,6 +23,11 @@ class CategoryRepository extends BaseRepository
         return Category::where(['parent_category_id' => $parentId])->get();
     }
 
+    public function findById(int $id): Collection
+    {
+        return Category::where(['id' => $id])->get();
+    }
+
     /**
      * @return Collection
      */

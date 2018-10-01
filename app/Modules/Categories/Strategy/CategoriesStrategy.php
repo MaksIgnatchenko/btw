@@ -16,19 +16,8 @@ class CategoriesStrategy
      */
     public function getCategories(int $parentId = null): Collection
     {
-        if (null === $parentId) {
-            $strategy = new GetRootCategories();
-        } else {
-            $strategy = new GetChildCategories();
-        }
+        $strategy = new GetCompositeCategories();
 
-        return $strategy->getCategories($parentId);
-    }
-
-    public function getAllCategories(int $parentId = null): Collection
-    {
-
-        $strategy = new GetAllCategories();
         return $strategy->getCategories($parentId);
     }
 }
