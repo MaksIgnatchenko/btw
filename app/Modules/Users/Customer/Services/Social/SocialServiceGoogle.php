@@ -43,6 +43,6 @@ class SocialServiceGoogle extends SocialServiceAbstract implements SocialService
             return ArrayHelper::replace_keys($payload, self::KEYS_TO_REPLACE);
         }
 
-        throw new SocialServiceGoogleException("Token ID verification failed");
+        throw new SocialServiceGoogleException('Token ID verification failed');
     }
 }
