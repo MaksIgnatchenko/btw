@@ -12,6 +12,7 @@ use App\Modules\Categories\Requests\Admin\SaveRootCategoryRequest;
 use App\Modules\Categories\Requests\Admin\SaveSubcategoryRequest;
 use App\Modules\Categories\Requests\Admin\UpdateCategoryRequest;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 use Laracasts\Flash\Flash;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -99,9 +100,14 @@ class CategoriesController extends Controller
      */
     public function saveCategory(SaveRootCategoryRequest $request)
     {
+        $iconPath = Storage::putFileAs(
+            'avatars', $request->file('icon'), $request->user()->id
+        );
+
         $this->categoryRepository->create([
             'name'     => $request->get('name'),
             'is_final' => false,
+            'icon' => $iconPath
         ]);
 
         Flash::success('Root category created successfully');

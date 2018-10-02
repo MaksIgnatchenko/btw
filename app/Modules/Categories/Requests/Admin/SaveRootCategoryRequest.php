@@ -28,6 +28,7 @@ class SaveRootCategoryRequest extends FormRequest
     {
         return [
             'name' => 'required|min:4|max:100',
+            'icon' => 'image',
         ];
     }
 }

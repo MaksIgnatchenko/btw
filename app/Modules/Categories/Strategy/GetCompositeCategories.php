@@ -38,7 +38,7 @@ class GetCompositeCategories extends AbstractGetCategories implements GetCategor
     {
         $children = $this->categoryRepository->findChildCategories($category->id);
 
-        $category->children = $children;
+        $category->descendants = $children;
 
         foreach ($children as $child) {
             $this->build($child);

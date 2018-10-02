@@ -9,7 +9,7 @@
         <div class="clearfix"></div>
 
         @include('flash::message')
-        {!! Form::open(['route' => ['categories.save-category'], 'method' => 'post']) !!}
+        {!! Form::open(['route' => ['categories.save-category'], 'method' => 'post', 'files' => true]) !!}
         <div class="row">
             <div class="col-md-4">
 

@@ -2,7 +2,7 @@
 
 {{Html::style('css/Categories/categories.css')}}
 
-@section('scripts')
+@section('script')
     <script>
         function deleteCategory(el) {
             if (confirm('Are you sure? This option will delete all merchant subscribers!')) {
