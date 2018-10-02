@@ -29,6 +29,15 @@
                             @endif
                         </div>
 
+                        <div class="form-group">
+
+                            {{ Form::label('icon', 'Icon') }}
+                            {!! Form::file('icon', ['accept' => 'image/*']) !!}
+                            @if ($errors->has('icon'))
+                                <div class="text-red">{{ $errors->first('icon') }}</div>
+                            @endif
+                        </div>
+
                         <!-- Submit Field -->
                         <div class="form-group text-right">
                             {!! Form::submit('Save', ['class' => 'btn btn-success']) !!}

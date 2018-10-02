@@ -18,6 +18,7 @@ class CreteCategoriesTable extends Migration
             $table->string('name')->nullable(false);
             $table->integer('parent_category_id')->unsigned()->nullable(true);
             $table->boolean('is_final')->default(false);
+            $table->string('icon')->nullable(true);
             $table->json('attributes')->nullable(true);
             $table->json('parameters')->nullable(true);
             $table->timestamps();

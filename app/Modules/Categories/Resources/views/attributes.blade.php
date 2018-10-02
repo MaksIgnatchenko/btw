@@ -46,8 +46,8 @@
 
         <div class="form-group">
             <div class="pull-right">
-                <button type="button" class="btn btn-primary" data-toggle="modal"
-                        data-target="#add-attribute-modal">
+                <button type="button" class="btn btn-primary"
+                        id="add-attribute-button">
                     Add attribute
                 </button>
             </div>
