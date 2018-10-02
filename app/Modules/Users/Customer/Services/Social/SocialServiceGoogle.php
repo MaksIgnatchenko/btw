@@ -9,16 +9,27 @@ use App\Helpers\ArrayHelper;
 use App\Modules\Users\Customer\Exceptions\SocialServiceException;
 use App\Modules\Users\Customer\Exceptions\SocialServiceGoogleException;
 use App\Modules\Users\Customer\Services\SocialServiceInterface;
-use GuzzleHttp\Client;
 
 class SocialServiceGoogle extends SocialServiceAbstract implements SocialServiceInterface
 {
-    protected const GET_USER_DATA_REQUEST_URL = 'https://www.googleapis.com/oauth2/v1/userinfo';
-
     protected const KEYS_TO_REPLACE = [
         'given_name' => 'first_name',
         'family_name' => 'last_name',
     ];
+
+    protected $client;
+
+    public function __construct($token)
+    {
+        parent::__construct($token);
+
+        $this->credentials = [
+            'client_id' => config('services.google.client_id'),
+            'client_secret' => config('services.google.client_secret'),
+        ];
+
+        $this->client = new \Google_Client($this->credentials);
+    }
 
     /**
      * @return array
@@ -26,17 +37,12 @@ class SocialServiceGoogle extends SocialServiceAbstract implements SocialService
      */
     public function getUserData(): array
     {
-        $client = new Client(['headers' => [
-            'Authorization' => 'Bearer ' . $this->token,
-        ]]);
+        $payload = $this->client->verifyIdToken($this->token);
 
-        $res = $client->get(self::GET_USER_DATA_REQUEST_URL);
-
-        if (200 === $res->getStatusCode()) {
-            $userData = json_decode($res->getBody()->getContents(), true);
-            return ArrayHelper::replace_keys($userData, self::KEYS_TO_REPLACE);
+        if ($payload) {
+            return ArrayHelper::replace_keys($payload, self::KEYS_TO_REPLACE);
         }
 
-        throw new SocialServiceGoogleException("Response returned with code: {$res->getStatusCode()}");
+        throw new SocialServiceGoogleException("Token ID verification failed");
     }
 }
