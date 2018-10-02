@@ -6,12 +6,16 @@
 namespace App\Modules\Users\Customer\Services\Social;
 
 use App\Helpers\ArrayHelper;
+use App\Modules\Users\Customer\Enums\SocialServiceDeviceEnum;
 use App\Modules\Users\Customer\Exceptions\SocialServiceException;
 use App\Modules\Users\Customer\Exceptions\SocialServiceGoogleException;
+use App\Modules\Users\Customer\Services\Social\Traits\SocialServiceDeviceTrait;
 use App\Modules\Users\Customer\Services\SocialServiceInterface;
 
 class SocialServiceGoogle extends SocialServiceAbstract implements SocialServiceInterface
 {
+    use SocialServiceDeviceTrait;
+
     protected const KEYS_TO_REPLACE = [
         'given_name' => 'first_name',
         'family_name' => 'last_name',
@@ -19,13 +23,19 @@ class SocialServiceGoogle extends SocialServiceAbstract implements SocialService
 
     protected $client;
 
-    public function __construct($token)
+    public function __construct($token, $device)
     {
         parent::__construct($token);
 
+        $this->device = $device;
+
+        $clientID =
+            (SocialServiceDeviceEnum::DEVICE_ANDROID === $this->device) ?
+                config('services.google.client_id') :
+                config('services.google.client_id_ios');
+
         $this->credentials = [
-            'client_id' => config('services.google.client_id'),
-            'client_secret' => config('services.google.client_secret'),
+            'client_id' => $clientID,
         ];
 
         $this->client = new \Google_Client($this->credentials);
