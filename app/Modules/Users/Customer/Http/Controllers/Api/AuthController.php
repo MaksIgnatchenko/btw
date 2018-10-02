@@ -6,6 +6,7 @@
 namespace App\Modules\Users\Customer\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Modules\Users\Customer\DTO\SocialServiceDto;
 use App\Modules\Users\Customer\Factories\SocialServiceFactory;
 use App\Modules\Users\Customer\Http\Api\Requests\LoginRequest;
 use App\Modules\Users\Customer\Http\Requests\Api\LoginSocialRequest;
@@ -123,13 +124,12 @@ class AuthController extends Controller
 
     public function socialLogin(LoginSocialRequest $request, $service)
     {
-        $serviceInstance = SocialServiceFactory::getSocialServiceInstance(
-            $service,
-            [
-                'token' => $request->get('token'),
-                'device' => $request->get('device'),
-            ]
+        $socialServiceDto = new SocialServiceDto(
+            $request->get('token'),
+            $request->get('device')
         );
+
+        $serviceInstance = SocialServiceFactory::getSocialServiceInstance($service, $socialServiceDto);
 
         $userData = $serviceInstance->getUserData();
 
