@@ -52,7 +52,7 @@ class AuthController extends Controller
         if ($token = $this->guard()->attempt($credentials)) {
             $user = $this->guard()->user();
 
-            return $this->respondWithToken($token, $user);
+            return $this->respondWithToken($token);
         }
 
         return response()->json(['message' => 'No such email or password'], 401);
@@ -123,7 +123,13 @@ class AuthController extends Controller
 
     public function socialLogin(LoginSocialRequest $request, $service)
     {
-        $serviceInstance = SocialServiceFactory::getSocialServiceInstance($service, $request->get('token'));
+        $serviceInstance = SocialServiceFactory::getSocialServiceInstance(
+            $service,
+            [
+                'token' => $request->get('token'),
+                'device' => $request->get('device'),
+            ]
+        );
 
         $userData = $serviceInstance->getUserData();
 
