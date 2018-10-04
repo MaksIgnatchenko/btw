@@ -108,7 +108,7 @@ class CategoriesController extends Controller
         ];
 
         if ($icon = $request->file('icon', null)) {
-            $categoryData['icon'] = StorageHelper::upload($icon);
+            $categoryData['icon'] = StorageHelper::upload($icon, 'category-icon/');
         }
 
         $this->categoryRepository->create($categoryData);

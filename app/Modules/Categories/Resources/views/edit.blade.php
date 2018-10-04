@@ -30,7 +30,7 @@
                         </div>
 
                         @if(!$category->parent_id)
-                            <img src="{{$category->icon}}">
+                            <img class="img-fluid" src="{{$category->icon}}">
                             <div class="form-group">
 
                                 {{ Form::label('icon', 'Icon') }}

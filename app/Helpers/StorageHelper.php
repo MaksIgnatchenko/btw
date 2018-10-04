@@ -9,13 +9,19 @@ use Illuminate\Support\Facades\Storage;
 
 class StorageHelper
 {
-    public static function upload($file):string
+    /**
+     * @param      $file
+     * @param null $path
+     *
+     * @return string
+     */
+    public static function upload($file, $path = null): string
     {
         $fileName = str_random(30) . '.' . $file->extension();
-        $filePath = 'public/' . $fileName;
+        $filePath = 'public/' . $path . $fileName;
 
         Storage::put($filePath, file_get_contents($file));
 
-        return asset('storage/' . $fileName);
+        return asset('storage/' . $path . $fileName);
     }
 }
