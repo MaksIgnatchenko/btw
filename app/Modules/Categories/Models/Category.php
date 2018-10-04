@@ -43,7 +43,6 @@ class Category extends Model
 
     protected $casts = [
         'attributes' => 'array',
-        'parameters' => 'array',
         'is_final' => 'boolean',
     ];
 
@@ -147,71 +146,5 @@ class Category extends Model
     public function categories(): HasMany
     {
         return $this->hasMany(__CLASS__, 'parent_category_id', 'id');
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
-     */
-    public function merchants(): BelongsToMany
-    {
-        return $this->belongsToMany(Merchant::class, 'category_merchant')
-            ->withTimestamps()
-            ->with('user');
-    }
-
-    /**
-     * @return BelongsToMany
-     */
-    public function merchantsWhereEnabledWishList(): BelongsToMany
-    {
-        return $this->belongsToMany(Merchant::class, 'category_merchant')
-            ->withTimestamps()
-            ->with('user.device')
-            ->whereHas('pushSettings', function ($query) {
-                return $query->where([
-                    'enabled' => true,
-                    'wish_list' => true,
-                ]);
-            });
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
-     */
-    public function pushCustomers(): BelongsToMany
-    {
-        return $this
-            ->belongsToMany(PushCustomer::class, 'push_customer_categories', 'category_id', 'push_customer_id')
-            ->withTimestamps()
-            ->with('customer');
-    }
-
-    /**
-     * @return Collection
-     */
-    public function getProductsStatistic()
-    {
-        /** @var CategoryRepository $categoryRepository */
-        $categoryRepository = app()[CategoryRepository::class];
-        $rootCategories = $categoryRepository->findWhere(['parent_category_id' => null]);
-
-        $productsStatistic = [];
-        foreach ($rootCategories as $rootCategory) {
-            try {
-                $categories = $this->getFinalCategories($rootCategory->id)->load('products');
-
-                $productsStatistic['count'][$rootCategory->name] = 0;
-                foreach ($categories as $category) {
-                    $productsStatistic['count'][$rootCategory->name] += $category->products->count();
-                    $productsStatistic['name'][$rootCategory->name] = $rootCategory->name;
-                }
-            } catch (NotFountCategory $e) {
-            }
-        }
-
-        return collect([
-            'count' => collect($productsStatistic['count'])->values(),
-            'name' => collect($productsStatistic['name'])->values(),
-        ]);
     }
 }

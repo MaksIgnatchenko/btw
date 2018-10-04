@@ -9,7 +9,7 @@
         <div class="clearfix"></div>
 
         @include('flash::message')
-        {!! Form::open(['route' => ['categories.update', $category], 'method' => 'post']) !!}
+        {!! Form::open(['route' => ['categories.update', $category], 'method' => 'post', 'files' => true]) !!}
         <div class="row">
             <div class="col-md-4">
 
@@ -29,7 +29,7 @@
                             @endif
                         </div>
 
-                        @if(!$category->parent_id)
+                        @if(!$category->parent_category_id)
                             <img class="img-fluid" src="{{$category->icon}}">
                             <div class="form-group">
 
@@ -51,9 +51,6 @@
             @if($category->is_final)
                 <div class="col-md-4">
                     @include('attributes')
-                </div>
-                <div class="col-md-4">
-                    @include('parameters')
                 </div>
             @endif
         </div>
