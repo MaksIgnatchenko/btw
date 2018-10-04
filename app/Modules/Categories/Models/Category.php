@@ -30,6 +30,7 @@ class Category extends Model
         'attributes',
         'parameters',
         'parent_category_id',
+        'icon',
     ];
 
     /**
@@ -45,9 +46,6 @@ class Category extends Model
         'parameters' => 'array',
         'is_final' => 'boolean',
     ];
-
-    /** @var array */
-    public $children = [];
 
     /**
      * @param Collection $categories

@@ -1,4 +1,4 @@
-<?php
+ <?php
 
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
@@ -20,7 +20,7 @@ class CreteCategoriesTable extends Migration
             $table->boolean('is_final')->default(false);
             $table->string('icon')->nullable(true);
             $table->json('attributes')->nullable(true);
-            $table->json('parameters')->nullable(true);
+            $table->integer('quantity')->default(0);
             $table->timestamps();
 
             $table->foreign('parent_category_id')

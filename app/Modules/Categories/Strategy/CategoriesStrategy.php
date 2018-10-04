@@ -16,7 +16,11 @@ class CategoriesStrategy
      */
     public function getCategories(int $parentId = null): Collection
     {
-        $strategy = new GetCompositeCategories();
+        if (null === $parentId) {
+            $strategy = new GetRootCompositeCategories();
+        } else {
+            $strategy = new GetSingleCompositeCategories($parentId);
+        };
 
         return $strategy->getCategories($parentId);
     }
