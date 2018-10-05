@@ -4,13 +4,12 @@
 
     <section class="content-header">
         <h1>Add root category</h1>
-        {{ Breadcrumbs::render('add-category') }}
     </section>
     <section class="content">
         <div class="clearfix"></div>
 
         @include('flash::message')
-        {!! Form::open(['route' => ['categories.save-category'], 'method' => 'post']) !!}
+        {!! Form::open(['route' => ['categories.save-category'], 'method' => 'post', 'files' => true]) !!}
         <div class="row">
             <div class="col-md-4">
 
@@ -27,6 +26,15 @@
                             {!! Form::text('name', null, ['class' => 'form-control']) !!}
                             @if ($errors->has('name'))
                                 <div class="text-red">{{ $errors->first('name') }}</div>
+                            @endif
+                        </div>
+
+                        <div class="form-group">
+
+                            {{ Form::label('icon', 'Icon') }}
+                            {!! Form::file('icon', ['accept' => 'image/*']) !!}
+                            @if ($errors->has('icon'))
+                                <div class="text-red">{{ $errors->first('icon') }}</div>
                             @endif
                         </div>
 

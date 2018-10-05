@@ -4,7 +4,7 @@
  */
 
 Route::group([
-    'middleware' => ['auth:web'],
+    'middleware' => ['auth:admin'],
     'prefix'     => 'categories',
 ], function () {
     Route::get('/', 'CategoriesController@index')->name('categories.index');

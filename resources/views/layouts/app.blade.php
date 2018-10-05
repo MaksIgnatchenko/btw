@@ -57,7 +57,7 @@
     </div>
 </div>
 
-<div id="wrapper">
+<div id="wrapper" class="wrapper-fixed-height">
     @include('layouts.sidebar')
 
     <div class="content-page">

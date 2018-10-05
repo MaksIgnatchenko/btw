@@ -1,52 +1,48 @@
 @extends('layouts.app')
 
 @section('content')
-    <section class="content-header">
-        <h1>Terms & Conditions</h1>
+    <h1>Terms & Conditions</h1>
 
-    </section>
-    <div class="content">
-        <div class="clearfix"></div>
+    <div class="clearfix"></div>
 
-        @include('flash::message')
+    @include('flash::message')
 
-        @if ($errors->has('value'))
-            <div class="text-red">{{ $errors->first('value') }}</div>
-        @endif
+    @if ($errors->has('value'))
+        <div class="text-red">{{ $errors->first('value') }}</div>
+    @endif
 
-        <div class="clearfix"></div>
-        <div class="box box-primary">
-            <div class="box-body">
+    <div class="clearfix"></div>
+    <div class="box box-primary">
+        <div class="box-body">
 
 
-                @foreach ($contents as $content)
-                    <div class="col-md-6">
-                        {!! Form::model($content, ['route' => ['content.update', $content->key], 'method' => 'put']) !!}
+            @foreach ($contents as $content)
+                <div class="col-md-6">
+                    {!! Form::model($content, ['route' => ['content.update', $content->key], 'method' => 'put']) !!}
 
-                        <h3>
-                            {!! Form::label($content->key, $content->title. ':') !!}
-                        </h3>
+                    <h3>
+                        {!! Form::label($content->key, $content->title. ':') !!}
+                    </h3>
 
-                        {{ Form::textarea('value', $content->value, [
-                        'size' => '30x20',
-                        'value' => $content->value,
-                        'class' => 'form-control',
-                        'style' => 'resize:none',
-                        ]) }}
-                        <br>
-                        <div class="pull-right">
-                            {!! Form::button('Save', ['type' => 'submit', 'class' => 'btn btn-success']) !!}
-                        </div>
-
-                        {!! Form::close() !!}
-
-
+                    {{ Form::textarea('value', $content->value, [
+                    'size' => '30x20',
+                    'value' => $content->value,
+                    'class' => 'form-control',
+                    'style' => 'resize:none',
+                    ]) }}
+                    <br>
+                    <div class="pull-right">
+                        {!! Form::button('Save', ['type' => 'submit', 'class' => 'btn btn-success']) !!}
                     </div>
 
+                    {!! Form::close() !!}
 
-                @endforeach
 
-            </div>
+                </div>
+
+
+            @endforeach
+
         </div>
     </div>
 @endsection
