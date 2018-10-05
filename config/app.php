@@ -256,6 +256,7 @@ return [
         'ActiveLink' => App\Helpers\ActiveLink::class,
         'DateConverter' => App\Helpers\DateConverter::class,
         'DisplayValues' => App\Modules\Categories\Helpers\DisplayValues::class,
+        'CategoriesHelper' => App\Modules\Categories\Helpers\CategoriesHelper::class,
         //'PushNotification' => Edujugon\PushNotification\Facades\PushNotification::class,
         'ImagesPathHelper' => App\Modules\Products\Helpers\ImagesPathHelper::class,
         'ImagePathHelper' => App\Modules\Products\Helpers\ImagesPathHelper::class,
