@@ -7,5 +7,5 @@ namespace App\Modules\Users\Customer\Services;
 
 interface SocialServiceInterface
 {
-    public function getUserData();
+    public function getUserData(): array;
 }

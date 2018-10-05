@@ -14,7 +14,7 @@ class SocialServiceFacebook extends SocialServiceAbstract implements SocialServi
 {
     protected $fbApp;
 
-    const fields = 'id,first_name,last_name,name,gender,email,birthday,location';
+    protected const FIELDS = 'id,first_name,last_name,email';
 
     /**
      * SocialServiceFacebook constructor.
@@ -28,8 +28,8 @@ class SocialServiceFacebook extends SocialServiceAbstract implements SocialServi
         parent::__construct($token);
 
         $this->credentials = [
-            'appId' => env('FACEBOOK_CLIENT_ID'),
-            'appSecret' => env('FACEBOOK_CLIENT_SECRET'),
+            'appId' => config('services.facebook.client_id'),
+            'appSecret' => config('services.facebook.client_secret'),
         ];
 
         $this->fbApp = new FacebookApp($this->credentials['appId'], $this->credentials['appSecret']);
@@ -41,7 +41,7 @@ class SocialServiceFacebook extends SocialServiceAbstract implements SocialServi
      */
     public function getUserData(): array
     {
-        $fbRequest = new FacebookRequest($this->fbApp, $this->token, 'GET', '/me?fields=' . $this::fields);
+        $fbRequest = new FacebookRequest($this->fbApp, $this->token, 'GET', '/me?fields=' . self::FIELDS);
 
         $client = new FacebookClient();
 

@@ -10,10 +10,6 @@ use App\Modules\Users\Customer\Factories\SocialServiceFactory;
 use App\Modules\Users\Customer\Http\Api\Requests\LoginRequest;
 use App\Modules\Users\Customer\Http\Requests\Api\LoginSocialRequest;
 use App\Modules\Users\Customer\Models\Customer;
-use Facebook\FacebookApp;
-use Facebook\FacebookClient;
-use Facebook\FacebookRequest;
-use GuzzleHttp\Client;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
@@ -127,7 +123,7 @@ class AuthController extends Controller
 
     public function socialLogin(LoginSocialRequest $request, $service)
     {
-        $serviceInstance = (new SocialServiceFactory)->getSocialServiceInstance($service, $request->get('token'));
+        $serviceInstance = SocialServiceFactory::getSocialServiceInstance($service, $request->get('token'));
 
         $userData = $serviceInstance->getUserData();
 
@@ -136,20 +132,18 @@ class AuthController extends Controller
         return $this->respondWithToken($token);
     }
 
-    public function authSocialUser($socialUserData)
+    protected function authSocialUser($socialUserData)
     {
-        [$firstName, $lastName] = explode(' ', $socialUserData['name']);
-
-        $user = Customer::firstOrCreate([
+        $customer = Customer::firstOrCreate([
             'email' => $socialUserData['email'],
         ], [
             'email' => $socialUserData['email'],
-            'first_name' => $firstName,
-            'last_name' => $lastName,
+            'first_name' => $socialUserData['first_name'],
+            'last_name' => $socialUserData['last_name'],
             'password' => Hash::make(str_random(30)),
         ]);
 
-        return Auth::login($user);
+        return Auth::login($customer);
     }
 
     /**
