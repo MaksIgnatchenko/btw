@@ -53,7 +53,7 @@ class Category extends Model
      */
     public function buildCategoriesTree(Collection $categories): array
     {
-        return $this->buildTree($categories)[0];
+        return $this->buildTree($categories)[0] ?? [];
     }
 
     /**

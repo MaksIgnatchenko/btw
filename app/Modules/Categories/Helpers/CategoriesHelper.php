@@ -1,9 +1,5 @@
 <?php
 /**
- * Created by Ilya Kobus, Appus Studio LP on 5.10.2018
- */
-
-/**
  * Created by Artem Petrov, Appus Studio LP on 12.12.2017
  */
 
