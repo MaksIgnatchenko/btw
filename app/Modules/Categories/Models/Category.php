@@ -12,9 +12,9 @@ use App\Modules\Products\Models\Product;
 use App\Modules\Users\Models\Merchant;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 
 class Category extends Model
 {
@@ -146,5 +146,12 @@ class Category extends Model
     public function categories(): HasMany
     {
         return $this->hasMany(__CLASS__, 'parent_category_id', 'id');
+    }
+
+    public function getIconAttribute($value)
+    {
+        if ($value) {
+            return Storage::url($value);
+        }
     }
 }

@@ -18,10 +18,10 @@ class StorageHelper
     public static function upload($file, $path = null): string
     {
         $fileName = str_random(30) . '.' . $file->extension();
-        $filePath = 'public/' . $path . $fileName;
+        $filePath = $path . $fileName;
 
         Storage::put($filePath, file_get_contents($file));
 
-        return asset('storage/' . $path . $fileName);
+        return $filePath;
     }
 }
