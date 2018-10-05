@@ -16,6 +16,10 @@ class LoginSocialRequest extends FormRequest
     {
         return [
             'token' => 'required|string',
+            'device' => [
+                'regex:/^(ios|android)$/',
+                'required'
+            ],
         ];
     }
 
