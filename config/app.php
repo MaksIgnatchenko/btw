@@ -180,7 +180,7 @@ return [
         App\Modules\Content\Providers\ContentApiRouteServiceProvider::class,
         App\Modules\Categories\Providers\CategoriesAdminRouteServiceProvider::class,
         App\Modules\Categories\Providers\CategoriesApiRouteServiceProvider::class,
-//        App\Modules\Products\Providers\ProductApiRouteServiceProvider::class,
+        App\Modules\Products\Providers\ProductApiRouteServiceProvider::class,
 //        \Cviebrock\ImageValidator\ImageValidatorServiceProvider::class,
 
 //        App\Modules\Products\Providers\ProductEventServiceProvider::class,

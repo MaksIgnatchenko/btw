@@ -1,33 +1,50 @@
 <?php
 /**
- * Created by Artem Petrov, Appus Studio LP on 08.12.2017
+ * Created by Ilya Kobus, Appus Studio LP on 10.10.2018
  */
 
 namespace App\Modules\Products\Enums;
 
+use App\Modules\Products\Filter\Particular\FromCreationDaysFilter;
+use App\Modules\Products\Filters\Particular\PriceGtFilter;
+use App\Modules\Products\Filters\Particular\PriceLtFilter;
+
 class ProductFiltersEnum
 {
-    public const OUTSTANDING_OFFERS = 'outstanding-offers';
-    public const EXPIRED_OFF = 'expired-off';
+    public const PRICE_LESS_THEN = 'fplt';
+    public const PRICE_GREATER_THEN = 'fpgt';
+    public const DAYS_FROM_CREATION = 'ffcd';
 
     /**
-     * @return string
+     * @return array
      */
-    public static function toString(): string
+    public static function toClassArray(): array
     {
-        return self::OUTSTANDING_OFFERS
-            . ','
-            . self::EXPIRED_OFF;
+        return [
+            self::PRICE_LESS_THEN => PriceLtFilter::class,
+            self::PRICE_GREATER_THEN => PriceGtFilter::class,
+            self::DAYS_FROM_CREATION => FromCreationDaysFilter::class,
+        ];
+    }
+
+    public static function toArray(): array
+    {
+        return [
+            self::PRICE_LESS_THEN ,
+            self::PRICE_GREATER_THEN,
+            self::DAYS_FROM_CREATION,
+        ];
     }
 
     /**
      * @return array
      */
-    public static function toArray(): array
+    public static function rules(): array
     {
         return [
-            self::OUTSTANDING_OFFERS => 'Outstanding offers',
-            self::EXPIRED_OFF        => 'Expired off',
+            self::PRICE_LESS_THEN => 'sometimes|numeric',
+            self::PRICE_GREATER_THEN => 'sometimes|numeric',
+            self::DAYS_FROM_CREATION => 'sometimes|integer',
         ];
     }
 }

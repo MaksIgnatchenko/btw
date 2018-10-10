@@ -4,7 +4,7 @@
  */
 
 $this->group([
-    'middleware' => ['api', 'role:' . \App\Modules\Rbac\Enum\RolesEnum::MERCHANT],
+    'middleware' => ['api'],
     'prefix'     => 'products',
 ], function () {
     $this->post('/set', 'ProductController@set')->middleware('activeUser');
@@ -31,7 +31,7 @@ $this->group([
 });
 
 $this->group([
-    'middleware' => ['auth:api', 'role:' . \App\Modules\Rbac\Enum\RolesEnum::CUSTOMER],
+    'middleware' => ['auth:api'],
     'prefix'     => 'cart',
 ], function () {
     $this->get('/', 'CartController@getAll');
@@ -41,14 +41,14 @@ $this->group([
 });
 
 $this->group([
-    'middleware' => ['auth:api', 'role:' . \App\Modules\Rbac\Enum\RolesEnum::CUSTOMER, 'activeUser'],
+    'middleware' => ['auth:api', 'activeUser'],
     'prefix'     => 'cart',
 ], function () {
     $this->get('/check', 'CartController@check');
 });
 
 $this->group([
-    'middleware' => ['auth:api', 'role:' . \App\Modules\Rbac\Enum\RolesEnum::CUSTOMER, 'activeUser'],
+    'middleware' => ['auth:api', 'activeUser'],
     'prefix'     => 'transaction',
 ], function () {
     $this->post('/', 'TransactionController@create');

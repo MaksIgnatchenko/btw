@@ -8,6 +8,7 @@ namespace App\Modules\Products\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Modules\Products\Dto\CoordinatesDto;
 use App\Modules\Products\Dto\CustomerSearchDto;
+use App\Modules\Products\Enums\ProductFiltersEnum;
 use App\Modules\Products\Events\AddProductEvent;
 use App\Modules\Products\Models\Product;
 use App\Modules\Products\Models\ProductImage;
@@ -22,9 +23,6 @@ use App\Modules\Products\Requests\Api\GetProductsRequest;
 use App\Modules\Products\Requests\Api\OtherMerchantProductsRequest;
 use App\Modules\Products\Requests\Api\SetProductRequest;
 use App\Modules\Products\Requests\Api\UpdateProductRequest;
-use App\Modules\Users\Models\Merchant;
-use App\Modules\Users\Models\User;
-use App\Modules\Users\Repositories\MerchantRepository;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 
@@ -34,8 +32,6 @@ class ProductController extends Controller
     protected $productRepository;
     /** @var  ProductImageRepository */
     protected $productImageRepository;
-    /** @var  MerchantRepository $merchantRepository */
-    protected $merchantRepository;
     /** @var  Product */
     protected $product;
     /** @var  ProductImage */
@@ -48,21 +44,18 @@ class ProductController extends Controller
      * @param ProductImageRepository $productImageRepository
      * @param Product $product
      * @param ProductImage $productImage
-     * @param MerchantRepository $merchantRepository
      */
     public function __construct(
         ProductRepository $productRepository,
         ProductImageRepository $productImageRepository,
         Product $product,
-        ProductImage $productImage,
-        MerchantRepository $merchantRepository
+        ProductImage $productImage
     ) {
         $this->productRepository = $productRepository;
         $this->productImageRepository = $productImageRepository;
 
         $this->product = $product;
         $this->productImage = $productImage;
-        $this->merchantRepository = $merchantRepository;
     }
 
     /**
@@ -167,24 +160,8 @@ class ProductController extends Controller
     public function popular(GetPopularRequest $request): JsonResponse
     {
         $offset = $request->get('offset');
-        $coordinates = new CoordinatesDto();
-        $coordinates
-            ->setLatitude($request->get('latitude', 0))
-            ->setLongitude($request->get('longitude', 0));
 
-        $userIds = null;
-        if (!$coordinates->isEmpty()) {
-            $userIds = $this->merchantRepository->getInRadius(
-                $coordinates->getLongitude(),
-                $coordinates->getLatitude(),
-                Product::DEFAULT_RADIUS
-            )
-                ->sortBy('distance')
-                ->pluck('user_id')
-                ->toArray();
-        }
-
-        $products = $this->productRepository->getPopular($offset, $userIds);
+        $products = $this->productRepository->getPopular($offset);
 
         return response()->json(['products' => $products]);
     }
@@ -200,12 +177,10 @@ class ProductController extends Controller
         $customerSearchDto = app()[CustomerSearchDto::class];
 
         $customerSearchDto->setOffset($request->get('offset', 0))
-            ->setCategoryId($request->get('category_id'))
+            ->setCategoryId($request->get('category'))
             ->setKeyword($request->get('keyword'))
-            ->setDistance($request->get('distance'))
-            ->setBarcode($request->get('barcode'))
-            ->setLongitude($request->get('longitude'))
-            ->setLatitude($request->get('latitude'));
+            ->setOrder($request->get('order'))
+            ->setFilters($request->only(ProductFiltersEnum::toArray()));
 
         /** @var Product $productModel */
         $productModel = app()[Product::class];
@@ -229,18 +204,11 @@ class ProductController extends Controller
         if (null === $product) {
             return response()->json([
                 'product'  => new \stdClass(),
-                'merchant' => new \stdClass(),
             ]);
         }
 
-        /** @var Merchant $merchantModel */
-        $merchantModel = app(Merchant::class);
-        $merchant = $merchantModel->getMerchantWithRatingById($product->user->merchant->id);
-        $product->setHidden(['user']);
-
         return response()->json([
             'product'  => $product,
-            'merchant' => $merchant,
         ]);
     }
 

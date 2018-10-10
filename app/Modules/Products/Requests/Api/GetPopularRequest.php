@@ -28,8 +28,6 @@ class GetPopularRequest extends FormRequest
     {
         return [
             'offset'    => 'required|integer',
-            'longitude' => 'sometimes|numeric',
-            'latitude'  => 'required_with:longitude|numeric',
         ];
     }
 }
