@@ -4,13 +4,12 @@
 
     <section class="content-header">
         <h1>Edit category {{$category->name}}</h1>
-        {{ Breadcrumbs::render('edit-category', $category) }}
     </section>
     <section class="content">
         <div class="clearfix"></div>
 
         @include('flash::message')
-        {!! Form::open(['route' => ['categories.update', $category], 'method' => 'post']) !!}
+        {!! Form::open(['route' => ['categories.update', $category], 'method' => 'post', 'files' => true]) !!}
         <div class="row">
             <div class="col-md-4">
 
@@ -30,7 +29,19 @@
                             @endif
                         </div>
 
-                        <!-- Submit Field -->
+                        @if(!$category->parent_category_id)
+                            <img class="img-fluid" src="{{$category->icon}}">
+                            <div class="form-group">
+
+                                {{ Form::label('icon', 'Icon') }}
+                                {!! Form::file('icon', ['accept' => 'image/*']) !!}
+                                @if ($errors->has('icon'))
+                                    <div class="text-red">{{ $errors->first('icon') }}</div>
+                                @endif
+                            </div>
+                    @endif
+
+                    <!-- Submit Field -->
                         <div class="form-group text-right">
                             {!! Form::submit('Save', ['class' => 'btn btn-success']) !!}
                         </div>
@@ -40,9 +51,6 @@
             @if($category->is_final)
                 <div class="col-md-4">
                     @include('attributes')
-                </div>
-                <div class="col-md-4">
-                    @include('parameters')
                 </div>
             @endif
         </div>

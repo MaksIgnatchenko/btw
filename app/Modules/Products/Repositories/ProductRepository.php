@@ -2,7 +2,6 @@
 
 namespace App\Modules\Products\Repositories;
 
-use App\Modules\Products\Dto\CoordinatesDto;
 use App\Modules\Products\Models\Product;
 use App\Modules\Reviews\Enums\ReviewStatusEnum;
 use Carbon\Carbon;
@@ -41,7 +40,7 @@ class ProductRepository extends BaseRepository
             ->with([
                 'category' => function ($query) {
                     return $query->select('id', 'name');
-                }
+                },
             ])
             ->orderBy('offer_end', 'desc')
             ->skip($offset)
@@ -61,7 +60,7 @@ class ProductRepository extends BaseRepository
             ->with([
                 'category' => function ($query) {
                     return $query->select('id', 'name');
-                }
+                },
             ])->where('offer_end', '<', Carbon::now())
             ->orderBy('offer_end', 'desc')
             ->skip($offset)
@@ -70,7 +69,7 @@ class ProductRepository extends BaseRepository
     }
 
     /**
-     * @param int $offset
+     * @param int   $offset
      *
      * @param array $userIds
      *
@@ -92,17 +91,14 @@ class ProductRepository extends BaseRepository
         $query = Product::active()
             ->select(DB::raw($sql))
             ->orderBy('price_break', 'desc')
-            ->limit(10)
+            ->limit(Product::PRODUCTS_PAGE_LIMIT)
             ->offset($offset);
-        if (null !== $userIds) {
-            $query->whereIn('user_id', $userIds);
-        }
 
         return $query->get();
     }
 
     /**
-     * @param int $offset
+     * @param int        $offset
      * @param array|null $userIds
      *
      * @return Collection|null
@@ -113,17 +109,13 @@ class ProductRepository extends BaseRepository
             ->select(
                 'id',
                 'name',
-                'regular_price',
-                'offer_price',
+                'price',
                 'main_image',
-                'purchase_count',
-                'parameters',
-                'attributes',
-                'offer_end',
-                'return_details'
+                'quantity',
+                'attributes'
             )
-            ->orderBy('purchase_count', 'desc')
-            ->limit(10)
+            ->orderBy('created_at', 'desc')
+            ->limit(Product::PRODUCTS_PAGE_LIMIT)
             ->offset($offset);
 
         if (null !== $userIds) {
@@ -135,23 +127,23 @@ class ProductRepository extends BaseRepository
 
 
     /**
-     * @param array $userIds
-     * @param int $offset
-     * @param array|null $categoryIds
+     * @param array       $userIds
+     * @param int         $offset
+     * @param array|null  $categoryIds
      * @param string|null $keyword
      * @param string|null $barcode
      *
      * @return Collection
      */
     public function getProductsByConditions(
-        array $userIds,
         int $offset,
         array $categoryIds = null,
         string $keyword = null,
-        string $barcode = null
-    ): Collection {
-        $query = Product::active()
-            ->whereIn('user_id', $userIds);
+        string $order = null,
+        array $filters = null
+    ): Collection
+    {
+        $query = Product::active();
 
         if (!empty($categoryIds) && null !== $categoryIds) {
             $query->whereIn('category_id', $categoryIds);
@@ -161,8 +153,12 @@ class ProductRepository extends BaseRepository
             $query->where('name', 'like', "%$keyword%");
         }
 
-        if (null !== $barcode) {
-            $query->where('barcode', "$barcode");
+        if (null !== $order) {
+            $query->order($order);
+        }
+
+        if (null !== $filters) {
+            $query->filter($filters);
         }
 
         return $query->offset($offset)
@@ -179,18 +175,6 @@ class ProductRepository extends BaseRepository
     {
         return Product::with([
             'images',
-            'user',
-            'reviews' => function ($query) {
-                return $query->take(Product::REVIEWS_PAGE_LIMIT)
-                    ->select('review', 'product_id', 'customer_id')
-                    ->where(['status' => ReviewStatusEnum::ACTIVE])
-                    ->orderBy('created_at', 'DESC')
-                    ->with([
-                        'customer' => function ($query) {
-                            return $query->select(['id', 'first_name', 'last_name']);
-                        }
-                    ]);
-            },
             'category',
         ])->find($id);
     }

@@ -5,6 +5,7 @@
 
 namespace App\Modules\Categories\Http\Controllers\Admin;
 
+use App\Helpers\StorageHelper;
 use App\Http\Controllers\Controller;
 use App\Modules\Categories\Models\Category;
 use App\Modules\Categories\Repositories\CategoryRepository;
@@ -35,12 +36,13 @@ class CategoriesController extends Controller
      * CategoriesController constructor.
      *
      * @param CategoryRepository $categoriesRepository
-     * @param Category $categoryModel
+     * @param Category           $categoryModel
      */
     public function __construct(
         CategoryRepository $categoriesRepository,
         Category $categoryModel
-    ) {
+    )
+    {
         $this->categoryRepository = $categoriesRepository;
         $this->categoryModel = $categoryModel;
     }
@@ -99,10 +101,16 @@ class CategoriesController extends Controller
      */
     public function saveCategory(SaveRootCategoryRequest $request)
     {
-        $this->categoryRepository->create([
-            'name'     => $request->get('name'),
+        $categoryData = [
+            'name' => $request->get('name'),
             'is_final' => false,
-        ]);
+        ];
+
+        if ($icon = $request->file('icon', null)) {
+            $categoryData['icon'] = StorageHelper::upload($icon, 'category-icon/');
+        }
+
+        $this->categoryRepository->create($categoryData);
 
         Flash::success('Root category created successfully');
 
@@ -121,14 +129,13 @@ class CategoriesController extends Controller
             'name'     => $request->get('name'),
             'is_final' => $request->get('is_final', false),
 
-            'parent_category_id' => $request->get('parent_category_id')
+            'parent_category_id' => $request->get('parent_category_id'),
         ];
 
         // TODO вынести в общий метод
         if ($request->get('is_final')) {
             $attributes += [
                 'attributes' => $request->get('attributes'),
-                'parameters' => $request->get('parameters'),
             ];
         }
 
@@ -170,10 +177,13 @@ class CategoriesController extends Controller
             'is_final' => $category->is_final,
         ];
 
+        if ($icon = $request->file('icon', null)) {
+            $attributes['icon'] = StorageHelper::upload($icon, 'category-icon/');
+        }
+
         if ($category->is_final) {
             $attributes += [
                 'attributes' => $request->get('attributes'),
-                'parameters' => $request->get('parameters'),
             ];
         }
 

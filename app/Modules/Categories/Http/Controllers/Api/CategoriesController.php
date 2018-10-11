@@ -19,9 +19,8 @@ class CategoriesController extends Controller
      *
      * @param CategoriesStrategy $categoriesStrategy
      */
-    public function __construct(
-        CategoriesStrategy $categoriesStrategy
-    ) {
+    public function __construct(CategoriesStrategy $categoriesStrategy)
+    {
         $this->categoriesStrategy = $categoriesStrategy;
     }
 
@@ -39,3 +38,4 @@ class CategoriesController extends Controller
         ]);
     }
 }
+

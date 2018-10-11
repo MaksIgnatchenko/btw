@@ -5,7 +5,10 @@
 
 namespace App\Modules\Products\Requests\Api;
 
+use App\Modules\Products\Enums\ProductFiltersEnum;
+use App\Modules\Products\Enums\ProductOrdersEnum;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class CustomerSearchRequest extends FormRequest
 {
@@ -26,15 +29,17 @@ class CustomerSearchRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            'distance'  => 'required|integer|min:1|max:100',
-            'longitude' => 'required|numeric',
-            'latitude'  => 'required|numeric',
-            'offset'    => 'sometimes|integer',
-            'keyword'   => 'sometimes|string|max:50',
-            'barcode'   => 'sometimes|string|max:20',
-
-            'category_id' => 'sometimes|integer|exists:categories,id',
+        $rules = [
+            'offset' => 'sometimes|integer',
+            'keyword' => 'sometimes|string|max:50',
+            'category' => 'sometimes|integer|exists:categories,id',
+            'order' => ['sometimes', Rule::in(ProductOrdersEnum::getValues())],
         ];
+
+        foreach (ProductFiltersEnum::rules() as $filter => $rule) {
+            $rules[$filter] = $rule;
+        }
+
+        return $rules;
     }
 }

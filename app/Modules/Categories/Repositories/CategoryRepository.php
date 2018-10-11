@@ -23,6 +23,11 @@ class CategoryRepository extends BaseRepository
         return Category::where(['parent_category_id' => $parentId])->get();
     }
 
+    public function findById(int $id): Collection
+    {
+        return Category::where(['id' => $id])->get();
+    }
+
     /**
      * @return Collection
      */
@@ -39,30 +44,5 @@ class CategoryRepository extends BaseRepository
     public function model(): string
     {
         return Category::class;
-    }
-
-    /**
-     * Return delivery addresses with needed customers and users
-     *
-     * @param $categoryId
-     * @param $longitude
-     * @param $latitude
-     * @param $radius
-     *
-     * @return Collection
-     */
-    public function findCustomersInRadius($categoryId, $longitude, $latitude, $radius): Collection
-    {
-        $sql = PreparedStatementsHelper::getDistanceSql($latitude, $longitude);
-
-        $customerIds = Category::find($categoryId)->pushCustomers->pluck('customer_id');
-
-        $deliveryAddress = CustomerDeliveryAddress::whereIn('customer_id', $customerIds)
-            ->selectRaw("{$sql} AS distance, customer_id, longitude, latitude")
-            ->whereRaw("{$sql} < ?", [$radius])
-            ->with('customer')
-            ->get();
-
-        return $deliveryAddress;
     }
 }

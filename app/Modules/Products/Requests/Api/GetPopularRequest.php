@@ -27,9 +27,7 @@ class GetPopularRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'offset'    => 'required|integer',
-            'longitude' => 'sometimes|numeric',
-            'latitude'  => 'required_with:longitude|numeric',
+            'offset'    => 'sometimes|integer',
         ];
     }
 }

@@ -12,9 +12,9 @@ use App\Modules\Products\Models\Product;
 use App\Modules\Users\Models\Merchant;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 
 class Category extends Model
 {
@@ -30,6 +30,7 @@ class Category extends Model
         'attributes',
         'parameters',
         'parent_category_id',
+        'icon',
     ];
 
     /**
@@ -42,12 +43,8 @@ class Category extends Model
 
     protected $casts = [
         'attributes' => 'array',
-        'parameters' => 'array',
-        'is_final'   => 'boolean',
+        'is_final' => 'boolean',
     ];
-
-    /** @var array */
-    public $children = [];
 
     /**
      * @param Collection $categories
@@ -56,7 +53,7 @@ class Category extends Model
      */
     public function buildCategoriesTree(Collection $categories): array
     {
-        return $this->buildTree($categories)[0];
+        return $this->buildTree($categories)[0] ?? [];
     }
 
     /**
@@ -151,69 +148,10 @@ class Category extends Model
         return $this->hasMany(__CLASS__, 'parent_category_id', 'id');
     }
 
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
-     */
-    public function merchants(): BelongsToMany
+    public function getIconAttribute($value)
     {
-        return $this->belongsToMany(Merchant::class, 'category_merchant')
-            ->withTimestamps()
-            ->with('user');
-    }
-
-    /**
-     * @return BelongsToMany
-     */
-    public function merchantsWhereEnabledWishList(): BelongsToMany
-    {
-        return $this->belongsToMany(Merchant::class, 'category_merchant')
-            ->withTimestamps()
-            ->with('user.device')
-            ->whereHas('pushSettings', function ($query) {
-                return $query->where([
-                    'enabled'   => true,
-                    'wish_list' => true,
-                ]);
-            });
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
-     */
-    public function pushCustomers(): BelongsToMany
-    {
-        return $this
-            ->belongsToMany(PushCustomer::class, 'push_customer_categories', 'category_id', 'push_customer_id')
-            ->withTimestamps()
-            ->with('customer');
-    }
-
-    /**
-     * @return Collection
-     */
-    public function getProductsStatistic()
-    {
-        /** @var CategoryRepository $categoryRepository */
-        $categoryRepository = app()[CategoryRepository::class];
-        $rootCategories = $categoryRepository->findWhere(['parent_category_id' => null]);
-
-        $productsStatistic = [];
-        foreach ($rootCategories as $rootCategory) {
-            try {
-                $categories = $this->getFinalCategories($rootCategory->id)->load('products');
-
-                $productsStatistic['count'][$rootCategory->name] = 0;
-                foreach ($categories as $category) {
-                    $productsStatistic['count'][$rootCategory->name] += $category->products->count();
-                    $productsStatistic['name'][$rootCategory->name] = $rootCategory->name;
-                }
-            } catch (NotFountCategory $e) {
-            }
+        if ($value) {
+            return Storage::url($value);
         }
-
-        return collect([
-            'count' => collect($productsStatistic['count'])->values(),
-            'name'  => collect($productsStatistic['name'])->values(),
-        ]);
     }
 }

@@ -47,6 +47,10 @@ $('#attributes').on('click', '#drop-attribute', function () {
     $(this).parent().parent().remove();
 });
 
+$('#add-attribute-button').on('click', function () {
+    $('#add-attribute-modal').modal('show');
+});
+
 $('#attributes').on('click', '#edit-attribute', function () {
 
     var attributeJson = $(this).parent().parent().find('input').val();

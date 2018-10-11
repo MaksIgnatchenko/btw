@@ -1,0 +1,17 @@
+<?php
+/**
+ * Created by Ilya Kobus, Appus Studio LP on 10.10.2018
+ */
+
+namespace App\Modules\Products\Filters\Particular;
+
+use App\Filters\ParticularFilterInterface;
+use Illuminate\Database\Eloquent\Builder;
+
+class PriceLtFilter implements ParticularFilterInterface
+{
+    public function filter(Builder $builder, $value): Builder
+    {
+        return $builder->where('price' , '<', $value);
+    }
+}

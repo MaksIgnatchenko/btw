@@ -176,10 +176,11 @@ return [
 //        \InfyOm\Generator\InfyOmGeneratorServiceProvider::class,
         \InfyOm\AdminLTETemplates\AdminLTETemplatesServiceProvider::class,
 //        App\Modules\Users\Providers\WebRouteServiceProvider::class,
-//        App\Modules\Content\Providers\ContentAdminRouteServiceProvider::class,
-//        App\Modules\Content\Providers\ContentApiRouteServiceProvider::class,
-//        App\Modules\Categories\Providers\CategoriesAdminRouteServiceProvider::class,
-//        App\Modules\Products\Providers\ProductApiRouteServiceProvider::class,
+        App\Modules\Content\Providers\ContentAdminRouteServiceProvider::class,
+        App\Modules\Content\Providers\ContentApiRouteServiceProvider::class,
+        App\Modules\Categories\Providers\CategoriesAdminRouteServiceProvider::class,
+        App\Modules\Categories\Providers\CategoriesApiRouteServiceProvider::class,
+        App\Modules\Products\Providers\ProductApiRouteServiceProvider::class,
 //        \Cviebrock\ImageValidator\ImageValidatorServiceProvider::class,
 
 //        App\Modules\Products\Providers\ProductEventServiceProvider::class,
@@ -196,8 +197,6 @@ return [
         App\Modules\Users\Customer\Providers\ApiRouteServiceProvider::class,
         App\Modules\Users\Customer\Providers\WebRouteServiceProvider::class,
 
-        App\Modules\Content\Providers\ContentAdminRouteServiceProvider::class,
-        App\Modules\Content\Providers\ContentApiRouteServiceProvider::class,
         App\Modules\Users\Customer\Providers\AdminRouteServiceProvider::class,
 
         Laravel\Socialite\SocialiteServiceProvider::class,

@@ -10,17 +10,13 @@ class CustomerSearchDto
     /** @var int */
     protected $offset;
     /** @var int */
-    protected $distance;
-    /** @var int */
     protected $categoryId;
     /** @var string */
     protected $keyword;
-    /** @var float */
-    protected $latitude;
-    /** @var float */
-    protected $longitude;
     /** @var string */
-    protected $barcode;
+    protected $order;
+    /** @var array */
+    protected $filters;
 
     /**
      * @return int
@@ -38,26 +34,6 @@ class CustomerSearchDto
     public function setOffset($offset): CustomerSearchDto
     {
         $this->offset = $offset;
-
-        return $this;
-    }
-
-    /**
-     * @return int
-     */
-    public function getDistance(): int
-    {
-        return $this->distance;
-    }
-
-    /**
-     * @param int|null $distance
-     *
-     * @return CustomerSearchDto
-     */
-    public function setDistance(int $distance): CustomerSearchDto
-    {
-        $this->distance = $distance;
 
         return $this;
     }
@@ -103,41 +79,21 @@ class CustomerSearchDto
     }
 
     /**
-     * @return float
+     * @return string|null
      */
-    public function getLatitude(): float
+    public function getOrder(): ?string
     {
-        return $this->latitude;
+        return $this->order;
     }
 
     /**
-     * @param float $latitude
+     * @param string|null $keyword
      *
      * @return CustomerSearchDto
      */
-    public function setLatitude(float $latitude): CustomerSearchDto
+    public function setOrder(string $order = null): CustomerSearchDto
     {
-        $this->latitude = $latitude;
-
-        return $this;
-    }
-
-    /**
-     * @return float
-     */
-    public function getLongitude(): float
-    {
-        return $this->longitude;
-    }
-
-    /**
-     * @param float $longitude
-     *
-     * @return CustomerSearchDto
-     */
-    public function setLongitude(float $longitude): CustomerSearchDto
-    {
-        $this->longitude = $longitude;
+        $this->order = $order;
 
         return $this;
     }
@@ -145,19 +101,19 @@ class CustomerSearchDto
     /**
      * @return string|null
      */
-    public function getBarcode(): ?string
+    public function getFilters(): ?array
     {
-        return $this->barcode;
+        return $this->filters;
     }
 
     /**
-     * @param string|null $barcode
+     * @param array|null $filters
      *
      * @return CustomerSearchDto
      */
-    public function setBarcode(string $barcode = null): CustomerSearchDto
+    public function setFilters(array $filters = null): CustomerSearchDto
     {
-        $this->barcode = $barcode;
+        $this->filters = $filters;
 
         return $this;
     }

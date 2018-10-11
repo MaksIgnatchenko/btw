@@ -1,6 +1,9 @@
 <li class="{{\Route::current()->getName() === 'admin' ? 'active' : ''}}">
     <a href="{{route('admin')}}"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a>
 </li>
+<li class="{{\Route::current()->getName() === 'categories.index' ? 'active' : ''}}">
+    <a href="{{route('categories.index')}}"><i class="mdi mdi-format-list-bulleted"></i> <span>Categories</span></a>
+</li>
 <li class="treeview {{ActiveLink::checkManagement() ? 'active' : ''}}">
     <a href="#" class="treeview-toggle"><i class="fa fa-table"></i><span>Management</span>
         <span class="pull-right-container">

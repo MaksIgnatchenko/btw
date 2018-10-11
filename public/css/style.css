@@ -63,3 +63,21 @@ body {
     color: #fff !important;
 }
 
+.wrapper-fixed-height {
+    height: auto !important;
+}
+
+/* inner content */
+.content .content {
+    padding: 15px 0px 0px 0px !important;
+}
+
+.content .content-header {
+    padding: 0px !important;
+}
+
+.modal-body select:not([multiple]) {
+    height: 2.5em !important;
+}
+
+
