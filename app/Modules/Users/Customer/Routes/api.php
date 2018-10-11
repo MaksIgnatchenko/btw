@@ -26,4 +26,12 @@ $this->group([
     $this->post('email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
 });
 
+$this->group([
+    'prefix' => 'wishlist',
+], function () {
+    $this->get('/', 'WishController@get');
+    $this->post('add/{product}', 'WishController@add');
+    $this->post('remove/{product}', 'WishController@remove');
+});
+
 $this->post('register', 'RegisterController@register');
