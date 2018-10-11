@@ -17,8 +17,45 @@
     color: #fff !important;
 }
 
+#wrapper .dataTables_wrapper .dataTables_paginate .paginate_button:hover .paginate_button a {
+    background: #4bc08f !important;
+}
+
+#wrapper .dataTables_wrapper .dataTables_paginate .paginate_button:hover a {
+    background: #4bc08f !important;
+    border: 0;
+}
+
+#wrapper .dataTables_wrapper .dataTables_paginate .paginate_button {
+    padding: 0 0.25em;
+    cursor: pointer;
+    box-shadow: none;
+}
+
+#wrapper .dataTables_wrapper .dataTables_paginate ul.pagination {
+    padding-top: 12px;
+}
+
+body {
+    font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
+}
+
+.pagination>.active>a,
+.pagination>.active>a:focus,
+.pagination>.active>a:hover,
+.pagination>.active>span,
+.pagination>.active>span:focus,
+.pagination>.active>span:hover {
+    background-color: initial!important;
+}
+
+#wrapper .dataTables_info {
+    padding-top: 0;
+}
+
 .dataTables_wrapper .dataTables_paginate .paginate_button a {
     color: #4bc08f;
+    border: 0;
 }
 
 #wrapper .dataTables_wrapper .dataTables_paginate .paginate_button.active a,
