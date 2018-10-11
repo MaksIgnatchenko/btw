@@ -27,7 +27,7 @@ class GetPopularRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'offset'    => 'required|integer',
+            'offset'    => 'sometimes|integer',
         ];
     }
 }

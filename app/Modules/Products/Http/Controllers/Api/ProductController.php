@@ -159,7 +159,7 @@ class ProductController extends Controller
      */
     public function popular(GetPopularRequest $request): JsonResponse
     {
-        $offset = $request->get('offset');
+        $offset = $request->get('offset', 0);
 
         $products = $this->productRepository->getPopular($offset);
 
