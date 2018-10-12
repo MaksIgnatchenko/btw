@@ -64,6 +64,13 @@ class Product extends Model
     ];
 
     /**
+     * @var array
+     */
+    protected $hidden = [
+        'wishPivot',
+    ];
+
+    /**
      * @param CustomerSearchDto $customerSearchDto
      *
      * @return Collection|null
