@@ -18,6 +18,7 @@ class WishListRequest extends FormRequest
     {
         return [
             'offset' => 'sometimes|integer',
+            'kyeword' => 'sometimes|string|max:100'
         ];
     }
 

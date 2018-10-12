@@ -5,6 +5,7 @@
 
 namespace App\Modules\Users\Customer\Models;
 
+use App\Modules\Products\Models\Product;
 use Illuminate\Support\Facades\Hash;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Notifications\Notifiable;
@@ -52,5 +53,12 @@ class Customer extends Authenticatable implements JWTSubject
     public function setPasswordAttribute(string $password): void
     {
         $this->attributes['password'] = Hash::make($password);
+    }
+
+    public function wishlist()
+    {
+        return $this->belongsToMany(Product::class, 'wishlists')
+            ->as('wishPivot')
+            ->withTimestamps();
     }
 }

@@ -7,8 +7,10 @@ namespace App\Modules\Users\Customer\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Modules\Products\Models\Product;
+use App\Modules\Users\Customer\DTO\WishListSearchDto;
 use App\Modules\Users\Customer\Http\Requests\Api\WishListRequest;
 use App\Modules\Users\Customer\Models\Customer;
+use App\Modules\Users\Customer\Repositories\CustomerRepository;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Support\Facades\Auth;
 
@@ -16,6 +18,9 @@ class WishController extends Controller
 {
     /** @var Customer */
     protected $customer;
+
+    /** @var WishListRepository */
+    protected $customerRepo;
 
     /**
      * WishController constructor.
@@ -25,6 +30,7 @@ class WishController extends Controller
     public function __construct()
     {
         $this->customer = Auth::user();
+        $this->customerRepo = app()[CustomerRepository::class];
     }
 
     /**
@@ -39,7 +45,7 @@ class WishController extends Controller
 
     public function add(Product $product)
     {
-        $this->customer->wishes()->syncWithoutDetaching($product->id);
+        $this->customerRepo->addToWishList($this->customer, $product->id);
 
         return response()->json([
             'status' => 'success',
@@ -48,17 +54,23 @@ class WishController extends Controller
 
     public function remove(Product $product)
     {
-        $this->customer->wishes()->attach($product->id);
+        $this->customerRepo->removeFromWishList($this->customer, $product->id);
+
+        return response()->json([
+            'status' => 'success',
+        ]);
     }
 
     public function get(WishListRequest $request)
     {
+        $wishListSearchDto = app()[WishListSearchDto::class];
+
+        $wishListSearchDto
+            ->setOffset($request->get('offset', 0))
+            ->setKeyword($request->keyword);
+
         return response()->json([
-            'products' => $this->customer->wishes()
-                ->with('wishlist')
-                ->offset($request->get('offset', 0))
-                ->take(Product::PRODUCTS_PAGE_LIMIT)
-                ->get(),
+            'products' => $this->customerRepo->getWishList($this->customer, $wishListSearchDto),
         ]);
     }
 }

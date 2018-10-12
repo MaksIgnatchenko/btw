@@ -27,7 +27,7 @@ $this->group([
 });
 
 $this->group([
-    'prefix' => 'wishlist',
+    'prefix' => 'wishlist', 'middleware' => 'auth:customer',
 ], function () {
     $this->get('/', 'WishController@get');
     $this->post('add/{product}', 'WishController@add');
