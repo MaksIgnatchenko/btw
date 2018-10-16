@@ -197,6 +197,8 @@ return [
         App\Modules\Users\Customer\Providers\ApiRouteServiceProvider::class,
         App\Modules\Users\Customer\Providers\WebRouteServiceProvider::class,
 
+        App\Modules\Users\Customer\Providers\AdminRouteServiceProvider::class,
+
         Laravel\Socialite\SocialiteServiceProvider::class,
 
     ],

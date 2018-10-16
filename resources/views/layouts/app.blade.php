@@ -95,6 +95,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.3.11/js/app.min.js"></script>
 
 <script src="{{ URL::asset('js/admin-change-password.js') }}"></script>
+<script src="{{ URL::asset('js/menu.js') }}"></script>
 <script src="{{ URL::asset('js/AdminLte/jquery-jvectormap-2.0.3.min.js') }}"></script>
 <script src="{{ URL::asset('js/AdminLte/jquery-jvectormap-world-mill.js') }}"></script>
 
