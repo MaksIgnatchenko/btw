@@ -4,6 +4,7 @@
 <li class="{{\Route::current()->getName() === 'categories.index' ? 'active' : ''}}">
     <a href="{{route('categories.index')}}"><i class="mdi mdi-format-list-bulleted"></i> <span>Categories</span></a>
 </li>
+
 <li class="treeview {{ActiveLink::checkManagement() ? 'active' : ''}}">
     <a href="#" class="treeview-toggle"><i class="fa fa-table"></i><span>Management</span>
         <span class="pull-right-container">
@@ -19,6 +20,7 @@
         </li>
     </ul>
 </li>
+
 <li class="{{\Route::current()->getName() === 'content' ? 'active' : ''}}">
     <a href="{{route('content')}}"><i class="mdi mdi-book-open-page-variant"></i> <span>Terms & Condiotions</span></a>
 </li>
