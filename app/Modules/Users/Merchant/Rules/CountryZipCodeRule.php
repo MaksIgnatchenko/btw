@@ -3,9 +3,9 @@
  * Created by Ilya Kobus, Appus Studio LP on 12.10.2018
  */
 
-namespace App\Modules\Users\Merchants\Rules;
+namespace App\Modules\Users\Merchant\Rules;
 
-use App\Modules\Users\Merchants\Enums\CountryZipCodeRegExpEnum;
+use App\Modules\Users\Merchant\Enums\CountryZipCodeRegExpEnum;
 use Illuminate\Contracts\Validation\Rule;
 
 class CountryZipCodeRule implements Rule

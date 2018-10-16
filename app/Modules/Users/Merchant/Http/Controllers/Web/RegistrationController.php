@@ -3,12 +3,12 @@
  * Created by Ilya Kobus, Appus Studio LP on 16.10.2018
  */
 
-namespace App\Modules\Users\Merchants\Http\Controllers\Web;
+namespace App\Modules\Users\Merchant\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
-use App\Modules\Users\Merchants\Enums\MerchantRegistrationCountriesEnum;
-use App\Modules\Users\Merchants\Requests\RegisterMerchantCompanyRequest;
-use App\Modules\Users\Merchants\Requests\RegisterMerchantContactDataRequest;
+use App\Modules\Users\Merchant\Enums\MerchantRegistrationCountriesEnum;
+use App\Modules\Users\Merchant\Requests\RegisterMerchantCompanyRequest;
+use App\Modules\Users\Merchant\Requests\RegisterMerchantContactDataRequest;
 use App\Modules\Users\Models\Merchant;
 use App\Modules\Users\Requests\RegisterMerchantRequest;
 use Illuminate\Support\Facades\Auth;

@@ -4,7 +4,7 @@
  * Appus Studio LP on 12.10.2018
  */
 
-namespace App\Modules\Users\Merchants\Enums;
+namespace App\Modules\Users\Merchant\Enums;
 
 abstract class MerchantRegistrationCountriesEnum
 {

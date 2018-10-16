@@ -3,10 +3,10 @@
  * Created by Ilya Kobus, Appus Studio LP on 12.10.2018
  */
 
-namespace App\Modules\Users\Merchants\Requests;
+namespace App\Modules\Users\Merchant\Requests;
 
-use App\Modules\Users\Merchants\Enums\MerchantRegistrationCountriesEnum;
-use App\Modules\Users\Merchants\Rules\CountryZipCodeRule;
+use App\Modules\Users\Merchant\Enums\MerchantRegistrationCountriesEnum;
+use App\Modules\Users\Merchant\Rules\CountryZipCodeRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 

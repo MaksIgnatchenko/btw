@@ -16,7 +16,7 @@ use App\Modules\Payments\Models\WireTransferOption;
 use App\Modules\Review\Models\MerchantReview;
 use App\Modules\Review\Repositories\MerchantReviewRepository;
 use App\Modules\Reviews\Enums\ReviewStatusEnum;
-use App\Modules\Users\Enums\MerchantStatusEnum;
+use App\Modules\Users\Enums\MerchanttatusEnum;
 use App\Modules\Users\Enums\PaymentOptionsEnum;
 use App\Modules\Users\Repositories\MerchantRepository;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
