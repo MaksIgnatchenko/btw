@@ -40,10 +40,10 @@ return [
             'driver' => 'jwt',
             'provider' => 'customer',
         ],
-//        'merchant' => [
-//            'driver' => 'session',
-//            'provider' => 'merchant',
-//        ],
+        'merchant' => [
+            'driver' => 'session',
+            'provider' => 'merchant',
+        ],
         'admin' => [
             'driver' => 'session',
             'provider' => 'admin',
@@ -72,10 +72,10 @@ return [
             'driver' => 'eloquent',
             'model'  => \App\Modules\Users\Customer\Models\Customer::class,
         ],
-//        'merchant'  => [
-//            'driver' => 'eloquent',
-//            'model'  => \App\Modules\Users\Models\Merchant::class,
-//        ],
+        'merchant'  => [
+            'driver' => 'eloquent',
+            'model'  => \App\Modules\Users\Models\Merchant::class,
+        ],
         'admin' => [
             'driver' => 'eloquent',
             'model'  => \App\Modules\Users\Admin\Models\Admin::class,

@@ -23,6 +23,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Support\Collection;
 
 class Merchant extends UserTypeAbstract implements UserTypePushSettingsInterface
@@ -266,5 +267,10 @@ class Merchant extends UserTypeAbstract implements UserTypePushSettingsInterface
             ->where(['status' => ReviewStatusEnum::ACTIVE])
             ->selectRaw('merchant_id, AVG(rate) AS avg')
             ->groupBy('merchant_id');
+    }
+
+    public function address(): MorphOne
+    {
+        return $this->hasOne(Address::class);
     }
 }

@@ -175,6 +175,6 @@ class CountryZipCodeRegExpEnum
      */
     public static function getZipCodeRegExpForCountry($country): string
     {
-        return self::REGEXPS[$country] ?? "";
+        return self::REGEXPS[$country] ?? '';
     }
 }
