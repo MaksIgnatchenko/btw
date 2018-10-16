@@ -3,7 +3,7 @@
  * Created by Ilya Kobus, Appus Studio LP on 9.10.2018
  */
 
-namespace App\Filters;
+namespace App\Modules\Products\Filters;
 
 use Illuminate\Database\Eloquent\Builder;
 
