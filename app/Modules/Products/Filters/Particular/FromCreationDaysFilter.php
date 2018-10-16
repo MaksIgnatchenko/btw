@@ -5,7 +5,7 @@
 
 namespace App\Modules\Products\Filter\Particular;
 
-use App\Filters\ParticularFilterInterface;
+use App\Modules\Products\Filters\ParticularFilterInterface;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 
