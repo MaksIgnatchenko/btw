@@ -2,7 +2,7 @@
 
     <nav class="navbar-custom">
 
-        <ul class="list-inline float-right mb-0">
+        <ul class="list-inline float-right mt-4">
             <li class="list-inline-item dropdown notification-list">
                 <a class="nav-link dropdown-toggle arrow-none waves-effect nav-user" data-toggle="dropdown" href="#"
                    role="button"
