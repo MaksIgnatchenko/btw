@@ -3,7 +3,7 @@
  * Created by Ilya Kobus, Appus Studio LP on 9.10.2018
  */
 
-namespace App\Filters;
+namespace App\Modules\Products\Filters;
 
 use Illuminate\Database\Eloquent\Builder;
 
@@ -14,5 +14,5 @@ interface FilterInterface
      *
      * @return mixed
      */
-    public function filter(Builder $builder);
+    public function filter(Builder $builder): Builder;
 }
