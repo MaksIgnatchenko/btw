@@ -1,6 +1,9 @@
 @extends('layouts.app')
+@section('title', 'Categories')
 
-{{Html::style('css/Categories/categories.css')}}
+@section('css')
+    <link href="{{ asset('css/Categories/categories.css') }}" rel="stylesheet">
+@endsection
 
 @section('script')
     <script>
@@ -14,9 +17,6 @@
 
 @section('content')
 
-    <section class="content-header">
-        <h1>Categories</h1>
-    </section>
     <div class="content">
         @include('flash::message')
 
