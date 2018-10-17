@@ -1,10 +1,7 @@
 @extends('layouts.app')
-
+@section('title', 'Add root category')
 @section('content')
-
-    <section class="content-header">
-        <h1>Add root category</h1>
-    </section>
+    
     <section class="content">
         <div class="clearfix"></div>
 
