@@ -6,6 +6,7 @@
 namespace App\Modules\Categories\Helpers;
 
 use App\Modules\Categories\Models\Category;
+use Illuminate\Support\Collection;
 
 class CategoriesHelper
 {
@@ -29,5 +30,18 @@ class CategoriesHelper
         }
 
         return true;
+    }
+
+    /**
+     * Return categories names string.
+     *
+     * @param Collection $categories
+     * @return string
+     */
+    public static function getNames(Collection $categories)
+    {
+        $categories = $categories->pluck('name')->toArray();
+
+        return implode(', ', $categories);
     }
 }

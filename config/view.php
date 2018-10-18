@@ -23,6 +23,7 @@ return [
 //        app_path('Modules/Content/Resources/views'),
         app_path('Modules/Categories/Resources/views'),
 //        app_path('Modules/Orders/Resources/views'),
+        app_path('Modules/Users/Merchant/Resources/views'),
 
     ],
 
