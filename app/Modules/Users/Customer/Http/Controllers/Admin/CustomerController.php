@@ -7,6 +7,7 @@ namespace App\Modules\Users\Customer\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Modules\Users\Customer\DataTables\CustomerDataTable;
+use App\Modules\Users\Customer\Models\Customer;
 use App\Modules\Users\Customer\Repositories\CustomerRepository;
 use Flash;
 use Illuminate\View\View;
@@ -38,19 +39,11 @@ class CustomerController extends Controller
     /**
      * Display the specified Customer.
      *
-     * @param int $id
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector|View
+     * @param Customer $customer
+     * @return \Illuminate\Contracts\View\Factory|View
      */
-    public function show($id)
+    public function show(Customer $customer)
     {
-        $customer = $this->customerRepository->findWithoutFail($id);
-
-        if (null === $customer) {
-            Flash::error('Customer not found');
-
-            return redirect(route('customers.index'));
-        }
-
         return view('customers.show')->with('customer', $customer);
     }
 }

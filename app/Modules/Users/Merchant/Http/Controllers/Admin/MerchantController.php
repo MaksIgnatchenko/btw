@@ -7,6 +7,7 @@ namespace App\Modules\Users\Merchant\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Modules\Users\Merchant\DataTables\MerchantDataTable;
+use App\Modules\Users\Merchant\Models\Merchant;
 use App\Modules\Users\Merchant\Repositories\MerchantRepository;
 use Laracasts\Flash\Flash;
 
@@ -35,21 +36,11 @@ class MerchantController extends Controller
     }
 
     /**
-     * Display the specified Merchant.
-     *
-     * @param int $id
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector|\Illuminate\View\View
+     * @param Merchant $merchant
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function show($id)
+    public function show(Merchant $merchant)
     {
-        $merchant = $this->merchantRepository->findWithoutFail($id);
-
-        if (null === $merchant) {
-            Flash::error('Merchant not found');
-
-            return redirect(route('merchants.index'));
-        }
-
         $merchant->load('address', 'store', 'store.categories');
 
         return view('merchants.show')->with('merchant', $merchant);
