@@ -23,7 +23,6 @@ $(function () {
         })) {
             $(this).find('ul').slideDown(500);
             $(this).addClass('open');
-            return true;
         }
     });
 });
