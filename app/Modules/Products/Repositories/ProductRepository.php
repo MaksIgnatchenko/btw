@@ -119,11 +119,11 @@ class ProductRepository extends BaseRepository
 
 
     /**
-     * @param array       $userIds
      * @param int         $offset
      * @param array|null  $categoryIds
      * @param string|null $keyword
-     * @param string|null $barcode
+     * @param string|null $order
+     * @param array|null  $filters
      *
      * @return Collection
      */
