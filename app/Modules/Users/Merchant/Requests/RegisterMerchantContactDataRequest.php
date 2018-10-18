@@ -28,7 +28,7 @@ class RegisterMerchantContactDataRequest extends FormRequest
         return [
             'first_name' => 'required|string|max:100',
             'last_name' => 'required|string|max:100',
-            'street_adress' => 'required|string|max:255',
+            'street_address' => 'required|string|max:255',
             'country' => 'required|string|' . Rule::in(MerchantRegistrationCountriesEnum::toArray()),
             'state' => 'nullable|string|max:255',
             'city' => 'required|string|max:255',

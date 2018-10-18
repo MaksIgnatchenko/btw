@@ -54,7 +54,7 @@ class RegistrationController extends Controller
     public function aboutStore(RegisterMerchantCompanyRequest $request)
     {
         $merchant = Merchant::create($request->session()->all());
-        $merchant->adress()->create($request->session()->all());
+        $merchant->address()->create($request->session()->all());
         $merchant->store()->create($request->all());
 
         Auth::login($merchant);
