@@ -48,15 +48,11 @@ class RegistrationController extends Controller
     {
         $request->session()->put($request->all());
 
-        return response()->redirectToRoute('');
+        return view('');
     }
 
     public function aboutStore(RegisterMerchantCompanyRequest $request)
     {
-        if($request->isMethod('GET')) {
-            return view('', []);
-        }
-
         $merchant = Merchant::create($request->session()->all());
         $merchant->adress()->create($request->session()->all());
         $merchant->store()->create($request->all());

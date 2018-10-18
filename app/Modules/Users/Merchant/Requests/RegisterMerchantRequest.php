@@ -16,8 +16,8 @@ class RegisterMerchantRequest extends FormRequest
     {
         return [
             'email' => 'required|min:1|max:100',
-            'password' => 'required|digits:10',
-            'ein' => 'required|regex:/\b\d{9}\b/',
+            'password' => 'required|min:6|max:50',
+            'company' => 'required|min:3|max:50',
         ];
     }
 
