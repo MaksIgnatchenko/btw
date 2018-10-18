@@ -22,7 +22,7 @@
 
         <div class="clearfix"></div>
 
-        @each('categories', $categories, 'category')
+        @each('categories.admin.categories', $categories, 'category')
 
         <br>
         <div class='text-right'>

@@ -56,7 +56,7 @@ class CategoriesController extends Controller
         $categories = $this->categoryRepository->all();
         $categoriesTree = $this->categoryModel->buildCategoriesTree($categories);
 
-        return view('index')
+        return view('categories.admin.index')
             ->with('categories', $categoriesTree);
     }
 
@@ -65,7 +65,7 @@ class CategoriesController extends Controller
      */
     public function add(): View
     {
-        return view('add');
+        return view('categories.admin.add');
     }
 
 
@@ -90,7 +90,7 @@ class CategoriesController extends Controller
             return redirect(route('categories.index'));
         }
 
-        return view('add-subcategory', ['category' => $category]);
+        return view('categories.admin.add-subcategory', ['category' => $category]);
     }
 
     /**
@@ -156,7 +156,7 @@ class CategoriesController extends Controller
     {
         $category = $this->checkCategory($id);
 
-        return view('edit')
+        return view('categories.admin.edit')
             ->with('category', $category);
     }
 
