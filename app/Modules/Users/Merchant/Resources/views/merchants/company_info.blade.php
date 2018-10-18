@@ -19,7 +19,7 @@
 <div class="form-group">
     <p>
         {!! Form::label('company_info', 'Company information:') !!}
-        {!! $merchant->store->city !!}
+        {!! $merchant->store->info !!}
     </p>
 </div>
 
