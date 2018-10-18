@@ -50,7 +50,7 @@ class MerchantController extends Controller
             return redirect(route('merchants.index'));
         }
 
-        $merchant->load('address', 'store');
+        $merchant->load('address', 'store', 'store.categories');
 
         return view('merchants.show')->with('merchant', $merchant);
     }
