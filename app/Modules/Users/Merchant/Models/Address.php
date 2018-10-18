@@ -20,7 +20,10 @@ class Address extends Model
         return $this->belongsTo(Merchant::class);
     }
 
-    public function toString()
+    /**
+     * @return string
+     */
+    public function toString(): string
     {
         return implode(', ', [$this->street, $this->zipcode, $this->city, $this->state, $this->country]);
     }

@@ -9,10 +9,15 @@ use App\Modules\Users\Merchant\Services\Geography\GeographyServiceInterface;
 
 abstract class GeographyValidationAdapterAbsract implements GeographyValidationAdapterInterface
 {
-    protected static function resolveCountry($country)
+    /**
+     * @param $countryCode
+     *
+     * @return mixed
+     */
+    protected static function resolveCountry($countryCode)
     {
-        $adaptee = app()[GeographyServiceInterface::class];
+        $geographyService = app()[GeographyServiceInterface::class];
 
-        return $adaptee->getCountryById($country)->sortname;
+        return $geographyService->getCountryById($countryCode)->sortname;
     }
 }

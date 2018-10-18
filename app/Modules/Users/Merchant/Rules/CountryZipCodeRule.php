@@ -7,23 +7,9 @@ namespace App\Modules\Users\Merchant\Rules;
 
 use App\Modules\Users\Merchant\Adapters\ZipCodeValidationAdapter;
 use App\Modules\Users\Merchant\Enums\CountryZipCodeRegExpEnum;
-use Illuminate\Contracts\Validation\Rule;
-use IsoCodes\ZipCode;
 
-class CountryZipCodeRule implements Rule
+class CountryZipCodeRule extends RegistrationGeographyRuleAbstract
 {
-    protected $country;
-
-    /**
-     * Create a new rule instance.
-     *
-     * @return void
-     */
-    public function __construct(string $country)
-    {
-        $this->country = $country;
-    }
-
     /**
      * Determine if the validation rule passes.
      *
@@ -43,6 +29,6 @@ class CountryZipCodeRule implements Rule
      */
     public function message()
     {
-        return 'Zipcode/Postal code are not valid';
+        return 'Zipcode/Postal code is not valid';
     }
 }

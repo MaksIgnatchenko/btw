@@ -9,7 +9,9 @@ class MerchantRepository extends BaseRepository
 {
     /**
      * Configure the Model
-     **/
+     *
+     * @return string
+     */
     public function model(): string
     {
         return Merchant::class;

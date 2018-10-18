@@ -10,17 +10,30 @@ use InfyOm\Generator\Common\BaseRepository;
 
 class AddressRepository extends BaseRepository
 {
+    /**
+     * @return string
+     */
     public function model()
     {
         return Address::class;
     }
 
-    public function save(Address $address)
+    /**
+     * @param Address $address
+     *
+     * @return bool
+     */
+    public function save(Address $address): bool
     {
         $address->save();
     }
 
-    public function getByMerchantId($id)
+    /**
+     * @param int $id
+     *
+     * @return Address|null
+     */
+    public function getByMerchantId(int $id): ?Address
     {
         return Address::where('merchant_id', $id)->first();
     }

@@ -5,13 +5,34 @@
 
 namespace App\Modules\Users\Merchant\Services\Geography;
 
+use App\Modules\Users\Merchant\Models\Geography\GeographyCountry;
+use Illuminate\Database\Eloquent\Collection;
+
 interface GeographyServiceInterface
 {
-    public function getCountries();
+    /**
+     * @return Collection
+     */
+    public function getCountries(): Collection;
 
-    public function getCountryById($id);
+    /**
+     * @param $id
+     *
+     * @return GeographyCountry
+     */
+    public function getCountryById($id): GeographyCountry;
 
-    public function getStates(int $country = null);
+    /**
+     * @param int|null $country
+     *
+     * @return Collection
+     */
+    public function getStates(int $country = null): Collection;
 
-    public function getCities(int $state = null);
+    /**
+     * @param int|null $state
+     *
+     * @return Collection
+     */
+    public function getCities(int $state = null): Collection;
 }

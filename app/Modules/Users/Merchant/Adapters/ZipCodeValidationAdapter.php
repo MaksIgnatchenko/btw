@@ -11,12 +11,18 @@ use IsoCodes\ZipCode;
 
 class ZipCodeValidationAdapter extends GeographyValidationAdapterAbsract
 {
-    public static function validate(string $value, int $country = null)
+    /**
+     * @param string   $value
+     * @param int|null $countryCode
+     *
+     * @return mixed
+     */
+    public static function validate(string $value, int $countryCode = null): bool
     {
-        if ($country) {
-            $country = self::resolveCountry($country);
+        if ($countryCode) {
+            $country = self::resolveCountry($countryCode);
         }
 
-        return ZipCode::valid($value, $country);
+        return ZipCode::valid($value, $country ?? null);
     }
 }

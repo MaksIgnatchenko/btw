@@ -7,5 +7,11 @@ namespace App\Modules\Users\Merchant\Adapters;
 
 interface GeographyValidationAdapterInterface
 {
-    public static function validate(string $value, int $country = null);
+    /**
+     * @param string   $value
+     * @param int|null $countryCode
+     *
+     * @return bool
+     */
+    public static function validate(string $value, int $countryCode = null): bool;
 }

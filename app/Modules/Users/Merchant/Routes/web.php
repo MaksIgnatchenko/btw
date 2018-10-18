@@ -5,18 +5,18 @@
 
 Route::group([
     'middleware' => 'web',
-    'prefix'     => 'auth'
+    'prefix' => 'auth/password',
 ], function () {
-    $this->get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request');
-    $this->get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.reset');
-    $this->post('password/reset', 'Auth\ResetPasswordController@reset');
-    $this->get('password/success', 'Auth\ResetPasswordController@success');
+    $this->get('reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request');
+    $this->get('reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.reset');
+    $this->post('reset', 'Auth\ResetPasswordController@reset');
+    $this->get('success', 'Auth\ResetPasswordController@success');
 });
 
 /* --- Registration --- */
 Route::group([
     'middleware' => ['web', 'auth:merchant'],
-    'prefix'     => 'auth'
+    'prefix' => 'registration',
 ], function () {
     $this->match(['get', 'post'], '/sign-up', 'RegistrationController@signUp');
     $this->match(['get', 'post'], '/contact-info', 'RegistrationController@contactInfo');

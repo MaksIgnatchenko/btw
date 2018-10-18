@@ -5,22 +5,10 @@
 
 namespace App\Modules\Users\Merchant\Rules;
 
-use Illuminate\Contracts\Validation\Rule;
+use App\Modules\Users\Merchant\Adapters\PhoneNumberValidationAdapter;
 
-class PhoneNumberRule implements Rule
+class PhoneNumberRule extends RegistrationGeographyRuleAbstract
 {
-    protected $country;
-
-    /**
-     * Create a new rule instance.
-     *
-     * @return void
-     */
-    public function __construct(string $country)
-    {
-        $this->country = $country;
-    }
-
     /**
      * Determine if the validation rule passes.
      *
@@ -30,7 +18,7 @@ class PhoneNumberRule implements Rule
      */
     public function passes($attribute, $value)
     {
-        return ZipCodeValidationAdapter::validate($value, $this->country);
+        return PhoneNumberValidationAdapter::validate($value, $this->country);
     }
 
     /**
@@ -40,6 +28,6 @@ class PhoneNumberRule implements Rule
      */
     public function message()
     {
-        return 'Zipcode/Postal code are not valid';
+        return 'Phone number is not valid';
     }
 }

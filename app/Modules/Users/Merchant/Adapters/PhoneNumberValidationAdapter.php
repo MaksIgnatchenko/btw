@@ -10,13 +10,19 @@ use IsoCodes\PhoneNumber;
 
 class PhoneNumberValidationAdapter extends GeographyValidationAdapterAbsract
 {
-    public static function validate(string $value, int  $country = null)
+    /**
+     * @param string   $value
+     * @param int|null $countryCode
+     *
+     * @return bool
+     */
+    public static function validate(string $value, int $countryCode = null): bool
     {
-        if ($country) {
-            $country = self::resolveCountry($country, $adaptee);
+        if ($countryCode) {
+            $country = self::resolveCountry($countryCode);
         }
 
-        return PhoneNumber::validate($value, $country);
+        return PhoneNumber::validate($value, $country ?? null);
     }
 
 }
