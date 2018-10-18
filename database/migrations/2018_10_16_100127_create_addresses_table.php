@@ -25,7 +25,7 @@ class CreateAddressesTable extends Migration
 
             $table->foreign('merchant_id')
                 ->references('id')
-                ->on('categories')
+                ->on('merchants')
                 ->onDelete('cascade');
         });
     }
