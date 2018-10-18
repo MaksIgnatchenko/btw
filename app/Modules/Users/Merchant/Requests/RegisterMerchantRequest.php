@@ -5,9 +5,6 @@
 
 namespace App\Modules\Users\Requests;
 
-use App\Modules\Users\Enums\PaymentOptionsEnum;
-use App\Modules\Users\RequestsTraits\UserValidationRulesTrait;
-use App\Modules\Users\RequestsTraits\ValidatePaymentOptionsTrait;
 use Illuminate\Foundation\Http\FormRequest;
 
 class RegisterMerchantRequest extends FormRequest
@@ -17,13 +14,11 @@ class RegisterMerchantRequest extends FormRequest
      */
     public function rules(): array
     {
-        $rules = [
+        return [
             'email' => 'required|min:1|max:100',
             'password' => 'required|digits:10',
             'ein' => 'required|regex:/\b\d{9}\b/',
         ];
-
-        return array_merge($this->getRegisterUserValidationRules(), $rules);
     }
 
 
