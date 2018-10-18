@@ -1,11 +1,7 @@
 @extends('layouts.app')
-
+@section('title', 'Add subcategory to ' . $category->name)
 @section('content')
-
-
-    <section class="content-header">
-        <h1>Add subcategory to {{$category->name}}</h1>
-    </section>
+    
     <section class="content">
         <div class="clearfix"></div>
 
