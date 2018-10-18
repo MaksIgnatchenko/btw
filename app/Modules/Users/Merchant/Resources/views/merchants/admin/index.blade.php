@@ -10,7 +10,7 @@
         <div class="clearfix"></div>
         <div class="box">
             <div class="box-body">
-                @include('merchants.table')
+                @include('merchants.admin.table')
             </div>
         </div>
     </div>
