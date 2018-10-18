@@ -46,7 +46,7 @@ class RegistrationController extends Controller
 
     public function contactInfo(RegisterMerchantContactDataRequest $request)
     {
-        Auth::user()->address()->create($request->all());
+        $request->session()->put($request->all());
 
         return response()->redirectToRoute('');
     }
@@ -57,9 +57,13 @@ class RegistrationController extends Controller
             return view('', []);
         }
 
-        Auth::user()->update($request->all());
+        $merchant = Merchant::create($request->session()->all());
+        $merchant->adress()->create($request->session()->all());
+        $merchant->store()->create($request->all());
 
-        return response()->redirectToRoute('');
+        Auth::login($merchant);
+
+        return view('');
     }
 
 
