@@ -43,4 +43,9 @@ class LoginController
 
         return redirect('/login');
     }
+
+    public function index()
+    {
+        return view('web.index');
+    }
 }

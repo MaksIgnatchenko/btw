@@ -3,6 +3,8 @@
  * Created by Artem Petrov, Appus Studio LP on 16.11.2017
  */
 
+Route::get('/', 'LoginController@index');
+
 Route::group([
     'middleware' => 'web',
     'prefix' => 'auth/password',

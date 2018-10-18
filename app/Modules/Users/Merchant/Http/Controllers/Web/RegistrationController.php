@@ -6,13 +6,11 @@
 namespace App\Modules\Users\Merchant\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
-use App\Modules\Users\Merchant\Enums\MerchantRegistrationCountriesEnum;
-use App\Modules\Users\Merchant\Providers\GeographyServiceProvider;
+use App\Modules\Users\Merchant\Models\Merchant;
 use App\Modules\Users\Merchant\Requests\RegisterMerchantCompanyRequest;
 use App\Modules\Users\Merchant\Requests\RegisterMerchantContactDataRequest;
 use App\Modules\Users\Merchant\Services\Geography\GeographyServiceInterface;
-use App\Modules\Users\Models\Merchant;
-use App\Modules\Users\Repositories\MerchantRepository;
+use App\Modules\Users\Merchant\Repositories\MerchantRepository;
 use App\Modules\Users\Requests\RegisterMerchantRequest;
 use Illuminate\Support\Facades\Auth;
 
