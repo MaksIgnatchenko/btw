@@ -5,7 +5,7 @@
 
 namespace App\Modules\Products\Filters\Particular;
 
-use App\Filters\ParticularFilterInterface;
+use App\Modules\Products\Filters\ParticularFilterInterface;
 use Illuminate\Database\Eloquent\Builder;
 
 class PriceGtFilter implements ParticularFilterInterface

@@ -5,8 +5,10 @@
 
 namespace App\Modules\Users\Merchant\Rules;
 
+use App\Modules\Users\Merchant\Adapters\ZipCodeValidationAdapter;
 use App\Modules\Users\Merchant\Enums\CountryZipCodeRegExpEnum;
 use Illuminate\Contracts\Validation\Rule;
+use IsoCodes\ZipCode;
 
 class CountryZipCodeRule implements Rule
 {
@@ -31,7 +33,7 @@ class CountryZipCodeRule implements Rule
      */
     public function passes($attribute, $value)
     {
-        return preg_match(CountryZipCodeRegExpEnum::getZipCodeRegExpForCountry($this->country), $value) !== false;
+        return ZipCodeValidationAdapter::validate($value, $this->country);
     }
 
     /**

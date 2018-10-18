@@ -7,47 +7,45 @@ namespace App\Modules\Users\Merchant\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
 use App\Modules\Users\Merchant\Enums\MerchantRegistrationCountriesEnum;
+use App\Modules\Users\Merchant\Providers\GeographyServiceProvider;
 use App\Modules\Users\Merchant\Requests\RegisterMerchantCompanyRequest;
 use App\Modules\Users\Merchant\Requests\RegisterMerchantContactDataRequest;
+use App\Modules\Users\Merchant\Services\Geography\GeographyServiceInterface;
 use App\Modules\Users\Models\Merchant;
+use App\Modules\Users\Repositories\MerchantRepository;
 use App\Modules\Users\Requests\RegisterMerchantRequest;
 use Illuminate\Support\Facades\Auth;
 
 class RegistrationController extends Controller
 {
     protected $merchantRepository;
+    protected $geographyService;
 
     /**
      * RegistrationController constructor.
      *
-     * @param $merchntRepository
+     * @param MerchantRepository        $merchantRepository
+     * @param GeographyServiceInterface $geographyService
      */
-    public function __construct($merchantRepository)
+    public function __construct(MerchantRepository $merchantRepository, GeographyServiceInterface $geographyService)
     {
         $this->merchantRepository = $merchantRepository;
+        $this->geographyService = $geographyService;
     }
 
     public function signUp(RegisterMerchantRequest $request)
     {
-        if($request->isMethod('GET')) {
-            return view('', []);
-        }
+        $request->session()->put($request->all());
 
-        $merchant = Merchant::create($request->all());
-        Auth::login($merchant);
+        $countries = $this->geographyService->getCountries();
 
-        return response()->redirectToRoute('');
-
+        return view('', [
+            'countries' => $countries
+        ]);
     }
 
     public function contactInfo(RegisterMerchantContactDataRequest $request)
     {
-        $countries = MerchantRegistrationCountriesEnum::COUNTRIES;
-
-        if($request->isMethod('GET')) {
-            return view('', compact($countries));
-        }
-
         Auth::user()->address()->create($request->all());
 
         return response()->redirectToRoute('');
