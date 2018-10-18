@@ -3,7 +3,7 @@
  * Created by Artem Petrov, Appus Studio on 10/31/17.
  */
 
-namespace App\Modules\Users\Customer\Providers;
+namespace App\Modules\Users\Merchant\Providers;
 
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Route;
