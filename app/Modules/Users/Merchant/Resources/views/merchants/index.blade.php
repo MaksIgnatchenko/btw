@@ -1,9 +1,7 @@
 @extends('layouts.app')
+@section('title', 'Merchants')
 
 @section('content')
-    <section class="content-header">
-        <h1>Merchants</h1>
-    </section>
     <div class="content">
         <div class="clearfix"></div>
 

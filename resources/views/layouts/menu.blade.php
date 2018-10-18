@@ -11,8 +11,7 @@
                 <i class="fa fa-angle-left pull-right"></i>
               </span>
     </a>
-    <ul class="treeview-menu"
-        style="display:{{strpos(Route::current()->getName(), 'categories') !== false ? 'block' : 'none'}}">
+    <ul class="treeview-menu">
         <li class="{{ActiveLink::checkCustomers() ? 'active' : ''}}">
             <a href="{{url('/admin/customers')}}"><i class="fa fa-circle-o"></i>Customers</a>
         </li>
