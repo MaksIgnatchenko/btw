@@ -18,8 +18,7 @@
 </div>
 <div class="form-group">
     <p>
-        {!! Form::label('company_info', 'Company information:') !!}
-        {!! $merchant->store->info !!}
+        {!! Form::label('categories', 'Categories:') !!}
+        {!! CategoriesHelper::getNames($merchant->store->categories) !!}
     </p>
 </div>
-
