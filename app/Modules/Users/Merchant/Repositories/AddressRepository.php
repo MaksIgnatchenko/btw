@@ -5,7 +5,7 @@
 
 namespace App\Modules\Users\Repositories;
 
-use App\Models\Address;
+use App\Modules\Users\Merchant\Models\Address;
 use InfyOm\Generator\Common\BaseRepository;
 
 class AddressRepository extends BaseRepository
