@@ -16,7 +16,7 @@ Route::group([
 /* --- Registration --- */
 Route::group([
     'middleware' => ['web', 'auth:merchant'],
-    'prefix'     => 'auth'
+    'prefix'     => 'auth',
 ], function () {
     $this->match(['get', 'post'], '/sign-up', 'RegistrationController@signUp');
     $this->match(['get', 'post'], '/contact-info', 'RegistrationController@contactInfo');
