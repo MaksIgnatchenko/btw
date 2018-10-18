@@ -20,12 +20,12 @@ class CreateAddressesTable extends Migration
             $table->string('city');
             $table->string('street');
             $table->string('zipcode', 10);
-
             $table->unsignedInteger('merchant_id')->nullable();
+            $table->timestamps();
 
             $table->foreign('merchant_id')
                 ->references('id')
-                ->on('categories')
+                ->on('merchants')
                 ->onDelete('cascade');
         });
     }
