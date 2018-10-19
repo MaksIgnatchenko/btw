@@ -25,7 +25,7 @@ class CustomerDataTable extends DataTable
     {
         $dataTable = new EloquentDataTable($query);
 
-        return $dataTable->addColumn('action', 'customers.datatables_actions')
+        return $dataTable->addColumn('action', 'customers.admin.datatables_actions')
             ->editColumn('created_at', function (Customer $customer) {
                 return DateConverter::date($customer->created_at);
             });

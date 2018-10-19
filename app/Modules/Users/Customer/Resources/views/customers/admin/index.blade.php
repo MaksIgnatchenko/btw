@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Merchants')
+@section('title', 'Customers')
 
 @section('content')
     <div class="content">
@@ -10,7 +10,7 @@
         <div class="clearfix"></div>
         <div class="box">
             <div class="box-body">
-                @include('merchants.table')
+                @include('customers.admin.table')
             </div>
         </div>
     </div>

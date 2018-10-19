@@ -24,7 +24,7 @@ class MerchantDataTable extends DataTable
     {
         $dataTable = new EloquentDataTable($query);
 
-        return $dataTable->addColumn('action', 'merchants.datatables_actions')
+        return $dataTable->addColumn('action', 'merchants.admin.datatables_actions')
             ->editColumn('created_at', function (Merchant $merchant) {
                 return DateConverter::date($merchant->created_at);
             });

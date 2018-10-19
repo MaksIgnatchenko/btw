@@ -18,7 +18,7 @@
                         <h3 class="box-title">Merchant details</h3>
                     </div>
                     <div class="box-body">
-                        @include('merchants.show_fields')
+                        @include('merchants.admin.show_fields')
                     </div>
                 </div>
             </div>
@@ -29,7 +29,7 @@
                         <h3 class="box-title">Merchant company details</h3>
                     </div>
                     <div class="box-body">
-                        @include('merchants.company_info')
+                        @include('merchants.admin.company_info')
                     </div>
                 </div>
             </div>

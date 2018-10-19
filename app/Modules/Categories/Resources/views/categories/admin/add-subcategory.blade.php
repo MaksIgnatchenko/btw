@@ -48,10 +48,10 @@
         </div>
         <div id="categories-additional-fields">
             <div class="col-md-4">
-                @include('attributes')
+                @include('categories.admin.attributes')
             </div>
             <div class="col-md-4">
-                @include('parameters')
+                @include('categories.admin.parameters')
             </div>
         </div>
         {!! Form::close() !!}
@@ -59,5 +59,5 @@
     </section>
 @endsection
 
-@include('categories-libs')
+@include('categories.admin.categories-libs')
 

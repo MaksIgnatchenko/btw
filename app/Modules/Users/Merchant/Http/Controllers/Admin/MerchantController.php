@@ -32,7 +32,7 @@ class MerchantController extends Controller
      */
     public function index(MerchantDataTable $merchantDataTable)
     {
-        return $merchantDataTable->render('merchants.index');
+        return $merchantDataTable->render('merchants.admin.index');
     }
 
     /**
@@ -43,6 +43,6 @@ class MerchantController extends Controller
     {
         $merchant->load('address', 'store', 'store.categories');
 
-        return view('merchants.show')->with('merchant', $merchant);
+        return view('merchants.admin.show')->with('merchant', $merchant);
     }
 }
