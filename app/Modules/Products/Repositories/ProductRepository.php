@@ -106,14 +106,6 @@ class ProductRepository extends BaseRepository
     public function getPopular(int $offset, $userIds = null): ?Collection
     {
         $query = Product::active()
-            ->select(
-                'id',
-                'name',
-                'price',
-                'main_image',
-                'quantity',
-                'attributes'
-            )
             ->orderBy('created_at', 'desc')
             ->limit(Product::PRODUCTS_PAGE_LIMIT)
             ->offset($offset);
@@ -127,11 +119,11 @@ class ProductRepository extends BaseRepository
 
 
     /**
-     * @param array       $userIds
      * @param int         $offset
      * @param array|null  $categoryIds
      * @param string|null $keyword
-     * @param string|null $barcode
+     * @param string|null $order
+     * @param array|null  $filters
      *
      * @return Collection
      */

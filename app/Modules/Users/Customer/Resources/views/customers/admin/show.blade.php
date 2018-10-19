@@ -18,7 +18,7 @@
                         <h3 class="box-title">Customer info</h3>
                     </div>
                     <div class="box-body">
-                        @include('customers.show_fields')
+                        @include('customers.admin.show_fields')
                     </div>
                 </div>
             </div>
