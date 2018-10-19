@@ -5,6 +5,11 @@
 
 namespace App\Helpers;
 
+use App\Modules\Categories\Http\Controllers\Admin\CategoriesController;
+use App\Modules\Content\Http\Controllers\Admin\ContentController;
+use App\Modules\Users\Admin\Http\Controllers\DashboardController;
+use App\Modules\Users\Customer\Http\Controllers\Admin\CustomerController;
+use App\Modules\Users\Merchant\Http\Controllers\Admin\MerchantController;
 use Illuminate\Support\Facades\Request;
 
 class ActiveLink
@@ -12,44 +17,11 @@ class ActiveLink
     /**
      * @return bool
      */
-    public static function checkManagement(): bool
-    {
-        if (Request::is('admin/customers/*')) {
-            return true;
-        }
-        if (Request::is('admin/customers')) {
-            return true;
-        }
-        if (Request::is('admin/merchants/*')) {
-            return true;
-        }
-        if (Request::is('admin/merchants')) {
-            return true;
-        }
-        if (Request::is('admin/categories/*')) {
-            return true;
-        }
-        if (Request::is('admin/categories')) {
-            return true;
-        }
-
-        return false;
-    }
-
-
-    /**
-     * @return bool
-     */
     public static function checkCustomers(): bool
     {
-        if (Request::is('admin/customers/*')) {
-            return true;
-        }
-        if (Request::is('admin/customers')) {
-            return true;
-        }
+        $controller = self::getControllerInstance();
 
-        return false;
+        return $controller instanceof CustomerController;
     }
 
     /**
@@ -57,14 +29,9 @@ class ActiveLink
      */
     public static function checkMerchants(): bool
     {
-        if (Request::is('admin/merchants/*')) {
-            return true;
-        }
-        if (Request::is('admin/merchants')) {
-            return true;
-        }
+        $controller = self::getControllerInstance();
 
-        return false;
+        return $controller instanceof MerchantController;
     }
 
     /**
@@ -72,10 +39,43 @@ class ActiveLink
      */
     public static function checkCategories(): bool
     {
-        if (Request::is('admin/categories/*')) {
+        $controller = self::getControllerInstance();
+
+        return $controller instanceof CategoriesController;
+    }
+
+    /**
+     * @return bool
+     */
+    public static function checkContent(): bool
+    {
+        $controller = self::getControllerInstance();
+
+        return $controller instanceof ContentController;
+    }
+
+    /**
+     * @return bool
+     */
+    public static function checkDasboard(): bool
+    {
+        $controller = self::getControllerInstance();
+
+        return $controller instanceof DashboardController;
+    }
+
+    /**
+     * @return bool
+     */
+    public static function checkManagement(): bool
+    {
+        $controller = self::getControllerInstance();
+
+        if ($controller instanceof CustomerController) {
             return true;
         }
-        if (Request::is('admin/categories')) {
+
+        if ($controller instanceof MerchantController) {
             return true;
         }
 
@@ -83,129 +83,10 @@ class ActiveLink
     }
 
     /**
-     * @return bool
+     * @return mixed
      */
-    public static function checkReview(): bool
+    public static function getControllerInstance()
     {
-        if (Request::is('admin/review/*')) {
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
-     * @return bool
-     */
-    public static function checkProductReview(): bool
-    {
-        if (Request::is('admin/review/product/*')) {
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
-     * @return bool
-     */
-    public static function checkMerchantReview(): bool
-    {
-        if (Request::is('admin/review/merchant/*')) {
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
-     * @return bool
-     */
-    public static function checkPayments(): bool
-    {
-        if (Request::is('admin/payments/income')) {
-            return true;
-        }
-        if (Request::is('admin/payments/income/*')) {
-            return true;
-        }
-
-        if (Request::is('admin/payments/outcome')) {
-            return true;
-        }
-        if (Request::is('admin/payments/outcome/*')) {
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
-     * @return bool
-     */
-    public static function checkIncome(): bool
-    {
-        if (Request::is('admin/payments/income')) {
-            return true;
-        }
-        if (Request::is('admin/payments/income/*')) {
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
-     * @return bool
-     */
-    public static function checkOutcome(): bool
-    {
-        if (Request::is('admin/payments/outcome')) {
-            return true;
-        }
-        if (Request::is('admin/payments/outcome/*')) {
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
-     * @return bool
-     */
-    public static function checkAdvert(): bool
-    {
-        if (Request::is('admin/adverts')) {
-            return true;
-        }
-        if (Request::is('admin/adverts/*')) {
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
-     * @return bool
-     */
-    public static function checkLogs(): bool
-    {
-        if (Request::is('admin/logs')) {
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
-     * @return bool
-     */
-    public static function checkCsv(): bool
-    {
-        if (Request::is('admin/csv')) {
-            return true;
-        }
-
-        return false;
+        return Request::route()->getController();
     }
 }
