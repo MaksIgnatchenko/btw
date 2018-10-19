@@ -198,6 +198,7 @@ return [
         App\Modules\Users\Customer\Providers\AdminRouteServiceProvider::class,
         App\Modules\Users\Merchant\Providers\AdminRouteServiceProvider::class,
         App\Modules\Users\Merchant\Providers\GeographyServiceProvider::class,
+        App\Modules\Store\Providers\WebRouteServiceProvider::class,
 
         Laravel\Socialite\SocialiteServiceProvider::class,
 
