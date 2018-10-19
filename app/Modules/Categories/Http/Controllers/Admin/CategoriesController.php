@@ -13,6 +13,7 @@ use App\Modules\Categories\Requests\Admin\SaveRootCategoryRequest;
 use App\Modules\Categories\Requests\Admin\SaveSubcategoryRequest;
 use App\Modules\Categories\Requests\Admin\UpdateCategoryRequest;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 use Laracasts\Flash\Flash;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -178,6 +179,9 @@ class CategoriesController extends Controller
         ];
 
         if ($icon = $request->file('icon', null)) {
+            if (Storage::exists($category->getOriginal('icon'))) {
+                Storage::delete($category->getOriginal('icon'));
+            }
             $attributes['icon'] = StorageHelper::upload($icon, 'category-icon/');
         }
 
