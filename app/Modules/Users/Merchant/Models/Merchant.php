@@ -5,6 +5,9 @@
 
 namespace App\Modules\Users\Merchant\Models;
 
+use App\Modules\Users\Merchant\Models\Geography\GeographyCity;
+use App\Modules\Users\Merchant\Models\Geography\GeographyCountry;
+use App\Modules\Users\Merchant\Models\Geography\GeographyState;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -64,10 +67,21 @@ class Merchant extends Authenticatable
      */
     public static function createWithRelations(array $data): Merchant
     {
+        $data['country'] = GeographyCountry::find($data['country'])->sortname;
+        $data['state'] = GeographyState::find($data['state'])->name;
+        $data['city'] = GeographyCity::find($data['city'])->name;
+
         /** @var Merchant $merchant */
         $merchant = self::create($data);
+
         $merchant->address()->create($data);
-        $merchant->store()->create($data);
+
+        $storeData = array_merge($data, [
+            'country' => GeographyCountry::find($data['store_country'])->sortname,
+            'city' => $data['store_city'],
+        ]);
+
+        $merchant->store()->create($storeData);
 
         return $merchant;
     }
