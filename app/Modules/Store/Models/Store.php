@@ -13,6 +13,13 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Store extends Model
 {
+     protected $fillable = [
+         'name',
+         'country',
+         'city',
+         'info',
+     ];
+
     /**
      * Company to merchant relation.
      *
