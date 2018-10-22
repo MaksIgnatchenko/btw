@@ -80,4 +80,6 @@ body {
     height: 2.5em !important;
 }
 
-
+#sidebar-menu > ul > li.active>a {
+    color: #1d1e3a;
+}

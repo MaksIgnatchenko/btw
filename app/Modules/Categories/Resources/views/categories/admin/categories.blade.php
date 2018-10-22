@@ -45,7 +45,7 @@
     </div>
     @if (null !== $category->children)
         <div class="box-body">
-            @each('categories', $category->children, 'category')
+            @each('categories.admin.categories', $category->children, 'category')
         </div>
     @endif
 

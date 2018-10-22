@@ -33,7 +33,7 @@ class CustomerController extends Controller
      */
     public function index(CustomerDataTable $customerDataTable)
     {
-        return $customerDataTable->render('customers.index');
+        return $customerDataTable->render('customers.admin.index');
     }
 
     /**
@@ -44,6 +44,6 @@ class CustomerController extends Controller
      */
     public function show(Customer $customer)
     {
-        return view('customers.show')->with('customer', $customer);
+        return view('customers.admin.show')->with('customer', $customer);
     }
 }

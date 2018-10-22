@@ -13,6 +13,7 @@ use App\Modules\Categories\Requests\Admin\SaveRootCategoryRequest;
 use App\Modules\Categories\Requests\Admin\SaveSubcategoryRequest;
 use App\Modules\Categories\Requests\Admin\UpdateCategoryRequest;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 use Laracasts\Flash\Flash;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -56,7 +57,7 @@ class CategoriesController extends Controller
         $categories = $this->categoryRepository->all();
         $categoriesTree = $this->categoryModel->buildCategoriesTree($categories);
 
-        return view('index')
+        return view('categories.admin.index')
             ->with('categories', $categoriesTree);
     }
 
@@ -65,7 +66,7 @@ class CategoriesController extends Controller
      */
     public function add(): View
     {
-        return view('add');
+        return view('categories.admin.add');
     }
 
 
@@ -90,7 +91,7 @@ class CategoriesController extends Controller
             return redirect(route('categories.index'));
         }
 
-        return view('add-subcategory', ['category' => $category]);
+        return view('categories.admin.add-subcategory', ['category' => $category]);
     }
 
     /**
@@ -156,7 +157,7 @@ class CategoriesController extends Controller
     {
         $category = $this->checkCategory($id);
 
-        return view('edit')
+        return view('categories.admin.edit')
             ->with('category', $category);
     }
 
@@ -178,6 +179,9 @@ class CategoriesController extends Controller
         ];
 
         if ($icon = $request->file('icon', null)) {
+            if (Storage::exists($category->getOriginal('icon'))) {
+                Storage::delete($category->getOriginal('icon'));
+            }
             $attributes['icon'] = StorageHelper::upload($icon, 'category-icon/');
         }
 
