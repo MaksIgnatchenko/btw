@@ -3,9 +3,10 @@
  * Created by Andrei Podgornyi, Appus Studio LP on 17.10.2018
  */
 
-namespace App\Modules\Users\Merchant\Models;
+namespace App\Modules\Store\Models;
 
 use App\Modules\Categories\Models\Category;
+use App\Modules\Users\Merchant\Models\Merchant;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
