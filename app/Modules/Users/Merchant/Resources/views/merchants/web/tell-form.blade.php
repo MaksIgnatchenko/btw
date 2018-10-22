@@ -18,13 +18,21 @@
 
             <h6 class="tell-form__title">Where is your inventory/warehouse located?</h6>
             <div class="tell-form-wrapper">
-                <div class="tell-form-country custom-select">
-                    {!! Form::select('country', ['Country'] + $countries->toArray()) !!}
+                <div class="tell-form-country custom-select position-relative">
+                    {!! Form::select('store_country', ['Country'] + $countries->toArray()) !!}
+                    @if ($errors->has('store_country'))
+                        <div class="alert alert-danger" role="alert">
+                            <strong>{{ $errors->first('store_country') }}</strong></div>
+                    @endif
                 </div>
-                <div class="tell-form-city">
+                <div class="tell-form-city position-relative">
                     <p>
-                        <input type="text" name="city" placeholder="City">
+                        {!! Form::text('store_city', null, ['placeholder' => 'City']) !!}
                     </p>
+                    @if ($errors->has('store_city'))
+                        <div class="alert alert-danger" role="alert">
+                            <strong>{{ $errors->first('store_city') }}</strong></div>
+                    @endif
                 </div>
             </div>
             <div class="form-group" hidden>
@@ -32,7 +40,7 @@
             </div>
             <h6 class="tell-form__title">Product Categories</h6>
             <div class="tell-form-wr-float">
-                <div class="tell-form-category">
+                <div class="tell-form-category position-relative">
                     <p class="tell-form-category__display" id="category-title">Categories</p>
                     <ul class="tell-form-category__list tell-form-category__list--close" id="tell-categories">
 
@@ -41,14 +49,22 @@
                         @endforeach
 
                     </ul>
+                    @if ($errors->has('categories'))
+                        <div class="alert alert-danger" role="alert">
+                            <strong>{{ $errors->first('categories') }}</strong></div>
+                    @endif
                 </div>
                 <div class="tell-form-labels">
                     <ul class="tell-form-list"></ul>
                 </div>
             </div>
             <h6 class="tell-form__title">Company info</h6>
-            <div class="tell-form-area">
-                <textarea name="info" rows="8" placeholder="Write your info"></textarea>
+            <div class="tell-form-area position-relative">
+                {!! Form::textarea('info', null, ['placeholder' => 'Write your info', 'rows'=> 8]) !!}
+                @if ($errors->has('info'))
+                    <div class="alert alert-danger" role="alert">
+                        <strong>{{ $errors->first('info') }}</strong></div>
+                @endif
             </div>
             <div class="tell-form-btns">
                 <button class="tell-form-btn tell-form-btn--uncolor">Back</button>

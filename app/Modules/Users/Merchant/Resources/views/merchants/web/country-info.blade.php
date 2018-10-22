@@ -17,7 +17,7 @@
 
             <h6 class="contact-info__title">Add your contact information</h6>
             <div class="form-wrapper-half">
-                <div class="form-content-half">
+                <div class="form-content-half position-relative">
                     <p>
                         {!! Form::text('first_name', null, ['placeholder' => 'First name']) !!}
                     </p>
@@ -26,7 +26,7 @@
                             <strong>{{ $errors->first('first_name') }}</strong></div>
                     @endif
                 </div>
-                <div class="form-content-half">
+                <div class="form-content-half position-relative">
                     <p>
                         {!! Form::text('last_name', null, ['placeholder' => 'Last name']) !!}
                     </p>
@@ -37,7 +37,7 @@
                 </div>
             </div>
 
-            <div class="form-content custom-select">
+            <div class="form-content custom-select position-relative">
                 {!! Form::select('country', ['Country/Region'] + $countries->toArray()) !!}
                 @if ($errors->has('country'))
                     <div class="alert alert-danger" role="alert">
@@ -45,7 +45,7 @@
                 @endif
             </div>
 
-            <div class="form-wrapper-half">
+            <div class="form-wrapper-half position-relative">
                 <div class="form-content-half custom-select">
                     {!! Form::select('state', (!old('country')? ['State']:Geography::statesSelectValues(old('country'))), null) !!}
                     @if ($errors->has('country'))
@@ -53,7 +53,7 @@
                             <strong>{{ $errors->first('country') }}</strong></div>
                     @endif
                 </div>
-                <div class="form-content-half">
+                <div class="form-content-half position-relative">
                     <p>
                         {!! Form::text('street', null, ['placeholder' => 'Street address']) !!}
                     </p>
@@ -64,14 +64,14 @@
                 </div>
             </div>
             <div class="form-wrapper-half">
-                <div class="form-content-half custom-select">
+                <div class="form-content-half custom-select position-relative">
                     {!! Form::select('city', (!old('state')? ['City']:Geography::citiesSelectValues(old('state')))) !!}
                     @if ($errors->has('city'))
                         <div class="alert alert-danger" role="alert">
                             <strong>{{ $errors->first('city') }}</strong></div>
                     @endif
                 </div>
-                <div class="form-content-half">
+                <div class="form-content-half position-relative">
                     <p>
                         {!! Form::text('zipcode', null, ['placeholder' => 'Zipcode/Postal code']) !!}
                     </p>
@@ -84,7 +84,7 @@
 
 
             <h6 class="contact-info__title">Phone number</h6>
-            <div class="contact-form-content-wr container-relative">
+            <div class="contact-form-content-wr position-relative">
                 <div class="contact-small-wrapper">
                     <p>
                         {!! Form::text('phone_code', null, ['placeholder' => 'Country', 'readonly']) !!}
