@@ -12,11 +12,11 @@ abstract class RegistrationGeographyRuleAbstract implements Rule
     protected $country;
 
     /**
-     * Create a new rule instance.
+     * RegistrationGeographyRuleAbstract constructor.
      *
-     * @return void
+     * @param string|null $country
      */
-    public function __construct(string $country)
+    public function __construct(string $country = null)
     {
         $this->country = $country;
     }
