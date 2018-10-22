@@ -20,7 +20,7 @@
                         </p>
                     </div>
                     <div class="reg-store-bottom">
-                        <a href="#">Register now</a>
+                        <a href="{{route('merchant.registration.sign-up')}}">Register now</a>
                         <a href="#">Forgot password</a>
                     </div>
                     <div class="form-content form-content--min-margin">

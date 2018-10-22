@@ -4,6 +4,7 @@
  */
 
 Route::get('/', 'LoginController@index');
+Route::get('/log-in', 'LoginController@loginPage')->name('merchant.login');
 
 Route::group([
     'middleware' => 'web',
@@ -17,11 +18,22 @@ Route::group([
 
 /* --- Registration --- */
 Route::group([
-    'middleware' => ['web', 'auth:merchant'],
+    'middleware' => ['web'],
     'prefix' => 'registration',
 ], function () {
-    $this->match(['get', 'post'], '/sign-up', 'RegistrationController@signUp');
-    $this->match(['get', 'post'], '/contact-info', 'RegistrationController@contactInfo');
-    $this->match(['get', 'post'], '/company-info', 'RegistrationController@aboutStore');
+    $this->get('sign-up', 'RegistrationController@signUp')->name('merchant.registration.sign-up');
+    $this->post('set-account-info', 'RegistrationController@setAccountInfo')->name('merchant.registration.set-account-info');
+    $this->post('set-contact-info', 'RegistrationController@setContactInfo')->name('merchant.registration.set-contact-info');
+    $this->post('set-company-info', 'RegistrationController@setStoreInfo')->name('merchant.registration.set-store-info');
+});
+/* ------------------- */
+
+/* --- Geography --- */
+Route::group([
+    'middleware' => ['web'],
+    'prefix' => 'service/geography',
+], function () {
+    $this->get('get', 'GeographyController@getObjects');
+    $this->get('country-phone-code', 'GeographyController@getCountryPhoneCode');
 });
 /* ------------------- */
