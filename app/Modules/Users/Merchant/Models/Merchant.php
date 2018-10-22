@@ -23,6 +23,10 @@ class Merchant extends Authenticatable
         'password',
     ];
 
+    protected $hidden = [
+        'password',
+    ];
+
     /**
      * Password attribute mutator.
      *
@@ -51,5 +55,20 @@ class Merchant extends Authenticatable
     public function store(): HasOne
     {
         return $this->hasOne(Store::class);
+    }
+
+    /**
+     * @param array $data
+     *
+     * @return Merchant
+     */
+    public static function createWithRelations(array $data): Merchant
+    {
+        /** @var Merchant $merchant */
+        $merchant = self::create($data);
+        $merchant->address()->create($data);
+        $merchant->store()->create($data);
+
+        return $merchant;
     }
 }
