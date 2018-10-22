@@ -1,5 +1,7 @@
 @extends('layouts.merchants.app')
 
+@section('title', 'BTW')
+
 @section('content')
     <!-- Main -->
     <div class="main login-page">

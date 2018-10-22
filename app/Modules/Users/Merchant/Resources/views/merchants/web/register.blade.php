@@ -1,5 +1,7 @@
 @extends('layouts.merchants.app')
 
+@section('title', 'Create Store')
+
 @section('content')
     <!-- Main -->
     <div class="main store-page">

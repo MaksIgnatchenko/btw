@@ -4,6 +4,8 @@
     <script src="{{asset('js/marchants/registration/store-data.js')}}"></script>
 @endsection
 
+@section('title', 'Store info')
+
 @section('content')
     <!-- Main -->
     <div class="main tell-page">

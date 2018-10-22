@@ -4,6 +4,8 @@
     <script src="{{asset('js/marchants/registration/contact-data.js')}}"></script>
 @endsection
 
+@section('title', 'Contact info')
+
 @section('content')
     <!-- Main -->
     <div class="main contact-page">

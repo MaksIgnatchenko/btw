@@ -1,5 +1,7 @@
 @extends('layouts.merchants.app')
 
+@section('title', 'Password reset request')
+
 @section('content')
     <!-- Main -->
     <div class="main forgot-pass">
