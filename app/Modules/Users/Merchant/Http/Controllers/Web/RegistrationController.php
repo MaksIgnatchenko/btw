@@ -95,9 +95,11 @@ class RegistrationController extends Controller
     {
         $merchant = Merchant::createWithRelations($request->session()->all() + $request->all());
 
-        Auth::login($merchant);
+        Auth::guard('merchant')->login($merchant);
 
-        return view('');
+        $request->session()->flush();
+
+        return view('store.index');
     }
 
 }

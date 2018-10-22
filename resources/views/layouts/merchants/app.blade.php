@@ -18,7 +18,7 @@
     <div class="container">
         <div class="header__cont">
             <div class="header__logo">
-                <a href="#">Logotype BTW</a>
+                <a href="{{route('index')}}">Logotype BTW</a>
             </div>
             <div class="header__info">
                 <div class="header__lang"><span></span>English</div>

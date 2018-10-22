@@ -5,15 +5,19 @@
 
 namespace App\Modules\Users\Merchant\Models;
 
+use App\Modules\Store\Models\Store;
 use App\Modules\Users\Merchant\Models\Geography\GeographyCity;
 use App\Modules\Users\Merchant\Models\Geography\GeographyCountry;
 use App\Modules\Users\Merchant\Models\Geography\GeographyState;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class Merchant extends Authenticatable
 {
+    use Notifiable;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -79,6 +83,7 @@ class Merchant extends Authenticatable
         $storeData = array_merge($data, [
             'country' => GeographyCountry::find($data['store_country'])->sortname,
             'city' => $data['store_city'],
+            'name' => $data['store']
         ]);
 
         $merchant->store()->create($storeData);

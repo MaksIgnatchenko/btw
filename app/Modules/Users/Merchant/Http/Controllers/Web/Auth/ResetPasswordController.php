@@ -3,11 +3,14 @@
  * Created by Artem Petrov, Appus Studio LP on 10.11.2017
  */
 
-namespace App\Modules\Users\Http\Controllers\Web\Auth;
+namespace App\Modules\Users\Merchant\Http\Controllers\Web\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Modules\Users\Models\User;
 use Illuminate\Foundation\Auth\ResetsPasswords;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
 use Illuminate\Auth\Events\PasswordReset;
 
@@ -31,7 +34,7 @@ class ResetPasswordController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/auth/password/success';
+    protected $redirectTo = 'auth/password/reset';
 
     /**
      * Create a new controller instance.
@@ -55,8 +58,7 @@ class ResetPasswordController extends Controller
     {
         return [
             'token'    => 'required',
-            'email'    => 'required|email',
-            'password' => 'required|confirmed|min:8|max:50|regex:' . User::PASSWORD_REGEXP,
+            'password' => 'required|confirmed|min:6|max:50',
         ];
     }
 
@@ -91,5 +93,36 @@ class ResetPasswordController extends Controller
         event(new PasswordReset($user));
 
         $this->guard()->login($user);
+    }
+
+    protected function guard()
+    {
+        return Auth::guard('merchant');
+    }
+
+    /**
+     * Display the password reset view for the given token.
+     *
+     * If no token is present, display the link request form.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  string|null  $token
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function showResetForm(Request $request, $token = null)
+    {
+        return view('merchants.auth.passwords.reset')->with(
+            ['token' => $token, 'email' => $request->email]
+        );
+    }
+
+    /**
+     * Get the broker to be used during password reset.
+     *
+     * @return \Illuminate\Contracts\Auth\PasswordBroker
+     */
+    public function broker()
+    {
+        return Password::broker('merchant');
     }
 }

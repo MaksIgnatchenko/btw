@@ -3,17 +3,17 @@
  * Created by Artem Petrov, Appus Studio LP on 16.11.2017
  */
 
-Route::get('/', 'LoginController@index');
-Route::get('/log-in', 'LoginController@loginPage')->name('merchant.login');
+Route::get('/', 'LoginController@index')->name('index');
+Route::post('/login', 'LoginController@login')->name('merchant.login');
 
 Route::group([
     'middleware' => 'web',
     'prefix' => 'auth/password',
 ], function () {
-    $this->get('reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request');
+    $this->get('reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('merchant.password.request');
     $this->get('reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.reset');
-    $this->post('reset', 'Auth\ResetPasswordController@reset');
-    $this->get('success', 'Auth\ResetPasswordController@success');
+    Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('merchant.password.email');
+    Route::post('password/request', 'Auth\ResetPasswordController@reset')->name('password.request');
 });
 
 /* --- Registration --- */

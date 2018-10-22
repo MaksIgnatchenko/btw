@@ -13,7 +13,7 @@
             'name' => 'create-store-form',
             ]) !!}
 
-            <div class="form-content">
+            <div class="form-content position-relative">
                 <p>
                     {!! Form::text('store', null, ['placeholder' => 'Store name']) !!}
                 </p>
@@ -22,18 +22,18 @@
                         <strong>{{ $errors->first('store') }}</strong></div>
                 @endif
             </div>
-            <div class="form-content">
+            <div class="form-content position-relative">
                 <p>
-                    {!! Form::email('email', null, ['placeholder' => 'Store name']) !!}
+                    {!! Form::email('email', null, ['placeholder' => 'Email']) !!}
                 </p>
                 @if ($errors->has('email'))
                     <div class="alert alert-danger" role="alert">
                         <strong>{{ $errors->first('email') }}</strong></div>
                 @endif
             </div>
-            <div class="form-content">
+            <div class="form-content position-relative">
                 <p>
-                    {!! Form::password('password', null, ['placeholder' => 'Store name']) !!}
+                    {!! Form::password('password', ['placeholder' => 'Password']) !!}
                 </p>
                 @if ($errors->has('password'))
                     <div class="alert alert-danger" role="alert">

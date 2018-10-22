@@ -74,7 +74,7 @@ return [
         ],
         'merchant'  => [
             'driver' => 'eloquent',
-            'model'  => \App\Modules\Users\Models\Merchant::class,
+            'model'  => \App\Modules\Users\Merchant\Models\Merchant::class,
         ],
         'admin' => [
             'driver' => 'eloquent',
