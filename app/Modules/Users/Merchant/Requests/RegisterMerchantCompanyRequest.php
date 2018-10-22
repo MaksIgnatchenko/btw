@@ -23,9 +23,11 @@ class RegisterMerchantCompanyRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'store_name' => 'required|string|min:3|max:100',
-            'email' => 'required|email',
-            'password' => 'required|min:8|max:100|confirmed',
+            'country' => 'required|string|max:255',
+            'city' => 'required|string|max:255',
+            'info' => 'required|string|max:5000|',
+            'categories' => 'required|array',
+            'categories.*' => 'int|exists:categories,id',
         ];
     }
 }

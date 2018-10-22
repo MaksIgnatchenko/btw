@@ -46,6 +46,6 @@ class LoginController
 
     public function index()
     {
-        return view('web.index');
+        return view('merchants.web.login');
     }
 }

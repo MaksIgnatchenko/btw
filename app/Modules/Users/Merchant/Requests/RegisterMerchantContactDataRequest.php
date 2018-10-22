@@ -7,6 +7,7 @@ namespace App\Modules\Users\Merchant\Requests;
 
 use App\Modules\Users\Merchant\Enums\MerchantRegistrationCountriesEnum;
 use App\Modules\Users\Merchant\Rules\CountryZipCodeRule;
+use App\Modules\Users\Merchant\Rules\PhoneNumberRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -28,15 +29,27 @@ class RegisterMerchantContactDataRequest extends FormRequest
         return [
             'first_name' => 'required|string|max:100',
             'last_name' => 'required|string|max:100',
-            'street_address' => 'required|string|max:255',
-            'country' => 'required|string|' . Rule::in(MerchantRegistrationCountriesEnum::toArray()),
-            'state' => 'nullable|string|max:255',
-            'city' => 'required|string|max:255',
-            'zipcode' => new CountryZipCodeRule($this->country),
-            'phone_code' => '',
-            'phone_number' => '',
-            'products' => 'required|array',
-            'products.*' => 'int|exists:categories',
+            'street' => 'required|string|max:255',
+            'country' => 'required|integer|not_in:0',
+            'state' => 'required|integer|not_in:0',
+            'city' => 'nullable|string|max:255',
+            'zipcode' => [
+                'required',
+                new CountryZipCodeRule($this->country)
+            ],
+            'phone_code' => ['sometimes', 'required'],
+            'phone_number' => [
+                'required',
+                new PhoneNumberRule($this->country, $this->phone_code)
+            ],
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'country.not_in' => 'The country field is required',
+            'state.not_in' => 'The state field is required',
         ];
     }
 }
