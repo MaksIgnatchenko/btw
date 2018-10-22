@@ -1,0 +1,10 @@
+.form-content, .form-content-half, .contact-form-content-wr{
+    position: relative;
+}
+
+.alert {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    font-family: sans-serif;
+}

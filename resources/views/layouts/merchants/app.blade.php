@@ -5,7 +5,10 @@
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Create Store</title>
-    <link rel="stylesheet" href="{{asset('css/merchant-style.css')}}">
+    <link rel="stylesheet" href="{{asset('css/merchants/style.css')}}">
+    <link rel="stylesheet" href="{{asset('css/merchants/app.css')}}">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
     @yield('css')
 </head>
@@ -37,6 +40,7 @@
     </div>
 </footer><!-- /. footer -->
 
+<script src="{{asset('js/wish.js')}}"></script>
 <script src="{{asset('js/custom.js')}}"></script>
 @yield('script')
 </body>
