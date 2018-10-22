@@ -22,7 +22,12 @@ class PhoneNumberValidationAdapter extends GeographyValidationAdapterAbsract
             $country = self::resolveCountry($countryCode);
         }
 
-        return PhoneNumber::validate($value, $country ?? null);
+        try {
+            return PhoneNumber::validate($value, $country ?? null);
+        } catch (\InvalidArgumentException $e) {
+            return true;
+        }
+
     }
 
 }

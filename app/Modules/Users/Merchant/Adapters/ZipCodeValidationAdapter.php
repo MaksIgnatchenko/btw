@@ -23,6 +23,11 @@ class ZipCodeValidationAdapter extends GeographyValidationAdapterAbsract
             $country = self::resolveCountry($countryCode);
         }
 
-        return ZipCode::valid($value, $country ?? null);
+        try {
+            return ZipCode::validate($value, $country ?? null);
+        } catch (\InvalidArgumentException $e) {
+            return true;
+        }
+
     }
 }
