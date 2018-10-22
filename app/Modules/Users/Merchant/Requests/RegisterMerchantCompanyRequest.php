@@ -23,11 +23,18 @@ class RegisterMerchantCompanyRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'country' => 'required|string|max:255',
-            'city' => 'required|string|max:255',
-            'info' => 'required|string|max:5000|',
+            'store_country' => 'required|integer|not_in:0',
+            'store_city' => 'required|string|max:255',
+            'info' => 'required|string|max:5000',
             'categories' => 'required|array',
             'categories.*' => 'int|exists:categories,id',
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'store_country.not_in' => 'The store country field is required',
         ];
     }
 }

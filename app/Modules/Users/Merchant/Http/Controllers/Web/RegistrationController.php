@@ -93,7 +93,7 @@ class RegistrationController extends Controller
 
     public function setStoreInfo(RegisterMerchantCompanyRequest $request)
     {
-        $merchant = Merchant::createWithRelations($request->session()->all());
+        $merchant = Merchant::createWithRelations($request->session()->all() + $request->all());
 
         Auth::login($merchant);
 

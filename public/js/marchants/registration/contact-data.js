@@ -15,6 +15,13 @@ $(function () {
                 _W.selectHelper.fillSelectData($('select[name=state]'), data, 'State');
                 $('select[name=state]').trigger('change')
             });
+        _W.geography.ajaxGetCountryPhoneCode(
+            {
+                country_id: $(this).find('[selected]').val(),
+            },
+            function (data) {
+                $('input[name=phone_code]').val(data);
+            });
     }
 
     function OnStateChange() {
@@ -28,12 +35,6 @@ $(function () {
             }
         );
     }
-
-    if ($('select[name=country]').val() && $('select[name=country]').val() !== '0') {
-        console.log('!!!')
-        // OnCountryChange.call($('select[name=country]'));
-    }
-
 });
 
 

@@ -18,6 +18,8 @@ class Address extends Model
         'zipcode',
     ];
 
+    public $timestamps = false;
+
     /**
      * Address to merchant relation.
      *
