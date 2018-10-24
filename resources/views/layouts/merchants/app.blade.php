@@ -23,8 +23,8 @@
             <div class="header__info">
                 <div class="header__lang"><span></span>English</div>
                 <nav class="navigation">
-                    <a href="#">Home</a>
-                    <a href="#">Terms and conditions</a>
+                    <a href="#">{{__('merchants.home')}}</a>
+                    <a href="#">{{__('merchants.terms_and_conditions')}}</a>
                 </nav>
             </div>
         </div>

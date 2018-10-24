@@ -9,6 +9,8 @@ return [
     'password' => 'Password',
     'save' => 'Save',
     'back' => 'Back',
+    'home' => 'Home',
+    'terms_and_conditions' => 'Terms and conditions',
 
     /* --- Pages` titles --- */
     'page_titles' => [
