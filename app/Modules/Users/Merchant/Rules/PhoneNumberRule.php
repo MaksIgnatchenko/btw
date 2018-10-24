@@ -9,6 +9,22 @@ use App\Modules\Users\Merchant\Adapters\PhoneNumberValidationAdapter;
 
 class PhoneNumberRule extends RegistrationGeographyRuleAbstract
 {
+    protected $phone_code;
+
+    /**
+     * PhoneNumberRule constructor.
+     *
+     * @param string $country
+     * @param string $phoneCode
+     */
+    public function __construct(string $country = null, string $phoneCode = null)
+    {
+        parent::__construct($country);
+
+        $this->phone_code = $phoneCode;
+    }
+
+
     /**
      * Determine if the validation rule passes.
      *
@@ -18,7 +34,11 @@ class PhoneNumberRule extends RegistrationGeographyRuleAbstract
      */
     public function passes($attribute, $value)
     {
-        return PhoneNumberValidationAdapter::validate($value, $this->country);
+        if(!$this->country || !$this->phone_code) {
+            return false;
+        }
+
+        return PhoneNumberValidationAdapter::validate($this->phone_code . $value, $this->country);
     }
 
     /**

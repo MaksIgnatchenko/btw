@@ -9,8 +9,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class GeographyCountry extends Model
 {
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function states()
     {
-        $this->hasMany(GeographyState::class);
+        return $this->hasMany(GeographyState::class);
     }
 }

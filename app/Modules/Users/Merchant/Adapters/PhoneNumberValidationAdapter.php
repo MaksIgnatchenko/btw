@@ -16,13 +16,16 @@ class PhoneNumberValidationAdapter extends GeographyValidationAdapterAbsract
      *
      * @return bool
      */
-    public static function validate(string $value, int $countryCode = null): bool
+    public static function validate(string $value, int $countryCode): bool
     {
-        if ($countryCode) {
-            $country = self::resolveCountry($countryCode);
+        $country = self::resolveCountry($countryCode);
+
+        try {
+            return PhoneNumber::validate($value, $country);
+        } catch (\InvalidArgumentException $e) {
+            return true;
         }
 
-        return PhoneNumber::validate($value, $country ?? null);
     }
 
 }

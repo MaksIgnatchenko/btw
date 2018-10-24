@@ -6,61 +6,129 @@
 namespace App\Modules\Users\Merchant\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
-use App\Modules\Users\Merchant\Enums\MerchantRegistrationCountriesEnum;
-use App\Modules\Users\Merchant\Providers\GeographyServiceProvider;
+use App\Modules\Categories\Repositories\CategoryRepository;
+use App\Modules\Users\Merchant\Models\Merchant;
 use App\Modules\Users\Merchant\Requests\RegisterMerchantCompanyRequest;
 use App\Modules\Users\Merchant\Requests\RegisterMerchantContactDataRequest;
 use App\Modules\Users\Merchant\Services\Geography\GeographyServiceInterface;
-use App\Modules\Users\Models\Merchant;
-use App\Modules\Users\Repositories\MerchantRepository;
+use App\Modules\Users\Merchant\Repositories\MerchantRepository;
 use App\Modules\Users\Requests\RegisterMerchantRequest;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class RegistrationController extends Controller
 {
+    /** @var MerchantRepository */
     protected $merchantRepository;
+
+    /** @var GeographyServiceInterface */
     protected $geographyService;
+
+    /** @var CategoryRepository */
+    protected $categoryRepository;
 
     /**
      * RegistrationController constructor.
      *
      * @param MerchantRepository        $merchantRepository
+     * @param CategoryRepository        $categoryRepository
      * @param GeographyServiceInterface $geographyService
      */
-    public function __construct(MerchantRepository $merchantRepository, GeographyServiceInterface $geographyService)
+    public function __construct(
+        MerchantRepository $merchantRepository,
+        CategoryRepository $categoryRepository,
+        GeographyServiceInterface $geographyService
+    )
     {
         $this->merchantRepository = $merchantRepository;
         $this->geographyService = $geographyService;
+        $this->categoryRepository = $categoryRepository;
     }
 
-    public function signUp(RegisterMerchantRequest $request)
+    /**
+     * @param Request $request
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function signUp(Request $request)
+    {
+        if ($request->session()->has('first_name')) {
+            $countries = $this->geographyService->getCountries()->pluck('name', 'id');
+            $categories = $this->categoryRepository->all()->pluck('name', 'id');
+            return view('merchants.web.tell-form', [
+                'countries' => $countries,
+                'categories' => $categories,
+            ]);
+        }
+
+        if ($request->session()->has('email')) {
+            $countries = $this->geographyService->getCountries()->pluck('name', 'id');
+
+            return view('merchants.web.country-info', [
+                'countries' => $countries,
+            ]);
+        }
+
+        return view('merchants.web.register');
+    }
+
+    /**
+     * @param RegisterMerchantRequest $request
+     *
+     * @return RedirectResponse
+     */
+    public function setAccountInfo(RegisterMerchantRequest $request)
     {
         $request->session()->put($request->all());
 
-        $countries = $this->geographyService->getCountries();
+        return redirect()->route('merchant.registration.sign-up');
+    }
 
-        return view('', [
-            'countries' => $countries
+    /**
+     * @param RegisterMerchantContactDataRequest $request
+     *
+     * @return RedirectResponse
+     */
+    public function setContactInfo(RegisterMerchantContactDataRequest $request)
+    {
+        $request->session()->put($request->all());
+
+        return redirect()->route('merchant.registration.sign-up');
+    }
+
+    /**
+     * @param RegisterMerchantCompanyRequest $request
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws \Prettus\Validator\Exceptions\ValidatorException
+     */
+    public function setStoreInfo(RegisterMerchantCompanyRequest $request)
+    {
+        $merchant = $this->merchantRepository
+            ->createWithRelations(array_merge($request->session()->all(), $request->all()));
+
+        Auth::guard('merchant')->login($merchant);
+
+        $request->session()->flush();
+
+        return view('store.index');
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function restoreContactData(Request $request)
+    {
+        $request->session()->put($request->all());
+
+        $countries = $this->geographyService->getCountries()->pluck('name', 'id');
+
+        return view('merchants.web.country-info', [
+            'countries' => $countries,
         ]);
     }
-
-    public function contactInfo(RegisterMerchantContactDataRequest $request)
-    {
-        $request->session()->put($request->all());
-
-        return view('');
-    }
-
-    public function aboutStore(RegisterMerchantCompanyRequest $request)
-    {
-        $merchant = Merchant::create($request->session()->all());
-        $merchant->address()->create($request->session()->all());
-        $merchant->store()->create($request->all());
-
-        Auth::login($merchant);
-
-        return view('');
-    }
-
 
 }

@@ -5,11 +5,12 @@
 
 namespace App\Modules\Users\Merchant\Http\Controllers\Web;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class LoginController
+class LoginController extends Controller
 {
     use AuthenticatesUsers;
 
@@ -42,5 +43,13 @@ class LoginController
         $request->session()->invalidate();
 
         return redirect('/login');
+    }
+
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function index()
+    {
+        return view('merchants.web.login');
     }
 }

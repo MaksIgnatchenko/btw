@@ -5,6 +5,7 @@
 
 namespace App\Modules\Users\Merchant\Services\Geography;
 
+use App\Modules\Users\Merchant\Models\Geography\GeographyCity;
 use App\Modules\Users\Merchant\Models\Geography\GeographyCountry;
 use App\Modules\Users\Merchant\Models\Geography\GeographyState;
 use Illuminate\Database\Eloquent\Collection;
@@ -52,7 +53,7 @@ class GeographyService implements GeographyServiceInterface
     public function getCities(int $state = null): Collection
     {
         if ($state) {
-            return GeographyState::where('state_id', $state)->get();
+            return GeographyCity::where('state_id', $state)->get();
         }
 
         return GeographyState::all();

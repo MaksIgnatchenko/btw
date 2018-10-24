@@ -78,7 +78,7 @@ return [
     |
     */
 
-    'locale' => 'en',
+    'locale' => env('APP_LOCALE', 'en'),
 
     /*
     |--------------------------------------------------------------------------
@@ -197,7 +197,9 @@ return [
         App\Modules\Users\Customer\Providers\WebRouteServiceProvider::class,
         App\Modules\Users\Customer\Providers\AdminRouteServiceProvider::class,
         App\Modules\Users\Merchant\Providers\AdminRouteServiceProvider::class,
+        App\Modules\Users\Merchant\Providers\WebRouteServiceProvider::class,
         App\Modules\Users\Merchant\Providers\GeographyServiceProvider::class,
+        App\Modules\Store\Providers\WebRouteServiceProvider::class,
 
         Laravel\Socialite\SocialiteServiceProvider::class,
 
@@ -268,5 +270,6 @@ return [
         'Outcome' => App\Modules\Orders\Models\Outcome::class,
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
         'Socialite' => Laravel\Socialite\Facades\Socialite::class,
+        'Geography' => App\Modules\Users\Merchant\Facades\Geography::class,
     ],
 ];

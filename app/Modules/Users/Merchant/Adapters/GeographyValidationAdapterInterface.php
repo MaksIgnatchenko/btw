@@ -13,5 +13,5 @@ interface GeographyValidationAdapterInterface
      *
      * @return bool
      */
-    public static function validate(string $value, int $countryCode = null): bool;
+    public static function validate(string $value, int $countryCode): bool;
 }
