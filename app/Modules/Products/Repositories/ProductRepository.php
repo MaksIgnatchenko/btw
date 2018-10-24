@@ -114,7 +114,9 @@ class ProductRepository extends BaseRepository
             $query->whereIn('user_id', $userIds);
         }
 
-        return $query->get();
+        return $query
+            ->get()
+            ->makeVisible('wished');
     }
 
 
@@ -155,7 +157,8 @@ class ProductRepository extends BaseRepository
 
         return $query->offset($offset)
             ->limit(Product::PRODUCTS_PAGE_LIMIT)
-            ->get();
+            ->get()
+            ->makeVisible('wished');
     }
 
     /**
@@ -168,7 +171,9 @@ class ProductRepository extends BaseRepository
         return Product::with([
             'images',
             'category',
-        ])->find($id);
+        ])
+            ->find($id)
+            ->makeVisible('wished');
     }
 
     /**

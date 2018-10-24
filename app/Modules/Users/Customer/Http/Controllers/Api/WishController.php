@@ -19,7 +19,7 @@ class WishController extends Controller
     /** @var Customer */
     protected $customer;
 
-    /** @var WishListRepository */
+    /** @var CustomerRepository */
     protected $customerRepo;
 
     /**
