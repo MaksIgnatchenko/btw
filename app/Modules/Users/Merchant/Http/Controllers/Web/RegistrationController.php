@@ -13,6 +13,7 @@ use App\Modules\Users\Merchant\Requests\RegisterMerchantContactDataRequest;
 use App\Modules\Users\Merchant\Services\Geography\GeographyServiceInterface;
 use App\Modules\Users\Merchant\Repositories\MerchantRepository;
 use App\Modules\Users\Requests\RegisterMerchantRequest;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -45,6 +46,11 @@ class RegistrationController extends Controller
         $this->categoryRepository = $categoryRepository;
     }
 
+    /**
+     * @param Request $request
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function signUp(Request $request)
     {
         if ($request->session()->has('first_name')) {
@@ -70,7 +76,7 @@ class RegistrationController extends Controller
     /**
      * @param RegisterMerchantRequest $request
      *
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      */
     public function setAccountInfo(RegisterMerchantRequest $request)
     {
@@ -82,7 +88,7 @@ class RegistrationController extends Controller
     /**
      * @param RegisterMerchantContactDataRequest $request
      *
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      */
     public function setContactInfo(RegisterMerchantContactDataRequest $request)
     {
@@ -91,15 +97,36 @@ class RegistrationController extends Controller
         return redirect()->route('merchant.registration.sign-up');
     }
 
+    /**
+     * @param RegisterMerchantCompanyRequest $request
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function setStoreInfo(RegisterMerchantCompanyRequest $request)
     {
-        $merchant = Merchant::createWithRelations($request->session()->all() + $request->all());
+        $merchant = Merchant::createWithRelations(array_merge($request->session()->all(), $request->all()));
 
         Auth::guard('merchant')->login($merchant);
 
         $request->session()->flush();
 
         return view('store.index');
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function restoreContactData(Request $request)
+    {
+        $request->session()->put($request->all());
+
+        $countries = $this->geographyService->getCountries()->pluck('name', 'id');
+
+        return view('merchants.web.country-info', [
+            'countries' => $countries,
+        ]);
     }
 
 }
