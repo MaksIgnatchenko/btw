@@ -1,12 +1,12 @@
 @extends('layouts.merchants.app')
 
-@section('title', 'Reset password')
+@section('title', __('merchants.page_titles.password_reset'))
 
 @section('content')
     <!-- Main -->
     <div class="main forgot-pass">
         <div class="forgot-wrapper">
-            <h1 class="page-title">Forgot password</h1>
+            <h1 class="page-title">{{__('merchants.forgot_password')}}</h1>
 
             {!! Form::open([
     'route' => 'password.request',
@@ -27,23 +27,23 @@
 
             <div class="form-content">
                 <p>
-                    {!! Form::text('email', null, ['placeholder' => 'Enter your email']) !!}
+                    {!! Form::text('email', null, ['placeholder' => __('merchants.password_restore.email')]) !!}
                 </p>
             </div>
             <div class="form-content">
                 <p>
-                    {!! Form::password('password', ['placeholder' => 'Enter a new password']) !!}
+                    {!! Form::password('password', ['placeholder' => __('merchants.password_restore.enter_new_pasword')]) !!}
                 </p>
             </div>
             <div class="form-content form-content--min-margin">
                 <p>
-                    {!! Form::password('password_confirmation', ['placeholder' => 'Confirm password']) !!}
+                    {!! Form::password('password_confirmation', ['placeholder' => __('merchants.password_restore.confirm_password')]) !!}
 
                 </p>
             </div>
             <div class="form-content">
                 <p>
-                    <button type="submit">Save</button>
+                    <button type="submit">{{__('merchants.save')}}</button>
                 </p>
             </div>
 

@@ -1,12 +1,12 @@
 @extends('layouts.merchants.app')
 
-@section('title', 'Password reset request')
+@section('title', __('merchants.page_titles.password_reset_request'))
 
 @section('content')
     <!-- Main -->
     <div class="main forgot-pass">
         <div class="forgot-wrapper">
-            <h1 class="page-title">Forgot password</h1>
+            <h1 class="page-title">{{__('merchants.forgot_password')}}</h1>
 
             {!! Form::open([
         'route' => 'merchant.password.email',
@@ -25,13 +25,13 @@
 
             <div class="form-content form-content--min-margin">
                 <p>
-                    {!! Form::text('email', null, ['placeholder' => 'Enter your email']) !!}
+                    {!! Form::text('email', null, ['placeholder' => __('merchants.password_restore.email')]) !!}
                 </p>
             </div>
-            <p class="forgot-pass__info">Please enter your e-mail to recover password</p>
+            <p class="forgot-pass__info">{{__('merchants.password_restore.email_info')}}</p>
             <div class="form-content">
                 <p>
-                    {!! Form::submit('Reset Password') !!}
+                    {!! Form::submit(__('merchants.password_restore.reset_password')) !!}
                 </p>
             </div>
 

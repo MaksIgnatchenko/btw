@@ -7,7 +7,7 @@
     <div class="main login-page">
         <div class="container">
             <div class="login-page__wrapper">
-                <h1 class="page-title page-title--short">Join to unlock the full experience</h1>
+                <h1 class="page-title page-title--short">{{__('merchants.login.join')}}</h1>
 
                 @if($errors->count())
                     <div class="login-error-message">{{$errors->first()}}</div>
@@ -24,8 +24,8 @@
                     <p class="login-form__inp-wr">
                         <span class="icon icon-user"></span>
                         {!! Form::text('email', null, [
-                        'placeholder' => 'Email',
-                        'class' => $errors->has('email') ? 'registration-field-valid-fail' : '',
+                        'placeholder' => __('merchants.email'),
+                        'class' => $errors->has('merchants.email') ? 'registration-field-valid-fail' : '',
                         ]
                         ) !!}
                     </p>
@@ -34,22 +34,26 @@
                     <p class="login-form__inp-wr">
                         <span class="icon icon-password"></span>
                         {!! Form::password('password', [
-                        'placeholder' => 'Password',
+                        'placeholder' => __('merchants.password'),
                         'class' => $errors->has('password') ? 'registration-field-valid-fail' : '',
                         ]) !!}
                     </p>
                 </div>
                 <div class="reg-store-bottom">
-                    <a href="{{route('merchant.registration.sign-up')}}">Register now</a>
-                    <a href="{{route('merchant.password.request')}}">Forgot password</a>
+                    <a href="{{route('merchant.registration.sign-up')}}">{{__('merchants.register_now')}}</a>
+                    <a href="{{route('merchant.password.request')}}">{{__('merchants.forgot_password')}}</a>
                 </div>
                 <div class="form-content form-content--min-margin">
                     <p>
-                        <button type="submit">Sign in</button>
+                        <button type="submit">{{__('merchants.login.sign_in')}}</button>
                     </p>
                 </div>
-                <p class="login-form__info">By signing in, you agree to the <a href="#">Terms and Conditions</a> and
-                    <a href="#">Privacy Policy</a></p>
+                <p class="login-form__info">
+                    {!! __('merchants.agreement', [
+                    'tc_link' => '#',
+                    'pp_link' => '#',
+                    ]) !!}
+                </p>
                 {!! Form::close() !!}
             </div>
         </div>

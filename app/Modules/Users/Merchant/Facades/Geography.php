@@ -10,9 +10,6 @@ use Illuminate\Support\Facades\Facade;
 
 class Geography extends Facade
 {
-    protected const DEFAULT_CITY_RESULT = ['Cities'];
-    protected const DEFAULT_STATE_RESULT = ['States'];
-
     protected static function getFacadeAccessor()
     {
         return GeographyServiceInterface::class;
@@ -22,13 +19,13 @@ class Geography extends Facade
     {
         $states = static::getFacadeRoot()->getStates($country)->pluck('name', 'id');
 
-        return $states->count() ? $states : self::DEFAULT_STATE_RESULT;
+        return $states->count() ? $states : [__('registration.contacts.state')];
     }
 
     public static function getCitiesByStateAsSelectArray(int $state = null)
     {
         $cities = static::getFacadeRoot()->getCities($state)->pluck('name', 'id');
 
-        return $cities->count() ? $cities : self::DEFAULT_CITY_RESULT;
+        return $cities->count() ? $cities : [__('registration.contacts.city')];
     }
 }
