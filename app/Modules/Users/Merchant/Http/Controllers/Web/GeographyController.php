@@ -25,13 +25,24 @@ class GeographyController extends Controller
         $this->geographyService = $geographyService;
     }
 
+    /**
+     * @param GeographyDataRequest $request
+     *
+     * @return \Illuminate\Support\Collection
+     * @throws \App\Modules\Users\Merchant\Exceptions\UnknownGeographicObjectTypeException
+     */
     public function getObjects(GeographyDataRequest $request)
     {
         return GeographyHelper::getObjectsByParentId($request->parent_id, $request->data_type)
             ->pluck('name', 'id');
     }
 
-    public function getCountryPhoneCode(Request $request)
+    /**
+     * @param Request $request
+     *
+     * @return null|string
+     */
+    public function getCountryPhoneCode(Request $request): ?string
     {
         return $this->geographyService->getCountryById($request->country_id)->phoneCode;
     }

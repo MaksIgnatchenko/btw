@@ -11,7 +11,10 @@ class GeographyObjectTypesEnum
     public const STATE = 'state';
     public const CITY = 'city';
 
-    public static function toArray()
+    /**
+     * @return array
+     */
+    public static function toArray(): array
     {
         return [
             self::COUNTRY,
@@ -20,7 +23,10 @@ class GeographyObjectTypesEnum
         ];
     }
 
-    public static function toString()
+    /**
+     * @return string
+     */
+    public static function toString(): string
     {
         return implode(',', self::toArray());
     }

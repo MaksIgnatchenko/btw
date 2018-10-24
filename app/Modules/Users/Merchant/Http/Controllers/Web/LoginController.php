@@ -45,6 +45,9 @@ class LoginController extends Controller
         return redirect('/login');
     }
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function index()
     {
         return view('merchants.web.login');

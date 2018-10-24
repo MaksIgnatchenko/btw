@@ -18,14 +18,14 @@ class Geography extends Facade
         return GeographyServiceInterface::class;
     }
 
-    public static function statesSelectValues(int $country = null)
+    public static function getStatesByCountryAsSelectArray(int $country = null)
     {
         $states = static::getFacadeRoot()->getStates($country)->pluck('name', 'id');
 
         return $states->count() ? $states : self::DEFAULT_STATE_RESULT;
     }
 
-    public static function citiesSelectValues(int $state = null)
+    public static function getCitiesByStateAsSelectArray(int $state = null)
     {
         $cities = static::getFacadeRoot()->getCities($state)->pluck('name', 'id');
 

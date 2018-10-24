@@ -12,6 +12,13 @@ use Illuminate\Database\Eloquent\Collection;
 
 abstract class GeographyHelper
 {
+    /**
+     * @param int    $parentId
+     * @param string $objectType
+     *
+     * @return Collection
+     * @throws UnknownGeographicObjectTypeException
+     */
     public static function getObjectsByParentId(int $parentId, string $objectType): Collection
     {
         $geographyService = app()[GeographyServiceInterface::class];
