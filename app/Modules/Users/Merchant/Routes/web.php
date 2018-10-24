@@ -25,6 +25,7 @@ Route::group([
     $this->post('set-account-info', 'RegistrationController@setAccountInfo')->name('merchant.registration.set-account-info');
     $this->post('set-contact-info', 'RegistrationController@setContactInfo')->name('merchant.registration.set-contact-info');
     $this->post('set-company-info', 'RegistrationController@setStoreInfo')->name('merchant.registration.set-store-info');
+    $this->post('restore-contact-info', 'RegistrationController@restoreContactData')->name('merchant.registration.restore-contact-info');
 });
 /* ------------------- */
 

@@ -31,7 +31,7 @@
     </div>
 </header><!-- /. end header -->
 
-@yield('content');
+@yield('content')
 
 <!-- Footer -->
 <footer class="footer">

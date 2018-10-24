@@ -21,7 +21,7 @@
             <h6 class="tell-form__title">Where is your inventory/warehouse located?</h6>
             <div class="tell-form-wrapper">
                 <div class="tell-form-country custom-select position-relative">
-                    {!! Form::select('store_country', ['Country'] + $countries->toArray()) !!}
+                    {!! Form::select('store_country', ['Country'] + $countries->toArray(), Session::get('store_country')) !!}
                     @if ($errors->has('store_country'))
                         <div class="alert alert-danger" role="alert">
                             <strong>{{ $errors->first('store_country') }}</strong></div>
@@ -29,7 +29,7 @@
                 </div>
                 <div class="tell-form-city position-relative">
                     <p>
-                        {!! Form::text('store_city', null, ['placeholder' => 'City']) !!}
+                        {!! Form::text('store_city', Session::get('store_city'), ['placeholder' => 'City']) !!}
                     </p>
                     @if ($errors->has('store_city'))
                         <div class="alert alert-danger" role="alert">
@@ -38,7 +38,7 @@
                 </div>
             </div>
             <div class="form-group" hidden>
-                {!! Form::select('categories[]', $categories, null, ['class' => 'form-control', 'multiple']) !!}
+                {!! Form::select('categories[]', $categories, Session::get('categories'), ['class' => 'form-control', 'multiple']) !!}
             </div>
             <h6 class="tell-form__title">Product Categories</h6>
             <div class="tell-form-wr-float">
@@ -62,14 +62,14 @@
             </div>
             <h6 class="tell-form__title">Company info</h6>
             <div class="tell-form-area position-relative">
-                {!! Form::textarea('info', null, ['placeholder' => 'Write your info', 'rows'=> 8]) !!}
+                {!! Form::textarea('info', Session::get('info'), ['placeholder' => 'Write your info', 'rows'=> 8]) !!}
                 @if ($errors->has('info'))
                     <div class="alert alert-danger" role="alert">
                         <strong>{{ $errors->first('info') }}</strong></div>
                 @endif
             </div>
             <div class="tell-form-btns">
-                <button class="tell-form-btn tell-form-btn--uncolor">Back</button>
+                <button formaction="{{route('merchant.registration.restore-contact-info')}}" class="tell-form-btn tell-form-btn--uncolor">Back</button>
 
                 {!! Form::submit('Enter my Store', ['class' => 'tell-form-btn tell-form-btn--color']) !!}
 

@@ -21,7 +21,7 @@
             <div class="form-wrapper-half">
                 <div class="form-content-half position-relative">
                     <p>
-                        {!! Form::text('first_name', null, ['placeholder' => 'First name']) !!}
+                        {!! Form::text('first_name', Session::get('first_name'), ['placeholder' => 'First name']) !!}
                     </p>
                     @if ($errors->has('first_name'))
                         <div class="alert alert-danger" role="alert">
@@ -30,7 +30,7 @@
                 </div>
                 <div class="form-content-half position-relative">
                     <p>
-                        {!! Form::text('last_name', null, ['placeholder' => 'Last name']) !!}
+                        {!! Form::text('last_name', Session::get('last_name'), ['placeholder' => 'Last name']) !!}
                     </p>
                     @if ($errors->has('last_name'))
                         <div class="alert alert-danger" role="alert">
@@ -40,7 +40,7 @@
             </div>
 
             <div class="form-content custom-select position-relative">
-                {!! Form::select('country', ['Country/Region'] + $countries->toArray()) !!}
+                {!! Form::select('country', ['Country/Region'] + $countries->toArray(), Session::get('country')) !!}
                 @if ($errors->has('country'))
                     <div class="alert alert-danger" role="alert">
                         <strong>{{ $errors->first('country') }}</strong></div>
@@ -49,15 +49,26 @@
 
             <div class="form-wrapper-half position-relative">
                 <div class="form-content-half custom-select">
-                    {!! Form::select('state', (!old('country')? ['State']:Geography::statesSelectValues(old('country'))), null) !!}
-                    @if ($errors->has('country'))
+                    @if (Session::get('country'))
+                        @php
+                            $stateSelectValues = Geography::getStatesByCountryAsSelectArray(Session::get('country'));
+                        @endphp
+                    @endif
+                    @if (old('state'))
+                        @php
+                            $stateSelectValues = Geography::getStatesByCountryAsSelectArray(old('country'));
+                        @endphp
+                    @endif
+
+                    {!! Form::select('state', $stateSelectValues ?? ['State'], Session::get('state')) !!}
+                    @if ($errors->has('state'))
                         <div class="alert alert-danger" role="alert">
-                            <strong>{{ $errors->first('country') }}</strong></div>
+                            <strong>{{ $errors->first('state') }}</strong></div>
                     @endif
                 </div>
                 <div class="form-content-half position-relative">
                     <p>
-                        {!! Form::text('street', null, ['placeholder' => 'Street address']) !!}
+                        {!! Form::text('street', Session::get('street'), ['placeholder' => 'Street address']) !!}
                     </p>
                     @if ($errors->has('street'))
                         <div class="alert alert-danger" role="alert">
@@ -67,7 +78,18 @@
             </div>
             <div class="form-wrapper-half">
                 <div class="form-content-half custom-select position-relative">
-                    {!! Form::select('city', (!old('state')? ['City']:Geography::citiesSelectValues(old('state')))) !!}
+                    @if (Session::get('country'))
+                        @php
+                            $citySelectValues = Geography::getCitiesByStateAsSelectArray(Session::get('state'));
+                        @endphp
+                    @endif
+                    @if (old('state'))
+                        @php
+                            $citySelectValues = Geography::getCitiesByStateAsSelectArray(old('state'));
+                        @endphp
+                    @endif
+
+                    {!! Form::select('city', $citySelectValues ?? ['City'], Session::get('city')) !!}
                     @if ($errors->has('city'))
                         <div class="alert alert-danger" role="alert">
                             <strong>{{ $errors->first('city') }}</strong></div>
@@ -75,7 +97,7 @@
                 </div>
                 <div class="form-content-half position-relative">
                     <p>
-                        {!! Form::text('zipcode', null, ['placeholder' => 'Zipcode/Postal code']) !!}
+                        {!! Form::text('zipcode', Session::get('zipcode'), ['placeholder' => 'Zipcode/Postal code']) !!}
                     </p>
                     @if ($errors->has('zipcode'))
                         <div class="alert alert-danger" role="alert">
@@ -89,12 +111,12 @@
             <div class="contact-form-content-wr position-relative">
                 <div class="contact-small-wrapper">
                     <p>
-                        {!! Form::text('phone_code', null, ['placeholder' => 'Country', 'readonly']) !!}
+                        {!! Form::text('phone_code', Session::get('phone_code'), ['placeholder' => 'Country', 'readonly']) !!}
                     </p>
                 </div>
                 <div class="contact-mid-wrapper">
                     <p>
-                        {!! Form::text('phone_number', null, ['placeholder' => 'Number']) !!}
+                        {!! Form::text('phone_number', Session::get('phone_number'), ['placeholder' => 'Number']) !!}
                     </p>
                 </div>
                 @if ($errors->has('phone_number'))
@@ -103,7 +125,7 @@
                 @endif
             </div>
 
-            <div class="contact-form-content-wr"  style="margin-top: -40px;">
+            <div class="contact-form-content-wr" style="margin-top: -40px;">
                 <div class="contact-mid-wrapper">
 
                 </div>

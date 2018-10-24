@@ -108,10 +108,12 @@ window.onload = function() {
             /* Add created element in list */
             labelList.appendChild(li);
 
-            document
-                .querySelector('select[name^=categories]')
-                .querySelector('option[value="'+id+'"]')
-                .setAttribute('selected', 'selected');
+            var cs = document.querySelector('select[name^=categories]');
+
+            if(cs) {
+                cs.querySelector('option[value="' + id + '"]')
+                    .setAttribute('selected', 'selected');
+            }
         }
 
         /* Get category name after click on list item */
@@ -125,13 +127,16 @@ window.onload = function() {
             }
         }
 
-        document
-            .querySelector('select[name^=categories]')
-            .querySelectorAll('option[selected]').forEach(function (o) {
-            createLabel(o.getAttribute('value'), o.innerHTML);
-            document.querySelector('.tell-form-category__item[id="'+o.getAttribute('value')+'"]')
-                .classList.add('tell-form-category__item--chosen');
-        });
+        var cs = document.querySelector('select[name^=categories]');
+
+        if(cs) {
+            cs.querySelectorAll('option[selected]').forEach(function (o) {
+                createLabel(o.getAttribute('value'), o.innerHTML);
+                document.querySelector('.tell-form-category__item[id="'+o.getAttribute('value')+'"]')
+                    .classList.add('tell-form-category__item--chosen');
+            });
+        }
+
 
         /* Remove label and activate list item */
         function removeLabel(e) {
