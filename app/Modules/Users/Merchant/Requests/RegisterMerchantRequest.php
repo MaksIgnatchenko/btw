@@ -17,9 +17,9 @@ class RegisterMerchantRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'email' => 'sometimes|required|min:1|max:100|unique:merchants,email',
-            'password' => 'sometimes|required|min:6|max:50',
-            'store' => 'sometimes|required|min:3|max:50',
+            'email' => 'required|email|max:255|unique:merchants,email',
+            'password' => 'required|min:6|max:50',
+            'store' => 'required|string|min:3|max:100',
         ];
     }
 
