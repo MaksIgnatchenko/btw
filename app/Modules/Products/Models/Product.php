@@ -86,20 +86,14 @@ class Product extends Model
         /** @var Category $categoryModel */
         $categoryModel = app()[Category::class];
 
-        /** @var int $categoryId */
-        $categoryId = $customerSearchDto->getCategoryId();
+        /** @var array $categoryIds */
+        $categoryIds = $customerSearchDto->getCategoryIds();
 
-        $categoryIds = null;
-
-        if ($categoryId) {
-            $category = $categoryRepository->find($categoryId);
-            $categories = new Collection([$category]);
-
-            if (false === $category->is_final) {
-                $categories = $categoryModel->getFinalCategories($categoryId);
-            }
-
-            $categoryIds = $categories->pluck('id')->toArray();
+        if ($categoryIds && false === $categoryModel::find($categoryIds[0])->is_final) {
+            $categoryIds = $categoryModel
+                ->getFinalCategories($categoryIds[0])
+                ->pluck('id')
+                ->toArray();
         }
 
         return $productRepository->getProductsByConditions(

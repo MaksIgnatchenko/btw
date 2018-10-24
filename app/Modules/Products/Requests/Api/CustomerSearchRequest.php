@@ -32,7 +32,8 @@ class CustomerSearchRequest extends FormRequest
         $rules = [
             'offset' => 'sometimes|integer',
             'keyword' => 'sometimes|string|max:50',
-            'category' => 'sometimes|integer|exists:categories,id',
+            'category' => 'sometimes|array',
+            'category.*' => 'integer|exists:categories,id',
             'order' => ['sometimes', Rule::in(ProductOrdersEnum::getValues())],
         ];
 

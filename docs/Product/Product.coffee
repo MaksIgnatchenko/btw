@@ -52,7 +52,7 @@ HTTP/1.1 200 OK
 @apiParam {Decimal} fplt Optional. Filter <b>Price less than</b>
 @apiParam {Decimal} fpgt Optional. Filter <b>Price greater than</b>
 @apiParam {String} order Optional. Available values: <code>lowest_price</code>, <code>highest_price</code>
-@apiParam {Integer} category Optional. Category ID
+@apiParam {Array} category[] Optional. Category IDs. One root category or many final categories can be set
 
 @apiSuccessExample Success-Response:
 HTTP/1.1 200 OK
