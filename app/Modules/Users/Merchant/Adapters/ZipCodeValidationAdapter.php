@@ -17,12 +17,15 @@ class ZipCodeValidationAdapter extends GeographyValidationAdapterAbsract
      *
      * @return mixed
      */
-    public static function validate(string $value, int $countryCode = null): bool
+    public static function validate(string $value, int $countryCode): bool
     {
-        if ($countryCode) {
-            $country = self::resolveCountry($countryCode);
+        $country = self::resolveCountry($countryCode);
+
+        try {
+            return ZipCode::validate($value, $country ?? null);
+        } catch (\InvalidArgumentException $e) {
+            return true;
         }
 
-        return ZipCode::valid($value, $country ?? null);
     }
 }

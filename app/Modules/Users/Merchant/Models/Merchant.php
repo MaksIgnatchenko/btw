@@ -5,12 +5,16 @@
 
 namespace App\Modules\Users\Merchant\Models;
 
+use App\Modules\Store\Models\Store;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class Merchant extends Authenticatable
 {
+    use Notifiable;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -20,6 +24,10 @@ class Merchant extends Authenticatable
         'first_name',
         'last_name',
         'email',
+        'password',
+    ];
+
+    protected $hidden = [
         'password',
     ];
 

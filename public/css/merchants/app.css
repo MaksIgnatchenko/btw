@@ -1,0 +1,22 @@
+.position-relative {
+    position: relative;
+}
+
+.alert {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    font-family: sans-serif;
+    width: max-content;
+}
+
+.registration-field-valid-fail {
+    background-color: #af7575;
+}
+
+.login-error-message {
+    text-align: center;
+    margin-bottom: 20px;
+    font-weight: bold;
+    font-size: 1.2em;
+}

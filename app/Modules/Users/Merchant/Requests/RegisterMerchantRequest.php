@@ -5,6 +5,8 @@
 
 namespace App\Modules\Users\Requests;
 
+use App\Modules\Users\Merchant\Rules\CountryZipCodeRule;
+use App\Modules\Users\Merchant\Rules\PhoneNumberRule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class RegisterMerchantRequest extends FormRequest
@@ -15,9 +17,9 @@ class RegisterMerchantRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'email' => 'required|min:1|max:100',
+            'email' => 'required|email|max:255|unique:merchants,email',
             'password' => 'required|min:6|max:50',
-            'company' => 'required|min:3|max:50',
+            'store' => 'required|string|min:3|max:100',
         ];
     }
 
