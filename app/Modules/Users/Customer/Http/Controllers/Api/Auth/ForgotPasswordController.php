@@ -49,6 +49,6 @@ class ForgotPasswordController extends Controller
      */
     protected function sendResetLinkFailedResponse()
     {
-        return response()->json(['message' => 'No such email']);
+        return response()->json(['message' => 'No such email'])->setStatusCode(422);
     }
 }
