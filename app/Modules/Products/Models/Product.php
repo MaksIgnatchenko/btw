@@ -7,14 +7,15 @@ use App\Modules\Categories\Repositories\CategoryRepository;
 use App\Modules\Products\Dto\CustomerSearchDto;
 use App\Modules\Products\Enums\ProductFiltersEnum;
 use App\Modules\Products\Enums\ProductOrdersEnum;
-use App\Modules\Products\Exceptions\WrongStatusException;
 use App\Modules\Products\Filters\ProductFilter;
 use App\Modules\Products\Repositories\ProductRepository;
+use App\Modules\Users\Customer\Models\Customer;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Auth;
 
 class Product extends Model
 {
@@ -68,7 +69,22 @@ class Product extends Model
      */
     protected $hidden = [
         'wishPivot',
+        'wished',
     ];
+
+    protected $appends = [
+        'wished',
+    ];
+
+    public function getWishedAttribute()
+    {
+        return (bool)$this->customersWishList()->where('customers.id', Auth::id())->count();
+    }
+
+    public function customersWishList()
+    {
+        return $this->belongsToMany(Customer::class, 'wishlists');
+    }
 
     /**
      * @param CustomerSearchDto $customerSearchDto
@@ -89,16 +105,24 @@ class Product extends Model
         /** @var array $categoryIds */
         $categoryIds = $customerSearchDto->getCategoryIds();
 
-        if ($categoryIds && false === $categoryModel::find($categoryIds[0])->is_final) {
-            $categoryIds = $categoryModel
-                ->getFinalCategories($categoryIds[0])
-                ->pluck('id')
-                ->toArray();
+        $categories = [];
+
+        if ($categoryIds) {
+            foreach ($categoryIds as $id) {
+                if ($categoryIds && false === $categoryModel::find($id)->is_final) {
+                    $categories = array_merge($categories, $categoryModel
+                        ->getFinalCategories($id)
+                        ->pluck('id')
+                        ->toArray());
+                } else {
+                    $categories[] = (int) $id;
+                }
+            }
         }
 
         return $productRepository->getProductsByConditions(
             $customerSearchDto->getOffset(),
-            $categoryIds,
+            array_unique($categories),
             $customerSearchDto->getKeyword(),
             $customerSearchDto->getOrder(),
             $customerSearchDto->getFilters()
