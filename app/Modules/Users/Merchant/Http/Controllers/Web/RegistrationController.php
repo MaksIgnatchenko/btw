@@ -101,10 +101,12 @@ class RegistrationController extends Controller
      * @param RegisterMerchantCompanyRequest $request
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws \Prettus\Validator\Exceptions\ValidatorException
      */
     public function setStoreInfo(RegisterMerchantCompanyRequest $request)
     {
-        $merchant = Merchant::createWithRelations(array_merge($request->session()->all(), $request->all()));
+        $merchant = $this->merchantRepository
+            ->createWithRelations(array_merge($request->session()->all(), $request->all()));
 
         Auth::guard('merchant')->login($merchant);
 

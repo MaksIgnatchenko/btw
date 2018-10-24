@@ -6,9 +6,6 @@
 namespace App\Modules\Users\Merchant\Models;
 
 use App\Modules\Store\Models\Store;
-use App\Modules\Users\Merchant\Models\Geography\GeographyCity;
-use App\Modules\Users\Merchant\Models\Geography\GeographyCountry;
-use App\Modules\Users\Merchant\Models\Geography\GeographyState;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -62,32 +59,5 @@ class Merchant extends Authenticatable
     public function store(): HasOne
     {
         return $this->hasOne(Store::class);
-    }
-
-    /**
-     * @param array $data
-     *
-     * @return Merchant
-     */
-    public static function createWithRelations(array $data): Merchant
-    {
-        $data['country'] = GeographyCountry::find($data['country'])->sortname;
-        $data['state'] = GeographyState::find($data['state'])->name;
-        $data['city'] = GeographyCity::find($data['city'])->name;
-
-        /** @var Merchant $merchant */
-        $merchant = self::create($data);
-
-        $merchant->address()->create($data);
-
-        $storeData = array_merge($data, [
-            'country' => GeographyCountry::find($data['store_country'])->sortname,
-            'city' => $data['store_city'],
-            'name' => $data['store']
-        ]);
-
-        $merchant->store()->create($storeData);
-
-        return $merchant;
     }
 }
