@@ -3,7 +3,9 @@
 @apiName Get Categories tree
 @apiGroup Product
 @apiPermission Guest
-@apiVersion 0.1.0
+@apiVersion 0.1.1
+
+@apiHeader {String} Authorization <code><b>token_type</b> <b>access_token</b></code>
 
 @apiParam {Integer} offset Optional. Result offset
 
@@ -12,28 +14,47 @@ HTTP/1.1 200 OK
 {
     "products": [
         {
+
             "id": 21,
             "name": "Test Product #1",
+            "category_id": 8,
+            "attributes": null,
+            "quantity": 8,
             "price": "238.67",
             "main_image": "demo.jpeg",
-            "quantity": 8,
-            "attributes": null
+            "created_at": "2018-10-08 16:26:41",
+            "updated_at": "2018-10-08 16:26:41",
+            "offer_end": "2018-12-10 14:46:06",
+            "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+            "is_in_wish_list": false
         },
         {
             "id": 22,
             "name": "Test Product #2",
+            "category_id": 7,
+            "attributes": null,
+            "quantity": 10,
             "price": "171.43",
             "main_image": "demo.jpeg",
-            "quantity": 10,
-            "attributes": null
+            "created_at": "2018-10-08 16:26:41",
+            "updated_at": "2018-10-08 16:26:41",
+            "offer_end": "2018-12-10 14:46:06",
+            "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+            "is_in_wish_list": false
         },
         {
             "id": 23,
             "name": "Test Product #3",
+            "category_id": 7,
+            "attributes": null,
+            "quantity": 3,
             "price": "115.52",
             "main_image": "demo.jpeg",
-            "quantity": 3,
-            "attributes": null
+            "created_at": "2018-10-08 16:26:41",
+            "updated_at": "2018-10-08 16:26:41",
+            "offer_end": "2018-12-10 14:46:06",
+            "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+            "is_in_wish_list": false
         }
     ]
 }
@@ -44,7 +65,9 @@ HTTP/1.1 200 OK
 @apiName Get Products by search criterias
 @apiGroup Product
 @apiPermission Guest
-@apiVersion 0.1.0
+@apiVersion 0.1.1
+
+@apiHeader {String} Authorization <code><b>token_type</b> <b>access_token</b></code>
 
 @apiParam {Integer} offset Optional. Result offset
 @apiParam {String} keyword Optional. Search pattern
@@ -52,7 +75,7 @@ HTTP/1.1 200 OK
 @apiParam {Decimal} fplt Optional. Filter <b>Price less than</b>
 @apiParam {Decimal} fpgt Optional. Filter <b>Price greater than</b>
 @apiParam {String} order Optional. Available values: <code>lowest_price</code>, <code>highest_price</code>
-@apiParam {Integer} category Optional. Category ID
+@apiParam {Array} category[] Optional. Category IDs. One root category or many final categories can be set
 
 @apiSuccessExample Success-Response:
 HTTP/1.1 200 OK
@@ -69,7 +92,8 @@ HTTP/1.1 200 OK
             "main_image": "demo.jpeg",
             "offer_end": "2018-12-03 16:26:41",
             "created_at": "2018-10-08 16:26:41",
-            "updated_at": "2018-10-08 16:26:41"
+            "updated_at": "2018-10-08 16:26:41",
+            "is_in_wish_list": false
         },
         {
             "id": 22,
@@ -82,7 +106,8 @@ HTTP/1.1 200 OK
             "main_image": "demo.jpeg",
             "offer_end": "2018-12-06 16:26:41",
             "created_at": "2018-10-08 16:26:41",
-            "updated_at": "2018-10-08 16:26:41"
+            "updated_at": "2018-10-08 16:26:41",
+            "is_in_wish_list": true
         },
         {
             "id": 23,
@@ -95,7 +120,8 @@ HTTP/1.1 200 OK
             "main_image": "demo.jpeg",
             "offer_end": "2018-11-22 16:26:41",
             "created_at": "2018-10-08 16:26:41",
-            "updated_at": "2018-10-08 16:26:41"
+            "updated_at": "2018-10-08 16:26:41",
+            "is_in_wish_list": false
         }
     ]
 }
@@ -106,7 +132,9 @@ HTTP/1.1 200 OK
 @apiName Get single Product by ID
 @apiGroup Product
 @apiPermission Guest
-@apiVersion 0.1.0
+@apiVersion 0.1.1
+
+@apiHeader {String} Authorization <code><b>token_type</b> <b>access_token</b></code>
 
 @apiSuccessExample Success-Response:
 HTTP/1.1 200 OK
@@ -123,6 +151,7 @@ HTTP/1.1 200 OK
         "offer_end": "2018-12-06 16:26:41",
         "created_at": "2018-10-08 16:26:41",
         "updated_at": "2018-10-08 16:26:41",
+        "is_in_wish_list": false,
         "images": [],
         "category": {
             "id": 7,

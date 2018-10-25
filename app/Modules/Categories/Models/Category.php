@@ -7,9 +7,7 @@ namespace App\Modules\Categories\Models;
 
 use App\Modules\Categories\Exceptions\NotFountCategory;
 use App\Modules\Categories\Repositories\CategoryRepository;
-use App\Modules\Notifications\Models\PushCustomer;
 use App\Modules\Products\Models\Product;
-use App\Modules\Users\Models\Merchant;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -98,7 +96,8 @@ class Category extends Model
         foreach ($categories as $category) {
             if ($category->children) {
                 $recursionResult = $this->getCategoriesFromTree($category->children);
-                $result += $recursionResult;
+                // TODO how did it work with + statement??? O_o
+                $result = array_merge($result, $recursionResult);
                 continue;
             }
             $result[] = $category;

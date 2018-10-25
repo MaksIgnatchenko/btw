@@ -177,7 +177,7 @@ class ProductController extends Controller
         $customerSearchDto = app()[CustomerSearchDto::class];
 
         $customerSearchDto->setOffset($request->get('offset', 0))
-            ->setCategoryId($request->get('category'))
+            ->setCategoryIds($request->get('category', []))
             ->setKeyword($request->get('keyword'))
             ->setOrder($request->get('order'))
             ->setFilters($request->only(ProductFiltersEnum::toArray()));

@@ -3,7 +3,6 @@
 namespace App\Modules\Products\Repositories;
 
 use App\Modules\Products\Models\Product;
-use App\Modules\Reviews\Enums\ReviewStatusEnum;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
@@ -114,7 +113,9 @@ class ProductRepository extends BaseRepository
             $query->whereIn('user_id', $userIds);
         }
 
-        return $query->get();
+        return $query
+            ->get()
+            ->makeVisible('is_in_wish_list');
     }
 
 
@@ -155,7 +156,8 @@ class ProductRepository extends BaseRepository
 
         return $query->offset($offset)
             ->limit(Product::PRODUCTS_PAGE_LIMIT)
-            ->get();
+            ->get()
+            ->makeVisible('is_in_wish_list');
     }
 
     /**
@@ -168,7 +170,9 @@ class ProductRepository extends BaseRepository
         return Product::with([
             'images',
             'category',
-        ])->find($id);
+        ])
+            ->find($id)
+            ->makeVisible('is_in_wish_list');
     }
 
     /**

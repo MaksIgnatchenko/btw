@@ -7,14 +7,15 @@ use App\Modules\Categories\Repositories\CategoryRepository;
 use App\Modules\Products\Dto\CustomerSearchDto;
 use App\Modules\Products\Enums\ProductFiltersEnum;
 use App\Modules\Products\Enums\ProductOrdersEnum;
-use App\Modules\Products\Exceptions\WrongStatusException;
 use App\Modules\Products\Filters\ProductFilter;
 use App\Modules\Products\Repositories\ProductRepository;
+use App\Modules\Users\Customer\Models\Customer;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Auth;
 
 class Product extends Model
 {
@@ -68,7 +69,28 @@ class Product extends Model
      */
     protected $hidden = [
         'wishPivot',
+        'is_in_wish_list',
     ];
+
+    protected $appends = [
+        'is_in_wish_list',
+    ];
+
+    /**
+     * @return bool
+     */
+    public function getIsInWishListAttribute(): bool
+    {
+        return (bool)$this->customersWishList()->where('customers.id', Auth::id())->count();
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function customersWishList()
+    {
+        return $this->belongsToMany(Customer::class, 'wishlists');
+    }
 
     /**
      * @param CustomerSearchDto $customerSearchDto
@@ -80,31 +102,29 @@ class Product extends Model
         /** @var ProductRepository $productRepository */
         $productRepository = app()[ProductRepository::class];
 
-        /** @var CategoryRepository $categoryRepository */
-        $categoryRepository = app()[CategoryRepository::class];
-
         /** @var Category $categoryModel */
         $categoryModel = app()[Category::class];
 
-        /** @var int $categoryId */
-        $categoryId = $customerSearchDto->getCategoryId();
+        /** @var array $categoryIds */
+        $categoryIds = $customerSearchDto->getCategoryIds();
 
-        $categoryIds = null;
+        $categories = [];
 
-        if ($categoryId) {
-            $category = $categoryRepository->find($categoryId);
-            $categories = new Collection([$category]);
-
-            if (false === $category->is_final) {
-                $categories = $categoryModel->getFinalCategories($categoryId);
+        if ($categoryIds) {
+            foreach ($categoryIds as $id) {
+                if (!$categoryModel::find($id)->is_final) {
+                    $categories = array_merge($categories, $categoryModel
+                        ->getFinalCategories($id)
+                        ->pluck('id'));
+                } else {
+                    $categories[] = (int) $id;
+                }
             }
-
-            $categoryIds = $categories->pluck('id')->toArray();
         }
 
         return $productRepository->getProductsByConditions(
             $customerSearchDto->getOffset(),
-            $categoryIds,
+            array_unique($categories),
             $customerSearchDto->getKeyword(),
             $customerSearchDto->getOrder(),
             $customerSearchDto->getFilters()

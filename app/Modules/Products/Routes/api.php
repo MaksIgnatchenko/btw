@@ -16,6 +16,7 @@ $this->group([
 });
 
 $this->group([
+    'middleware' => ['auth:customer'],
     'prefix' => 'products',
 ], function () {
     $this->get('/price-breakers', 'ProductController@priceBreakers');

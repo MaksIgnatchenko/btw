@@ -9,8 +9,8 @@ class CustomerSearchDto
 {
     /** @var int */
     protected $offset;
-    /** @var int */
-    protected $categoryId;
+    /** @var array */
+    protected $categoryIds;
     /** @var string */
     protected $keyword;
     /** @var string */
@@ -39,21 +39,21 @@ class CustomerSearchDto
     }
 
     /**
-     * @return int|null
+     * @return array|null
      */
-    public function getCategoryId(): ?int
+    public function getCategoryIds(): ?array
     {
-        return $this->categoryId;
+        return $this->categoryIds;
     }
 
     /**
-     * @param int|null $categoryId
+     * @param array $categoryIds
      *
      * @return CustomerSearchDto
      */
-    public function setCategoryId(int $categoryId = null): CustomerSearchDto
+    public function setCategoryIds(array $categoryIds = []): CustomerSearchDto
     {
-        $this->categoryId = $categoryId;
+        $this->categoryIds = $categoryIds;
 
         return $this;
     }
