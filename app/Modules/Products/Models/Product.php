@@ -69,18 +69,24 @@ class Product extends Model
      */
     protected $hidden = [
         'wishPivot',
-        'wished',
+        'is_in_wish_list',
     ];
 
     protected $appends = [
-        'wished',
+        'is_in_wish_list',
     ];
 
-    public function getWishedAttribute()
+    /**
+     * @return bool
+     */
+    public function getIsInWishListAttribute(): bool
     {
         return (bool)$this->customersWishList()->where('customers.id', Auth::id())->count();
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
     public function customersWishList()
     {
         return $this->belongsToMany(Customer::class, 'wishlists');
@@ -96,9 +102,6 @@ class Product extends Model
         /** @var ProductRepository $productRepository */
         $productRepository = app()[ProductRepository::class];
 
-        /** @var CategoryRepository $categoryRepository */
-        $categoryRepository = app()[CategoryRepository::class];
-
         /** @var Category $categoryModel */
         $categoryModel = app()[Category::class];
 
@@ -109,11 +112,10 @@ class Product extends Model
 
         if ($categoryIds) {
             foreach ($categoryIds as $id) {
-                if ($categoryIds && false === $categoryModel::find($id)->is_final) {
+                if (!$categoryModel::find($id)->is_final) {
                     $categories = array_merge($categories, $categoryModel
                         ->getFinalCategories($id)
-                        ->pluck('id')
-                        ->toArray());
+                        ->pluck('id'));
                 } else {
                     $categories[] = (int) $id;
                 }
