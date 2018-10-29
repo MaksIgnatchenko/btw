@@ -1,6 +1,6 @@
-window.onload = function() {
+window.onload = function () {
     /* Custom Select */
-    (function(){
+    (function () {
         var x, i, j, selElmnt, a, b, c, e;
         /*look for any elements with the class "custom-select":*/
         x = document.getElementsByClassName("custom-select");
@@ -25,7 +25,7 @@ window.onload = function() {
                 b.appendChild(c);
             }
             x[i].insertBefore(b, e.nextSibling);
-            a.addEventListener("click", function(e) {
+            a.addEventListener("click", function (e) {
                 /*when the select box is clicked, close any other select boxes,
                 and open/close the current select box:*/
                 e.stopPropagation();
@@ -34,6 +34,7 @@ window.onload = function() {
                 this.classList.toggle("select-arrow-active");
             });
         }
+
         function closeAllSelect(elmnt) {
             /*a function that will close all select boxes in the document,
             except the current select box:*/
@@ -53,13 +54,14 @@ window.onload = function() {
                 }
             }
         }
+
         /*if the user clicks anywhere outside the select box,
         then close all select boxes:*/
         document.addEventListener("click", closeAllSelect);
     })();
 
     /* Add categories */
-    (function(){
+    (function () {
         var elemTitle, list, labelList;
         /* Element category title */
         elemTitle = document.getElementById('category-title');
@@ -70,19 +72,37 @@ window.onload = function() {
 
         /* Open/close category list and toggle triangle after click in title  */
         function openCategoryList(e) {
+            e.stopPropagation();
             var that = e.target;
-            if( !that.classList.contains('tell-form-category__display--open') ) {
+            if (!that.classList.contains('tell-form-category__display--open')) {
                 that.classList.add('tell-form-category__display--open');
-                list.classList.remove('tell-form-category__list--close')
-            } else {
-                that.classList.remove('tell-form-category__display--open');
-                list.classList.add('tell-form-category__list--close');
+                list.classList.remove('tell-form-category__list--close');
+                return true;
+            } else if (that.classList.contains('tell-form-category__display--open')) {
+                closeCategoryList(e);
             }
         }
 
-        function closeCategoryList() {
-            elemTitle.classList.remove('tell-form-category__display--open');
-            list.classList.add('tell-form-category__list--close');
+        function closeCategoryList(e) {
+            var that = e.target;
+
+            // don't close when click on categories
+            if (e.target.classList.contains('tell-form-category__item')) {
+                return false;
+            }
+
+            // close on click categories title
+            if (e.target.classList.contains('tell-form-category__display--open')) {
+                elemTitle.classList.remove('tell-form-category__display--open');
+                list.classList.add('tell-form-category__list--close');
+                return true;
+            }
+
+            // close categories list in any other cases
+            if (elemTitle.classList.contains('tell-form-category__display--open')) {
+                elemTitle.classList.remove('tell-form-category__display--open');
+                list.classList.add('tell-form-category__list--close');
+            }
         }
 
         /* Generate markdown for category label */
@@ -110,7 +130,7 @@ window.onload = function() {
 
             var cs = document.querySelector('select[name^=categories]');
 
-            if(cs) {
+            if (cs) {
                 cs.querySelector('option[value="' + id + '"]')
                     .setAttribute('selected', 'selected');
             }
@@ -119,7 +139,7 @@ window.onload = function() {
         /* Get category name after click on list item */
         function chooseCategory(e) {
             var that = e.target;
-            if( !that.classList.contains('tell-form-category__item--chosen') ) {
+            if (!that.classList.contains('tell-form-category__item--chosen')) {
                 var text = that.textContent || that.innerText;
                 that.classList.add('tell-form-category__item--chosen');
                 createLabel(that.getAttribute('id'), text);
@@ -129,10 +149,10 @@ window.onload = function() {
 
         var cs = document.querySelector('select[name^=categories]');
 
-        if(cs) {
+        if (cs) {
             cs.querySelectorAll('option[selected]').forEach(function (o) {
                 createLabel(o.getAttribute('value'), o.innerHTML);
-                document.querySelector('.tell-form-category__item[id="'+o.getAttribute('value')+'"]')
+                document.querySelector('.tell-form-category__item[id="' + o.getAttribute('value') + '"]')
                     .classList.add('tell-form-category__item--chosen');
             });
         }
@@ -140,7 +160,7 @@ window.onload = function() {
 
         /* Remove label and activate list item */
         function removeLabel(e) {
-            if( e.target.tagName.toUpperCase() === 'I' ) {
+            if (e.target.tagName.toUpperCase() === 'I') {
                 var label = e.target.parentElement.parentElement;
                 var input = e.target.parentElement.nextElementSibling;
                 var elemId = input.getAttribute('value');
@@ -148,53 +168,50 @@ window.onload = function() {
                 var items = document.querySelector('.tell-form-list');
 
                 label.classList.add('tell-form-item--remove');
-                setTimeout(function(){
+                var myTimeout = setTimeout(function () {
                     items.removeChild(label);
-                },300);
+                    clearTimeout(myTimeout);
+                }, 300);
                 categoryElem.classList.remove('tell-form-category__item--chosen');
                 document
                     .querySelector('select[name^=categories]')
-                    .querySelector('option[value="'+elemId+'"]')
+                    .querySelector('option[value="' + elemId + '"]')
                     .removeAttribute('selected', 'selected');
 
             }
         }
 
 
-        if( elemTitle ) {
+        if (elemTitle) {
             elemTitle.addEventListener('click', openCategoryList);
             list.addEventListener('click', chooseCategory);
             labelList.addEventListener('click', removeLabel);
+            document.addEventListener('click', closeCategoryList);
         }
     })();
-};
 
-function divSelectClickEvent(e) {
-    /*when an item is clicked, update the original select box,
-    and the selected item:*/
-    var y, i, k, s, h, ki;
-    s = this.parentNode.parentNode.getElementsByTagName("select")[0];
-    h = this.parentNode.previousSibling;
-    for (i = 0; i < s.length; i++) {
-        if (s.options[i].innerHTML == this.innerHTML) {
-            s.selectedIndex = i;
-            h.innerHTML = this.innerHTML;
-            y = this.parentNode.getElementsByClassName("same-as-selected");
-            for (k = 0; k < y.length; k++) {
-                y[k].removeAttribute("class");
-            }
-            /* pass through select and remove attribute selected */
-            for ( ki = 0; ki < s.options.length; ki++ ) {
-                if( s.options[ki].hasAttribute('selected') ) {
-                    s.options[ki].removeAttribute('selected');
-                }
-            }
-            s.options[i].setAttribute("selected", "selected");
-            this.setAttribute("class", "same-as-selected");
-            var event = new Event("change");
-            s.dispatchEvent(event);
-            break;
+
+    /* Set height to empty shop container */
+    (function () {
+        var shopWrapper = document.querySelector('.main-shop-wrapper'),
+            shopContainer = document.querySelector('.main-shop-empty');
+
+        function setHeight(wrapper, el) {
+            var height = wrapper.offsetHeight - 60;
+            el.style.height = height + 'px';
         }
-    }
-    h.click();
-}
+
+        function onResize() {
+            shopContainer.removeAttribute('style');
+            setHeight(shopWrapper, shopContainer);
+        }
+
+        if (shopContainer) {
+            setHeight(shopWrapper, shopContainer);
+            if (window.innerWidth > 400) {
+                window.addEventListener('resize', onResize);
+            }
+        }
+    })();
+
+};

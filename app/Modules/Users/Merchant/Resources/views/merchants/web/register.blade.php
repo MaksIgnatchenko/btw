@@ -58,7 +58,7 @@
 
             <div class="reg-store-bottom">
                 <span>{{__('registration.already_have_account_question')}}</span>
-                <a href="{{route('merchant.login')}}">{{__('merchants.login_here')}}</a>
+                <a href="{{route('index')}}">{{__('merchants.login_here')}}</a>
             </div>
         </div>
     </div><!-- /. end header -->
