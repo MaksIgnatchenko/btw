@@ -215,3 +215,33 @@ window.onload = function () {
     })();
 
 };
+
+function divSelectClickEvent(e) {
+    /*when an item is clicked, update the original select box,
+    and the selected item:*/
+    var y, i, k, s, h, ki;
+    s = this.parentNode.parentNode.getElementsByTagName("select")[0];
+    h = this.parentNode.previousSibling;
+    for (i = 0; i < s.length; i++) {
+        if (s.options[i].innerHTML == this.innerHTML) {
+            s.selectedIndex = i;
+            h.innerHTML = this.innerHTML;
+            y = this.parentNode.getElementsByClassName("same-as-selected");
+            for (k = 0; k < y.length; k++) {
+                y[k].removeAttribute("class");
+            }
+            /* pass through select and remove attribute selected */
+            for ( ki = 0; ki < s.options.length; ki++ ) {
+                if( s.options[ki].hasAttribute('selected') ) {
+                    s.options[ki].removeAttribute('selected');
+                }
+            }
+            s.options[i].setAttribute("selected", "selected");
+            this.setAttribute("class", "same-as-selected");
+            var event = new Event("change");
+            s.dispatchEvent(event);
+            break;
+        }
+    }
+    h.click();
+}
