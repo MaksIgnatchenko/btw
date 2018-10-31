@@ -6,6 +6,12 @@
 
 @section('title', __('merchants.page_titles.store_info'))
 
+@section('footer-class', 'footer')
+
+@section('header')
+    @include('merchants.web.header')
+@stop
+
 @section('content')
     <!-- Main -->
     <div class="main tell-page">
