@@ -5,6 +5,7 @@
 
 namespace App\Modules\Store\Providers;
 
+use App\Modules\Store\Http\ViewComposers\StoreComposer;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
@@ -17,6 +18,6 @@ class ComposerServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        View::composer('store.store', 'App\Modules\Store\Http\ViewComposers\StoreComposer');
+        View::composer('store.store', StoreComposer::class);
     }
 }
