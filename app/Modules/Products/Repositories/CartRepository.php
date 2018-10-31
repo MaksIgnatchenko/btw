@@ -52,7 +52,7 @@ class CartRepository extends BaseRepository
     public function findCartsWithProducts(int $customerId): Collection
     {
         return Cart::where(['customer_id' => $customerId])
-            ->with('productRelation')
+            ->with('product')
             ->get();
     }
 

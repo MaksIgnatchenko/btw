@@ -7,10 +7,10 @@ namespace App\Modules\Products\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Modules\Products\Exceptions\ProductAlreadyAddedException;
-use App\Modules\Products\Factory\AddToCart\AddToCartFactory;
-use App\Modules\Products\Factory\ChangeQuantityFactory;
+use App\Modules\Products\Factory\AddToCart\AddProduct;
 use App\Modules\Products\Models\Cart;
 use App\Modules\Products\Repositories\CartRepository;
+use App\Modules\Products\Repositories\ProductRepository;
 use App\Modules\Products\Requests\Api\CheckCartRequest;
 use App\Modules\Products\Requests\Api\CreateCartRequest;
 use App\Modules\Products\Requests\Api\UpdateCartRequest;
@@ -21,22 +21,30 @@ use Illuminate\Support\Facades\Auth;
 
 class CartController extends Controller
 {
+    /** @var CartRepository */
+    protected $cartRepository;
+
+    /** @var ProductRepository */
+    protected $productRepository;
+
+    /**
+     * CartController constructor.
+     *
+     * @param CartRepository $cartRepository
+     */
+    public function __construct(CartRepository $cartRepository, ProductRepository $productRepository)
+    {
+        $this->cartRepository = $cartRepository;
+        $this->productRepository = $productRepository;
+    }
 
     /**
      * @return JsonResponse
      */
     public function getAll(): JsonResponse
     {
-        /** @var CartRepository $cartRepository */
-        $cartRepository = app(CartRepository::class);
-        /** @var User $user */
-        $user = Auth::user();
-        $customerId = $user->customer->id;
-
-        $carts = $cartRepository->findCartsWithProducts($customerId);
-        $carts->each(function ($item, $key) {
-            $item->productRelation->setVisible(['parameters']);
-        });
+        $customerId = Auth::id();
+        $carts = $this->cartRepository->findCartsWithProducts($customerId);
 
         return response()->json(['cart' => $carts]);
     }
@@ -50,29 +58,22 @@ class CartController extends Controller
      */
     public function create(CreateCartRequest $request): JsonResponse
     {
-        /** @var User $user */
-        $user = Auth::user();
-        $customer = $user->customer;
-        $source = $request->get('source');
-        $deliveryOption = $request->get('delivery_option', CartDeliveryOptionEnum::STORE_DELIVERY);
-
-        // TODO move to model
-        $itemId = $request->get('product_id');
-        if (CartSourceEnum::BID === $source) {
-            $itemId = $request->get('bid_id');
-        }
-
-        /** @var AddToCartFactory $factory */
-        $factory = app(AddToCartFactory::class);
+        $customerId = Auth::id();
 
         try {
-            $addToCart = $factory->get($source, $customer->id, $itemId, $deliveryOption);
-            $addToCart->execute();
+            $product = $this->productRepository->find($request->product_id);
+            $cart = $this->cartRepository->findCartByConditions($product->id, $customerId);
+
+            if (null !== $cart) {
+                throw new ProductAlreadyAddedException('This product is already added to cart');
+            }
+
+            (new AddProduct($product, $customerId))->execute();
         } catch (ProductAlreadyAddedException $e) {
             return response()->json([
                 'message' => 'The given data is invalid',
-                'errors'  => [
-                    'product_id' => ['This product is already added to cart'],
+                'errors' => [
+                    'product_id' => $e->getMessage(),
                 ],
             ], 400);
         }
@@ -82,27 +83,33 @@ class CartController extends Controller
 
     /**
      * @param UpdateCartRequest $request
-     * @param int $cartId
+     * @param int               $cartId
      *
      * @return JsonResponse
-     * @throws \App\Modules\Products\Exceptions\WrongOperationActionException
      */
     public function update(UpdateCartRequest $request, int $cartId): JsonResponse
     {
-        /** @var CartRepository $cartRepository */
-        $cartRepository = app(CartRepository::class);
         /** @var Cart $cart */
-        $cart = $cartRepository->findWithoutFail($cartId);
+        $cart = $this->cartRepository->findWithoutFail($cartId);
 
         $this->checkCart($cart);
-        if (CartSourceEnum::PRODUCT !== $cart->source) {
-            abort(403, 'You can edit only when source product');
+
+        if (
+            $request->quantity <= $cart->product->quantity &&
+            $request->quantity > Cart::PRODUCT_MIN_QUANTITY
+        ) {
+            $cart->quantity = $request->quantity;
+            $this->cartRepository->save($cart);
+
+            return response()->json(['success' => true]);
         }
 
-        $operation = ChangeQuantityFactory::getOperation($request->get('action'));
-        $operation->make($cart);
-
-        return response()->json(['success' => true]);
+        return response()->json([
+            'message' => 'The given data is invalid',
+            'errors' => [
+                'quantity' => 'Quantity must be a value between 1 and product quantity',
+            ],
+        ], 422);
     }
 
     /**
@@ -113,14 +120,11 @@ class CartController extends Controller
      */
     public function delete(int $cartId): JsonResponse
     {
-        /** @var CartRepository $cartRepository */
-        $cartRepository = app(CartRepository::class);
-        /** @var Cart $cart */
-        $cart = $cartRepository->findWithoutFail($cartId);
+        $cart = $this->cartRepository->findWithoutFail($cartId);
 
         $this->checkCart($cart);
 
-        $cartRepository->delete($cartId);
+        $this->cartRepository->delete($cartId);
 
         return response()->json(['success' => true]);
     }
@@ -144,10 +148,8 @@ class CartController extends Controller
             abort(401, 'No such cart');
         }
 
-        /** @var User $user */
-        $user = Auth::user();
         /** @var Customer $customer */
-        $customer = $user->customer;
+        $customer = Auth::user();
 
         if (!$customer->owns($cart, 'customer_id')) {
             abort(403, 'You can edit only your own carts');
