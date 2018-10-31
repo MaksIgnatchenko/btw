@@ -6,11 +6,15 @@
 namespace App\Modules\Store\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
+use Illuminate\View\View;
 
 class StoreController extends Controller
 {
-    public function index()
+    /**
+     * @return View
+     */
+    public function index(): View
     {
-        return view('store.index');
+        return view('store.store');
     }
 }
