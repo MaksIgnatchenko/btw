@@ -6,6 +6,12 @@
 
 @section('title', __('merchants.page_titles.contact_info'))
 
+@section('footer-class', 'footer')
+
+@section('header')
+    @include('merchants.web.header')
+@stop
+
 @section('content')
     <!-- Main -->
     <div class="main contact-page">

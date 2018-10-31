@@ -2,6 +2,12 @@
 
 @section('title', __('merchants.page_titles.create_store'))
 
+@section('footer-class', 'footer')
+
+@section('header')
+    @include('merchants.web.header')
+@stop
+
 @section('content')
     <!-- Main -->
     <div class="main store-page">

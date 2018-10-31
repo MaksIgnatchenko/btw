@@ -3,8 +3,9 @@
  * Created by Artem Petrov, Appus Studio LP on 16.11.2017
  */
 
-Route::get('/', 'LoginController@index')->name('index');
-Route::post('/login', 'LoginController@login')->name('merchant.login');
+Route::get('/login', 'LoginController@index')->name('index');
+Route::post('/login', 'LoginController@login')->name('merchant.login')->middleware(['guest']);
+Route::post('/logout', 'LoginController@logout')->name('logout')->middleware(['auth']);
 
 Route::group([
     'middleware' => 'web',

@@ -42,6 +42,16 @@ class Merchant extends Authenticatable
     }
 
     /**
+     * Merchant full name mutator.
+     *
+     * @return string
+     */
+    public function getFullNameAttribute(): string
+    {
+        return $this->first_name . ' ' . $this->last_name;
+    }
+
+    /**
      * Merchant to address relation.
      *
      * @return HasOne

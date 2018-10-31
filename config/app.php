@@ -200,6 +200,7 @@ return [
         App\Modules\Users\Merchant\Providers\WebRouteServiceProvider::class,
         App\Modules\Users\Merchant\Providers\GeographyServiceProvider::class,
         App\Modules\Store\Providers\WebRouteServiceProvider::class,
+        App\Modules\Store\Providers\ComposerServiceProvider::class,
 
         Laravel\Socialite\SocialiteServiceProvider::class,
 

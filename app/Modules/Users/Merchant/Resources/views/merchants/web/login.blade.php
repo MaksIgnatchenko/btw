@@ -2,6 +2,12 @@
 
 @section('title', 'BTW')
 
+@section('footer-class', 'footer')
+
+@section('header')
+    @include('merchants.web.header')
+@stop
+
 @section('content')
     <!-- Main -->
     <div class="main login-page">
