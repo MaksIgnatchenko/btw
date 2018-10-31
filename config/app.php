@@ -200,6 +200,7 @@ return [
         App\Modules\Users\Merchant\Providers\WebRouteServiceProvider::class,
         App\Modules\Users\Merchant\Providers\GeographyServiceProvider::class,
         App\Modules\Store\Providers\WebRouteServiceProvider::class,
+        App\Modules\Store\Providers\ComposerServiceProvider::class,
 
         Laravel\Socialite\SocialiteServiceProvider::class,
 
@@ -271,5 +272,6 @@ return [
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
         'Socialite' => Laravel\Socialite\Facades\Socialite::class,
         'Geography' => App\Modules\Users\Merchant\Facades\Geography::class,
+        'MerchantHelper' => App\Modules\Users\Merchant\Helpers\MerchantHelper::class,
     ],
 ];
