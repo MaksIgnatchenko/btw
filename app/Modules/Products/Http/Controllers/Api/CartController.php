@@ -96,7 +96,7 @@ class CartController extends Controller
 
         if (
             $request->quantity <= $cart->product->quantity &&
-            $request->quantity > Cart::PRODUCT_MIN_QUANTITY
+            $request->quantity >= Cart::PRODUCT_MIN_QUANTITY
         ) {
             $cart->quantity = $request->quantity;
             $this->cartRepository->save($cart);
