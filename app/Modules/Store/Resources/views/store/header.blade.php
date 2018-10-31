@@ -15,7 +15,7 @@
                     </div>
                 </div>
                 <div class="header-shop__add">
-                    <a href="#" class="shop-header__btn"><i></i>Add New Products</a>
+                    <a href="#" class="shop-header__btn"><i></i>{{__('store.add_new_products')}}</a>
                 </div>
             </div>
         </div>

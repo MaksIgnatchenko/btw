@@ -17,13 +17,13 @@
         <div class="top-nav-line">
             <ul class="nav-line__list">
                 <li class="nav-line__item">
-                    <a href="#" class="nav-line__link nav-line__link--active">My Products</a>
+                    <a href="#" class="nav-line__link nav-line__link--active">{{__('store.my_products')}}</a>
                 </li>
                 <li class="nav-line__item">
-                    <a href="#" class="nav-line__link">My orders</a>
+                    <a href="#" class="nav-line__link">{{__('store.my_orders')}}</a>
                 </li>
                 <li class="nav-line__item">
-                    <a href="#" class="nav-line__link">Settings</a>
+                    <a href="#" class="nav-line__link">{{__('store.settings')}}</a>
                 </li>
             </ul>
         </div><!-- /. end navigate link -->
@@ -32,8 +32,8 @@
         <div class="main-shop-wrapper">
             <div class="container main-shop-empty">
                 <div class="main-shop-empty__cont">
-                    <p>Now you do not have any active ads</p>
-                    <a href="#" class=""><i></i>Add New Products</a>
+                    <p>{{__('store.no_active_ads')}}</p>
+                    <a href="#" class=""><i></i>{{__('store.add_new_products')}}</a>
                 </div>
             </div>
         </div><!-- /. main shop wrapper -->
