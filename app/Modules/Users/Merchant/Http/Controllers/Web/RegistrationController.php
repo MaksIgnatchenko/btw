@@ -112,7 +112,7 @@ class RegistrationController extends Controller
 
         $request->session()->flush();
 
-        return view('store.index');
+        return view('store.store');
     }
 
     /**
