@@ -6,8 +6,6 @@
 namespace App\Modules\Products\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Modules\Products\Enums\CartDeliveryOptionEnum;
-use App\Modules\Products\Enums\CartSourceEnum;
 use App\Modules\Products\Exceptions\ProductAlreadyAddedException;
 use App\Modules\Products\Factory\AddToCart\AddToCartFactory;
 use App\Modules\Products\Factory\ChangeQuantityFactory;
