@@ -25,7 +25,7 @@
                 <div class="header__lang"><span>EN</span>English</div>
                 <nav class="navigation">
 
-                    @if (Route::currentRouteName() !== 'index')
+                    @if (Route::currentRouteName() !== 'index' && Auth::id())
                         <a href="#">{{__('merchants.home')}}</a>
                     @endif
 
