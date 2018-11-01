@@ -1,14 +1,14 @@
 <?php
 /**
- * Created by Andrei Podgornyi, Appus Studio LP on 31.10.2018
+ * Created by Andrei Podgornyi, Appus Studio LP on 01.11.2018
  */
 
-namespace App\Modules\Store\Http\ViewComposers;
+namespace App\Http\ViewComposers;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
-class StoreComposer
+class GlobalComposer
 {
     /**
      * @var \Illuminate\Contracts\Auth\Authenticatable|null

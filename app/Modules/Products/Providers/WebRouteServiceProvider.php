@@ -1,9 +1,9 @@
 <?php
 /**
- * Created by Andrei Podgornyi, Appus Studio LP on 19.10.2018
+ * Created by Andrei Podgornyi, Appus Studio LP on 01.11.2018
  */
 
-namespace App\Modules\Store\Providers;
+namespace App\Modules\Products\Providers;
 
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Route;
@@ -17,7 +17,7 @@ class WebRouteServiceProvider extends ServiceProvider
      *
      * @var string
      */
-    protected $namespace = 'App\Modules\Store\Http\Controllers\Web';
+    protected $namespace = 'App\Modules\Products\Http\Controllers\Web';
 
     /**
      * Define the routes for the application.

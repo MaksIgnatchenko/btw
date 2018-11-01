@@ -3,7 +3,7 @@
  * Created by Andrei Podgornyi, Appus Studio LP on 17.10.2018
  */
 
-namespace App\Modules\Store\Models;
+namespace App\Modules\Users\Merchant\Models;
 
 use App\Modules\Categories\Models\Category;
 use App\Modules\Users\Merchant\Models\Merchant;
