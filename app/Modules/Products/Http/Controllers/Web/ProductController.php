@@ -5,6 +5,8 @@
 
 namespace App\Modules\Products\Http\Controllers\Web;
 
+use App\Modules\Categories\Models\Category;
+use App\Modules\Products\Requests\Web\CreateProductRequest;
 use App\Http\Controllers\Controller;
 use Illuminate\View\View;
 
@@ -18,13 +20,18 @@ class ProductController extends Controller
         return view('products.web.index');
     }
 
-    public function create()
+    /**
+     * @return View
+     */
+    public function create(): View
     {
-        //TODO create create product method
+        $categories = Category::all()->pluck('name', 'id');
+
+        return view('products.web.create', ['categories' => $categories]);
     }
 
-    public function store()
+    public function store(CreateProductRequest $request)
     {
-        //TODO create store product method
+        return $request;
     }
 }
