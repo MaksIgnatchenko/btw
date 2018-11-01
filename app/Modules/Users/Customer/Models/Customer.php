@@ -10,10 +10,11 @@ use Illuminate\Support\Facades\Hash;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Laratrust\Traits\LaratrustUserTrait;
 
 class Customer extends Authenticatable implements JWTSubject
 {
-    use Notifiable;
+    use Notifiable, LaratrustUserTrait;
 
     protected $hidden = [
         'password',
@@ -55,6 +56,9 @@ class Customer extends Authenticatable implements JWTSubject
         $this->attributes['password'] = Hash::make($password);
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
     public function wishlist()
     {
         return $this->belongsToMany(Product::class, 'wishlists')

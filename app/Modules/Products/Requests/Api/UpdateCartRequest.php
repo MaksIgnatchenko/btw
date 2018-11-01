@@ -29,17 +29,7 @@ class UpdateCartRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'action' => 'required|in:' . UpdateCartActionEnum::toString(),
-        ];
-    }
-
-    /**
-     * @return array
-     */
-    public function messages(): array
-    {
-        return [
-            'action.in' => 'Wrong action. Available values: ' .  UpdateCartActionEnum::toString(),
+            'quantity' => 'required|integer',
         ];
     }
 }

@@ -3,7 +3,6 @@
 namespace App\Modules\Products\Models;
 
 use App\Modules\Categories\Models\Category;
-use App\Modules\Categories\Repositories\CategoryRepository;
 use App\Modules\Products\Dto\CustomerSearchDto;
 use App\Modules\Products\Enums\ProductFiltersEnum;
 use App\Modules\Products\Enums\ProductOrdersEnum;
@@ -13,6 +12,7 @@ use App\Modules\Users\Customer\Models\Customer;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
@@ -87,7 +87,7 @@ class Product extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function customersWishList()
+    public function customersWishList(): BelongsToMany
     {
         return $this->belongsToMany(Customer::class, 'wishlists');
     }
@@ -117,7 +117,7 @@ class Product extends Model
                         ->getFinalCategories($id)
                         ->pluck('id'));
                 } else {
-                    $categories[] = (int) $id;
+                    $categories[] = (int)$id;
                 }
             }
         }

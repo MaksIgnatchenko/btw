@@ -32,7 +32,7 @@ $this->group([
 });
 
 $this->group([
-    'middleware' => ['auth:api'],
+    'middleware' => ['auth:customer'],
     'prefix'     => 'cart',
 ], function () {
     $this->get('/', 'CartController@getAll');
