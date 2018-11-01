@@ -4,8 +4,8 @@
  */
 
 Route::get('/login', 'LoginController@index')->name('index');
-Route::post('/login', 'LoginController@login')->name('merchant.login')->middleware(['guest']);
-Route::post('/logout', 'LoginController@logout')->name('logout')->middleware(['auth']);
+Route::post('/login', 'LoginController@login')->name('merchant.login');
+Route::post('/logout', 'LoginController@logout')->name('logout');
 
 Route::group([
     'middleware' => 'web',
