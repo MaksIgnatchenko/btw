@@ -14,8 +14,6 @@ class Cart extends Model
     public const PRODUCT_MIN_QUANTITY = 1;
     public const PRODUCT_DEFAULT_QUANTITY = 1;
 
-    protected $table = 'carts';
-
     protected $fillable = [
         'customer_id',
         'product_id',

@@ -6,7 +6,6 @@
 namespace App\Modules\Products\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Modules\Products\Exceptions\ProductAlreadyAddedException;
 use App\Modules\Products\Factory\AddToCart\AddProduct;
 use App\Modules\Products\Models\Cart;
 use App\Modules\Products\Repositories\CartRepository;
@@ -14,8 +13,6 @@ use App\Modules\Products\Repositories\ProductRepository;
 use App\Modules\Products\Requests\Api\CheckCartRequest;
 use App\Modules\Products\Requests\Api\CreateCartRequest;
 use App\Modules\Products\Requests\Api\UpdateCartRequest;
-use App\Modules\Users\Models\Customer;
-use App\Modules\Users\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 
@@ -60,23 +57,19 @@ class CartController extends Controller
     {
         $customerId = Auth::id();
 
-        try {
-            $product = $this->productRepository->find($request->product_id);
-            $cart = $this->cartRepository->findCartByConditions($product->id, $customerId);
+        $product = $this->productRepository->find($request->product_id);
+        $cart = $this->cartRepository->findCartByConditions($product->id, $customerId);
 
-            if (null !== $cart) {
-                throw new ProductAlreadyAddedException('This product is already added to cart');
-            }
-
-            (new AddProduct($product, $customerId))->execute();
-        } catch (ProductAlreadyAddedException $e) {
+        if (null !== $cart) {
             return response()->json([
                 'message' => 'The given data is invalid',
                 'errors' => [
-                    'product_id' => $e->getMessage(),
+                    'product_id' => 'This product is already added to cart',
                 ],
             ], 400);
         }
+
+        (new AddProduct($product, $customerId))->execute();
 
         return response()->json(['success' => true]);
     }
