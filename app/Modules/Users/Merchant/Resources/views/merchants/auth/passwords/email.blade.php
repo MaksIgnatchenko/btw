@@ -2,6 +2,12 @@
 
 @section('title', __('merchants.page_titles.password_reset_request'))
 
+@section('footer-class', 'footer')
+
+@section('header')
+    @include('merchants.web.header')
+@stop
+
 @section('content')
     <!-- Main -->
     <div class="main forgot-pass">
