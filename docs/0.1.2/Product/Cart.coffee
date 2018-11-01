@@ -28,7 +28,6 @@ HTTP/1.1 200 OK
                 "main_image": "demo.jpeg",
                 "created_at": "2018-10-08 16:26:41",
                 "updated_at": "2018-10-08 16:26:41",
-                "offer_end": "2018-12-10 14:46:06",
                 "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do \n        eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation \n        ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit \n        esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui \n        officia deserunt mollit anim id est laborum."
             }
         },
@@ -49,7 +48,6 @@ HTTP/1.1 200 OK
                 "main_image": "demo.jpeg",
                 "created_at": "2018-10-08 16:26:41",
                 "updated_at": "2018-10-08 16:26:41",
-                "offer_end": "2018-12-10 14:46:06",
                 "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do \n        eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation \n        ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit \n        esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui \n        officia deserunt mollit anim id est laborum."
             }
         }

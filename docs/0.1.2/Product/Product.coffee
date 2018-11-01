@@ -24,7 +24,6 @@ HTTP/1.1 200 OK
             "main_image": "demo.jpeg",
             "created_at": "2018-10-08 16:26:41",
             "updated_at": "2018-10-08 16:26:41",
-            "offer_end": "2018-12-10 14:46:06",
             "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
             "is_in_wish_list": false
         },
@@ -38,7 +37,6 @@ HTTP/1.1 200 OK
             "main_image": "demo.jpeg",
             "created_at": "2018-10-08 16:26:41",
             "updated_at": "2018-10-08 16:26:41",
-            "offer_end": "2018-12-10 14:46:06",
             "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
             "is_in_wish_list": false
         },
@@ -52,7 +50,6 @@ HTTP/1.1 200 OK
             "main_image": "demo.jpeg",
             "created_at": "2018-10-08 16:26:41",
             "updated_at": "2018-10-08 16:26:41",
-            "offer_end": "2018-12-10 14:46:06",
             "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
             "is_in_wish_list": false
         }
@@ -90,7 +87,6 @@ HTTP/1.1 200 OK
             "quantity": 9,
             "price": "721.68",
             "main_image": "demo.jpeg",
-            "offer_end": "2018-12-03 16:26:41",
             "created_at": "2018-10-08 16:26:41",
             "updated_at": "2018-10-08 16:26:41",
             "is_in_wish_list": false
@@ -104,7 +100,6 @@ HTTP/1.1 200 OK
             "quantity": 10,
             "price": "171.43",
             "main_image": "demo.jpeg",
-            "offer_end": "2018-12-06 16:26:41",
             "created_at": "2018-10-08 16:26:41",
             "updated_at": "2018-10-08 16:26:41",
             "is_in_wish_list": true
@@ -118,7 +113,6 @@ HTTP/1.1 200 OK
             "quantity": 3,
             "price": "115.52",
             "main_image": "demo.jpeg",
-            "offer_end": "2018-11-22 16:26:41",
             "created_at": "2018-10-08 16:26:41",
             "updated_at": "2018-10-08 16:26:41",
             "is_in_wish_list": false
@@ -148,7 +142,6 @@ HTTP/1.1 200 OK
         "quantity": 10,
         "price": "171.43",
         "main_image": "demo.jpeg",
-        "offer_end": "2018-12-06 16:26:41",
         "created_at": "2018-10-08 16:26:41",
         "updated_at": "2018-10-08 16:26:41",
         "is_in_wish_list": false,

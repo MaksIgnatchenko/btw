@@ -24,8 +24,7 @@ HTTP/1.1 200 OK
             "price": "238.67",
             "main_image": "demo.jpeg",
             "created_at": "2018-10-08 16:26:41",
-            "updated_at": "2018-10-08 16:26:41",
-            "offer_end": "2018-12-10 14:46:06"
+            "updated_at": "2018-10-08 16:26:41"
         },
         {
             "id": 23,
@@ -37,8 +36,7 @@ HTTP/1.1 200 OK
             "price": "115.52",
             "main_image": "demo.jpeg",
             "created_at": "2018-10-08 16:26:41",
-            "updated_at": "2018-10-08 16:26:41",
-            "offer_end": "2018-12-10 14:46:06"
+            "updated_at": "2018-10-08 16:26:41"
         },
         {
             "id": 27,
@@ -50,8 +48,7 @@ HTTP/1.1 200 OK
             "price": "921.23",
             "main_image": "demo.jpeg",
             "created_at": "2018-10-08 16:26:41",
-            "updated_at": "2018-10-08 16:26:41",
-            "offer_end": "2018-12-10 14:46:06"
+            "updated_at": "2018-10-08 16:26:41"
         }
     ]
 }
