@@ -111,7 +111,7 @@ class RegistrationController extends Controller
 
         Auth::guard('merchant')->login($merchant);
 
-        return redirect()->route('store.products');
+        return redirect()->route('products.index');
     }
 
     /**

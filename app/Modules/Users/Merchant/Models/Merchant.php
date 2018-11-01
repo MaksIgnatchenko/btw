@@ -5,9 +5,7 @@
 
 namespace App\Modules\Users\Merchant\Models;
 
-use App\Modules\Products\Models\Product;
 use App\Modules\Store\Models\Store;
-use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Database\Eloquent\Relations\HasOne;

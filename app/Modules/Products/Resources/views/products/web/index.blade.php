@@ -7,7 +7,7 @@
 @section('footer-class', 'footer-shop')
 
 @section('header')
-    @include('store.header')
+    @include('products.web.header')
 @endsection
 
 @section('content')
