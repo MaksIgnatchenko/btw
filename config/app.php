@@ -183,7 +183,7 @@ return [
         App\Modules\Products\Providers\ProductApiRouteServiceProvider::class,
 //        \Cviebrock\ImageValidator\ImageValidatorServiceProvider::class,
 
-//        App\Modules\Products\Providers\ProductEventServiceProvider::class,
+        App\Modules\Products\Providers\ProductEventServiceProvider::class,
 //        App\Modules\Orders\Providers\OrderEventServiceProvider::class,
 //        App\Modules\Orders\Providers\OrderApiRouteServiceProvider::class,
 //        App\Modules\Orders\Providers\OrderAdminRouteServiceProvider::class,
