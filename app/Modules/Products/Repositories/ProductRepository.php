@@ -104,8 +104,7 @@ class ProductRepository extends BaseRepository
      */
     public function getPopular(int $offset, $userIds = null): ?Collection
     {
-        $query = Product::active()
-            ->orderBy('created_at', 'desc')
+        $query = Product::orderBy('created_at', 'desc')
             ->limit(Product::PRODUCTS_PAGE_LIMIT)
             ->offset($offset);
 
@@ -136,7 +135,7 @@ class ProductRepository extends BaseRepository
         array $filters = null
     ): Collection
     {
-        $query = Product::active();
+        $query = Product::query();
 
         if (!empty($categoryIds) && null !== $categoryIds) {
             $query->whereIn('category_id', $categoryIds);
