@@ -6,10 +6,12 @@
 namespace App\Modules\Store\Models;
 
 use App\Modules\Categories\Models\Category;
+use App\Modules\Products\Models\Product;
 use App\Modules\Users\Merchant\Models\Merchant;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Store extends Model
 {
@@ -38,5 +40,13 @@ class Store extends Model
     public function categories(): BelongsToMany
     {
         return $this->belongsToMany(Category::class);
+    }
+
+    /**
+     * @return HasMany
+     */
+    public function products(): HasMany
+    {
+        return $this->hasMany(Product::class);
     }
 }
