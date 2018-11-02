@@ -43,7 +43,7 @@ $this->group([
 });
 
 $this->group([
-    'middleware' => ['auth:api', 'activeUser'],
+    'middleware' => ['auth:customer'],
     'prefix'     => 'transaction',
 ], function () {
     $this->post('/', 'TransactionController@create');
