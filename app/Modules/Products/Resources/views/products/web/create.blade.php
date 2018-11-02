@@ -20,42 +20,28 @@
         <div class="main-shop-wrapper">
             <div class="container">
                 <!-- Add new -->
-                <form action="{{ route('products.store') }}" method="post" enctype="multipart/form-data" name="add-new-product">
-                    <p class="form-title">Add a new product</p>
+                {!! Form::model(null, ['route' => ['products.store'], 'method' => 'POST', 'files' => true, 'name' => 'add-new-product']) !!}
+                    <p class="form-title">{{__('products.create_product_section_title')}}</p>
                     <hr class="form-hr">
 
                     <!-- form container -->
                     <div class="form-container">
                         <div class="form-line__wrapper">
                             <div class="form-item__wrapper form-item__wrapper--text">
-                                <p class="form-item__title">Product name</p>
+                                <p class="form-item__title">{{__('products.create_name')}}</p>
                             </div>
                             <div class="form-item__wrapper form-item__wrapper--field">
-                                <input class="form-item__inp" type="text" name="add-new-name" maxlength="170" placeholder="Please enter product name">
+                                <input class="form-item__inp" type="text" name="name" maxlength="170" placeholder="{{__('products.create_name_placeholder')}}">
                             </div>
                         </div>
 
                         <div class="form-line__wrapper">
                             <div class="form-item__wrapper form-item__wrapper--text">
-                                <p class="form-item__title">Select a category</p>
+                                <p class="form-item__title">{{__('products.create_category')}}</p>
                             </div>
                             <div class="form-item__wrapper form-item__wrapper--field">
                                 <div class="custom-select">
-                                    <select name="add-new-categories" id="tell-location">
-                                        <option value="" disabled selected>Categories</option>
-                                        <option value="Australia">Australia</option>
-                                        <option value="Austria">Austria</option>
-                                        <option value="Belgium">Belgium</option>
-                                        <option value="Canada">Canada</option>
-                                        <option value="Croatia">Croatia</option>
-                                        <option value="Denmark">Denmark</option>
-                                        <option value="Estonia">Estonia</option>
-                                        <option value="France">France</option>
-                                        <option value="Spain">Spain</option>
-                                        <option value="United Kingdom">United Kingdom</option>
-                                        <option value="United Kingdom">United State Of America</option>
-                                        <option value="Vatican City">Vatican City</option>
-                                    </select>
+                                    {{ Form::select('add-new-categories', $categories, null, ['name' => 'add-new-categories', 'id' => 'tell-location']) }}
                                 </div>
                             </div>
                         </div>
@@ -67,51 +53,51 @@
                     <div class="form-container">
                         <div class="form-line__wrapper">
                             <div class="form-item__wrapper form-item__wrapper--text">
-                                <p class="form-item__title">Description</p>
+                                <p class="form-item__title">{{__('products.create_description')}}</p>
                             </div>
                             <div class="form-item__wrapper form-item__wrapper--field">
-                                <textarea class="form-item__area" name="add-new-description" rows="10" maxlength="1000" placeholder="Product description ..."></textarea>
+                                <textarea class="form-item__area" name="description" rows="10" maxlength="1000" placeholder="{{__('products.create_description_placeholder')}}"></textarea>
                             </div>
                         </div>
                     </div><!-- /. end form container -->
-                    <p class="form-title">Product's attributes</p>
+                    <p class="form-title">{{__('products.create_attribute_section_title')}}</p>
 
                     <hr class="form-hr">
 
                     <div class="form-container">
                         <div class="form-line__wrapper form-line__wrapper--min-margin">
                             <div class="form-item__wrapper form-item__wrapper--text">
-                                <p class="form-item__title">Quantity</p>
+                                <p class="form-item__title">{{__('products.create_quantity')}}</p>
                             </div>
                             <div class="form-item__wrapper form-item__wrapper--field">
-                                <input class="form-item__inp" type="text" name="add-new-quantity" maxlength="7" placeholder="Enter the value">
+                                <input class="form-item__inp" type="text" name="quantity" maxlength="7" placeholder="{{__('products.create_attribute_section_placeholder')}}">
                             </div>
                         </div>
 
                         <div class="form-line__wrapper form-line__wrapper--min-margin">
                             <div class="form-item__wrapper form-item__wrapper--text">
-                                <p class="form-item__title">Color</p>
+                                <p class="form-item__title">{{__('products.create_color')}}</p>
                             </div>
                             <div class="form-item__wrapper form-item__wrapper--field">
-                                <input class="form-item__inp" type="text" name="add-new-color" maxlength="100" placeholder="Enter the value">
+                                <input class="form-item__inp" type="text" name="color" maxlength="100" placeholder="{{__('products.create_attribute_section_placeholder')}}">
                             </div>
                         </div>
 
                         <div class="form-line__wrapper form-line__wrapper--min-margin">
                             <div class="form-item__wrapper form-item__wrapper--text">
-                                <p class="form-item__title">Size</p>
+                                <p class="form-item__title">{{__('products.create_size')}}</p>
                             </div>
                             <div class="form-item__wrapper form-item__wrapper--field">
-                                <input class="form-item__inp" type="text" name="add-new-size" maxlength="20" placeholder="Enter the value">
+                                <input class="form-item__inp" type="text" name="size" maxlength="20" placeholder="{{__('products.create_attribute_section_placeholder')}}">
                             </div>
                         </div>
 
                         <div class="form-line__wrapper form-line__wrapper--min-margin">
                             <div class="form-item__wrapper form-item__wrapper--text">
-                                <p class="form-item__title">Material</p>
+                                <p class="form-item__title">{{__('products.create_material')}}</p>
                             </div>
                             <div class="form-item__wrapper form-item__wrapper--field">
-                                <input class="form-item__inp" type="text" name="add-new-material" maxlength="100" placeholder="Enter the value">
+                                <input class="form-item__inp" type="text" name="material" maxlength="100" placeholder="{{__('products.create_attribute_section_placeholder')}}">
                             </div>
                         </div>
                     </div><!-- /. end form container -->
@@ -121,8 +107,8 @@
                     <div class="form-container">
                         <div class="form-line__wrapper form-line__wrapper--min-margin">
                             <div class="form-item__wrapper form-item__wrapper--text">
-                                <p class="form-item__title">Product photo</p>
-                                <p class="form-item__descr">Maximum number of photos: 5 pcs.</p>
+                                <p class="form-item__title">{{__('products.create_photo_section_title')}}</p>
+                                <p class="form-item__descr">{{__('products.create_photo_section_description')}}</p>
                             </div>
                             <div class="form-item__wrapper form-item__wrapper--files">
                                 <ul class="form-item__list">
@@ -170,12 +156,12 @@
                     <div class="form-container">
                         <div class="form-line__wrapper form-line__wrapper--min-margin">
                             <div class="form-item__wrapper form-item__wrapper--text">
-                                <p class="form-item__title">Price</p>
+                                <p class="form-item__title">{{__('products.create_price')}}</p>
                             </div>
                             <div class="form-item__wrapper form-item__wrapper--field">
                                 <span class="form-item__currency">$</span>
                                 <input class="form-item__inp form-item__inp--price" type="number" name="add-new-price" min="1" max="999999999" maxlength="9">
-                                <p class="form-item__inp-descr">Attention! 15% of the item’s price is transferred to the website.</p>
+                                <p class="form-item__inp-descr">{{__('products.create_price_description')}}</p>
                             </div>
                         </div>
                     </div><!-- /. end form container -->
@@ -186,10 +172,10 @@
                     </div>
 
                     <div class="form-wrapper__btn form-wrapper__btn--ta-r">
-                        <button type="submit">Create</button>
+                        {!! Form::submit(__('products.create_submit')) !!}
                     </div>
 
-                </form><!-- /. end add new -->
+            {!! Form::close() !!}<!-- /. end add new -->
             </div><!-- /. end container -->
         </div><!-- /. main shop wrapper -->
     </div><!-- /. end main -->
