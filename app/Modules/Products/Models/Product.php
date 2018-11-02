@@ -8,6 +8,7 @@ use App\Modules\Products\Enums\ProductFiltersEnum;
 use App\Modules\Products\Enums\ProductOrdersEnum;
 use App\Modules\Products\Filters\ProductFilter;
 use App\Modules\Products\Repositories\ProductRepository;
+use App\Modules\Store\Models\Store;
 use App\Modules\Users\Customer\Models\Customer;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
@@ -158,6 +159,13 @@ class Product extends Model
         return $this->belongsTo(Category::class, 'category_id', 'id');
     }
 
+    /**
+     * @return BelongsTo
+     */
+    public function store(): BelongsTo
+    {
+        return $this->belongsTo(Store::class);
+    }
 
     /**
      * @param $query
