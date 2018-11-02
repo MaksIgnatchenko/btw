@@ -9,7 +9,6 @@ use App\Http\Controllers\Controller;
 use App\Modules\Products\Events\TransactionCompletedEvent;
 use App\Modules\Products\Models\Transaction;
 use App\Modules\Products\Requests\Api\TransactionRequest;
-use App\Modules\Users\Models\User;
 use Braintree\Configuration;
 use Braintree_Transaction;
 use Illuminate\Http\JsonResponse;
@@ -33,19 +32,18 @@ class TransactionController extends Controller
 
         /** @var Transaction $transactionModel */
         $transactionModel = app(Transaction::class);
-        /** @var User $user */
-        $user = Auth::user();
-        $customerId = $user->customer->id;
+
+        $customerId = Auth::id();
         $amount = $request->get('amount');
         $noncence = $request->get('noncence');
 
         $transaction = $transactionModel->createTransaction($customerId, $amount);
 
         $result = Braintree_Transaction::sale([
-            'amount'             => $amount,
+            'amount' => $amount,
             'paymentMethodNonce' => $noncence,
-            'options'            => [
-                'submitForSettlement' => true
+            'options' => [
+                'submitForSettlement' => true,
             ],
         ]);
 
