@@ -246,4 +246,11 @@ class Product extends Model
         $parameters->quantity = (string)($parameters->quantity - $quantity);
         $this->parameters = \GuzzleHttp\json_encode($parameters);
     }
+
+    public function createProduct(array $input): void
+    {
+        $articleRepository = app()[ProductRepository::class];
+
+        $articleRepository->create($input);
+    }
 }
