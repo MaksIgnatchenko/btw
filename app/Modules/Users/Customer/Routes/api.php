@@ -35,3 +35,11 @@ $this->group([
 });
 
 $this->post('register', 'RegisterController@register');
+
+$this->group([
+    'prefix' => 'profile', 'middleware' => 'auth:customer',
+], function () {
+    $this->post('/', 'AuthController@me');
+    $this->put('/', 'ProfileController@update');
+    $this->delete('/', 'ProfileController@delete');
+});
