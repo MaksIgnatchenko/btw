@@ -107,3 +107,19 @@ HTTP/1.1 200 OK
     "success": true
 }
 ###
+
+###
+@api {get} /api/cart/check Check possibility to purchase the Cart
+@apiName Check possibility to purchase the Cart
+@apiGroup Cart
+@apiPermission Customer
+@apiVersion 0.1.2
+
+@apiHeader {String} Authorization <code><b>token_type</b> <b>access_token</b></code>
+
+@apiSuccessExample Success-Response:
+HTTP/1.1 200 OK
+{
+    "success": true
+}
+###
