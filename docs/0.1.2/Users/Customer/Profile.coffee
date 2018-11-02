@@ -1,26 +1,4 @@
 ###
-@api {post} /api/customer/profile Get profile
-@apiName Get profile
-@apiGroup Profile
-@apiPermission Customer
-@apiVersion 0.1.2
-
-@apiHeader {String} Authorization <code><b>token_type</b> <b>access_token</b></code>
-
-@apiSuccessExample Success-Response:
-HTTP/1.1 200 OK
-{
-    "id": 6,
-    "first_name": "mr",
-    "last_name": "demo",
-    "email": "ilya.kobus@appus.me",
-    "created_at": "2018-11-01 10:38:35",
-    "updated_at": "2018-11-02 12:50:45",
-    "address": 'New York, 27 st.'
-}
-###
-
-###
 @api {put} /api/customer/profile Update profile
 @apiName Update profile
 @apiGroup Profile
