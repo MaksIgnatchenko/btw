@@ -231,7 +231,7 @@ window.onload = function () {
         // Clear input
         function clearInput(element) {
             element.value = "";
-            element.removeAttribute('disabled');
+            element.removeAttribute('readonly');
         }
 
         // Clear background-image
@@ -273,7 +273,7 @@ window.onload = function () {
                 if( block.lastElementChild.nodeName.toUpperCase() === 'P' ) {
                     block.removeChild(block.lastElementChild);
                 }
-                element.setAttribute('disabled', true);
+                element.setAttribute('readonly', true);
                 block.style.backgroundImage = 'url('+ window.URL.createObjectURL(file) +')';
                 block.firstElementChild.classList.add('form-item__label--remove');
                 eventToBlock = clearBlock.bind(null, block, element);
