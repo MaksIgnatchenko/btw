@@ -56,7 +56,7 @@ class CreateOrdersAndTransactionsTables extends Migration
                 $table->json('product');
 
                 $table->integer('quantity');
-                $table->enum('status', array_keys(\App\Modules\Orders\Enums\OrderStatusEnum::toArray()));
+                $table->enum('status', ['pending', 'picked_up', '__returned', '_refunded']);
 
                 $table->timestamps();
             });

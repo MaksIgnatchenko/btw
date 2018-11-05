@@ -7,6 +7,7 @@ use App\Modules\Orders\Enums\OrderStatusEnum;
 use App\Modules\Orders\Models\Order;
 use App\Modules\Products\Helpers\ImagesPathHelper;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\DataTableAbstract;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Services\DataTable;
@@ -57,10 +58,7 @@ class IncomeDataTable extends DataTable
             ->editColumn('created_at', function (Order $order) {
                 return DateConverter::date($order->created_at);
             })
-            ->editColumn('total_amount', function (Order $order) {
-                return $order->quantity * $order->product->price;
-            })
-            ->rawColumns(['picture', 'action', 'status']);
+            ->rawColumns(['picture', 'action', 'status', 'total_amount']);
     }
 
     /**
@@ -72,7 +70,11 @@ class IncomeDataTable extends DataTable
      */
     public function query(Order $model): Builder
     {
-        return $model->newQuery();
+        return $model->newQuery()
+            ->select([
+                'orders.*',
+                DB::raw('TRUNCATE(product->\'$."price"\' * product->\'$."quantity"\', 2) as total_amount'),
+            ]);
     }
 
     /**
@@ -97,12 +99,12 @@ class IncomeDataTable extends DataTable
             ->minifiedAjax()
             ->addAction(['width' => '80px'])
             ->parameters([
-                'dom'   => 'tp<"#status-filter"><"payment-search"f>',
+                'dom' => 'tp<"#status-filter"><"payment-search"f>',
                 'bInfo' => false,
                 'order' => [
                     0, // here is the column number
-                    'asc'
-                ]
+                    'asc',
+                ],
             ]);
     }
 
@@ -114,22 +116,21 @@ class IncomeDataTable extends DataTable
     protected function getColumns(): array
     {
         return [
-            'created_at'     => [
+            'created_at' => [
                 'title' => 'Purchase date',
             ],
-            'total_amount'    => [
+            'total_amount' => [
                 'title' => 'Total amount',
-                'orderable' => false,
                 'searchable' => false,
             ],
-            'picture'        => [
-                'name'      => 'product',
-                'title'     => 'Picture',
+            'picture' => [
+                'name' => 'product',
+                'title' => 'Picture',
                 'orderable' => false,
             ],
-            'name'           => [
-                'name'      => 'product',
-                'title'     => 'Name',
+            'name' => [
+                'name' => 'product',
+                'title' => 'Name',
             ],
             'status',
         ];
