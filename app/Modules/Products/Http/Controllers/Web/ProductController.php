@@ -5,12 +5,28 @@
 
 namespace App\Modules\Products\Http\Controllers\Web;
 
+use App\Modules\Categories\Models\Category;
+use App\Modules\Products\Models\Product;
+use App\Modules\Products\Requests\Web\CreateProductRequest;
 use App\Http\Controllers\Controller;
 use Illuminate\View\View;
 
 class ProductController extends Controller
 {
+    protected $productModel;
+
     /**
+     * ProductController constructor.
+     * @param Product $product
+     */
+    public function __construct(Product $product)
+    {
+        $this->productModel = $product;
+    }
+
+    /**
+     * Show products list.
+     *
      * @return View
      */
     public function index(): View
@@ -18,13 +34,28 @@ class ProductController extends Controller
         return view('products.web.index');
     }
 
-    public function create()
+    /**
+     * Show add new product page.
+     *
+     * @return View
+     */
+    public function create(): View
     {
-        //TODO create create product method
+        $categories = Category::where('is_final', '1')->pluck('name', 'id');
+
+        return view('products.web.create', ['categories' => $categories]);
     }
 
-    public function store()
+    /**
+     * Create new product.
+     *
+     * @param CreateProductRequest $request
+     * @return CreateProductRequest
+     */
+    public function store(CreateProductRequest $request)
     {
-        //TODO create store product method
+        $this->productModel->createProduct($request->all());
+
+        //TODO Create store method;
     }
 }

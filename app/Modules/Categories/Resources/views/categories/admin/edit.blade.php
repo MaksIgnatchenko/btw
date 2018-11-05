@@ -48,7 +48,7 @@
             </div>
             @if($category->is_final)
                 <div class="col-md-4">
-                    @include('attributes')
+                    @include('categories.admin.attributes')
                 </div>
             @endif
         </div>
@@ -58,5 +58,5 @@
 @endsection
 
 @if($category->is_final)
-    @include('categories-libs')
+    @include('categories.admin.categories-libs')
 @endif
