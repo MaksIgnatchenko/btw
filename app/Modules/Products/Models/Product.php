@@ -8,7 +8,7 @@ use App\Modules\Products\Enums\ProductFiltersEnum;
 use App\Modules\Products\Enums\ProductOrdersEnum;
 use App\Modules\Products\Filters\ProductFilter;
 use App\Modules\Products\Repositories\ProductRepository;
-use App\Modules\Store\Models\Store;
+use App\Modules\Users\Merchant\Models\Store;
 use App\Modules\Users\Customer\Models\Customer;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;

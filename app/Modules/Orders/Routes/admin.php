@@ -4,7 +4,7 @@
  */
 
 Route::group([
-    'middleware' => ['auth:web'],
+    'middleware' => ['auth:admin'],
     'prefix'     => 'payments/income',
 ], function () {
     Route::get('index', 'IncomeController@index')->name('payments.income.index');
