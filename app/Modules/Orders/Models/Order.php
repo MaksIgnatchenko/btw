@@ -17,6 +17,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Facades\DB;
 
 class Order extends Model
 {
@@ -141,6 +142,19 @@ class Order extends Model
             'status',
             'created_at',
             'delivery_option',
+        ]);
+    }
+
+    /**
+     * @param $query
+     *
+     * @return mixed
+     */
+    public function scopeWithTotalAmount($query)
+    {
+        return $query->select([
+            'orders.*',
+            DB::raw('TRUNCATE(product->\'$."price"\' * product->\'$."quantity"\', 2) as total_amount'),
         ]);
     }
 

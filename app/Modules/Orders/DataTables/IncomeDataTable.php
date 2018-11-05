@@ -71,10 +71,7 @@ class IncomeDataTable extends DataTable
     public function query(Order $model): Builder
     {
         return $model->newQuery()
-            ->select([
-                'orders.*',
-                DB::raw('TRUNCATE(product->\'$."price"\' * product->\'$."quantity"\', 2) as total_amount'),
-            ]);
+            ->withTotalAmount();
     }
 
     /**
