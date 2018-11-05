@@ -43,17 +43,4 @@ class ProfileController extends Controller
             'status' => 'success',
         ]);
     }
-
-    public function delete(): JsonResponse
-    {
-        $customer = Auth::user();
-
-        $this->customerRepository->delete($customer->id);
-
-        Auth::logout();
-
-        return response()->json([
-            'status' => 'success',
-        ]);
-    }
 }

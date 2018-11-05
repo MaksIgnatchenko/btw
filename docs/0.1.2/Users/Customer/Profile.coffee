@@ -19,19 +19,3 @@ HTTP/1.1 200 OK
     "status": "success"
 }
 ###
-
-###
-@api {delete} /api/customer/profile Delete profile
-@apiName Delete profile
-@apiGroup Profile
-@apiPermission Customer
-@apiVersion 0.1.2
-
-@apiHeader {String} Authorization <code><b>token_type</b> <b>access_token</b></code>
-
-@apiSuccessExample Success-Response:
-HTTP/1.1 200 OK
-{
-    "status": "success"
-}
-###

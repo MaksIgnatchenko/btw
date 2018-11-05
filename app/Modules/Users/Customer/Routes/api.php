@@ -40,5 +40,4 @@ $this->group([
     'prefix' => 'profile', 'middleware' => 'auth:customer',
 ], function () {
     $this->put('/', 'ProfileController@update');
-    $this->delete('/', 'ProfileController@delete');
 });
