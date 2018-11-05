@@ -10,6 +10,7 @@ use App\Modules\Products\Filters\ProductFilter;
 use App\Modules\Products\Repositories\ProductRepository;
 use App\Modules\Users\Merchant\Models\Store;
 use App\Modules\Users\Customer\Models\Customer;
+use App\Modules\Users\Merchant\Repositories\MerchantRepository;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -219,7 +220,7 @@ class Product extends Model
         $merchantRepository = app(MerchantRepository::class);
         $merchant = $merchantRepository->find($merchantId);
 
-        return $productRepository->findOtherMerchantProducts($productId, $merchant->user->id, $offset);
+        return $productRepository->findOtherMerchantProducts($productId, $merchant->store->id, $offset);
     }
 
     /**

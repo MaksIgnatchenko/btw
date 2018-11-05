@@ -186,16 +186,15 @@ class ProductRepository extends BaseRepository
 
     /**
      * @param int $productId
-     * @param int $userId
+     * @param int $storeId
      * @param int $offset
      *
      * @return Collection
      */
-    public function findOtherMerchantProducts(int $productId, int $userId, int $offset = 0): Collection
+    public function findOtherMerchantProducts(int $productId, int $storeId, int $offset = 0): Collection
     {
-        return Product::active()
-            ->where('id', '!=', $productId)
-            ->where('user_id', $userId)
+        return Product::where('id', '!=', $productId)
+            ->where('store_id', $storeId)
             ->offset($offset)
             ->limit(Product::PRODUCTS_PAGE_LIMIT)
             ->get();
