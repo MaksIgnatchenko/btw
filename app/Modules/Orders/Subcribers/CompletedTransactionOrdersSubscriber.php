@@ -59,11 +59,9 @@ class CompletedTransactionOrdersSubscriber
                 'transaction_id' => $transaction->id,
                 'customer_id'    => $customer->id,
                 'merchant_id'    => $merchant->id,
-                'delivery_option' => $cart->delivery_option,
 
                 'product'  => $cart->product,
                 'quantity' => $cart->quantity,
-                'qr_code'  => Str::random(self::QR_CODE_LENGTH),
                 'status'   => OrderStatusEnum::PENDING,
 
                 'created_at' => new Carbon(),
