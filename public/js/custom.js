@@ -215,14 +215,14 @@ window.onload = function () {
     })();
 
     /* Add images to input type file */
-    (function(){
+    (function () {
         var inputs = document.querySelectorAll('.form-item__inp-file'),
             blocks = document.querySelectorAll('.form-item__block');
 
         // Check image size
-        function returnFileSize(size) {
+        function validateFileSize(size) {
             // 20971520 -> 20 Mb
-            if( size > 20971520 ) {
+            if (size > 20971520) {
                 return true;
             }
             return false;
@@ -254,7 +254,7 @@ window.onload = function () {
         function clearBlock(element, inpt) {
             clearBgImage(element);
             element.firstElementChild.classList.remove('form-item__label--remove');
-            setTimeout(function(){
+            setTimeout(function () {
                 clearInput(inpt);
                 element.removeEventListener('click', eventToBlock, false);
             }, 200);
@@ -264,7 +264,7 @@ window.onload = function () {
             var block = blocks[index],
                 element = inputs[index],
                 file = element.files[0];
-            if( returnFileSize(file.size) ) {
+            if( validateFileSize(file.size) ) {
                 clearInput(element);
                 if( block.lastElementChild.nodeName.toUpperCase() !== 'P' ) {
                     showErrorMessage(block);
