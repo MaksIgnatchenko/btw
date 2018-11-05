@@ -1,10 +1,8 @@
 @extends('layouts.app')
 
+@section('title', 'Income details')
+
 @section('content')
-    <section class="content-header">
-        <h1>Income details</h1>
-        {{ Breadcrumbs::render('income-payment', $order) }}
-    </section>
     <div class="content">
         <div class="clearfix"></div>
 
@@ -19,7 +17,7 @@
                         <h3 class="box-title">Customer info</h3>
                     </div>
                     <div class="box-body">
-                        @include('customers.show_fields', ['customer' => $order->customer])
+                        @include('customers.admin.show_fields', ['customer' => $order->customer])
                     </div>
                 </div>
 
@@ -28,7 +26,7 @@
                         <h3 class="box-title">Merchant info</h3>
                     </div>
                     <div class="box-body">
-                        @include('merchants.show_fields', ['merchant' => $order->merchant])
+                        @include('merchants.admin.show_fields', ['merchant' => $order->merchant])
                     </div>
                 </div>
 
@@ -49,12 +47,12 @@
                         <h3 class="box-title">Product details</h3>
                     </div>
                     <div class="box-body">
-                    {!! Form::model($order, ['route' => ['payments.income.update', $order->id], 'method' => 'put', 'class'=> 'form-inline']) !!}
+                    {!! Form::model($order, ['route' => ['payments.income.update', $order->id], 'method' => 'put']) !!}
 
                     <!-- Status Field -->
                         <div class="form-group col-md-6">
 
-                            {{ Form::label('status', 'Status: ') }}
+                            {{ Form::label(null, 'Status: ') }}
                             {!! Form::select('status', OrderStatusEnum::toArray(), $order->status, [
                                 'class' => 'form-control' ,
                             ]) !!}
@@ -81,4 +79,8 @@
             </div>
         </div>
     </div>
+@endsection
+
+@section('script')
+    {!! Html::script('js/Payments/Income/show.js') !!}
 @endsection

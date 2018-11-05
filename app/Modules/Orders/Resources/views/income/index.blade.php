@@ -1,10 +1,8 @@
 @extends('layouts.app')
 
+@section('title', 'Income')
+
 @section('content')
-    <section class="content-header">
-        <h1>Income</h1>
-        {{ Breadcrumbs::render('income-payments') }}
-    </section>
     <div class="content">
         <div class="clearfix"></div>
 
