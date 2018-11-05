@@ -13,27 +13,15 @@
 @section('content')
     <!-- Main -->
     <div class="main-shop">
-        <!-- Navigate Link -->
-        <div class="top-nav-line">
-            <ul class="nav-line__list">
-                <li class="nav-line__item">
-                    <a href="#" class="nav-line__link nav-line__link--active">{{__('store.my_products')}}</a>
-                </li>
-                <li class="nav-line__item">
-                    <a href="#" class="nav-line__link">{{__('store.my_orders')}}</a>
-                </li>
-                <li class="nav-line__item">
-                    <a href="#" class="nav-line__link">{{__('store.settings')}}</a>
-                </li>
-            </ul>
-        </div><!-- /. end navigate link -->
+
+    @include('products.web.navigation')
 
         <!-- Main shop wrapper -->
         <div class="main-shop-wrapper">
             <div class="container main-shop-empty">
                 <div class="main-shop-empty__cont">
                     <p>{{__('store.no_active_ads')}}</p>
-                    <a href="#" class=""><i></i>{{__('store.add_new_products')}}</a>
+                    <a href="{{ route('products.create') }}" class=""><i></i>{{__('store.add_new_products')}}</a>
                 </div>
             </div>
         </div><!-- /. main shop wrapper -->

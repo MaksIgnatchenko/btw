@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="12px" height="12px" viewBox="0 0 12 12" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.2 (67145) - http://www.bohemiancoding.com/sketch -->
+    <title>arrow-left</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M9.29289322,6.5 L4.5,6.5 C4.22385763,6.5 4,6.27614237 4,6 C4,5.72385763 4.22385763,5.5 4.5,5.5 L9.29289322,5.5 L8.14644661,4.35355339 C7.95118446,4.15829124 7.95118446,3.84170876 8.14644661,3.64644661 C8.34170876,3.45118446 8.65829124,3.45118446 8.85355339,3.64644661 L10.8535534,5.64644661 C11.0488155,5.84170876 11.0488155,6.15829124 10.8535534,6.35355339 L8.85355339,8.35355339 C8.65829124,8.54881554 8.34170876,8.54881554 8.14644661,8.35355339 C7.95118446,8.15829124 7.95118446,7.84170876 8.14644661,7.64644661 L9.29289322,6.5 Z M5,10.5 C5.27614237,10.5 5.5,10.7238576 5.5,11 C5.5,11.2761424 5.27614237,11.5 5,11.5 L2.5,11.5 C1.67157288,11.5 1,10.8284271 1,10 L1,2 C1,1.17157288 1.67157288,0.5 2.5,0.5 L5,0.5 C5.27614237,0.5 5.5,0.723857625 5.5,1 C5.5,1.27614237 5.27614237,1.5 5,1.5 L2.5,1.5 C2.22385763,1.5 2,1.72385763 2,2 L2,10 C2,10.2761424 2.22385763,10.5 2.5,10.5 L5,10.5 Z" id="path-1"></path>
+    </defs>
+    <g id="WEB-/-UI-Design-/-Merchants" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Home-List" transform="translate(-843.000000, -61.000000)">
+            <g id="arrow-left" transform="translate(843.000000, 61.000000)">
+                <mask id="mask-2" fill="white">
+                    <use xlink:href="#path-1"></use>
+                </mask>
+                <use id="Combined-Shape" fill="#000000" fill-rule="nonzero" xlink:href="#path-1"></use>
+                <g id="COLOR/-black-Copy-3" mask="url(#mask-2)" fill="#D0021B">
+                    <rect id="Rectangle" x="0" y="0" width="12" height="12"></rect>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
