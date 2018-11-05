@@ -52,7 +52,7 @@
                     <!-- Status Field -->
                         <div class="form-group col-md-6">
 
-                            {{ Form::label(null, 'Status: ') }}
+                            {{ Form::label('status', 'Status: ') }}
                             {!! Form::select('status', OrderStatusEnum::toArray(), $order->status, [
                                 'class' => 'form-control' ,
                             ]) !!}
