@@ -120,7 +120,7 @@ class IncomeDataTable extends DataTable
             'total_amount'    => [
                 'title' => 'Total amount',
                 'orderable' => false,
-                'sortable' => false,
+                'searchable' => false,
             ],
             'picture'        => [
                 'name'      => 'product',
