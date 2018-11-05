@@ -16,6 +16,10 @@ $(document).ready(function () {
         $('#dataTableBuilder').DataTable().search(searchValue).draw();
     });
 
+    $('input[name=status]').attr('id', '_status');
+
+    console.log('here');
+
 
     $('.payment-search').find('.form-control').removeClass('input-sm');
 });
