@@ -11,8 +11,8 @@ use App\Modules\Orders\Exceptions\WrongReturnDetailsException;
 use App\Modules\Orders\Helpers\OrderChecker;
 use App\Modules\Orders\Repositories\OrderRepository;
 use App\Modules\Products\Models\Transaction;
-use App\Modules\Users\Models\Customer;
-use App\Modules\Users\Models\Merchant;
+use App\Modules\Users\Customer\Models\Customer;
+use App\Modules\Users\Merchant\Models\Merchant;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
@@ -32,14 +32,12 @@ class Order extends Model
         'status',
         'created_at',
         'updated_at',
-        'redeemed_at',
         'delivery_option',
     ];
 
     protected $dates = [
         'created_at',
         'updated_at',
-        'redeemed_at',
     ];
 
     protected $casts = [
