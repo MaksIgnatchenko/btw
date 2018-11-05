@@ -4,7 +4,7 @@
  */
 
 $this->group([
-    'middleware' => ['auth:api', 'role:' . \App\Modules\Rbac\Enum\RolesEnum::MERCHANT],
+    'middleware' => ['auth:api'],
 ], function () {
     Route::apiResource('order', 'OrderController', ['except' => ['show']]);
 });
