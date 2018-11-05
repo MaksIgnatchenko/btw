@@ -56,6 +56,6 @@ class ProductController extends Controller
     {
         $this->productModel->createProduct($request->all());
 
-        return $request;
+        //TODO Create store method;
     }
 }
