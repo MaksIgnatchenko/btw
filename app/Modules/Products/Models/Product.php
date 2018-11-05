@@ -247,6 +247,9 @@ class Product extends Model
         $this->parameters = \GuzzleHttp\json_encode($parameters);
     }
 
+    /**
+     * @param array $input
+     */
     public function createProduct(array $input): void
     {
         $articleRepository = app()[ProductRepository::class];
