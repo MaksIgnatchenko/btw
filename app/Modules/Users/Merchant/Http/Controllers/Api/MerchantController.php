@@ -12,38 +12,17 @@ use App\Modules\Users\Merchant\Requests\GetMerchantProductsRequest;
 
 class MerchantController extends Controller
 {
-    /** @var Product */
-    protected $productModel;
-
     /**
-     * MerchantController constructor.
+     * @param Merchant $merchant
      *
-     * @param $productModel
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function __construct(Product $productModel)
-    {
-        $this->productModel = $productModel;
-    }
-
-
     public function get(Merchant $merchant)
     {
         $merchant = $merchant->load('store');
 
         return response()->json([
             'merchant' => $merchant,
-        ]);
-    }
-
-    public function getProducts(GetMerchantProductsRequest $request, Merchant $merchant)
-    {
-        $products = $this->productModel->getOtherMerchantProducts(
-            0,
-            $merchant->id,
-            $request->get('offset', 0));
-
-        return response()->json([
-            'products' => $products,
         ]);
     }
 }
