@@ -58,7 +58,7 @@ class CompletedTransactionOrdersSubscriber
             $orders[] = $order->fill([
                 'transaction_id' => $transaction->id,
                 'customer_id'    => $customer->id,
-                'merchant_id'    => $merchant->merchant->id,
+                'merchant_id'    => $merchant->id,
                 'delivery_option' => $cart->delivery_option,
 
                 'product'  => $cart->product,
