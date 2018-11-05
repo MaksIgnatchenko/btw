@@ -17,7 +17,6 @@ class ProductEventServiceProvider extends EventServiceProvider
      * @var array
      */
     protected $subscribe = [
-        CreateProductSubscriber::class,
         TransactionCompletedSubscriber::class,
     ];
 }

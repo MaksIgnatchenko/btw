@@ -39,17 +39,11 @@ $this->group([
     $this->post('/', 'CartController@create');
     $this->put('/{id}', 'CartController@update');
     $this->delete('/{id}', 'CartController@delete');
-});
-
-$this->group([
-    'middleware' => ['auth:api', 'activeUser'],
-    'prefix'     => 'cart',
-], function () {
     $this->get('/check', 'CartController@check');
 });
 
 $this->group([
-    'middleware' => ['auth:api', 'activeUser'],
+    'middleware' => ['auth:customer'],
     'prefix'     => 'transaction',
 ], function () {
     $this->post('/', 'TransactionController@create');

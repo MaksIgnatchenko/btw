@@ -81,7 +81,7 @@ HTTP/1.1 200 OK
 @apiVersion 0.1.2
 
 @apiHeader {String} Authorization <code><b>token_type</b> <b>access_token</b></code>
-@apiHeader {String} Content-Type <code><b>application/x-www-form-urlencoded</b></code>
+@apiHeader {String} Content-Type <code>application/x-www-form-urlencoded</code>
 
 @apiParam {String} quantity Product quantity
 
@@ -95,6 +95,22 @@ HTTP/1.1 200 OK
 ###
 @api {delete} /api/cart/:id Delete Product from Cart
 @apiName Delete Product from Cart
+@apiGroup Cart
+@apiPermission Customer
+@apiVersion 0.1.2
+
+@apiHeader {String} Authorization <code><b>token_type</b> <b>access_token</b></code>
+
+@apiSuccessExample Success-Response:
+HTTP/1.1 200 OK
+{
+    "success": true
+}
+###
+
+###
+@api {get} /api/cart/check Check possibility to purchase the Cart
+@apiName Check possibility to purchase the Cart
 @apiGroup Cart
 @apiPermission Customer
 @apiVersion 0.1.2

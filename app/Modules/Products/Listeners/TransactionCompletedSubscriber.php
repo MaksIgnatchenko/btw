@@ -24,7 +24,6 @@ class TransactionCompletedSubscriber
     {
         $events->listen(TransactionCompletedEvent::class, self::class . '@clearCart');
         $events->listen(TransactionCompletedEvent::class, self::class . '@setTransactionStatus');
-        $events->listen(TransactionCompletedEvent::class, self::class . '@increaseProductsCounter');
         $events->listen(TransactionCompletedEvent::class, self::class . '@decreaseProductQuantity');
     }
 
@@ -58,26 +57,6 @@ class TransactionCompletedSubscriber
         }
 
         $transactionRepository->save($transaction);
-    }
-
-    /**
-     * @param TransactionCompletedEvent $event
-     */
-    public function increaseProductsCounter(TransactionCompletedEvent $event): void
-    {
-        $transaction = $event->getTransaction();
-
-        if (!$event->getResult()->success) {
-            return;
-        }
-
-        $orders = collect(json_decode($transaction->cart));
-        /** @var ProductRepository $productRepository */
-        $productRepository = app(ProductRepository::class);
-
-        foreach ($orders as $order) {
-            $productRepository->incrementCounter($order->product_id, $order->quantity);
-        }
     }
 
     /**
