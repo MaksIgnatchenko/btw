@@ -57,13 +57,10 @@ class IncomeDataTable extends DataTable
             ->editColumn('created_at', function (Order $order) {
                 return DateConverter::date($order->created_at);
             })
-            ->editColumn('redeemed_at', function (Order $order) {
-                return DateConverter::date($order->redeemed_at) ?? '<span class="text-red">Empty</span>';
+            ->editColumn('total_amount', function (Order $order) {
+                return $order->quantity * $order->product->price;
             })
-            ->editColumn('return_details', function (Order $order) {
-                return $order->product->return_details;
-            })
-            ->rawColumns(['picture', 'action', 'status', 'redeemed_at']);
+            ->rawColumns(['picture', 'action', 'status']);
     }
 
     /**
@@ -103,7 +100,7 @@ class IncomeDataTable extends DataTable
                 'dom'   => 'tp<"#status-filter"><"payment-search"f>',
                 'bInfo' => false,
                 'order' => [
-                    5, // here is the column number
+                    0, // here is the column number
                     'asc'
                 ]
             ]);
@@ -120,12 +117,10 @@ class IncomeDataTable extends DataTable
             'created_at'     => [
                 'title' => 'Purchase date',
             ],
-            'redeemed_at'    => [
-                'title' => 'Redemption date',
-            ],
-            'return_details' => [
-                'title' => 'Return policy date:',
-                'name' => 'product->return_details'
+            'total_amount'    => [
+                'title' => 'Total amount',
+                'orderable' => false,
+                'sortable' => false,
             ],
             'picture'        => [
                 'name'      => 'product',
