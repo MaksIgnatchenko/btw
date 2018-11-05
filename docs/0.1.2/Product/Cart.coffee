@@ -81,7 +81,7 @@ HTTP/1.1 200 OK
 @apiVersion 0.1.2
 
 @apiHeader {String} Authorization <code><b>token_type</b> <b>access_token</b></code>
-@apiHeader {String} Content-Type <code><b>application/x-www-form-urlencoded</b></code>
+@apiHeader {String} Content-Type <code>application/x-www-form-urlencoded</code>
 
 @apiParam {String} quantity Product quantity
 
