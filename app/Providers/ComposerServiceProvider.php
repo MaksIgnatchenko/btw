@@ -18,6 +18,6 @@ class ComposerServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        View::composer('products.web.index', GlobalComposer::class);
+        View::composer(['products.web.index', 'products.web.create'], GlobalComposer::class);
     }
 }

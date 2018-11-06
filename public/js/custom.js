@@ -214,6 +214,93 @@ window.onload = function () {
         }
     })();
 
+    /* Add images to input type file */
+    (function () {
+        var inputs = document.querySelectorAll('.form-item__inp-file'),
+            blocks = document.querySelectorAll('.form-item__block');
+
+        // Check image size
+        function validateFileSize(size) {
+            // 20971520 -> 20 Mb
+            if (size > 20971520) {
+                return true;
+            }
+            return false;
+        }
+
+        // Clear input
+        function clearInput(element) {
+            element.value = "";
+            element.removeAttribute('readonly');
+        }
+
+        // Clear background-image
+        function clearBgImage(element) {
+            element.removeAttribute('style');
+        }
+
+        // Generate error message
+        function showErrorMessage(block) {
+            var p = document.createElement('P');
+            p.classList.add('form-item__block__error');
+            p.innerHTML = "Too large image";
+            block.appendChild(p);
+        }
+
+        // Object use for bind clearBlock function.
+        var eventToBlock = {};
+
+        // Clear block and open write input
+        function clearBlock(element, inpt) {
+            clearBgImage(element);
+            element.firstElementChild.classList.remove('form-item__label--remove');
+            setTimeout(function () {
+                clearInput(inpt);
+                element.removeEventListener('click', eventToBlock, false);
+            }, 200);
+        }
+
+        function addFile(index) {
+            var block = blocks[index],
+                element = inputs[index],
+                file = element.files[0];
+            if( validateFileSize(file.size) ) {
+                clearInput(element);
+                if( block.lastElementChild.nodeName.toUpperCase() !== 'P' ) {
+                    showErrorMessage(block);
+                }
+            } else {
+                if( block.lastElementChild.nodeName.toUpperCase() === 'P' ) {
+                    block.removeChild(block.lastElementChild);
+                }
+                element.setAttribute('readonly', true);
+                block.style.backgroundImage = 'url('+ window.URL.createObjectURL(file) +')';
+                block.firstElementChild.classList.add('form-item__label--remove');
+                eventToBlock = clearBlock.bind(null, block, element);
+                block.addEventListener('click', eventToBlock, false);
+            }
+        }
+
+        /* Add listener to inputs */
+        if(inputs) {
+            for(var i = 0; i < inputs.length; i++) {
+                inputs[i].addEventListener('change', addFile.bind(null, i));
+            }
+        }
+    })();
+
+    /* Show Logout button */
+    (function(){
+        var userBlock = document.querySelector('.user__name');
+
+        function logoutHandler() {
+            userBlock.classList.toggle('user__name--logout');
+        }
+
+        if( userBlock ) {
+            userBlock.addEventListener('click', logoutHandler);
+        }
+    })();
 };
 
 function divSelectClickEvent(e) {

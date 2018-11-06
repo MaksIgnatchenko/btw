@@ -5,7 +5,7 @@
                 <a href="{{route('index')}}">Logotype BTW</a>
             </div>
             <div class="header__info">
-                <div class="header__lang"><span>EN</span>English</div>
+                <div class="header__lang">English<span>EN</span></div>
                 <nav class="navigation">
 
                     @if (Route::currentRouteName() !== 'index')
