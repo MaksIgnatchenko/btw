@@ -16,6 +16,8 @@
 
     @include('products.web.navigation')
 
+    @include('flash::message')
+
         <!-- Main shop wrapper -->
         <div class="main-shop-wrapper">
             <div class="container main-shop-empty">
