@@ -247,13 +247,11 @@ class Product extends Model
     public function decreaseQuantity(int $quantity): void
     {
         $productQuantity = $this->getQuantity();
-        if (null === $productQuantity) {
-            return;
+        if ($this->quantity >= $quantity) {
+            $this->quantity -= $quantity;
+        } else {
+            $this->quantity = 0;
         }
-
-        $parameters = \GuzzleHttp\json_decode($this->parameters);
-        $parameters->quantity = (string)($parameters->quantity - $quantity);
-        $this->parameters = \GuzzleHttp\json_encode($parameters);
     }
 
     /**

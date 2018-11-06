@@ -49,13 +49,17 @@
                 @endif
             </div>
             <div class="form-multiple">
-                <div class="form-multiple-cont">
+                <div class="form-multiple-cont position-relative">
                     <p>
-                        <input type="text" name="store-code" placeholder="{{__('registration.sign_in.captcha_enter')}}">
+                        <input type="text" name="captcha" placeholder="{{__('registration.sign_in.captcha_enter')}}">
                     </p>
+                    @if ($errors->has('captcha'))
+                        <div class="alert alert-danger" role="alert">
+                            <strong>{{ $errors->first('captcha') }}</strong></div>
+                    @endif
                 </div>
                 <div class="from-multiple-code">
-                    <span>46q12R</span>
+                    <img src="{{$captcha}}">
                 </div>
             </div>
             {!! Form::submit(__('registration.create_store'), ['class' => 'form-content']) !!}
