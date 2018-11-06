@@ -6,9 +6,7 @@
 namespace App\Modules\Users\Merchant\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Modules\Products\Models\Product;
 use App\Modules\Users\Merchant\Models\Merchant;
-use App\Modules\Users\Merchant\Requests\GetMerchantProductsRequest;
 
 class MerchantController extends Controller
 {

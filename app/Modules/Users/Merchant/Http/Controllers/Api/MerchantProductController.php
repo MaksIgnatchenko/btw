@@ -5,11 +5,12 @@
 
 namespace App\Modules\Users\Merchant\Http\Controllers\Api;
 
+use App\Http\Controllers\Controller;
 use App\Modules\Products\Models\Product;
 use App\Modules\Users\Merchant\Models\Merchant;
 use App\Modules\Users\Merchant\Requests\GetMerchantProductsRequest;
 
-class MerchantProductController
+class MerchantProductController extends Controller
 {
     /** @var Product */
     protected $productModel;
@@ -30,7 +31,7 @@ class MerchantProductController
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function getAll(GetMerchantProductsRequest $request, Merchant $merchant)
+    public function index(GetMerchantProductsRequest $request, Merchant $merchant)
     {
         $products = $this->productModel->getOtherMerchantProducts(
             0,
