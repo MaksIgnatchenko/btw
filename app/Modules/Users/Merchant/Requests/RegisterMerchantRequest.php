@@ -25,7 +25,6 @@ class RegisterMerchantRequest extends FormRequest
                 'max:50',
                 'regex:/^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$/',
             ],
-            'required|:6|max:50|',
             'store' => 'required|string|min:3|max:100',
             'captcha' => 'required|' . Rule::in($this->session()->get('captcha')),
         ];
