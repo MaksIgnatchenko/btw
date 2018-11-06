@@ -24,8 +24,9 @@
 .from-multiple-code {
     position: relative;
 }
+
 .from-multiple-code img {
     bottom: 0;
     left: 0;
     position: absolute;
- }
+}
