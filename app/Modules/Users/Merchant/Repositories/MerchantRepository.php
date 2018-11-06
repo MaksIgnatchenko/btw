@@ -33,14 +33,16 @@ class MerchantRepository extends BaseRepository
         $data['city'] = GeographyCity::find($data['city'])->name;
 
         /** @var Merchant $merchant */
-        $merchant = $this->create($data);
+        $merchant = $this->create(array_merge($data, [
+            'phone' => $data['phone_code'] . $data['phone_number'],
+        ]));
 
         $merchant->address()->create($data);
 
         $storeData = array_merge($data, [
             'country' => GeographyCountry::find($data['store_country'])->sortname,
             'city' => $data['store_city'],
-            'name' => $data['store']
+            'name' => $data['store'],
         ]);
 
         $merchant->store()->create($storeData);
