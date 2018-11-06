@@ -5,23 +5,28 @@
 
 namespace App\Modules\Products\Http\Controllers\Web;
 
+use App\Modules\Categories\Repositories\CategoryRepository;
 use App\Modules\Categories\Models\Category;
 use App\Modules\Products\Models\Product;
 use App\Modules\Products\Requests\Web\CreateProductRequest;
 use App\Http\Controllers\Controller;
 use Illuminate\View\View;
+use Laracasts\Flash\Flash;
 
 class ProductController extends Controller
 {
     protected $productModel;
+    protected $categoryRepository;
 
     /**
      * ProductController constructor.
      * @param Product $product
+     * @param CategoryRepository $categoriesRepository
      */
-    public function __construct(Product $product)
+    public function __construct(Product $product, CategoryRepository $categoriesRepository)
     {
         $this->productModel = $product;
+        $this->categoryRepository = $categoriesRepository;
     }
 
     /**
@@ -56,6 +61,8 @@ class ProductController extends Controller
     {
         $this->productModel->createProduct($request->all());
 
-        //TODO Create store method;
+        Flash::success('Product has been created successfully');
+
+        return redirect(route('products.index'));
     }
 }
