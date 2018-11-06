@@ -202,6 +202,7 @@ return [
         App\Modules\Users\Merchant\Providers\ApiRouteServiceProvider::class,
         App\Modules\Products\Providers\WebRouteServiceProvider::class,
         App\Providers\ComposerServiceProvider::class,
+        App\Modules\Categories\Providers\CategoriesWebRouteServiceProvider::class,
 
         Laravel\Socialite\SocialiteServiceProvider::class,
 
