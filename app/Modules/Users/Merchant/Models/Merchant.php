@@ -26,6 +26,7 @@ class Merchant extends Authenticatable
         'last_name',
         'email',
         'password',
+        'phone',
     ];
 
     protected $hidden = [
