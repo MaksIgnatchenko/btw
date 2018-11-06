@@ -9,13 +9,22 @@ use App\Http\Controllers\Controller;
 use App\Modules\Products\Events\TransactionCompletedEvent;
 use App\Modules\Products\Models\Transaction;
 use App\Modules\Products\Requests\Api\TransactionRequest;
-use Braintree\Configuration;
-use Braintree_Transaction;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 
 class TransactionController extends Controller
 {
+    /** @var \Braintree_Gateway */
+    protected $gateway;
+
+    /**
+     * TransactionController constructor.
+     */
+    public function __construct(Braintree_Gateway $gateway)
+    {
+        $this->gateway = $gateway;
+    }
+
     /**
      * @param TransactionRequest $request
      *
@@ -24,12 +33,6 @@ class TransactionController extends Controller
      */
     public function create(TransactionRequest $request): JsonResponse
     {
-        // TODO how to move it from here??
-        Configuration::environment(env('BT_ENVIRONMENT'));
-        Configuration::merchantId(env('BT_MERCHANT_ID'));
-        Configuration::publicKey(env('BT_PUBLIC_KEY'));
-        Configuration::privateKey(env('BT_PRIVATE_KEY'));
-
         /** @var Transaction $transactionModel */
         $transactionModel = app(Transaction::class);
 
@@ -39,7 +42,7 @@ class TransactionController extends Controller
 
         $transaction = $transactionModel->createTransaction($customerId, $amount);
 
-        $result = Braintree_Transaction::sale([
+        $result = $this->gateway->transaction()->sale([
             'amount' => $amount,
             'paymentMethodNonce' => $noncence,
             'options' => [
@@ -63,5 +66,17 @@ class TransactionController extends Controller
             'success' => false,
             'message' => $result->message,
         ], 400);
+    }
+
+    /**
+     * @return JsonResponse
+     */
+    public function generateToken(): JsonResponse
+    {
+        $token = $this->gateway->clientToken()->generate();
+
+        return response()->json([
+            'token' => $token,
+        ]);
     }
 }
