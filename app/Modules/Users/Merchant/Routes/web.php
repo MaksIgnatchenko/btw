@@ -39,3 +39,12 @@ Route::group([
     $this->get('country-phone-code', 'GeographyController@getCountryPhoneCode');
 });
 /* ------------------- */
+
+/* --- Content --- */
+Route::group([
+    'middleware' => ['web'],
+    'prefix' => 'content',
+], function () {
+    $this->get('{content}', 'ContentController@index');
+});
+/* -------------- */
