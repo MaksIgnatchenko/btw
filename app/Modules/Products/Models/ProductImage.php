@@ -50,24 +50,6 @@ class ProductImage extends Model
     ];
 
     /**
-     * @param UploadedFile $mainImage
-     *
-     * @return \Intervention\Image\Image
-     */
-    public function getMainImageThumb(UploadedFile $mainImage): Image
-    {
-        $manager = app()[ImageManager::class];
-
-        $thumb = $manager->make($mainImage->path());
-        $thumb->resize(self::IMAGE_THUMB_WIDTH, self::IMAGE_THUMB_HEIGHT, function ($constraint) {
-            $constraint->aspectRatio();
-            $constraint->upsize();
-        });
-
-        return $thumb;
-    }
-
-    /**
      * Create image thumbnail.
      *
      * @param UploadedFile $image
@@ -76,8 +58,8 @@ class ProductImage extends Model
     public function createImageThumbnail(UploadedFile $image): Image
     {
         $imageManager = app()[ImageManager::class];
-
         $thumbnail = $imageManager->make($image->path());
+
         $thumbnail->resize(
             config('wish.products.storage.image_thumb_width'),
             config('wish.products.storage.image_thumb_height'),
@@ -85,7 +67,7 @@ class ProductImage extends Model
                 $constraint->aspectRatio();
                 $constraint->upsize();
             }
-        );
+        )->encode();
 
         return $thumbnail;
     }
@@ -106,7 +88,7 @@ class ProductImage extends Model
             $imageThumbnail = $this->createImageThumbnail($image);
 
             Storage::putFileAs(config('wish.products.storage.gallery_images_path') . '/' . $storeId, $image, $imageName);
-            Storage::putFileAs(config('wish.products.storage.gallery_images_thumb_path') . '/' . $storeId, $imageThumbnail, $imageName);
+            Storage::disk('public')->put(config('wish.products.storage.gallery_images_thumb_path') . '/' . $storeId . '/' . $imageName, $imageThumbnail);
 
             $imagePath = $storeId . '/' . $imageName;
             $productImageData = [
