@@ -19,6 +19,8 @@ return [
         'store_info' => 'Store info',
         'password_reset_request' => 'Password reset request',
         'reset_password' => 'Reset password',
+        'terms_and_conditions' => 'Terms and conditions',
+        'privacy_policy' => 'Privacy Policy',
     ],
     /* --------------------- */
 
@@ -33,7 +35,7 @@ return [
         'email_info' => 'Please enter your e-mail to recover password',
         'reset_password' => 'Reset Password',
         'enter_new_pasword' => 'Enter a new password',
-        'confirm_password' => 'Confirm password'
+        'confirm_password' => 'Confirm password',
     ],
     /* ------------------------ */
 ];

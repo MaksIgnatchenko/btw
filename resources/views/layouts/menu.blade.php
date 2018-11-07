@@ -27,5 +27,5 @@
 </li>
 
 <li class="{{ActiveLink::checkContent() ? 'active' : ''}}">
-    <a href="{{route('content')}}"><i class="mdi mdi-book-open-page-variant"></i> <span>Terms & Condiotions</span></a>
+    <a href="{{route('content')}}"><i class="mdi mdi-book-open-page-variant"></i> <span>Terms & Conditions</span></a>
 </li>
