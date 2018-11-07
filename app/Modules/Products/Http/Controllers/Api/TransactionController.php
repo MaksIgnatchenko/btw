@@ -20,9 +20,10 @@ class TransactionController extends Controller
     /**
      * TransactionController constructor.
      */
-    public function __construct(Braintree_Gateway $gateway)
+    public function __construct()
     {
-        $this->gateway = $gateway;
+        //todo to clarify why it`s not working as constructor parameter
+        $this->gateway = resolve(\Braintree_Gateway::class);
     }
 
     /**
@@ -49,7 +50,6 @@ class TransactionController extends Controller
                 'submitForSettlement' => true,
             ],
         ]);
-
         /** @var TransactionCompletedEvent $transactionCompletedEvent */
         $transactionCompletedEvent = app(TransactionCompletedEvent::class);
         $transactionCompletedEvent->setTransaction($transaction)->setResult($result);
