@@ -1,6 +1,6 @@
 ###
 @api {get} /api/merchant/:id Get Merchant data
-@apiName Get Merchant data and Products
+@apiName Get Merchant data
 @apiGroup Merchant
 @apiPermission Guest
 @apiVersion 0.1.2
@@ -33,7 +33,7 @@ HTTP/1.1 200 OK
 
 ###
 @api {get} /api/merchant/:id/products Get Merchant Products
-@apiName Get Merchant data and Products
+@apiName Get Merchant Products
 @apiGroup Merchant
 @apiPermission Guest
 @apiVersion 0.1.2

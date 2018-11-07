@@ -32,10 +32,6 @@
     box-shadow: none;
 }
 
-#wrapper .dataTables_wrapper .dataTables_paginate ul.pagination {
-    padding-top: 12px;
-}
-
 body {
     font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
 }
