@@ -2,6 +2,7 @@
 
 @section('script')
     <script src="{{asset('js/marchants/registration/contact-data.js')}}"></script>
+    <script src="https://unpkg.com/imask"></script>
 @endsection
 
 @section('title', __('merchants.page_titles.contact_info'))
