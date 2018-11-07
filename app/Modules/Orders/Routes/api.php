@@ -4,13 +4,13 @@
  */
 
 $this->group([
-    'middleware' => ['auth:api'],
+    'middleware' => ['auth:merchant'],
 ], function () {
     Route::apiResource('order', 'OrderController', ['except' => ['show']]);
 });
 
 Route::group([
-    'middleware' => ['auth:api'],
+    'middleware' => ['auth:merchant'],
     'prefix'     => 'order',
 ], function () {
     Route::get('/', 'OrderController@index')->name('order.index');

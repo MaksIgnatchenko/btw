@@ -16,6 +16,5 @@ $(document).ready(function () {
         $('#dataTableBuilder').DataTable().search(searchValue).draw();
     });
 
-
     $('.payment-search').find('.form-control').removeClass('input-sm');
 });
