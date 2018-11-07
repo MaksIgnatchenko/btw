@@ -22,21 +22,11 @@ class AttributeController
     }
 
     /**
-     * @param $id
-     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\JsonResponse|\Symfony\Component\HttpFoundation\Response
+     * @param Category $category
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
      */
-    public function show($id)
+    public function show(Category $category)
     {
-        $category = $this->categoryRepository->find($id);
-
-        if (null === $category) {
-            //TODO change response
-            return response()->json([
-                'error' => 404,
-                'message' => 'No such category',
-            ]);
-        }
-
         return response($category->attributes);
     }
 }

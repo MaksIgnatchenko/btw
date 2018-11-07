@@ -1,3 +1,3 @@
 <?php
 
-Route::get('categories/{id}/attributes', 'AttributeController@show')->middleware(['web']);
+Route::get('categories/{category}/attributes', 'AttributeController@show')->middleware(['web']);
