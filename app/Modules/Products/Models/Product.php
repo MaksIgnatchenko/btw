@@ -283,19 +283,22 @@ class Product extends Model
     }
 
     /**
+     * Create product and store images.
+     *
      * @param array $input
      */
     public function createProduct(array $input): void
     {
         $productRepository = app()[ProductRepository::class];
 
-        //TODO change productImage model usage (relations)
         $productImageModel = app()[ProductImage::class];
 
         $storeId = Auth::user()->store->id;
         $mainImageName = $input['main_image']->hashName();
         $mainImagePath = $storeId . '/' . $mainImageName;
+        $mainImageThumbnail = $productImageModel->createImageThumbnail($input['main_image']);
 
+        Storage::disk('public')->put(config('wish.products.storage.main_images_thumb_path') . '/' . $storeId . '/' . $mainImageName, $mainImageThumbnail);
         Storage::putFileAs(config('wish.products.storage.main_images_path') . '/' . $storeId, $input['main_image'], $mainImageName);
 
         $input['main_image'] = $mainImagePath;
