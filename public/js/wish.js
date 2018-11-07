@@ -65,19 +65,26 @@ function getCategoryAttributes(id) {
         url:'/attributes/' + id,
         success: function (data) {
 
-            let attributeContaier = $('.attributes-container');
+            var attributeContaier = $('.attributes-container');
             attributeContaier.empty();
+
+            var attribute;
+            var wrapper;
+            var textWrapper;
+            var label;
+            var inputWrapper;
+            var input;
 
             if ($.isArray(data)) {
                 $.each(data, function (index, value) {
 
-                    let attribute = JSON.parse(value);
+                    attribute = JSON.parse(value);
 
-                    let wrapper = document.createElement('div');
-                    let textWrapper = document.createElement('div');
-                    let label = document.createElement('p');
-                    let inputWrapper = document.createElement('div');
-                    let input = document.createElement('input');
+                    wrapper = document.createElement('div');
+                    textWrapper = document.createElement('div');
+                    label = document.createElement('p');
+                    inputWrapper = document.createElement('div');
+                    input = document.createElement('input');
 
                     $(wrapper).addClass('form-line__wrapper form-line__wrapper--min-margin');
                     $(textWrapper).addClass('form-item__wrapper form-item__wrapper--text');

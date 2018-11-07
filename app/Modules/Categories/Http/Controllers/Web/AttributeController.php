@@ -22,8 +22,8 @@ class AttributeController
     }
 
     /**
-     * @param int $id
-     * @return Category
+     * @param $id
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\JsonResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function show($id)
     {

@@ -10,6 +10,7 @@ use App\Modules\Categories\Models\Category;
 use App\Modules\Products\Models\Product;
 use App\Modules\Products\Requests\Web\CreateProductRequest;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 use Laracasts\Flash\Flash;
 
@@ -59,7 +60,9 @@ class ProductController extends Controller
      */
     public function store(CreateProductRequest $request)
     {
-        $this->productModel->createProduct($request->all());
+        $storeId = Auth::user()->store->id;
+
+        $this->productModel->createProduct($request->all(), $storeId);
 
         Flash::success('Product has been created successfully');
 

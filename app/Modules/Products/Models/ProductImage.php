@@ -77,18 +77,24 @@ class ProductImage extends Model
      *
      * @param array $images
      * @param int $productId
+     * @param int $storeId
      */
-    public function saveImages(array $images, int $productId): void
+    public function saveGalleryImages(array $images, int $productId, int $storeId): void
     {
         $productImageRepository = app(ProductImageRepository::class);
-        $storeId = Auth::user()->store->id;
 
         foreach ($images as $image) {
             $imageName = $image->hashName();
             $imageThumbnail = $this->createImageThumbnail($image);
 
-            Storage::putFileAs(config('wish.products.storage.gallery_images_path') . '/' . $storeId, $image, $imageName);
-            Storage::disk('public')->put(config('wish.products.storage.gallery_images_thumb_path') . '/' . $storeId . '/' . $imageName, $imageThumbnail);
+            $this->saveImageWithThumbnail(
+                config('wish.products.storage.gallery_images_path'),
+                config('wish.products.storage.gallery_images_thumb_path'),
+                $imageName,
+                $imageThumbnail,
+                $storeId,
+                $image
+            );
 
             $imagePath = $storeId . '/' . $imageName;
             $productImageData = [
@@ -98,5 +104,19 @@ class ProductImage extends Model
 
             $productImageRepository->create($productImageData);
         }
+    }
+
+    /**
+     * @param string $originalPath
+     * @param string $thumbnailPath
+     * @param string $imageName
+     * @param Image $thumbnail
+     * @param int $storeId
+     * @param UploadedFile $image
+     */
+    public function saveImageWithThumbnail(string $originalPath, string $thumbnailPath, string $imageName, Image $thumbnail, int $storeId, UploadedFile $image): void
+    {
+        Storage::putFileAs($originalPath . '/' . $storeId, $image, $imageName);
+        Storage::disk('public')->put($thumbnailPath . '/' . $storeId . '/' . $imageName, $thumbnail);
     }
 }
