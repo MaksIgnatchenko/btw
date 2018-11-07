@@ -37,6 +37,16 @@
                     </div>
                 @endauth
 
+                @guest
+                    <nav class="navigation">
+                        @if (Route::currentRouteName() !== 'index')
+                            <a href="#">{{__('merchants.home')}}</a>
+                        @endif
+
+                        <a href="#">{{__('merchants.terms_and_conditions')}}</a>
+                    </nav>
+                @endguest
+
             </div>
         </div>
     </div>
