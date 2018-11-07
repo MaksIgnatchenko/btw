@@ -59,3 +59,47 @@
     window._W = this;
 })();
 
+function getCategoryAttributes(id) {
+    $.ajax({
+        type:'GET',
+        url:'/attributes/' + id,
+        success: function (data) {
+
+            let attributeContaier = $('.attributes-container');
+            attributeContaier.empty();
+
+            if ($.isArray(data)) {
+                $.each(data, function (index, value) {
+
+                    let attribute = JSON.parse(value);
+
+                    let wrapper = document.createElement('div');
+                    let textWrapper = document.createElement('div');
+                    let label = document.createElement('p');
+                    let inputWrapper = document.createElement('div');
+                    let input = document.createElement('input');
+
+                    $(wrapper).addClass('form-line__wrapper form-line__wrapper--min-margin');
+                    $(textWrapper).addClass('form-item__wrapper form-item__wrapper--text');
+                    $(label).addClass('form-item__title');
+                    $(inputWrapper).addClass('form-item__wrapper form-item__wrapper--field');
+
+                    $(input).addClass('form-item__inp');
+                    input.setAttribute('type', 'text');
+                    input.setAttribute('name', 'attributes[' + attribute.name + ']' );
+                    input.setAttribute('maxlength', 100);
+                    input.setAttribute('placeholder', 'Enter the value');
+
+                    label.innerHTML = attribute.name;
+                    wrapper.appendChild(textWrapper);
+                    wrapper.appendChild(inputWrapper);
+                    textWrapper.appendChild(label);
+                    inputWrapper.appendChild(input);
+
+                    $('.attributes-container').append(wrapper);
+                })
+            }
+        }
+    });
+}
+

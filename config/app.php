@@ -204,6 +204,8 @@ return [
         App\Modules\Users\Merchant\Providers\ApiRouteServiceProvider::class,
         App\Modules\Products\Providers\WebRouteServiceProvider::class,
         App\Providers\ComposerServiceProvider::class,
+        App\Modules\Categories\Providers\CategoriesWebRouteServiceProvider::class,
+        Intervention\Image\ImageServiceProvider::class,
 
         Laravel\Socialite\SocialiteServiceProvider::class,
 
@@ -275,5 +277,6 @@ return [
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
         'Socialite' => Laravel\Socialite\Facades\Socialite::class,
         'Geography' => App\Modules\Users\Merchant\Facades\Geography::class,
+        'Image' => Intervention\Image\Facades\Image::class,
     ],
 ];
