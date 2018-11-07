@@ -21,16 +21,12 @@
                 {!! $order->quantity !!}
             </p>
             <p>
-                {!! Form::label('price', 'Price:') !!}
-                {!! $product->offer_price !!} USD
-            </p>
-            <p>
-                {!! Form::label('tax', 'Tax:') !!}
-                {!! $product->tax !!} %
-            </p>
-            <p>
                 {!! Form::label('amount', 'Amount:') !!}
-                {!! $product->amount !!} USD
+                {!! $product->price !!} USD
+            </p>
+            <p>
+                {!! Form::label('amount', 'Total amount:') !!}
+                {!! $product->price * $order->quantity !!} USD
             </p>
             <p>
                 {!! Form::label('status', 'Status:') !!}
@@ -39,14 +35,6 @@
             <p>
                 {!! Form::label('created_at', 'Purchase date:') !!}
                 {!! DateConverter::date($order->created_at) !!}
-            </p>
-            <p>
-                {!! Form::label('redeemed_ar', 'Redemption date:') !!}
-                {!! DateConverter::date($order->redeemed_at) ?? '<span class="text-red">Empty</span>' !!}
-            </p>
-            <p>
-                {!! Form::label('return_details', 'Return policy date:') !!}
-                {!! $product->return_details !!}
             </p>
         </div>
     </div>
