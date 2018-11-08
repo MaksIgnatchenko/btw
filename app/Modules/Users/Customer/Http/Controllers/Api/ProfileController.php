@@ -11,7 +11,6 @@ use App\Modules\Users\Customer\Http\Requests\Api\UploadAvatarRequest;
 use App\Modules\Users\Customer\Models\Customer;
 use App\Modules\Users\Customer\Repositories\CustomerRepository;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
