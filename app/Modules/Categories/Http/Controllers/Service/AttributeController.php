@@ -3,7 +3,7 @@
  * Created by Andrei Podgornyi, Appus Studio LP on 05.11.2018
  */
 
-namespace App\Modules\Categories\Http\Controllers\Web;
+namespace App\Modules\Categories\Http\Controllers\Service;
 
 use App\Modules\Categories\Repositories\CategoryRepository;
 use App\Modules\Categories\Models\Category;

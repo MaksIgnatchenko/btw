@@ -62,7 +62,7 @@
 function getCategoryAttributes(id) {
     $.ajax({
         type:'GET',
-        url:'/attributes/' + id,
+        url:'/categories/' + id + '/attributes',
         success: function (data) {
 
             var attributeContaier = $('.attributes-container');

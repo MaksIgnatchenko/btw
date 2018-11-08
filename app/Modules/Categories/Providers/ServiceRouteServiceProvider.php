@@ -17,7 +17,7 @@ class ServiceRouteServiceProvider extends ServiceProvider
      *
      * @var string
      */
-    protected $namespace = 'App\Modules\Categories\Http\Controllers\Web';
+    protected $namespace = 'App\Modules\Categories\Http\Controllers\Service';
 
     /**
      * Define the routes for the application.
