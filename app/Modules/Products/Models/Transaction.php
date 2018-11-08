@@ -11,7 +11,7 @@ use App\Modules\Orders\Repositories\OrderRepository;
 use App\Modules\Products\Enums\TransactionStatusEnum;
 use App\Modules\Products\Repositories\CartRepository;
 use App\Modules\Products\Repositories\TransactionRepository;
-use App\Modules\Users\Models\Customer;
+use App\Modules\Users\Customer\Models\Customer;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Ramsey\Uuid\Uuid;
@@ -31,27 +31,17 @@ class Transaction extends Model
     public $casts = [
         'customer_id' => 'integer',
 
-        'cart'    => 'array',
+        'cart' => 'object',
         'message' => 'string',
-        'status'  => 'string',
-        'amount'  => 'float',
+        'status' => 'string',
+        'amount' => 'float',
     ];
 
-    public static function boot(): void
-    {
-        parent::boot();
-
-        self::creating(function ($model) {
-            $model->id = Uuid::uuid1();
-        });
-    }
-
     /**
-     * @param int $customerId
+     * @param int   $customerId
      * @param float $amount
      *
      * @return Transaction
-     * @throws \Illuminate\Database\Eloquent\MassAssignmentException
      */
     public function createTransaction(int $customerId, float $amount): Transaction
     {
