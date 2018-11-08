@@ -298,19 +298,19 @@ class Product extends Model
      */
     public function createProduct(array $input, int $storeId): void
     {
-        $mainImageName = $input['main_image']->hashName();
+        $mainImageHashName = $input['main_image']->hashName();
         $mainImageThumbnail = $this->productImageModel->createImageThumbnail($input['main_image']);
 
         $this->productImageModel->saveImageWithThumbnail(
-            config('wish.products.storage.main_images_path'),
-            config('wish.products.storage.main_images_thumb_path'),
-            $mainImageName,
+            config('wish.storage.products.main_images_path'),
+            config('wish.storage.products.main_images_thumb_path'),
+            $mainImageHashName,
             $mainImageThumbnail,
             $storeId,
             $input['main_image']
         );
 
-        $mainImagePath = $storeId . '/' . $mainImageName;
+        $mainImagePath = $storeId . '/' . $mainImageHashName;
         $input['main_image'] = $mainImagePath;
 
         $productRepository = app()[ProductRepository::class];
