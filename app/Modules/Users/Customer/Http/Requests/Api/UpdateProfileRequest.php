@@ -17,10 +17,10 @@ class UpdateProfileRequest extends FormRequest
     public function rules()
     {
         return [
-            'first_name' => 'required|min:2|max:50',
-            'last_name' => 'required|min:2|max:50',
-            'email' => 'required|email|max:100|unique:customers|unique:admins',
-            'address' => 'nullable|string|max:255',
+            'first_name' => 'sometimes|required|min:2|max:50',
+            'last_name' => 'sometimes|required|min:2|max:50',
+            'email' => 'sometimes|required|email|max:100|unique:customers|unique:admins',
+            'address' => 'sometimes|nullable|string|max:255',
         ];
     }
 
