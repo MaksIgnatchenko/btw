@@ -7,15 +7,18 @@ namespace App\Modules\Users\Customer\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Modules\Users\Customer\Http\Requests\Api\UpdateProfileRequest;
+use App\Modules\Users\Customer\Http\Requests\Api\UploadAvatarRequest;
+use App\Modules\Users\Customer\Models\Customer;
 use App\Modules\Users\Customer\Repositories\CustomerRepository;
-use http\Env\Response;
-use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class ProfileController extends Controller
 {
+    public const AVATAR_PATH = 'avatars';
+
     /** @var Customer */
     protected $customerRepository;
 
@@ -46,14 +49,18 @@ class ProfileController extends Controller
         ]);
     }
 
-    public function uploadAvatar(Request $request)
+    public function uploadAvatar(UploadAvatarRequest $request): JsonResponse
     {
         $avatar = $request->file('avatar');
-        $result = $avatar->store('avatars/');
+
+        $result = $avatar->store(self::AVATAR_PATH);
+
+        $customer = Auth::user();
+        $customer->avatar = $result;
+        $customer->save();
 
         return response()->json([
-            'status' => 'success',
-            'message' => $result,
+            'avatar' => Storage::url($result),
         ]);
     }
 }
