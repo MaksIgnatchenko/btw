@@ -88,7 +88,6 @@ class Product extends Model
 
     public function __construct(array $attributes = [])
     {
-        $this->productRepository = app()[ProductRepository::class];
         $this->productImageModel = app()[ProductImage::class];
 
         parent::__construct($attributes);
@@ -313,7 +312,9 @@ class Product extends Model
 
         $mainImagePath = $storeId . '/' . $mainImageName;
         $input['main_image'] = $mainImagePath;
-        $product = $this->productRepository->create($input);
+
+        $productRepository = app()[ProductRepository::class];
+        $product = $productRepository->create($input);
 
         $this->productImageModel->saveGalleryImages($input['product_gallery'], $product->id, $storeId);
     }
