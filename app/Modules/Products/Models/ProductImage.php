@@ -7,7 +7,6 @@ namespace App\Modules\Products\Models;
 
 use App\Modules\Products\Repositories\ProductImageRepository;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Image;
 use Intervention\Image\ImageManager;
@@ -15,6 +14,8 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class ProductImage extends Model
 {
+    protected $imageManager;
+
     /** @var array */
     public $fillable = [
         'product_id',
@@ -49,6 +50,13 @@ class ProductImage extends Model
         'product_id' => 'required|exists:products,id',
     ];
 
+    public function __construct(array $attributes = [])
+    {
+        $this->imageManager = app()[ImageManager::class];
+
+        parent::__construct($attributes);
+    }
+
     /**
      * Create image thumbnail.
      *
@@ -57,12 +65,11 @@ class ProductImage extends Model
      */
     public function createImageThumbnail(UploadedFile $image): Image
     {
-        $imageManager = app()[ImageManager::class];
-        $thumbnail = $imageManager->make($image->path());
+        $thumbnail = $this->imageManager->make($image->path());
 
         $thumbnail->resize(
-            config('wish.products.storage.image_thumb_width'),
-            config('wish.products.storage.image_thumb_height'),
+            config('wish.storage.products.image_thumb_width'),
+            config('wish.storage.products.image_thumb_height'),
             function ($constraint) {
                 $constraint->aspectRatio();
                 $constraint->upsize();
@@ -81,15 +88,15 @@ class ProductImage extends Model
      */
     public function saveGalleryImages(array $images, int $productId, int $storeId): void
     {
-        $productImageRepository = app(ProductImageRepository::class);
+        $productImageRepository = app()[ProductImageRepository::class];
 
         foreach ($images as $image) {
             $imageName = $image->hashName();
             $imageThumbnail = $this->createImageThumbnail($image);
 
             $this->saveImageWithThumbnail(
-                config('wish.products.storage.gallery_images_path'),
-                config('wish.products.storage.gallery_images_thumb_path'),
+                config('wish.storage.products.gallery_images_path'),
+                config('wish.storage.products.gallery_images_thumb_path'),
                 $imageName,
                 $imageThumbnail,
                 $storeId,
