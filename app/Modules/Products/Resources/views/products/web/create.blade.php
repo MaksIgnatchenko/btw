@@ -136,7 +136,7 @@
                             </div>
                             <div class="form-item__wrapper form-item__wrapper--field">
                                 <span class="form-item__currency">$</span>
-                                <input class="form-item__inp form-item__inp--price" type="number" name="price" min="1" max="999999999" step=".01" maxlength="9">
+                                <input class="form-item__inp form-item__inp--price" type="number" name="price" min="1" max="9999999" step=".01" maxlength="9">
                                 <p class="form-item__inp-descr">{{__('products.create_price_description')}}</p>
                             </div>
                         </div>
