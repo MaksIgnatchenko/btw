@@ -8,8 +8,10 @@ namespace App\Modules\Users\Customer\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Modules\Users\Customer\Http\Requests\Api\UpdateProfileRequest;
 use App\Modules\Users\Customer\Repositories\CustomerRepository;
+use http\Env\Response;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class ProfileController extends Controller
@@ -41,6 +43,17 @@ class ProfileController extends Controller
 
         return response()->json([
             'status' => 'success',
+        ]);
+    }
+
+    public function uploadAvatar(Request $request)
+    {
+        $avatar = $request->file('avatar');
+        $result = $avatar->store('avatars/');
+
+        return response()->json([
+            'status' => 'success',
+            'message' => $result,
         ]);
     }
 }
