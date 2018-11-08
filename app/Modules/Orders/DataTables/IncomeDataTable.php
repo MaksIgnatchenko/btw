@@ -7,6 +7,7 @@ use App\Modules\Orders\Enums\OrderStatusEnum;
 use App\Modules\Orders\Models\Order;
 use App\Modules\Products\Helpers\ImagesPathHelper;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\DataTableAbstract;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Services\DataTable;
@@ -57,13 +58,7 @@ class IncomeDataTable extends DataTable
             ->editColumn('created_at', function (Order $order) {
                 return DateConverter::date($order->created_at);
             })
-            ->editColumn('redeemed_at', function (Order $order) {
-                return DateConverter::date($order->redeemed_at) ?? '<span class="text-red">Empty</span>';
-            })
-            ->editColumn('return_details', function (Order $order) {
-                return $order->product->return_details;
-            })
-            ->rawColumns(['picture', 'action', 'status', 'redeemed_at']);
+            ->rawColumns(['picture', 'action', 'status', 'total_amount']);
     }
 
     /**
@@ -75,7 +70,8 @@ class IncomeDataTable extends DataTable
      */
     public function query(Order $model): Builder
     {
-        return $model->newQuery();
+        return $model->newQuery()
+            ->withTotalAmount();
     }
 
     /**
@@ -100,12 +96,12 @@ class IncomeDataTable extends DataTable
             ->minifiedAjax()
             ->addAction(['width' => '80px'])
             ->parameters([
-                'dom'   => 'tp<"#status-filter"><"payment-search"f>',
+                'dom' => 'tp<"#status-filter"><"payment-search"f>',
                 'bInfo' => false,
                 'order' => [
-                    5, // here is the column number
-                    'asc'
-                ]
+                    0, // here is the column number
+                    'asc',
+                ],
             ]);
     }
 
@@ -117,24 +113,21 @@ class IncomeDataTable extends DataTable
     protected function getColumns(): array
     {
         return [
-            'created_at'     => [
+            'created_at' => [
                 'title' => 'Purchase date',
             ],
-            'redeemed_at'    => [
-                'title' => 'Redemption date',
+            'total_amount' => [
+                'title' => 'Total amount',
+                'searchable' => false,
             ],
-            'return_details' => [
-                'title' => 'Return policy date:',
-                'name' => 'product->return_details'
-            ],
-            'picture'        => [
-                'name'      => 'product',
-                'title'     => 'Picture',
+            'picture' => [
+                'name' => 'product',
+                'title' => 'Picture',
                 'orderable' => false,
             ],
-            'name'           => [
-                'name'      => 'product',
-                'title'     => 'Name',
+            'name' => [
+                'name' => 'product',
+                'title' => 'Name',
             ],
             'status',
         ];

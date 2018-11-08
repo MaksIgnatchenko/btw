@@ -4,7 +4,7 @@
 
 {!! $dataTable->table(['width' => '100%']) !!}
 
-@section('scripts')
+@section('script')
     @include('layouts.datatables_js')
     {!! $dataTable->scripts() !!}
     {!! Html::style('css/Payments/index.css') !!}

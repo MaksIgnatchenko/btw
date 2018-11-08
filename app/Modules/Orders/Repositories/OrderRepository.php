@@ -5,15 +5,13 @@
 
 namespace App\Modules\Orders\Repositories;
 
-use App\Modules\Csv\Generator\DateDto;
-use App\Modules\Csv\Generator\GetInRangeInterface;
 use App\Modules\Orders\Enums\OrderStatusEnum;
 use App\Modules\Orders\Models\Order;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use InfyOm\Generator\Common\BaseRepository;
 
-class OrderRepository extends BaseRepository implements GetInRangeInterface
+class OrderRepository extends BaseRepository
 {
     /**
      * Specify Model class name
@@ -255,7 +253,6 @@ class OrderRepository extends BaseRepository implements GetInRangeInterface
         return Order::query()
             ->selectRaw('
                 DATE_FORMAT(orders.created_at, "%e %b %Y") as "Purchase date", 
-                DATE_FORMAT(redeemed_at, "%e %b %Y") as "Redemption date", 
                 product->"$.return_details"  as "Return policy", 
                 product->"$.name"  as "Name", 
                 orders.status as "Status",

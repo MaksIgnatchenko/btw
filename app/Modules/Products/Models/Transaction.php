@@ -42,6 +42,7 @@ class Transaction extends Model
      * @param float $amount
      *
      * @return Transaction
+     * @throws \Illuminate\Database\Eloquent\MassAssignmentException
      */
     public function createTransaction(int $customerId, float $amount): Transaction
     {
