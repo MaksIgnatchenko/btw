@@ -4,7 +4,7 @@ return [
     'login_here' => 'Login Here',
     'register_now' => 'Register now',
     'forgot_password' => 'Forgot password',
-    'agreement' => 'By signing in, you agree to the <a href=":tc_link">Terms and Conditions</a> and <a href=":pp_link">Privacy Policy</a>',
+    'agreement' => 'By signing in, you agree to the <a target="_blank" href=":tc_link">Terms and Conditions</a> and <a target="_blank" href=":pp_link">Privacy Policy</a>',
     'email' => 'Email',
     'password' => 'Password',
     'save' => 'Save',

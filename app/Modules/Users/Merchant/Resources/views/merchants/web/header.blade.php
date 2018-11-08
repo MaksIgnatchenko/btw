@@ -40,10 +40,13 @@
                 @guest
                     <nav class="navigation">
                         @if (Route::currentRouteName() !== 'index')
-                            <a href="#">{{__('merchants.home')}}</a>
+                            <a href="{{ url('products/') }}">{{__('merchants.home')}}</a>
                         @endif
 
-                        <a href="#">{{__('merchants.terms_and_conditions')}}</a>
+                        <a target="_blank"
+                           href="{{ route('merchant.content', ['content' => 'terms_and_conditions']) }}">
+                            {{__('merchants.terms_and_conditions')}}
+                        </a>
                     </nav>
                 @endguest
 

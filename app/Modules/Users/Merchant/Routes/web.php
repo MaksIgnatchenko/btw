@@ -45,6 +45,6 @@ Route::group([
     'middleware' => ['web'],
     'prefix' => 'content',
 ], function () {
-    $this->get('{content}', 'ContentController@index');
+    $this->get('{content}', 'ContentController@index')->name('merchant.content');
 });
 /* -------------- */
