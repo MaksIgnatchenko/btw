@@ -5,7 +5,6 @@
 
 namespace App\Modules\Products\Listeners;
 
-use App\Modules\Products\Enums\CartSourceEnum;
 use App\Modules\Products\Enums\TransactionStatusEnum;
 use App\Modules\Products\Events\TransactionCompletedEvent;
 use App\Modules\Products\Models\Product;
