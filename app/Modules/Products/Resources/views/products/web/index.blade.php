@@ -18,6 +18,9 @@
 
         <!-- Main shop wrapper -->
         <div class="main-shop-wrapper">
+
+            @include('flash::message')
+
             <div class="container main-shop-empty">
                 <div class="main-shop-empty__cont">
                     <p>{{__('store.no_active_ads')}}</p>

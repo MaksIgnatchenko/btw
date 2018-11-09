@@ -9,9 +9,7 @@ use App\Modules\Orders\Enums\OrderStatusEnum;
 use App\Modules\Orders\Models\Order;
 use App\Modules\Orders\Repositories\OrderRepository;
 use App\Modules\Products\Events\TransactionCompletedEvent;
-use App\Modules\Users\Models\Customer;
-use App\Modules\Users\Models\User;
-use App\Modules\Users\Repositories\UserRepository;
+use App\Modules\Users\Merchant\Repositories\MerchantRepository;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
@@ -37,15 +35,13 @@ class CompletedTransactionOrdersSubscriber
      */
     public function addOrders(TransactionCompletedEvent $event): void
     {
-        /** @var User $user */
-        $user = Auth::user();
-        /** @var Customer $customer */
-        $customer = $user->customer;
+        /** @var \App\Modules\Users\Customer\Models\Customer $customer */
+        $customer = Auth::user();
         $transaction = $event->getTransaction();
         /** @var OrderRepository $orderRepository */
         $orderRepository = app(OrderRepository::class);
-        /** @var UserRepository $userRepository */
-        $userRepository = app(UserRepository::class);
+        /** @var MerchantRepository $merchantRepository */
+        $merchantRepository = app(MerchantRepository::class);
 
         if (!$event->getResult()->success) {
             return;
@@ -54,21 +50,18 @@ class CompletedTransactionOrdersSubscriber
         $orders = [];
         $carts = json_decode($transaction->cart);
         foreach ($carts as $cart) {
-            $product = $cart->product;
             /** @var Order $order */
             $order = app(Order::class);
 
-            $user = $userRepository->find($cart->product->user_id);
+            $merchant = $merchantRepository->find($cart->product->user_id);
 
             $orders[] = $order->fill([
                 'transaction_id' => $transaction->id,
                 'customer_id'    => $customer->id,
-                'merchant_id'    => $user->merchant->id,
-                'delivery_option' => $cart->delivery_option,
+                'merchant_id'    => $merchant->id,
 
-                'product'  => json_encode($product),
+                'product'  => $cart->product,
                 'quantity' => $cart->quantity,
-                'qr_code'  => Str::random(self::QR_CODE_LENGTH),
                 'status'   => OrderStatusEnum::PENDING,
 
                 'created_at' => new Carbon(),

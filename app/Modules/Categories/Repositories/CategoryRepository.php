@@ -36,6 +36,11 @@ class CategoryRepository extends BaseRepository
         return Category::whereNull('parent_category_id')->get();
     }
 
+    public function findAllChildCategories(): Collection
+    {
+        return Category::whereNotNull('parent_category_id')->get();
+    }
+
     /**
      * Specify Model class name
      *

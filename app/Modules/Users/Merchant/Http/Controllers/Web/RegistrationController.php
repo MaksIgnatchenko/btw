@@ -13,6 +13,7 @@ use App\Modules\Users\Merchant\Requests\RegisterMerchantContactDataRequest;
 use App\Modules\Users\Merchant\Services\Geography\GeographyServiceInterface;
 use App\Modules\Users\Merchant\Repositories\MerchantRepository;
 use App\Modules\Users\Requests\RegisterMerchantRequest;
+use Gregwar\Captcha\CaptchaBuilder;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -70,7 +71,14 @@ class RegistrationController extends Controller
             ]);
         }
 
-        return view('merchants.web.register');
+        $builder = new CaptchaBuilder();
+        $builder->build();
+
+        $request->session()->put('captcha', $builder->getPhrase());
+
+        return view('merchants.web.register', [
+            'captcha' => $builder->inline(),
+        ]);
     }
 
     /**
@@ -99,6 +107,7 @@ class RegistrationController extends Controller
 
     /**
      * @param RegisterMerchantCompanyRequest $request
+     *
      * @return RedirectResponse
      * @throws \Prettus\Validator\Exceptions\ValidatorException
      */

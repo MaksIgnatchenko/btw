@@ -32,10 +32,6 @@
     box-shadow: none;
 }
 
-#wrapper .dataTables_wrapper .dataTables_paginate ul.pagination {
-    padding-top: 12px;
-}
-
 body {
     font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
 }
@@ -76,10 +72,17 @@ body {
     padding: 0px !important;
 }
 
-.modal-body select:not([multiple]) {
+select:not([multiple]) {
     height: 2.5em !important;
 }
 
 #sidebar-menu > ul > li.active>a {
     color: #1d1e3a;
+}
+
+#dataTableBuilder th.sorting_asc,
+#dataTableBuilder th.sorting_desc,
+#dataTableBuilder th.sorting  {
+    background-position-x: 0px;
+    padding-left: 20px;
 }

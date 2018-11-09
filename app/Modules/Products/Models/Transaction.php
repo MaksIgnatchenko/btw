@@ -31,20 +31,11 @@ class Transaction extends Model
     public $casts = [
         'customer_id' => 'integer',
 
-        'cart'    => 'array',
+        'cart'    => 'object',
         'message' => 'string',
         'status'  => 'string',
         'amount'  => 'float',
     ];
-
-    public static function boot(): void
-    {
-        parent::boot();
-
-        self::creating(function ($model) {
-            $model->id = Uuid::uuid1();
-        });
-    }
 
     /**
      * @param int $customerId
