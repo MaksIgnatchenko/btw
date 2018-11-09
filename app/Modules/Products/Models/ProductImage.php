@@ -7,7 +7,6 @@ namespace App\Modules\Products\Models;
 
 use App\Modules\Products\Repositories\ProductImageRepository;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Image;
 use Intervention\Image\ImageManager;
@@ -15,6 +14,8 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class ProductImage extends Model
 {
+    protected $imageManager;
+
     /** @var array */
     public $fillable = [
         'product_id',
@@ -49,6 +50,13 @@ class ProductImage extends Model
         'product_id' => 'required|exists:products,id',
     ];
 
+    public function __construct(array $attributes = [])
+    {
+        $this->imageManager = app()[ImageManager::class];
+
+        parent::__construct($attributes);
+    }
+
     /**
      * Create image thumbnail.
      *
@@ -57,12 +65,11 @@ class ProductImage extends Model
      */
     public function createImageThumbnail(UploadedFile $image): Image
     {
-        $imageManager = app()[ImageManager::class];
-        $thumbnail = $imageManager->make($image->path());
+        $thumbnail = $this->imageManager->make($image->path());
 
         $thumbnail->resize(
-            config('wish.products.storage.image_thumb_width'),
-            config('wish.products.storage.image_thumb_height'),
+            config('wish.storage.products.image_thumb_width'),
+            config('wish.storage.products.image_thumb_height'),
             function ($constraint) {
                 $constraint->aspectRatio();
                 $constraint->upsize();
@@ -77,18 +84,24 @@ class ProductImage extends Model
      *
      * @param array $images
      * @param int $productId
+     * @param int $storeId
      */
-    public function saveImages(array $images, int $productId): void
+    public function saveGalleryImages(array $images, int $productId, int $storeId): void
     {
-        $productImageRepository = app(ProductImageRepository::class);
-        $storeId = Auth::user()->store->id;
+        $productImageRepository = app()[ProductImageRepository::class];
 
         foreach ($images as $image) {
             $imageName = $image->hashName();
             $imageThumbnail = $this->createImageThumbnail($image);
 
-            Storage::putFileAs(config('wish.products.storage.gallery_images_path') . '/' . $storeId, $image, $imageName);
-            Storage::disk('public')->put(config('wish.products.storage.gallery_images_thumb_path') . '/' . $storeId . '/' . $imageName, $imageThumbnail);
+            $this->saveImageWithThumbnail(
+                config('wish.storage.products.gallery_images_path'),
+                config('wish.storage.products.gallery_images_thumb_path'),
+                $imageName,
+                $imageThumbnail,
+                $storeId,
+                $image
+            );
 
             $imagePath = $storeId . '/' . $imageName;
             $productImageData = [
@@ -98,5 +111,19 @@ class ProductImage extends Model
 
             $productImageRepository->create($productImageData);
         }
+    }
+
+    /**
+     * @param string $originalPath
+     * @param string $thumbnailPath
+     * @param string $imageName
+     * @param Image $thumbnail
+     * @param int $storeId
+     * @param UploadedFile $image
+     */
+    public function saveImageWithThumbnail(string $originalPath, string $thumbnailPath, string $imageName, Image $thumbnail, int $storeId, UploadedFile $image): void
+    {
+        Storage::putFileAs($originalPath . '/' . $storeId, $image, $imageName);
+        Storage::disk('public')->put($thumbnailPath . '/' . $storeId . '/' . $imageName, $thumbnail);
     }
 }

@@ -10,23 +10,27 @@ use App\Modules\Categories\Models\Category;
 use App\Modules\Products\Models\Product;
 use App\Modules\Products\Requests\Web\CreateProductRequest;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 use Laracasts\Flash\Flash;
 
 class ProductController extends Controller
 {
     protected $productModel;
+    protected $categoryModel;
     protected $categoryRepository;
 
     /**
      * ProductController constructor.
      * @param Product $product
      * @param CategoryRepository $categoriesRepository
+     * @param Category $categoryModel
      */
-    public function __construct(Product $product, CategoryRepository $categoriesRepository)
+    public function __construct(Product $product, CategoryRepository $categoriesRepository, Category $categoryModel)
     {
         $this->productModel = $product;
         $this->categoryRepository = $categoriesRepository;
+        $this->categoryModel = $categoryModel;
     }
 
     /**
@@ -46,9 +50,14 @@ class ProductController extends Controller
      */
     public function create(): View
     {
-        $categories = Category::where('is_final', '1')->pluck('name', 'id');
+        $storeCategories = Auth::user()->store->categories;
 
-        return view('products.web.create', ['categories' => $categories]);
+        $childCategories = $this->categoryRepository->findAllChildCategories();
+        $result = $childCategories->merge($storeCategories);
+
+        $categoriesTree = $this->categoryModel->buildCategoriesTree($result);
+
+        return view('products.web.create', ['categories' => $categoriesTree]);
     }
 
     /**
@@ -59,7 +68,9 @@ class ProductController extends Controller
      */
     public function store(CreateProductRequest $request)
     {
-        $this->productModel->createProduct($request->all());
+        $storeId = Auth::user()->store->id;
+
+        $this->productModel->createProduct($request->all(), $storeId);
 
         Flash::success('Product has been created successfully');
 

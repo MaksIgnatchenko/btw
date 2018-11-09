@@ -83,6 +83,15 @@ class Product extends Model
         'is_in_wish_list',
     ];
 
+
+
+    public function __construct(array $attributes = [])
+    {
+        $this->productImageModel = app()[ProductImage::class];
+
+        parent::__construct($attributes);
+    }
+
     /**
      * @return bool
      */
@@ -284,24 +293,28 @@ class Product extends Model
      * Create product and store images.
      *
      * @param array $input
+     * @param int $storeId
      */
-    public function createProduct(array $input): void
+    public function createProduct(array $input, int $storeId): void
     {
-        $productRepository = app()[ProductRepository::class];
+        $mainImageHashName = $input['main_image']->hashName();
+        $mainImageThumbnail = $this->productImageModel->createImageThumbnail($input['main_image']);
 
-        $productImageModel = app()[ProductImage::class];
+        $this->productImageModel->saveImageWithThumbnail(
+            config('wish.storage.products.main_images_path'),
+            config('wish.storage.products.main_images_thumb_path'),
+            $mainImageHashName,
+            $mainImageThumbnail,
+            $storeId,
+            $input['main_image']
+        );
 
-        $storeId = Auth::user()->store->id;
-        $mainImageName = $input['main_image']->hashName();
-        $mainImagePath = $storeId . '/' . $mainImageName;
-        $mainImageThumbnail = $productImageModel->createImageThumbnail($input['main_image']);
-
-        Storage::disk('public')->put(config('wish.products.storage.main_images_thumb_path') . '/' . $storeId . '/' . $mainImageName, $mainImageThumbnail);
-        Storage::putFileAs(config('wish.products.storage.main_images_path') . '/' . $storeId, $input['main_image'], $mainImageName);
-
+        $mainImagePath = $storeId . '/' . $mainImageHashName;
         $input['main_image'] = $mainImagePath;
+
+        $productRepository = app()[ProductRepository::class];
         $product = $productRepository->create($input);
 
-        $productImageModel->saveImages($input['product_gallery'], $product->id);
+        $this->productImageModel->saveGalleryImages($input['product_gallery'], $product->id, $storeId);
     }
 }

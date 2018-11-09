@@ -1,6 +1,6 @@
 <?php
 /**
- * Created by Andrei Podgornyi, Appus Studio LP on 05.11.2018
+ * Created by Andrei Podgornyi, Appus Studio LP on 07.11.2018
  */
 
 namespace App\Modules\Categories\Providers;
@@ -8,7 +8,7 @@ namespace App\Modules\Categories\Providers;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Route;
 
-class CategoriesWebRouteServiceProvider extends ServiceProvider
+class ServiceRouteServiceProvider extends ServiceProvider
 {
     /**
      * This namespace is applied to your controller routes.
@@ -17,7 +17,7 @@ class CategoriesWebRouteServiceProvider extends ServiceProvider
      *
      * @var string
      */
-    protected $namespace = 'App\Modules\Categories\Http\Controllers\Web';
+    protected $namespace = 'App\Modules\Categories\Http\Controllers\Service';
 
     /**
      * Define the routes for the application.
@@ -29,6 +29,6 @@ class CategoriesWebRouteServiceProvider extends ServiceProvider
         Route::prefix('')
             ->middleware('web')
             ->namespace($this->namespace)
-            ->group(__DIR__ . './../Routes/web.php');
+            ->group(__DIR__ . './../Routes/service.php');
     }
 }

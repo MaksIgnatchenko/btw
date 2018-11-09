@@ -203,8 +203,8 @@ return [
         App\Modules\Users\Merchant\Providers\GeographyServiceProvider::class,
         App\Modules\Users\Merchant\Providers\ApiRouteServiceProvider::class,
         App\Modules\Products\Providers\WebRouteServiceProvider::class,
+        \App\Modules\Categories\Providers\ServiceRouteServiceProvider::class,
         App\Providers\ComposerServiceProvider::class,
-        App\Modules\Categories\Providers\CategoriesWebRouteServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
 
         Laravel\Socialite\SocialiteServiceProvider::class,
