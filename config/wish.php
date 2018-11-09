@@ -13,6 +13,7 @@ return [
             'image_thumb_width' => env('PRODUCT_IMAGE_THUMB_WIDTH', 960),
             'image_thumb_height' => env('PRODUCT_IMAGE_THUMB_HEIGHT', 640),
             'image_max_size' => env('PRODUCT_IMAGE_MAX_SIZE', 1024 * 1024 * 5),
+            'image_mimes' => env('PRODUCT_IMAGE_MIMES', 'jpeg,jpg,png')
         ]
     ],
 ];
