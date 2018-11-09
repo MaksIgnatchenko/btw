@@ -27,3 +27,8 @@
     left: 0;
     position: absolute;
 }
+
+.select-items .not-allowed {
+    cursor: not-allowed;
+    color: black!important;
+}
