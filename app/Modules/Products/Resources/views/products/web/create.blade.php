@@ -41,7 +41,7 @@
                             </div>
                             <div class="form-item__wrapper form-item__wrapper--field">
                                 <div class="custom-select">
-                                    {{ Form::select('add-new-categories', $categories, null, ['name' => 'add-new-categories', 'id' => 'tell-location']) }}
+                                    {{ Form::select('category_id', $categories, null, ['name' => 'category_id', 'id' => 'categories', 'onChange' => 'getCategoryAttributes($(this).children(":selected").attr("value"))']) }}
                                 </div>
                             </div>
                         </div>
@@ -73,32 +73,8 @@
                                 <input class="form-item__inp" type="text" name="quantity" maxlength="7" placeholder="{{__('products.create_attribute_section_placeholder')}}">
                             </div>
                         </div>
+                        <div class="attributes-container">
 
-                        <div class="form-line__wrapper form-line__wrapper--min-margin">
-                            <div class="form-item__wrapper form-item__wrapper--text">
-                                <p class="form-item__title">{{__('products.create_color')}}</p>
-                            </div>
-                            <div class="form-item__wrapper form-item__wrapper--field">
-                                <input class="form-item__inp" type="text" name="color" maxlength="100" placeholder="{{__('products.create_attribute_section_placeholder')}}">
-                            </div>
-                        </div>
-
-                        <div class="form-line__wrapper form-line__wrapper--min-margin">
-                            <div class="form-item__wrapper form-item__wrapper--text">
-                                <p class="form-item__title">{{__('products.create_size')}}</p>
-                            </div>
-                            <div class="form-item__wrapper form-item__wrapper--field">
-                                <input class="form-item__inp" type="text" name="size" maxlength="20" placeholder="{{__('products.create_attribute_section_placeholder')}}">
-                            </div>
-                        </div>
-
-                        <div class="form-line__wrapper form-line__wrapper--min-margin">
-                            <div class="form-item__wrapper form-item__wrapper--text">
-                                <p class="form-item__title">{{__('products.create_material')}}</p>
-                            </div>
-                            <div class="form-item__wrapper form-item__wrapper--field">
-                                <input class="form-item__inp" type="text" name="material" maxlength="100" placeholder="{{__('products.create_attribute_section_placeholder')}}">
-                            </div>
                         </div>
                     </div><!-- /. end form container -->
 
@@ -115,35 +91,35 @@
                                     <li class="form-item__block">
                                         <label class="form-item__label">
                                             <span class="form-item__label-decor"></span>
-                                            <input class="form-item__inp-file" type="file" name="add-image-1" accept=".jpg, .jpeg, .png">
+                                            <input class="form-item__inp-file" type="file" name="main_image" accept=".jpg, .jpeg, .png">
                                         </label>
                                     </li>
 
                                     <li class="form-item__block">
                                         <label class="form-item__label">
                                             <span class="form-item__label-decor"></span>
-                                            <input class="form-item__inp-file" type="file" name="add-image-2" accept=".jpg, .jpeg, .png">
+                                            <input class="form-item__inp-file" type="file" name="product_gallery[]" accept=".jpg, .jpeg, .png">
                                         </label>
                                     </li>
 
                                     <li class="form-item__block">
                                         <label class="form-item__label">
                                             <span class="form-item__label-decor"></span>
-                                            <input class="form-item__inp-file" type="file" name="add-image-3" accept=".jpg, .jpeg, .png">
+                                            <input class="form-item__inp-file" type="file" name="product_gallery[]" accept=".jpg, .jpeg, .png">
                                         </label>
                                     </li>
 
                                     <li class="form-item__block">
                                         <label class="form-item__label">
                                             <span class="form-item__label-decor"></span>
-                                            <input class="form-item__inp-file" type="file" name="add-image-4" accept=".jpg, .jpeg, .png">
+                                            <input class="form-item__inp-file" type="file" name="product_gallery[]" accept=".jpg, .jpeg, .png">
                                         </label>
                                     </li>
 
                                     <li class="form-item__block">
                                         <label class="form-item__label">
                                             <span class="form-item__label-decor"></span>
-                                            <input class="form-item__inp-file" type="file" name="add-image-5" accept=".jpg, .jpeg, .png">
+                                            <input class="form-item__inp-file" type="file" name="product_gallery[]" accept=".jpg, .jpeg, .png">
                                         </label>
                                     </li>
                                 </ul>
@@ -160,7 +136,7 @@
                             </div>
                             <div class="form-item__wrapper form-item__wrapper--field">
                                 <span class="form-item__currency">$</span>
-                                <input class="form-item__inp form-item__inp--price" type="number" name="add-new-price" min="1" max="999999999" maxlength="9">
+                                <input class="form-item__inp form-item__inp--price" type="number" name="price" min="1" max="9999999" step=".01" maxlength="9">
                                 <p class="form-item__inp-descr">{{__('products.create_price_description')}}</p>
                             </div>
                         </div>
