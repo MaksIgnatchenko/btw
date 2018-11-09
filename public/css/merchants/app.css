@@ -27,3 +27,7 @@
     left: 0;
     position: absolute;
 }
+
+.alert.alert-danger {
+    margin-top: 5px;
+}
