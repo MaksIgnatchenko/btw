@@ -26,7 +26,6 @@ class Product extends Model
     public const REVIEWS_PAGE_LIMIT = 3;
     public const DEFAULT_RADIUS = 100;
 
-    protected $productRepository;
     protected $productImageModel;
 
     /** @var array */

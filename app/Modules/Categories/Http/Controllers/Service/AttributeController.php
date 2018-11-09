@@ -10,17 +10,6 @@ use App\Modules\Categories\Models\Category;
 
 class AttributeController
 {
-    protected $categoryRepository;
-
-    /**
-     * AttributeController constructor.
-     * @param CategoryRepository $categoriesRepository
-     */
-    public function __construct(CategoryRepository $categoriesRepository)
-    {
-        $this->categoryRepository = $categoriesRepository;
-    }
-
     /**
      * @param Category $category
      * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
