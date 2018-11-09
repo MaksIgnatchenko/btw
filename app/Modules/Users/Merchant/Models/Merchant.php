@@ -11,6 +11,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Facades\Storage;
 
 class Merchant extends Authenticatable
 {
@@ -51,6 +52,20 @@ class Merchant extends Authenticatable
     public function getFullNameAttribute(): string
     {
         return $this->first_name . ' ' . $this->last_name;
+    }
+
+    /**
+     * @param $value
+     *
+     * @return null
+     */
+    public function getAvatarAttribute($value)
+    {
+        if ($value) {
+            return Storage::url($value);
+        }
+
+        return null;
     }
 
     /**

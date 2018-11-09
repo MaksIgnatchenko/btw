@@ -30,6 +30,15 @@ Route::group([
 });
 /* ------------------- */
 
+/* --- Settings --- */
+Route::group([
+    'middleware' => ['web'],
+    'prefix' => 'settings',
+], function () {
+    $this->get('/', 'SettingsController@index');
+});
+/* ------------------- */
+
 /* --- Geography --- */
 Route::group([
     'middleware' => ['web'],
