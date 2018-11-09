@@ -28,7 +28,7 @@ class ImagesPathHelper
      */
     public static function getProductThumbPath(string $imageName): string
     {
-        return url(ProductImage::THUMB_URL . $imageName);
+        return url(config('wish.products.storage.main_images_thumb_path') . $imageName);
     }
 
     /**

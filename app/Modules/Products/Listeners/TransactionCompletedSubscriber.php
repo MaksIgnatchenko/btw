@@ -5,7 +5,6 @@
 
 namespace App\Modules\Products\Listeners;
 
-use App\Modules\Products\Enums\CartSourceEnum;
 use App\Modules\Products\Enums\TransactionStatusEnum;
 use App\Modules\Products\Events\TransactionCompletedEvent;
 use App\Modules\Products\Models\Product;
@@ -75,10 +74,6 @@ class TransactionCompletedSubscriber
         $productRepository = app(ProductRepository::class);
 
         foreach ($orders as $order) {
-            if (CartSourceEnum::PRODUCT !== $order->source) {
-                continue;
-            }
-            
             /** @var Product $product */
             $product = $productRepository->find($order->product_id);
             $product->decreaseQuantity($order->quantity);

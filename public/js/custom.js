@@ -143,7 +143,7 @@ window.onload = function () {
                 var text = that.textContent || that.innerText;
                 that.classList.add('tell-form-category__item--chosen');
                 createLabel(that.getAttribute('id'), text);
-                closeCategoryList();
+                closeCategoryList(e);
             }
         }
 

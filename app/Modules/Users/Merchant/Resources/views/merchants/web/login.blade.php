@@ -56,8 +56,8 @@
                 </div>
                 <p class="login-form__info">
                     {!! __('merchants.agreement', [
-                    'tc_link' => '#',
-                    'pp_link' => '#',
+                    'tc_link' => route('merchant.content', ['content' => 'terms_and_conditions']),
+                    'pp_link' => route('merchant.content', ['content' => 'privacy_policy']),
                     ]) !!}
                 </p>
                 {!! Form::close() !!}

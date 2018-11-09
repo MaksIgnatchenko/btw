@@ -49,7 +49,8 @@
             <h6 class="tell-form__title">{{__('registration.store.product_categories')}}</h6>
             <div class="tell-form-wr-float">
                 <div class="tell-form-category position-relative">
-                    <p class="tell-form-category__display" id="category-title">{{__('registration.store.categories')}}</p>
+                    <p class="tell-form-category__display"
+                       id="category-title">{{__('registration.store.categories')}}</p>
                     <ul class="tell-form-category__list tell-form-category__list--close" id="tell-categories">
 
                         @foreach ($categories as $id => $title)
@@ -75,12 +76,14 @@
                 @endif
             </div>
             <div class="tell-form-btns">
-                <button formaction="{{route('merchant.registration.restore-contact-info')}}" class="tell-form-btn tell-form-btn--uncolor">{{__('merchants.back')}}</button>
+                <button formaction="{{route('merchant.registration.restore-contact-info')}}"
+                        class="tell-form-btn tell-form-btn--uncolor">{{__('merchants.back')}}</button>
 
                 {!! Form::submit('Enter my Store', ['class' => 'tell-form-btn tell-form-btn--color']) !!}
 
             </div>
-            <p class="tell-form-attention">{!! __('registration.store.agreement', ['link' => '#']) !!}
+            <p class="tell-form-attention">
+                {!! __('registration.store.agreement', ['link' => route('merchant.content', ['content' => 'terms_and_conditions'])]) !!}
             </p>
 
             {!! Form::close() !!}

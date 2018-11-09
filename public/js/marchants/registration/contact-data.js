@@ -35,6 +35,12 @@ $(function () {
             }
         );
     }
+
+    IMask(
+        document.querySelector('input[name=phone_number]'), {
+            mask: '000000000000'
+        }
+    );
 });
 
 
