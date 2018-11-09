@@ -32,7 +32,7 @@ return [
         'categories' => 'Categories',
         'info' => 'Company info',
         'write_info' => 'Write your info',
-        'agreement' => 'By clicking "Enter my store", you agree to <a href=":link">Terms of Service</a>',
+        'agreement' => 'By clicking "Enter my store", you agree to <a target="_blank" href=":link">Terms of Service</a>',
     ],
     /* ------------------------ */
 

@@ -18,12 +18,15 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class Product extends Model
 {
     public const PRODUCTS_PAGE_LIMIT = 20;
     public const REVIEWS_PAGE_LIMIT = 3;
     public const DEFAULT_RADIUS = 100;
+
+    protected $productImageModel;
 
     /** @var array */
     public $fillable = [
@@ -42,6 +45,7 @@ class Product extends Model
         'user_id',
         'certificate',
         'return_details',
+        'price',
     ];
 
     /**
@@ -64,6 +68,7 @@ class Product extends Model
         'certificate' => 'boolean',
         'return_details' => 'string',
         'rating' => 'float',
+        'price' => 'float',
     ];
 
     /**
@@ -77,6 +82,15 @@ class Product extends Model
     protected $appends = [
         'is_in_wish_list',
     ];
+
+
+
+    public function __construct(array $attributes = [])
+    {
+        $this->productImageModel = app()[ProductImage::class];
+
+        parent::__construct($attributes);
+    }
 
     /**
      * @return bool
@@ -255,12 +269,52 @@ class Product extends Model
     }
 
     /**
-     * @param array $input
+     * Attributes mutator.
+     *
+     * @param $value
      */
-    public function createProduct(array $input): void
+    public function setAttributesAttribute($value): void
     {
-        $articleRepository = app()[ProductRepository::class];
+        $this->attributes['attributes'] = json_encode($value);
+    }
 
-        $articleRepository->create($input);
+    /**
+     * Main image accessor.
+     *
+     * @param string $attribute
+     * @return string
+     */
+    public function getMainImageAttribute(string $attribute): string
+    {
+        return asset(Storage::url($attribute));
+    }
+
+    /**
+     * Create product and store images.
+     *
+     * @param array $input
+     * @param int $storeId
+     */
+    public function createProduct(array $input, int $storeId): void
+    {
+        $mainImageHashName = $input['main_image']->hashName();
+        $mainImageThumbnail = $this->productImageModel->createImageThumbnail($input['main_image']);
+
+        $this->productImageModel->saveImageWithThumbnail(
+            config('wish.storage.products.main_images_path'),
+            config('wish.storage.products.main_images_thumb_path'),
+            $mainImageHashName,
+            $mainImageThumbnail,
+            $storeId,
+            $input['main_image']
+        );
+
+        $mainImagePath = $storeId . '/' . $mainImageHashName;
+        $input['main_image'] = $mainImagePath;
+
+        $productRepository = app()[ProductRepository::class];
+        $product = $productRepository->create($input);
+
+        $this->productImageModel->saveGalleryImages($input['product_gallery'], $product->id, $storeId);
     }
 }

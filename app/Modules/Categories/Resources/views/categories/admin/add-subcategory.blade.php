@@ -50,9 +50,6 @@
             <div class="col-md-4">
                 @include('categories.admin.attributes')
             </div>
-            <div class="col-md-4">
-                @include('categories.admin.parameters')
-            </div>
         </div>
         {!! Form::close() !!}
 
