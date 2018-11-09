@@ -6,6 +6,7 @@
 Route::group(['middleware' => ['auth:admin']], function () {
 
     Route::get('/content', 'ContentController@index')->name('content');
+    Route::get('/content/about-us', 'ContentController@aboutUs')->name('content.about-us');
     Route::put('/content/update/{key}', 'ContentController@update')->name('content.update');
 
 });
