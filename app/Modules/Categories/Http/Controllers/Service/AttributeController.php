@@ -10,6 +10,18 @@ use App\Modules\Categories\Models\Category;
 
 class AttributeController
 {
+    protected $categoryModel;
+
+    /**
+     * AttributeController constructor.
+     *
+     * @param Category $categoryModel
+     */
+    public function __construct(Category $categoryModel)
+    {
+        $this->categoryModel = $categoryModel;
+    }
+
     /**
      * @param Category $category
      * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
@@ -17,5 +29,15 @@ class AttributeController
     public function show(Category $category)
     {
         return response($category->attributes);
+    }
+
+    /**
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getAllAsTree()
+    {
+        return response()->json([
+            'categories' => $this->categoryModel->buildCategoriesTree(Category::all()),
+        ]);
     }
 }
