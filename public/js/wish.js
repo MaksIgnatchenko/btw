@@ -93,7 +93,7 @@ function getCategoryAttributes(id) {
 
                     $(input).addClass('form-item__inp');
                     input.setAttribute('type', 'text');
-                    input.setAttribute('name', 'attributes[' + attribute.name + ']' );
+                    input.setAttribute('name', 'attributes[' + attribute.type + ']' + '[' + attribute.name + ']' );
                     input.setAttribute('maxlength', 100);
                     input.setAttribute('placeholder', 'Enter the value');
 
@@ -109,4 +109,3 @@ function getCategoryAttributes(id) {
         }
     });
 }
-

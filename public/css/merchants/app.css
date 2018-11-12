@@ -28,6 +28,10 @@
     position: absolute;
 }
 
+.alert.alert-danger {
+    margin-top: 5px;
+}
+
 .header-black {
     background-color: black;
 }
