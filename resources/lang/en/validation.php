@@ -113,7 +113,7 @@ return [
         ],
         'product_gallery.*' => [
             'mimes' => 'Product gallery images must be files of types' . config('wish.storage.products.image_mimes') . '.',
-            'max' => 'Product gallery images may not be greater than' . config('wish.storage.products.image_max_size') . 'kilobytes.',
+            'max' => 'Product gallery images may not be greater than' . config('wish.storage.products.image_max_size') . 'megabytes.',
         ],
     ],
 
