@@ -46,6 +46,7 @@ class MerchantRepository extends BaseRepository
         ]);
 
         $merchant->store()->create($storeData);
+        $merchant->store->categories()->attach($data['categories']);
 
         return $merchant;
     }
