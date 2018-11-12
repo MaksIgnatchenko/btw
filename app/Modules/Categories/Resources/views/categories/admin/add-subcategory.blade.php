@@ -1,6 +1,10 @@
 @extends('layouts.app')
 @section('title', 'Add subcategory to ' . $category->name)
 @section('content')
+
+    <div class="breadcrumb-container pull-right">
+        {{ Breadcrumbs::render('add-subcategory') }}
+    </div>
     
     <section class="content">
         <div class="clearfix"></div>

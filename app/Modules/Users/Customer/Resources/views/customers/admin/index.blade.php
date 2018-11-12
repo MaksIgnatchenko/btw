@@ -2,6 +2,11 @@
 @section('title', 'Customers')
 
 @section('content')
+
+    <div class="breadcrumb-container pull-right">
+        {{ Breadcrumbs::render('customers') }}
+    </div>
+
     <div class="content">
         <div class="clearfix"></div>
 
