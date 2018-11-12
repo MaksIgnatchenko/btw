@@ -19,10 +19,10 @@ class AttributesHelper
 
         foreach ($attributes as $type => $attributeArray) {
             if (AttributeTypesEnum::check($type)) {
-                $mergedAttributes = array($attributeArray);
+                $mergedAttributes = array_merge($mergedAttributes, $attributeArray);
             }
-
-            return $mergedAttributes;
         }
+
+        return $mergedAttributes;
     }
 }
