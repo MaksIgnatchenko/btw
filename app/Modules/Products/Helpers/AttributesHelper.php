@@ -9,7 +9,11 @@ use App\Modules\Categories\Enums\AttributeTypesEnum;
 
 class AttributesHelper
 {
-    public static function mergeAttributes(?array $attributes)
+    /**
+     * @param array|null $attributes
+     * @return array|null
+     */
+    public static function mergeAttributes(?array $attributes): ?array
     {
         $mergedAttributes = [];
 
