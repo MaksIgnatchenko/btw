@@ -93,6 +93,23 @@
                     <div class="attributes-container">
 
                     </div>
+
+                    @foreach($product->attributes as $key => $data)
+                        <div class="form-line__wrapper form-line__wrapper--min-margin">
+                            <div class="form-item__wrapper form-item__wrapper--text">
+                                <p class="form-item__title">{{$key}}</p>
+                            </div>
+                            <div class="form-item__wrapper form-item__wrapper--field">
+                                {!! Form::text("attributes[{$data['type']}][]", $data['value'], [
+                                'placeholder' => __('products.create_attribute_section_placeholder'),
+                                'class' => 'form-item__inp']
+                                ) !!}
+                            </div>
+                        </div>
+                        <div class="attributes-container">
+
+                        </div>
+                    @endforeach
                 </div><!-- /. end form container -->
 
                 <hr class="form-hr">
@@ -105,45 +122,36 @@
                         </div>
                         <div class="form-item__wrapper form-item__wrapper--files">
                             <ul class="form-item__list">
-                                <li class="form-item__block">
-                                    <label class="form-item__label">
+                                <li class="form-item__block" style="background-image: url({{$product->main_image}});">
+                                    <label class="form-item__label form-item__label--remove">
                                         <span class="form-item__label-decor"></span>
                                         <input class="form-item__inp-file" type="file" name="main_image"
                                                accept=".jpg, .jpeg, .png">
                                     </label>
                                 </li>
 
-                                <li class="form-item__block">
-                                    <label class="form-item__label">
-                                        <span class="form-item__label-decor"></span>
-                                        <input class="form-item__inp-file" type="file" name="product_gallery[]"
-                                               accept=".jpg, .jpeg, .png">
-                                    </label>
-                                </li>
+                                @php $imgCount = 0; @endphp
 
-                                <li class="form-item__block">
-                                    <label class="form-item__label">
+                                @foreach ($product->images as $image)
+                                <li class="form-item__block" style="background-image: url({{$image->image}});">
+                                    <label class="form-item__label form-item__label--remove">
                                         <span class="form-item__label-decor"></span>
                                         <input class="form-item__inp-file" type="file" name="product_gallery[]"
                                                accept=".jpg, .jpeg, .png">
                                     </label>
                                 </li>
+                                @endforeach
 
-                                <li class="form-item__block">
-                                    <label class="form-item__label">
-                                        <span class="form-item__label-decor"></span>
-                                        <input class="form-item__inp-file" type="file" name="product_gallery[]"
-                                               accept=".jpg, .jpeg, .png">
-                                    </label>
-                                </li>
+                                @for ($i = $imgCount + 1; $i <= 4; $i++)
+                                    <li class="form-item__block">
+                                        <label class="form-item__label">
+                                            <span class="form-item__label-decor"></span>
+                                            <input class="form-item__inp-file" type="file" name="product_gallery[]"
+                                                   accept=".jpg, .jpeg, .png">
+                                        </label>
+                                    </li>
+                                @endfor
 
-                                <li class="form-item__block">
-                                    <label class="form-item__label">
-                                        <span class="form-item__label-decor"></span>
-                                        <input class="form-item__inp-file" type="file" name="product_gallery[]"
-                                               accept=".jpg, .jpeg, .png">
-                                    </label>
-                                </li>
                             </ul>
                         </div>
                     </div>
