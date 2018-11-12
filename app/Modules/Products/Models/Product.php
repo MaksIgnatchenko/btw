@@ -312,7 +312,7 @@ class Product extends Model
 
         $mainImagePath = $storeId . '/' . $mainImageHashName;
         $input['main_image'] = $mainImagePath;
-        $input['attributes'] = AttributesHelper::mergeAttributes($input['attributes'] ?? null);
+        $input['attributes'] = AttributesHelper::mergeAttributes($input['attributes'] ?? []);
 
         $productRepository = app()[ProductRepository::class];
         $product = $productRepository->create($input);
