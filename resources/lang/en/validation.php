@@ -87,8 +87,6 @@ return [
     'unique'               => 'The :attribute has already been taken.',
     'uploaded'             => 'The :attribute failed to upload.',
     'url'                  => 'The :attribute format is invalid.',
-    'password_format'      => 'Password must contain at least one number and one letter.',
-    'captcha_invalid'      => 'Invalid code.',
 
     /*
     |--------------------------------------------------------------------------
@@ -104,6 +102,22 @@ return [
     'custom' => [
         'attribute-name' => [
             'rule-name' => 'custom-message',
+        ],
+        'captcha' => [
+            'required' => 'Please enter the code from the image.',
+            'required.in' => 'Invalid code.',
+        ],
+        'password' => [
+            'regex' => 'Password must contain at least one number and one letter.',
+        ],
+        'country' => [
+            'not_in' => 'The :attribute field is required.',
+        ],
+        'state' => [
+            'not_in' => 'The :attribute field is required.',
+        ],
+        'store_country' => [
+            'not_in' => 'The :attribute field is required.',
         ],
     ],
 

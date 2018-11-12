@@ -30,11 +30,4 @@ class RegisterMerchantCompanyRequest extends FormRequest
             'categories.*' => 'int|exists:categories,id',
         ];
     }
-
-    public function messages()
-    {
-        return [
-            'store_country.not_in' => 'The store country field is required',
-        ];
-    }
 }
