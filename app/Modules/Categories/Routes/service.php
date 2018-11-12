@@ -4,6 +4,6 @@ Route::group([
     'prefix' => 'categories',
 ], function () {
     Route::get('{category}/attributes', 'AttributeController@show');
-    Route::get('tree', 'AttributeController@getAllAsTree');
+    Route::get('tree', 'CategoriesController@getAllAsTree');
 });
 

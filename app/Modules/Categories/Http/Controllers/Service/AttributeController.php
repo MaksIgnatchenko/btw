@@ -5,23 +5,11 @@
 
 namespace App\Modules\Categories\Http\Controllers\Service;
 
-use App\Modules\Categories\Repositories\CategoryRepository;
+use App\Http\Controllers\Controller;
 use App\Modules\Categories\Models\Category;
 
-class AttributeController
+class AttributeController extends Controller
 {
-    protected $categoryModel;
-
-    /**
-     * AttributeController constructor.
-     *
-     * @param Category $categoryModel
-     */
-    public function __construct(Category $categoryModel)
-    {
-        $this->categoryModel = $categoryModel;
-    }
-
     /**
      * @param Category $category
      * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
@@ -29,15 +17,5 @@ class AttributeController
     public function show(Category $category)
     {
         return response($category->attributes);
-    }
-
-    /**
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function getAllAsTree()
-    {
-        return response()->json([
-            'categories' => $this->categoryModel->buildCategoriesTree(Category::all()),
-        ]);
     }
 }
