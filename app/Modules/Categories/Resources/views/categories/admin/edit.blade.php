@@ -3,6 +3,10 @@
 
 @section('content')
 
+    <div class="breadcrumb-container pull-right">
+        {{ Breadcrumbs::render('edit-category', $category) }}
+    </div>
+
     <section class="content">
         <div class="clearfix"></div>
 

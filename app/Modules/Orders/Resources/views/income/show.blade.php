@@ -3,6 +3,11 @@
 @section('title', 'Income details')
 
 @section('content')
+
+    <div class="breadcrumb-container pull-right">
+        {{ Breadcrumbs::render('income-payment', $order) }}
+    </div>
+
     <div class="content">
         <div class="clearfix"></div>
 
