@@ -40,17 +40,4 @@ class CreateProductRequest extends FormRequest
             'attributes.digits.*' => 'required|integer',
         ];
     }
-
-    public function messages()
-    {
-        return [
-            'attributes.text.*.required' => 'The attribute field is required.',
-            'attributes.text.*.string' => 'The attribute field must be a string',
-            'attributes.text.*.max' => 'The attribute field may not be greater than 5 characters.',
-            'attributes.digits.*.required' => 'The attribute field is required',
-            'attributes.digits.*.integer' => 'The attribute field must be an integer.',
-            'product_gallery.*.mimes' => 'Product gallery images must be files of types' . config('wish.storage.products.image_mimes') . '.',
-            'product_gallery.*.max' => 'Product gallery images may not be greater than' . config('wish.storage.products.image_max_size') . 'kilobytes.',
-        ];
-    }
 }

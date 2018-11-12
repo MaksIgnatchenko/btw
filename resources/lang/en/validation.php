@@ -102,8 +102,18 @@ return [
     */
 
     'custom' => [
-        'attribute-name' => [
-            'rule-name' => 'custom-message',
+        'attributes.text.*' => [
+            'required' => 'The attribute field is required.',
+            'string' => 'The attribute field must be a string',
+            'max' => 'The attribute field may not be greater than 5 characters.',
+        ],
+        'attributes.digits.*' => [
+            'required' => 'The attribute field is required',
+            'integer' => 'The attribute field must be an integer.',
+        ],
+        'product_gallery.*' => [
+            'mimes' => 'Product gallery images must be files of types' . config('wish.storage.products.image_mimes') . '.',
+            'max' => 'Product gallery images may not be greater than' . config('wish.storage.products.image_max_size') . 'kilobytes.',
         ],
     ],
 
