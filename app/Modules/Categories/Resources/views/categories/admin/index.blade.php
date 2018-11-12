@@ -17,6 +17,10 @@
 
 @section('content')
 
+    <div class="breadcrumb-container pull-right">
+        {{ Breadcrumbs::render('categories') }}
+    </div>
+
     <div class="content">
         @include('flash::message')
 
