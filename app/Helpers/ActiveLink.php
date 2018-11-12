@@ -47,11 +47,21 @@ class ActiveLink
     /**
      * @return bool
      */
-    public static function checkContent(): bool
+    public static function checkAboutUs(): bool
     {
         $controller = self::getControllerInstance();
 
-        return $controller instanceof ContentController;
+        return ($controller instanceof ContentController) && (Request::route()->getName() === 'content.about-us');
+    }
+
+    /**
+     * @return bool
+     */
+    public static function checkTermsAndConditions(): bool
+    {
+        $controller = self::getControllerInstance();
+
+        return ($controller instanceof ContentController) && (Request::route()->getName() === 'content');
     }
 
     /**
