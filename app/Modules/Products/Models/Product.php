@@ -19,9 +19,11 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Laratrust\Contracts\Ownable;
 
-class Product extends Model
+class Product extends Model implements Ownable
 {
+
     public const PRODUCTS_PAGE_LIMIT = 20;
     public const REVIEWS_PAGE_LIMIT = 3;
     public const DEFAULT_RADIUS = 100;
@@ -69,6 +71,7 @@ class Product extends Model
         'return_details' => 'string',
         'rating' => 'float',
         'price' => 'float',
+        'attributes' => 'array',
     ];
 
     /**
@@ -83,7 +86,14 @@ class Product extends Model
         'is_in_wish_list',
     ];
 
-
+    /**
+     * @param mixed $owner
+     *
+     * @return mixed
+     */
+    public function ownerKey($owner) {
+        return $this->store->merchant_id;
+    }
 
     public function __construct(array $attributes = [])
     {

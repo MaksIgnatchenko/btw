@@ -57,6 +57,21 @@ class ProductController extends Controller
     }
 
     /**
+     * @param Product $product
+     *
+     * @return View
+     */
+    public function edit(Product $product): View
+    {
+        $categories = $this->getAllowedMerchantCategoriesAsArray();
+
+        return view('products.web.edit', [
+            'categories' => $categories,
+            'product' => $product,
+        ]);
+    }
+
+    /**
      * Returns one-dimensional array [id => name] of all categories, recurrently from root to final,
      * available for current merchant`s shop
      *
@@ -105,5 +120,18 @@ class ProductController extends Controller
         Flash::success('Product has been created successfully');
 
         return redirect(route('products.index'));
+    }
+
+    public function show(Product $product)
+    {
+        $merchant = Auth::user();
+
+        if (!$merchant->owns($product, 'customer_id')) {
+            abort(404);
+        }
+
+        return view('products.web.single', [
+            'product' => $product,
+        ]);
     }
 }
