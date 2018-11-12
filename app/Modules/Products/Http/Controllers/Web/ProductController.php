@@ -57,7 +57,7 @@ class ProductController extends Controller
     }
 
     /**
-     * Returns array [id => name] of all categories, recurrently from root to final,
+     * Returns one-dimensional array [id => name] of all categories, recurrently from root to final,
      * available for current merchant`s shop
      *
      * @return array
