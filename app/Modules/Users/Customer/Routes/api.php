@@ -40,4 +40,5 @@ $this->group([
     'prefix' => 'profile', 'middleware' => 'auth:customer',
 ], function () {
     $this->put('/', 'ProfileController@update');
+    $this->post('/avatar', 'ProfileController@uploadAvatar');
 });

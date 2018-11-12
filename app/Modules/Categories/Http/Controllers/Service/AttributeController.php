@@ -5,10 +5,10 @@
 
 namespace App\Modules\Categories\Http\Controllers\Service;
 
-use App\Modules\Categories\Repositories\CategoryRepository;
+use App\Http\Controllers\Controller;
 use App\Modules\Categories\Models\Category;
 
-class AttributeController
+class AttributeController extends Controller
 {
     /**
      * @param Category $category

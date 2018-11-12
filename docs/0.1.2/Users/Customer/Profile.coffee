@@ -19,3 +19,21 @@ HTTP/1.1 200 OK
     "status": "success"
 }
 ###
+
+###
+@api {post} /api/customer/profile/avatar Upload avatar
+@apiName Upload avatar
+@apiGroup Profile
+@apiPermission Customer
+@apiVersion 0.1.2
+
+@apiHeader {String} Authorization <code><b>token_type</b> <b>access_token</b></code>
+
+@apiParam {File} avatar
+
+@apiSuccessExample Success-Response:
+HTTP/1.1 200 OK
+{
+    "avatar": avatar_full_url
+}
+###

@@ -1,3 +1,9 @@
 <?php
+Route::group([
+    'middleware' => ['web'],
+    'prefix' => 'categories',
+], function () {
+    Route::get('{category}/attributes', 'AttributeController@show');
+    Route::get('tree', 'CategoriesController@getAllAsTree');
+});
 
-Route::get('categories/{category}/attributes', 'AttributeController@show')->middleware(['web']);

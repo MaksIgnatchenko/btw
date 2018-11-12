@@ -10,6 +10,10 @@
     @include('products.web.header')
 @endsection
 
+@section('script')
+    <script src="{{asset('js/marchants/products/category-tree.js')}}"></script>
+@endsection
+
 @section('content')
     <!-- Main -->
     <div class="main-shop">
@@ -44,6 +48,7 @@
                             </div>
                             <div class="form-item__wrapper form-item__wrapper--field">
                                 <div class="custom-select">
+                                    {{ Form::select('category_id', ['Category'] + $categories, 'Category', ['name' => 'category_id', 'id' => 'categories', 'onChange' => 'getCategoryAttributes($(this).children(":selected").attr("value"))']) }}
                                     {{ Form::select('category_id', $categories, null, ['name' => 'category_id', 'id' => 'categories', 'onChange' => 'getCategoryAttributes($(this).children(":selected").attr("value"))']) }}
                                     @if ($errors->has('category_id'))
                                         <div class="alert alert-danger" role="alert"><strong>{{ $errors->first('category_id') }}</strong></div>

@@ -22,9 +22,10 @@ class ProductController extends Controller
 
     /**
      * ProductController constructor.
-     * @param Product $product
+     *
+     * @param Product            $product
      * @param CategoryRepository $categoriesRepository
-     * @param Category $categoryModel
+     * @param Category           $categoryModel
      */
     public function __construct(Product $product, CategoryRepository $categoriesRepository, Category $categoryModel)
     {
@@ -50,6 +51,19 @@ class ProductController extends Controller
      */
     public function create(): View
     {
+        $categories = $this->getAllowedMerchantCategoriesAsArray();
+
+        return view('products.web.create', ['categories' => $categories]);
+    }
+
+    /**
+     * Returns one-dimensional array [id => name] of all categories, recurrently from root to final,
+     * available for current merchant`s shop
+     *
+     * @return array
+     */
+    protected function getAllowedMerchantCategoriesAsArray(): array
+    {
         $storeCategories = Auth::user()->store->categories;
 
         $childCategories = $this->categoryRepository->findAllChildCategories();
@@ -57,13 +71,29 @@ class ProductController extends Controller
 
         $categoriesTree = $this->categoryModel->buildCategoriesTree($result);
 
-        return view('products.web.create', ['categories' => $categoriesTree]);
+        $handle = function ($categories) use (&$handle) {
+            $result = [];
+
+            foreach ($categories as $category) {
+                $result[$category->id] = $category->name;
+                if ($category->children) {
+                    $recursionResult = $handle($category->children);
+                    $result += $recursionResult;
+                    continue;
+                }
+            }
+
+            return $result;
+        };
+
+        return $handle($categoriesTree);
     }
 
     /**
      * Create new product.
      *
      * @param CreateProductRequest $request
+     *
      * @return CreateProductRequest
      */
     public function store(CreateProductRequest $request)

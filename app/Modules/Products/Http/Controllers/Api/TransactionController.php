@@ -50,6 +50,12 @@ class TransactionController extends Controller
                 'submitForSettlement' => true,
             ],
         ]);
+
+        if (!$result->success) {
+            $transaction->message = $result->message;
+            $transaction->save();
+        }
+
         /** @var TransactionCompletedEvent $transactionCompletedEvent */
         $transactionCompletedEvent = app(TransactionCompletedEvent::class);
         $transactionCompletedEvent->setTransaction($transaction)->setResult($result);

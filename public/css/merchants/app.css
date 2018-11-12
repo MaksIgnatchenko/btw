@@ -31,3 +31,12 @@
 .alert.alert-danger {
     margin-top: 5px;
 }
+
+.header-black {
+    background-color: black;
+}
+
+.select-items .not-allowed {
+    cursor: not-allowed;
+    color: black!important;
+}
