@@ -10,8 +10,8 @@ use App\Modules\Categories\Enums\AttributeTypesEnum;
 class AttributesHelper
 {
     /**
-     * @param array|null $attributes
-     * @return array|null
+     * @param array $attributes
+     * @return array
      */
     public static function mergeAttributes(array $attributes): array
     {
