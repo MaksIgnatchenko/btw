@@ -51,7 +51,7 @@ class ProductController extends Controller
      */
     public function create(): View
     {
-        $categories = $this->getCustomerCategoriesAsArray();
+        $categories = $this->getAllowedMerchantCategoriesAsArray();
 
         return view('products.web.create', ['categories' => $categories]);
     }
@@ -62,7 +62,7 @@ class ProductController extends Controller
      *
      * @return array
      */
-    protected function getCustomerCategoriesAsArray(): array
+    protected function getAllowedMerchantCategoriesAsArray(): array
     {
         $storeCategories = Auth::user()->store->categories;
 
