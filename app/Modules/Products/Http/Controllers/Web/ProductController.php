@@ -57,11 +57,12 @@ class ProductController extends Controller
     }
 
     /**
-     * @param $categories
+     * Returns array [id => name] of all categories, recurrently from root to final,
+     * available for current merchant`s shop
      *
      * @return array
      */
-    protected function getCustomerCategoriesAsArray()
+    protected function getCustomerCategoriesAsArray(): array
     {
         $storeCategories = Auth::user()->store->categories;
 
