@@ -41,7 +41,9 @@ class ProductController extends Controller
      */
     public function index(): View
     {
-        return view('products.web.index');
+        $products = Auth::user()->products()->paginate(config('wish.store.pagination'));
+
+        return view('products.web.index', ['products' => $products]);
     }
 
     /**
