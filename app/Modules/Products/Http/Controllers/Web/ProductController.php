@@ -8,8 +8,10 @@ namespace App\Modules\Products\Http\Controllers\Web;
 use App\Modules\Categories\Repositories\CategoryRepository;
 use App\Modules\Categories\Models\Category;
 use App\Modules\Products\Models\Product;
+use App\Modules\Products\Repositories\ProductRepository;
 use App\Modules\Products\Requests\Web\CreateProductRequest;
 use App\Http\Controllers\Controller;
+use App\Modules\Products\Requests\Web\EditProductRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 use Laracasts\Flash\Flash;
@@ -19,6 +21,7 @@ class ProductController extends Controller
     protected $productModel;
     protected $categoryModel;
     protected $categoryRepository;
+    protected $productRepository;
 
     /**
      * ProductController constructor.
@@ -26,12 +29,18 @@ class ProductController extends Controller
      * @param Product            $product
      * @param CategoryRepository $categoriesRepository
      * @param Category           $categoryModel
+     * @param ProductRepository  $productRepository
      */
-    public function __construct(Product $product, CategoryRepository $categoriesRepository, Category $categoryModel)
+    public function __construct(
+        Product $product,
+        CategoryRepository $categoriesRepository,
+        Category $categoryModel,
+        ProductRepository $productRepository)
     {
         $this->productModel = $product;
         $this->categoryRepository = $categoriesRepository;
         $this->categoryModel = $categoryModel;
+        $this->productRepository = $productRepository;
     }
 
     /**
@@ -122,6 +131,11 @@ class ProductController extends Controller
         return redirect(route('products.index'));
     }
 
+    /**
+     * @param Product $product
+     *
+     * @return \Illuminate\Contracts\View\Factory|View
+     */
     public function show(Product $product)
     {
         $merchant = Auth::user();
@@ -129,6 +143,21 @@ class ProductController extends Controller
         if (!$merchant->owns($product, 'customer_id')) {
             abort(404);
         }
+
+        return view('products.web.single', [
+            'product' => $product,
+        ]);
+    }
+
+    public function update(EditProductRequest $request, $id)
+    {
+        $product = $this->productRepository->find($id);
+        $product->update($request);
+
+        //TODO make image replacement smarter
+        $product->updateProduct();
+
+        Flash::success('Product has been updated successfully');
 
         return view('products.web.single', [
             'product' => $product,

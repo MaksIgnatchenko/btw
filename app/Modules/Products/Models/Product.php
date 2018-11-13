@@ -329,4 +329,43 @@ class Product extends Model implements Ownable
 
         $this->productImageModel->saveGalleryImages($input['product_gallery'], $product->id, $storeId);
     }
+
+    /**
+     * @param array $input
+     */
+    public function updateProduct(array $input)
+    {
+        //TODO make this behavior smarter
+        $filesForDeleting = [];
+
+        if(isset($input['main_image'])) {
+            $filesForDeleting = array_merge($filesForDeleting, [
+                join('/', [config('wish.storage.products.main_images_path'), $this->main_image]),
+                join('/', [config('wish.storage.products.main_images_thumb_path'), $this->main_image])
+            ]);
+
+            $mainImageThumbnail = $this->productImageModel->createImageThumbnail($input['main_image']);
+
+            $this->productImageModel->saveImageWithThumbnail(
+                config('wish.storage.products.main_images_path'),
+                config('wish.storage.products.main_images_thumb_path'),
+                $input['main_image']->hashName(),
+                $mainImageThumbnail,
+                $this->store_id,
+                $input['main_image']
+            );
+        }
+
+        Storage::delete($filesForDeleting);
+
+        $input['main_image'] = join('/', [$this->store_id, $input['main_image']->hashName()]);
+        $input['attributes'] = AttributesHelper::mergeAttributes($input['attributes'] ?? []);
+
+        $productRepository = app()[ProductRepository::class];
+        $productRepository->save($this);
+
+        $this->productImageModel->saveGalleryImages($input['product_gallery'], $this->id, $this->store_id);
+
+
+    }
 }
