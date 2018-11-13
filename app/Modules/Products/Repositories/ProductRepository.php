@@ -202,6 +202,7 @@ class ProductRepository extends BaseRepository
 
     /**
      * @param int $productId
+     * @param int $count
      */
     public function incrementCounter(int $productId, int $count): void
     {
