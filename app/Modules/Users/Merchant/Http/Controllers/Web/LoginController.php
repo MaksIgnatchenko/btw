@@ -46,7 +46,7 @@ class LoginController extends Controller
     }
 
     /**
-     * @return bool|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
      */
     public function index()
     {
