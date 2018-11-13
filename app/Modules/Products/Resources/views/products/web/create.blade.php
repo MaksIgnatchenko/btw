@@ -7,7 +7,7 @@
 @section('footer-class', 'footer-shop')
 
 @section('header')
-    @include('products.web.header')
+    @include('layouts.merchants.header', ['header_class' => 'header-black'])
 @endsection
 
 @section('script')
@@ -18,7 +18,7 @@
     <!-- Main -->
     <div class="main-shop">
 
-        @include('products.web.navigation')
+        @include('layouts.merchants.navigation', ['active' => 'products'])
 
         <!-- Main shop wrapper -->
         <div class="main-shop-wrapper">
@@ -49,7 +49,6 @@
                             <div class="form-item__wrapper form-item__wrapper--field">
                                 <div class="custom-select">
                                     {{ Form::select('category_id', ['Category'] + $categories, 'Category', ['name' => 'category_id', 'id' => 'categories', 'onChange' => 'getCategoryAttributes($(this).children(":selected").attr("value"))']) }}
-                                    {{ Form::select('category_id', $categories, null, ['name' => 'category_id', 'id' => 'categories', 'onChange' => 'getCategoryAttributes($(this).children(":selected").attr("value"))']) }}
                                     @if ($errors->has('category_id'))
                                         <div class="alert alert-danger" role="alert"><strong>{{ $errors->first('category_id') }}</strong></div>
                                     @endif

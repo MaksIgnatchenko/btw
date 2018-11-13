@@ -10,7 +10,7 @@
 @section('footer-class', 'footer')
 
 @section('header')
-    @include('merchants.web.header')
+    @include('layouts.merchants.header')
 @stop
 
 @section('content')

@@ -46,10 +46,14 @@ class LoginController extends Controller
     }
 
     /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return bool|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index()
     {
+        if(Auth::guard('merchant')->user()) {
+            return redirect()->route('products.index');
+        }
+
         return view('merchants.web.login');
     }
 }
