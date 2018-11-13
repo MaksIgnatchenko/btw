@@ -16,8 +16,6 @@ use Illuminate\Support\Facades\Storage;
 
 class ProfileController extends Controller
 {
-    public const AVATAR_PATH = 'avatars';
-
     /** @var Customer */
     protected $customerRepository;
 
@@ -52,7 +50,7 @@ class ProfileController extends Controller
     {
         $avatar = $request->file('avatar');
 
-        $result = $avatar->store(self::AVATAR_PATH);
+        $result = $avatar->store(config('wish.storage.customers.avatar_path'));
 
         $customer = Auth::user();
         $customer->avatar = $result;
