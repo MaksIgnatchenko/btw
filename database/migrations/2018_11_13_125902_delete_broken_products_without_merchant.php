@@ -13,6 +13,10 @@ class DeleteBrokenProductsWithoutMerchant extends Migration
      */
     public function up()
     {
+        DB::table('wishlists')->whereIn('product_id',
+            DB::table('products')->where('store_id', null)->get()->pluck('id')
+        )->delete();
+
         DB::table('products')->where('store_id', null)->delete();
     }
 
