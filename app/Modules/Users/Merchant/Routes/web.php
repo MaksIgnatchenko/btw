@@ -19,7 +19,7 @@ Route::group([
 
 /* --- Registration --- */
 Route::group([
-    'middleware' => ['web'],
+    'middleware' => ['web', 'guest:merchant'],
     'prefix' => 'registration',
 ], function () {
     $this->get('sign-up', 'RegistrationController@signUp')->name('merchant.registration.sign-up');
