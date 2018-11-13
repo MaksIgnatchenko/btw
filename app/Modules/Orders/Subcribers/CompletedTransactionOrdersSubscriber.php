@@ -9,10 +9,10 @@ use App\Modules\Orders\Enums\OrderStatusEnum;
 use App\Modules\Orders\Models\Order;
 use App\Modules\Orders\Repositories\OrderRepository;
 use App\Modules\Products\Events\TransactionCompletedEvent;
+use App\Modules\Products\Repositories\ProductRepository;
 use App\Modules\Users\Merchant\Repositories\MerchantRepository;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Str;
 
 class CompletedTransactionOrdersSubscriber
 {
@@ -42,6 +42,8 @@ class CompletedTransactionOrdersSubscriber
         $orderRepository = app(OrderRepository::class);
         /** @var MerchantRepository $merchantRepository */
         $merchantRepository = app(MerchantRepository::class);
+        /** @var ProductRepository $productRepository */
+        $productRepository = app(ProductRepository::class);
 
         if (!$event->getResult()->success) {
             return;
@@ -53,14 +55,15 @@ class CompletedTransactionOrdersSubscriber
             /** @var Order $order */
             $order = app(Order::class);
 
-            $merchant = $merchantRepository->find($cart->product->user_id);
+            $product = $productRepository->find($cart->product_id);
+            $merchant = $merchantRepository->find($product->user_id);
 
             $orders[] = $order->fill([
                 'transaction_id' => $transaction->id,
                 'customer_id'    => $customer->id,
                 'merchant_id'    => $merchant->id,
 
-                'product'  => $cart->product,
+                'product'  => $product->toJson(),
                 'quantity' => $cart->quantity,
                 'status'   => OrderStatusEnum::PENDING,
 
