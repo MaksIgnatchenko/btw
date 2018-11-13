@@ -10,7 +10,6 @@ use App\Modules\Orders\Models\Order;
 use App\Modules\Orders\Repositories\OrderRepository;
 use App\Modules\Products\Events\TransactionCompletedEvent;
 use App\Modules\Products\Repositories\ProductRepository;
-use App\Modules\Users\Merchant\Repositories\MerchantRepository;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 
@@ -40,8 +39,6 @@ class CompletedTransactionOrdersSubscriber
         $transaction = $event->getTransaction();
         /** @var OrderRepository $orderRepository */
         $orderRepository = app(OrderRepository::class);
-        /** @var MerchantRepository $merchantRepository */
-        $merchantRepository = app(MerchantRepository::class);
         /** @var ProductRepository $productRepository */
         $productRepository = app(ProductRepository::class);
 
@@ -56,7 +53,7 @@ class CompletedTransactionOrdersSubscriber
             $order = app(Order::class);
 
             $product = $productRepository->find($cart->product_id);
-            $merchant = $merchantRepository->find($product->user_id);
+            $merchant = $product->store->merchant;
 
             $orders[] = $order->fill([
                 'transaction_id' => $transaction->id,
