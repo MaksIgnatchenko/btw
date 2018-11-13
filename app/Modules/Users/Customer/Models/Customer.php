@@ -65,8 +65,8 @@ class Customer extends Authenticatable implements JWTSubject
      */
     public function getAvatarAttribute($value): ?string
     {
-        if($value) {
-            return Storage::url($value);
+        if ($value) {
+            return Storage::url(join('/', [config('wish.storage.customers.avatar_path'), $value]));
         }
 
         return null;

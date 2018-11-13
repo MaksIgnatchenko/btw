@@ -53,7 +53,7 @@ class ProfileController extends Controller
         $result = $avatar->store(config('wish.storage.customers.avatar_path'));
 
         $customer = Auth::user();
-        $customer->avatar = $result;
+        $customer->avatar = $avatar->hashName();
         $customer->save();
 
         return response()->json([
