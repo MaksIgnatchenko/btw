@@ -6,8 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Modules\Content\Enums\ContentKeyEnum;
 use App\Modules\Content\Http\Requests\Admin\UpdateContentRequest;
 use App\Modules\Content\Repositories\ContentRepository;
-use Flash;
-use Response;
+use Laracasts\Flash\Flash;
 
 class ContentController extends Controller
 {

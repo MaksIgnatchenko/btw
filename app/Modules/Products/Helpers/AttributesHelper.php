@@ -10,17 +10,12 @@ use App\Modules\Categories\Enums\AttributeTypesEnum;
 class AttributesHelper
 {
     /**
-     * @param array|null $attributes
-     *
-     * @return array|null
+     * @param array $attributes
+     * @return array
      */
-    public static function mergeAttributes(?array $attributes): ?array
+    public static function mergeAttributes(array $attributes): array
     {
         $mergedAttributes = [];
-
-        if ($attributes === null) {
-            return null;
-        }
 
         foreach ($attributes as $type => $attributeArray) {
             if (AttributeTypesEnum::check($type)) {

@@ -3,6 +3,10 @@
 
 @section('content')
 
+    <div class="breadcrumb-container pull-right">
+        {{ Breadcrumbs::render('about-us') }}
+    </div>
+
     <div class="clearfix"></div>
 
     @include('flash::message')

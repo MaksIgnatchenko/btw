@@ -87,8 +87,6 @@ return [
     'unique'               => 'The :attribute has already been taken.',
     'uploaded'             => 'The :attribute failed to upload.',
     'url'                  => 'The :attribute format is invalid.',
-    'password_format'      => 'Password must contain at least one number and one letter.',
-    'captcha_invalid'      => 'Invalid code.',
 
     /*
     |--------------------------------------------------------------------------
@@ -113,7 +111,23 @@ return [
         ],
         'product_gallery.*' => [
             'mimes' => 'Product gallery images must be files of types' . config('wish.storage.products.image_mimes') . '.',
-            'max' => 'Product gallery images may not be greater than' . config('wish.storage.products.image_max_size') . 'kilobytes.',
+            'max' => 'Product gallery images may not be greater than' . config('wish.storage.products.image_max_size') . 'megabytes.',
+        ],
+        'captcha' => [
+            'required' => 'Please enter the code from the image.',
+            'in' => 'Invalid code.',
+        ],
+        'password' => [
+            'regex' => 'Password must contain at least one number and one letter.',
+        ],
+        'country' => [
+            'not_in' => 'The :attribute field is required.',
+        ],
+        'state' => [
+            'not_in' => 'The :attribute field is required.',
+        ],
+        'store_country' => [
+            'not_in' => 'The :attribute field is required.',
         ],
     ],
 
