@@ -18,8 +18,6 @@ use Ramsey\Uuid\Uuid;
 
 class Transaction extends Model
 {
-    public $incrementing = false;
-
     public $fillable = [
         'customer_id',
         'cart',
