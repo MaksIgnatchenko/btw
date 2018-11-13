@@ -37,13 +37,4 @@ class RegisterMerchantRequest extends FormRequest
     {
         return true;
     }
-
-    public function messages(): array
-    {
-        return [
-            'password.regex' => __('validation.password_format'),
-            'captcha.required' => __('validation.captcha_invalid'),
-            'captcha.in' => __('validation.captcha_invalid'),
-        ];
-    }
 }
