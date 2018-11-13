@@ -44,12 +44,4 @@ class RegisterMerchantContactDataRequest extends FormRequest
             ],
         ];
     }
-
-    public function messages()
-    {
-        return [
-            'country.not_in' => 'The country field is required',
-            'state.not_in' => 'The state field is required',
-        ];
-    }
 }

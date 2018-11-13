@@ -17,7 +17,7 @@ Breadcrumbs::register('merchants', function ($breadcrumbs) {
 // Admin panel > Merchants > [Merchant]
 Breadcrumbs::register('merchant', function ($breadcrumbs, $merchant) {
     $breadcrumbs->parent('merchants');
-    $breadcrumbs->push($merchant->business_name, route('merchants.show', $merchant->id));
+    $breadcrumbs->push($merchant->fullName, route('merchants.show', $merchant->id));
 });
 
 // Admin panel > Customers

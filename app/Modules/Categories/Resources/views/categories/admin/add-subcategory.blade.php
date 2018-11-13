@@ -3,7 +3,7 @@
 @section('content')
 
     <div class="breadcrumb-container pull-right">
-        {{ Breadcrumbs::render('add-subcategory') }}
+        {{ Breadcrumbs::render('add-subcategory', $category) }}
     </div>
     
     <section class="content">
