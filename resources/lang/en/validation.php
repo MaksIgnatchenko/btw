@@ -115,7 +115,7 @@ return [
         ],
         'captcha' => [
             'required' => 'Please enter the code from the image.',
-            'required.in' => 'Invalid code.',
+            'in' => 'Invalid code.',
         ],
         'password' => [
             'regex' => 'Password must contain at least one number and one letter.',
