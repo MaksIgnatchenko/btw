@@ -23,4 +23,7 @@ return [
             'background_path' => env('MERCHANT_BACKGROUND_PATH', 'merchants/backgrounds'),
         ],
     ],
+    'store' => [
+        'pagination' => 8,
+    ]
 ];
