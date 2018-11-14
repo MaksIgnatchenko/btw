@@ -342,7 +342,7 @@ class Product extends Model implements Ownable
      */
     public function updateProduct(array $input)
     {
-        //TODO make this behavior smarter
+        //TODO make image replacement better
         $filesForDeleting = [];
 
         if(isset($input['main_image'])) {
@@ -353,6 +353,7 @@ class Product extends Model implements Ownable
 
             $mainImageThumbnail = $this->productImageModel->createImageThumbnail($input['main_image']);
 
+            // TODO refactor code duplicating with create method
             $this->productImageModel->saveImageWithThumbnail(
                 config('wish.storage.products.main_images_path'),
                 config('wish.storage.products.main_images_thumb_path'),
@@ -361,18 +362,19 @@ class Product extends Model implements Ownable
                 $this->store_id,
                 $input['main_image']
             );
+
+            $input['main_image'] = join('/', [$this->store_id, $input['main_image']->hashName()]);
         }
 
         Storage::delete($filesForDeleting);
 
-        $input['main_image'] = join('/', [$this->store_id, $input['main_image']->hashName()]);
         $input['attributes'] = AttributesHelper::mergeAttributes($input['attributes'] ?? []);
 
+        if (isset($input['product_gallery'])) {
+            $this->productImageModel->saveGalleryImages($input['product_gallery'], $this->id, $this->store_id);
+        }
+
         $productRepository = app()[ProductRepository::class];
-        $productRepository->save($this);
-
-        $this->productImageModel->saveGalleryImages($input['product_gallery'], $this->id, $this->store_id);
-
-
+        $productRepository->update($input, $this->id);
     }
 }

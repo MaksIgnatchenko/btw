@@ -151,16 +151,10 @@ class ProductController extends Controller
 
     public function update(EditProductRequest $request, $id)
     {
+        /** @var Product $product */
         $product = $this->productRepository->find($id);
-        $product->update($request);
+        $product->updateProduct($request->all());
 
-        //TODO make image replacement smarter
-        $product->updateProduct();
-
-        Flash::success('Product has been updated successfully');
-
-        return view('products.web.single', [
-            'product' => $product,
-        ]);
+        return redirect()->route('products.show', ['product' => $product->id]);
     }
 }

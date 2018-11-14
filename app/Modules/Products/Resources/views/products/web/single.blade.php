@@ -7,7 +7,7 @@
 @section('footer-class', 'footer-shop')
 
 @section('header')
-    @include('products.web.header')
+    @include('layouts.merchants.header', ['header_class' => 'header-black'])
 @endsection
 
 @section('script')
@@ -19,15 +19,15 @@
     <!-- Main -->
     <div class="main-shop">
 
-    @include('products.web.navigation')
+    @include('layouts.merchants.navigation', ['active' => 'products'])
 
     <!-- Main shop wrapper -->
         <div class="main-shop-wrapper">
             <div class="container">
 
                 <div class="edit-title__container">
-                    <h1 class="edit-title">Test Product</h1>
-                    <div class="edit-price">$129.00</div>
+                    <h1 class="edit-title">{{ $product->name }}</h1>
+                    <div class="edit-price">${{ $product->price }}</div>
                 </div>
 
                 <hr class="form-hr">
@@ -40,7 +40,7 @@
                         </li>
                         @foreach ($product->images as $image)
                         <li class="edit-item">
-                            <img src="$image{{ $image->image }}" alt="edit pic">
+                            <img class="img__gallery" src="{{ $image->image }}" alt="edit pic">
                         </li>
                         @endforeach
                     </ul>
@@ -50,14 +50,12 @@
                     <div class="edit-attr__wrapper">
                         <div class="edit-attr__line">
                             <div class="edit-attr__title">Quantity</div>
-                            <div class="edit-attr__descr">$product->quantity</div>
+                            <div class="edit-attr__descr">{{ $product->quantity }}</div>
                         </div>
-                        @foreach ($product->attributes as $attribute)
-                            @php $attribute = json_decode($attribute);
-                            @endphp
+                        @foreach ($product->attributes as $name => $attribute)
                             <div class="edit-attr__line">
-                                <div class="edit-attr__title">{{ $attribute->name }}</div>
-                                <div class="edit-attr__descr">{{ $attribute->value }}</div>
+                                <div class="edit-attr__title">{{ $name }}</div>
+                                <div class="edit-attr__descr">{{ $attribute['value'] }}</div>
                             </div>
                         @endforeach
                     </div>
