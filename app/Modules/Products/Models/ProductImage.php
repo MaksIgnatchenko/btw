@@ -126,4 +126,15 @@ class ProductImage extends Model
         Storage::putFileAs($originalPath . '/' . $storeId, $image, $imageName);
         Storage::disk('public')->put($thumbnailPath . '/' . $storeId . '/' . $imageName, $thumbnail);
     }
+
+    /**
+     * Product image accessor.
+     *
+     * @param string $attribute
+     * @return string
+     */
+    public function getImageAttribute(string $attribute): string
+    {
+        return asset(Storage::url(config('wish.storage.products.gallery_images_path') . '/' . $attribute));
+    }
 }

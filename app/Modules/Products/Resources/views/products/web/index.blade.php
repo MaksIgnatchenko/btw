@@ -7,14 +7,14 @@
 @section('footer-class', 'footer-shop')
 
 @section('header')
-    @include('products.web.header')
+    @include('layouts.merchants.header', ['header_class' => 'header-black'])
 @endsection
 
 @section('content')
     <!-- Main -->
     <div class="main-shop">
 
-    @include('products.web.navigation')
+    @include('layouts.merchants.navigation', ['active' => 'products'])
 
         <!-- Main shop wrapper -->
         <div class="main-shop-wrapper">
