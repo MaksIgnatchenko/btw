@@ -86,3 +86,7 @@ select:not([multiple]) {
     background-position-x: 0px;
     padding-left: 20px;
 }
+
+ol.breadcrumb {
+    background-color: transparent!important;
+}
