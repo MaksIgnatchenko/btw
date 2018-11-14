@@ -7,8 +7,8 @@
 @section('footer-class', 'footer-shop')
 
 @section('header')
-    @include('merchants.web.header', ['header_class' => 'header-black'])
-@stop
+    @include('layouts.merchants.header', ['header_class' => 'header-black'])
+@endsection
 
 @section('content')
     <!-- Main -->
