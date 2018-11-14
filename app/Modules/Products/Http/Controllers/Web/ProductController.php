@@ -149,6 +149,12 @@ class ProductController extends Controller
         ]);
     }
 
+    /**
+     * @param EditProductRequest $request
+     * @param                    $id
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function update(EditProductRequest $request, $id)
     {
         /** @var Product $product */
