@@ -47,6 +47,8 @@ class Product extends Model
         'certificate',
         'return_details',
         'price',
+        'quantity',
+        'store_id',
     ];
 
     /**
@@ -70,6 +72,8 @@ class Product extends Model
         'return_details' => 'string',
         'rating' => 'float',
         'price' => 'float',
+        'quantity' => 'integer',
+        'store_id' => 'integer',
     ];
 
     /**
@@ -287,7 +291,7 @@ class Product extends Model
      */
     public function getMainImageAttribute(string $attribute): string
     {
-        return asset(Storage::url($attribute));
+        return asset(Storage::url(config('wish.storage.products.main_images_path') . '/' . $attribute));
     }
 
     /**
@@ -313,10 +317,13 @@ class Product extends Model
         $mainImagePath = $storeId . '/' . $mainImageHashName;
         $input['main_image'] = $mainImagePath;
         $input['attributes'] = AttributesHelper::mergeAttributes($input['attributes'] ?? []);
+        $input['store_id'] = $storeId;
 
         $productRepository = app()[ProductRepository::class];
         $product = $productRepository->create($input);
 
-        $this->productImageModel->saveGalleryImages($input['product_gallery'], $product->id, $storeId);
+        if (isset($input['product_gallery'])) {
+            $this->productImageModel->saveGalleryImages($input['product_gallery'], $product->id, $storeId);
+        }
     }
 }
