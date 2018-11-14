@@ -22,7 +22,8 @@
                 </a>
             @endif
 
-            <a href='{!! route('categories.edit', ['id' => $category->id]); !!}' class="btn btn-primary">
+            <a href='{!! route('categories.edit', ['id' => $category->id]); !!}'
+               class="btn btn-primary" data-toggle="tooltip" title="Edit">
                 <i class="fa fa-pencil"></i>
             </a>
             @if(CategoriesHelper::canDelete($category))
@@ -33,7 +34,7 @@
                 </a>
                 {!! Form::close() !!}
             @else
-                <span data-toggle="tooltip" title="Cannot delete category with products">
+                <span data-toggle="tooltip" title="Can't delete categories with products">
                     <a href='#' class="btn btn-danger disabled">
                         <i class="fa fa-trash"></i>
                     </a>
