@@ -7,6 +7,7 @@ namespace App\Modules\Users\Customer\Models;
 
 use App\Modules\Products\Models\Product;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -26,6 +27,7 @@ class Customer extends Authenticatable implements JWTSubject
         'first_name',
         'last_name',
         'address',
+        'avatar',
     ];
 
     /**
@@ -54,6 +56,20 @@ class Customer extends Authenticatable implements JWTSubject
     public function setPasswordAttribute(string $password): void
     {
         $this->attributes['password'] = Hash::make($password);
+    }
+
+    /**
+     * @param $value
+     *
+     * @return null|string
+     */
+    public function getAvatarAttribute($value): ?string
+    {
+        if ($value) {
+            return Storage::url(join('/', [config('wish.storage.customers.avatar_path'), $value]));
+        }
+
+        return null;
     }
 
     /**

@@ -3,11 +3,8 @@
 }
 
 .alert {
-    position: absolute;
-    top: 100%;
-    left: 0;
     font-family: sans-serif;
-    width: max-content;
+    text-align: center;
 }
 
 .registration-field-valid-fail {
@@ -29,4 +26,17 @@
     bottom: 0;
     left: 0;
     position: absolute;
+}
+
+.alert.alert-danger {
+    margin-top: 5px;
+}
+
+.header-black {
+    background-color: black;
+}
+
+.select-items .not-allowed {
+    cursor: not-allowed;
+    color: black!important;
 }

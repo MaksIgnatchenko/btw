@@ -1,6 +1,10 @@
 @extends('layouts.app')
 @section('title', 'Add subcategory to ' . $category->name)
 @section('content')
+
+    <div class="breadcrumb-container pull-right">
+        {{ Breadcrumbs::render('add-subcategory', $category) }}
+    </div>
     
     <section class="content">
         <div class="clearfix"></div>
@@ -49,9 +53,6 @@
         <div id="categories-additional-fields">
             <div class="col-md-4">
                 @include('categories.admin.attributes')
-            </div>
-            <div class="col-md-4">
-                @include('categories.admin.parameters')
             </div>
         </div>
         {!! Form::close() !!}

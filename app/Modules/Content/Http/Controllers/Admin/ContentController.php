@@ -3,10 +3,10 @@
 namespace App\Modules\Content\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Modules\Content\Enums\ContentKeyEnum;
 use App\Modules\Content\Http\Requests\Admin\UpdateContentRequest;
 use App\Modules\Content\Repositories\ContentRepository;
-use Flash;
-use Response;
+use Laracasts\Flash\Flash;
 
 class ContentController extends Controller
 {
@@ -18,22 +18,36 @@ class ContentController extends Controller
         $this->contentRepository = $contentRepo;
     }
 
-
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function index()
     {
-        $contents = $this->contentRepository->all();
+        $contents = $this->contentRepository->find([
+            ContentKeyEnum::TERMS_AND_CONDITIONS,
+            ContentKeyEnum::PRIVACY_POLICY,
+        ]);
 
-        return view('contents.index')
+        return view('contents.admin.index')
             ->with('contents', $contents);
     }
 
     /**
-     * Update the specified Content in storage.
-     *
-     * @param  int $key
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function aboutUs()
+    {
+        $content = $this->contentRepository->find(ContentKeyEnum::ABOUT_US);
+        return view('contents.admin.about_us')
+            ->with('content', $content);
+    }
+
+    /**
+     * @param                      $key
      * @param UpdateContentRequest $request
      *
-     * @return Response
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @throws \Prettus\Validator\Exceptions\ValidatorException
      */
     public function update($key, UpdateContentRequest $request)
     {
@@ -49,6 +63,6 @@ class ContentController extends Controller
 
         Flash::success('Content updated successfully.');
 
-        return redirect(route('content'));
+        return back();
     }
 }

@@ -3,6 +3,10 @@
 
 @section('content')
 
+    <div class="breadcrumb-container pull-right">
+        {{ Breadcrumbs::render('content') }}
+    </div>
+
     <div class="clearfix"></div>
 
     @include('flash::message')
@@ -46,4 +50,3 @@
         </div>
     </div>
 @endsection
-

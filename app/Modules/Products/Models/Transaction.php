@@ -11,15 +11,13 @@ use App\Modules\Orders\Repositories\OrderRepository;
 use App\Modules\Products\Enums\TransactionStatusEnum;
 use App\Modules\Products\Repositories\CartRepository;
 use App\Modules\Products\Repositories\TransactionRepository;
-use App\Modules\Users\Models\Customer;
+use App\Modules\Users\Customer\Models\Customer;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Ramsey\Uuid\Uuid;
 
 class Transaction extends Model
 {
-    public $incrementing = false;
-
     public $fillable = [
         'customer_id',
         'cart',
@@ -31,14 +29,14 @@ class Transaction extends Model
     public $casts = [
         'customer_id' => 'integer',
 
-        'cart'    => 'object',
+        'cart' => 'object',
         'message' => 'string',
-        'status'  => 'string',
-        'amount'  => 'float',
+        'status' => 'string',
+        'amount' => 'float',
     ];
 
     /**
-     * @param int $customerId
+     * @param int   $customerId
      * @param float $amount
      *
      * @return Transaction

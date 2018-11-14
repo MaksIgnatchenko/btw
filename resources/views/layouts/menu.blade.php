@@ -26,6 +26,10 @@
     <a href="{{route('payments.income.index')}}"><i class="fa fa-sign-in"></i> <span>Income</span></a>
 </li>
 
-<li class="{{ActiveLink::checkContent() ? 'active' : ''}}">
-    <a href="{{route('content')}}"><i class="mdi mdi-book-open-page-variant"></i> <span>Terms & Condiotions</span></a>
+<li class="{{ActiveLink::checkTermsAndConditions() ? 'active' : ''}}">
+    <a href="{{route('content')}}"><i class="mdi mdi-book-open-page-variant"></i> <span>Terms & Conditions</span></a>
+</li>
+
+<li class="{{ActiveLink::checkAboutUs() ? 'active' : ''}}">
+    <a href="{{route('content.about-us')}}"><i class="mdi mdi-book-open-page-variant"></i> <span>About Us</span></a>
 </li>
