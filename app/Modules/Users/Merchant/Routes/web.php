@@ -3,7 +3,7 @@
  * Created by Artem Petrov, Appus Studio LP on 16.11.2017
  */
 
-Route::get('login', 'LoginController@index')->name('index');
+Route::get('login', 'LoginController@index')->name('index')->middleware('guest:merchant');
 Route::post('login', 'LoginController@login')->name('merchant.login');
 Route::post('logout', 'LoginController@logout')->name('merchant.logout');
 

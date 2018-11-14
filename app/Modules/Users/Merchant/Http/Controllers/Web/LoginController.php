@@ -50,10 +50,6 @@ class LoginController extends Controller
      */
     public function index()
     {
-        if(Auth::guard('merchant')->user()) {
-            return redirect()->route('products.index');
-        }
-
         return view('merchants.web.login');
     }
 }
