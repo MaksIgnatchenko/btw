@@ -109,3 +109,16 @@ function getCategoryAttributes(id) {
         }
     });
 }
+
+var searchSubmitCallback = function(event) {
+    event.preventDefault();
+
+    var searchText = $(this).find('input[name="search"]').val();
+
+    if (searchText.length !== 0) {
+        $(this).off('submit', searchSubmitCallback);
+        $(this).submit();
+    }
+};
+
+$('.shop-top-settings__form').on('submit', searchSubmitCallback);
