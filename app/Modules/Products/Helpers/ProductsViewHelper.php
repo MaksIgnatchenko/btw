@@ -100,12 +100,13 @@ class ProductsViewHelper
     {
         $request = app()[Request::class];
         $currentPage = $paginator->currentPage();
+        $search = $request->get('search');
 
         $link = "?template=$template";
         $link .= "&page=$currentPage";
 
         if (null !== $request->get('search')) {
-            $link .= "&search=$request->get('search')";
+            $link .= "&search=$search";
         }
 
         return $link;
