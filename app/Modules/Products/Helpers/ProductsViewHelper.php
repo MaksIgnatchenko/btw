@@ -6,6 +6,7 @@
 namespace App\Modules\Products\Helpers;
 
 use App\Modules\Products\Enums\ProductsViewTemplateEnum;
+use Illuminate\Http\Request;
 
 class ProductsViewHelper
 {
@@ -14,7 +15,8 @@ class ProductsViewHelper
      */
     protected static function getTemplate(): string
     {
-        $requestedTemplate = request()->get('template', ProductsViewTemplateEnum::GALLERY);
+        $request = app()[Request::class];
+        $requestedTemplate = $request->get('template', ProductsViewTemplateEnum::GALLERY);
 
         return self::getValidTemplate($requestedTemplate);
     }
@@ -24,11 +26,15 @@ class ProductsViewHelper
      */
     protected static function getTemplateFromSession(): string
     {
-        if (request()->session()->exists('template')) {
-            $template = request()->session()->get('template');
+        $request = app()[Request::class];
+        $session = $request->session();
+
+        if ($session->exists('template')) {
+            $template = $session->get('template');
         } else {
             $template = ProductsViewTemplateEnum::GALLERY;
         }
+
 
         return self::getValidTemplate($template);
     }
@@ -67,8 +73,10 @@ class ProductsViewHelper
      */
     public static function storeTemplateToSession(): void
     {
-        if (request()->get('template')) {
-            request()->session()->put('template', self::getTemplate());
+        $request = app()[Request::class];
+
+        if ($request->get('template')) {
+            $request->session()->put('template', self::getTemplate());
         }
     }
 
@@ -77,6 +85,8 @@ class ProductsViewHelper
      */
     public static function isSearchResults(): bool
     {
-        return null !== request()->get('search');
+        $request = app()[Request::class];
+
+        return null !== $request->get('search');
     }
 }
