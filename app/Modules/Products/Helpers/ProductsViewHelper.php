@@ -16,6 +16,24 @@ class ProductsViewHelper
     {
         $requestedTemplate = request()->get('template', ProductsViewTemplateEnum::GALLERY);
 
+        return self::getValidTemplate($requestedTemplate);
+    }
+
+    /**
+     * @param string $requestedTemplate
+     * @return bool
+     */
+    public static function checkTemplate(string $requestedTemplate): bool
+    {
+        return $requestedTemplate === self::getTemplateFromSession();
+    }
+
+    /**
+     * @param string $requestedTemplate
+     * @return string
+     */
+    public static function getValidTemplate(string $requestedTemplate): string
+    {
         switch ($requestedTemplate) {
             case ProductsViewTemplateEnum::GALLERY:
                 $template = ProductsViewTemplateEnum::GALLERY;
@@ -31,11 +49,34 @@ class ProductsViewHelper
     }
 
     /**
-     * @param string $requestedTemplate
+     * @return string
+     */
+    public static function getTemplateFromSession(): string
+    {
+        if (request()->session()->exists('template')) {
+            $template = request()->session()->get('template');
+        } else {
+            $template = ProductsViewTemplateEnum::GALLERY;
+        }
+
+        return self::getValidTemplate($template);
+    }
+
+    /**
+     * @return void
+     */
+    public static function storeTemplateToSession(): void
+    {
+        if (request()->get('template')) {
+            request()->session()->put('template', self::getTemplate());
+        }
+    }
+
+    /**
      * @return bool
      */
-    public static function checkTemplate(string $requestedTemplate): bool
+    public static function isSearchResults(): bool
     {
-        return $requestedTemplate === self::getTemplate();
+        return null !== request()->get('search');
     }
 }
