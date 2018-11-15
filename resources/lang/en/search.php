@@ -6,4 +6,5 @@
 return [
     'search_icon' => 'Search icon',
     'search_input_placeholder' => 'Search...',
+    'search_empty_results' => 'Your search ":search" did not match any products.'
 ];
