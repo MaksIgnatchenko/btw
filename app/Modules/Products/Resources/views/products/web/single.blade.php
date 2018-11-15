@@ -33,7 +33,7 @@
                 <hr class="form-hr">
 
                 <div class="edit-wrapper">
-                    <h3 class="edit-title-min">Category</h3>
+                    <h3 class="edit-title-min">{{$product->category->name}}</h3>
                     <ul class="edit-gallery">
                         <li class="edit-item">
                             <img class="img__gallery" src="{{ $product->main_image }}" alt="edit pic">
@@ -62,7 +62,7 @@
                 </div>
 
                 <div class="t-a-center edit-bottom-m">
-                    <a class="btn" href="{{ route('products.edit', ['product' => $product]) }}">Edit</a>
+                    <a class="btn" href="{{ route('products.edit', ['product' => $product]) }}">{{ __('products.edit') }}</a>
                 </div>
 
             </div>

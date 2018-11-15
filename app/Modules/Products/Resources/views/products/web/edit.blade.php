@@ -12,6 +12,7 @@
 
 @section('script')
     <script src="{{asset('js/marchants/products/category-tree.js')}}"></script>
+    <script src="{{asset('js/marchants/products/remove-old-images.js')}}"></script>
 @endsection
 
 @section('content')
@@ -24,8 +25,8 @@
         <div class="main-shop-wrapper">
             <div class="container">
                 <!-- Add new -->
-                {!! Form::model($product, ['route' => ['products.update', 'product' => $product->id], 'method' => 'PATCH', 'files' => true, 'name' => 'add-new-product']) !!}
-                <p class="form-title">{{__('products.create_product_section_title')}}</p>
+                {!! Form::model($product, ['route' => ['products.update', 'product' => $product->id], 'method' => 'PATCH', 'files' => true, 'name' => 'edit-product']) !!}
+                <p class="form-title">{{__('products.edit_product_section_title')}}</p>
                 <hr class="form-hr">
 
                 <!-- form container -->
@@ -106,30 +107,28 @@
                             @endif
                         </div>
                     </div>
-                    <div class="attributes-container">
 
+                    <div class="attributes-container">
+                        @foreach($product->attributes as $key => $data)
+                            <div class="form-line__wrapper form-line__wrapper--min-margin">
+                                <div class="form-item__wrapper form-item__wrapper--text">
+                                    <p class="form-item__title">{{$key}}</p>
+                                </div>
+                                <div class="form-item__wrapper form-item__wrapper--field">
+                                    {!! Form::text("attributes[{$data['type']}][{$key}]", $data['value'], [
+                                    'placeholder' => __('products.create_attribute_section_placeholder'),
+                                    'class' => 'form-item__inp']
+                                    ) !!}
+                                    @if($errors->has("attributes.{$data['type']}.$key"))
+                                        <div class="alert alert-danger" role="alert">
+                                            <strong>{{ $errors->first("attributes.{$data['type']}.$key") }}</strong>
+                                        </div>
+                                    @endif
+                                </div>
+                            </div>
+                        @endforeach
                     </div>
 
-                    @foreach($product->attributes as $key => $data)
-                        <div class="form-line__wrapper form-line__wrapper--min-margin">
-                            <div class="form-item__wrapper form-item__wrapper--text">
-                                <p class="form-item__title">{{$key}}</p>
-                            </div>
-                            <div class="form-item__wrapper form-item__wrapper--field">
-                                {!! Form::text("attributes[{$data['type']}][{$key}]", $data['value'], [
-                                'placeholder' => __('products.create_attribute_section_placeholder'),
-                                'class' => 'form-item__inp']
-                                ) !!}
-                                @if($errors->has("attributes.{$data['type']}.$key"))
-                                    <div class="alert alert-danger" role="alert">
-                                        <strong>{{ $errors->first("attributes.{$data['type']}.$key") }}</strong></div>
-                                @endif
-                            </div>
-                        </div>
-                        <div class="attributes-container">
-
-                        </div>
-                    @endforeach
                 </div><!-- /. end form container -->
 
                 <hr class="form-hr">
@@ -153,7 +152,8 @@
                                 @php $imgCount = 0; @endphp
 
                                 @foreach ($product->images as $image)
-                                    <li class="form-item__block" style="background-image: url({{$image->image}});">
+                                    @php $imgCount++; @endphp
+                                    <li class="form-item__block photo-additional" style="background-image: url({{$image->image}});" data-url="{{$image->image}}">
                                         <label class="form-item__label form-item__label--remove">
                                             <span class="form-item__label-decor"></span>
                                             <input class="form-item__inp-file" type="file" name="product_gallery[]"
@@ -200,10 +200,11 @@
                             'maxlength' => '9',
                             'class' => 'form-item__inp form-item__inp--price']
                             ) !!}
-                            <p class="form-item__inp-descr">{{__('products.create_price_description')}}</p>
                             @if ($errors->has('price'))
-                                <div class="alert alert-danger" role="alert"><strong>{{ $errors->first('price') }}</strong></div>
+                                <div class="alert alert-danger" role="alert">
+                                    <strong>{{ $errors->first('price') }}</strong></div>
                             @endif
+                            <p class="form-item__inp-descr">{{__('products.create_price_description')}}</p>
                         </div>
                     </div>
                 </div><!-- /. end form container -->
@@ -214,7 +215,7 @@
                 </div>
 
                 <div class="form-wrapper__btn form-wrapper__btn--ta-r">
-                    {!! Form::submit(__('products.create_submit')) !!}
+                    {!! Form::submit(__('products.update_submit')) !!}
                 </div>
 
             {!! Form::close() !!}<!-- /. end add new -->
