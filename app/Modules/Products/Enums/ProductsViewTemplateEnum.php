@@ -10,6 +10,9 @@ class ProductsViewTemplateEnum
     public const GALLERY = 'gallery';
     public const LIST = 'list';
 
+    /**
+     * @return array
+     */
     public static function getValues(): array
     {
         return [
