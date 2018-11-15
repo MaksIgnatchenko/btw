@@ -24,6 +24,6 @@ return [
         ],
     ],
     'store' => [
-        'pagination' => 8,
+        'pagination' => env('PRODUCTS_PAGINATION', 12),
     ]
 ];

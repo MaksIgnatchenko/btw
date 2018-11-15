@@ -210,10 +210,15 @@ class ProductRepository extends BaseRepository
         Product::whereId($productId)->increment('purchase_count', $count);
     }
 
-    public function findStoreProductsBySearchTextWithPagination(int $storeId, string $searchText, int $perPage = 10)
+    /**
+     * @param int $storeId
+     * @param string $searchText
+     * @return mixed
+     */
+    public function findStoreProductsBySearchTextWithPagination(int $storeId, string $searchText)
     {
         return Product::where('products.name', 'LIKE', '%' . $searchText . '%')
             ->where('store_id', $storeId)
-            ->paginate($perPage);
+            ->paginate(config('wish.store.pagination'));
     }
 }
