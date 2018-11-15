@@ -8,6 +8,7 @@ use App\Modules\Products\Enums\ProductFiltersEnum;
 use App\Modules\Products\Enums\ProductOrdersEnum;
 use App\Modules\Products\Filters\ProductFilter;
 use App\Modules\Products\Helpers\AttributesHelper;
+use App\Modules\Products\Repositories\ProductImageRepository;
 use App\Modules\Products\Repositories\ProductRepository;
 use App\Modules\Users\Merchant\Models\Store;
 use App\Modules\Users\Customer\Models\Customer;
@@ -20,9 +21,11 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Laratrust\Contracts\Ownable;
 
-class Product extends Model
+class Product extends Model implements Ownable
 {
+
     public const PRODUCTS_PAGE_LIMIT = 20;
     public const REVIEWS_PAGE_LIMIT = 3;
     public const DEFAULT_RADIUS = 100;
@@ -74,6 +77,7 @@ class Product extends Model
         'price' => 'float',
         'quantity' => 'integer',
         'store_id' => 'integer',
+        'attributes' => 'array',
     ];
 
     /**
@@ -88,7 +92,15 @@ class Product extends Model
         'is_in_wish_list',
     ];
 
-
+    /**
+     * @param mixed $owner
+     *
+     * @return mixed
+     */
+    public function ownerKey($owner)
+    {
+        return $this->store->merchant_id;
+    }
 
     public function __construct(array $attributes = [])
     {
@@ -287,6 +299,7 @@ class Product extends Model
      * Main image accessor.
      *
      * @param string $attribute
+     *
      * @return string
      */
     public function getMainImageAttribute(string $attribute): string
@@ -297,33 +310,114 @@ class Product extends Model
     /**
      * Create product and store images.
      *
-     * @param array $input
-     * @param int $storeId
+     * @param array $inputData
+     * @param int   $storeId
      */
-    public function createProduct(array $input, int $storeId): void
+    public function createProduct(array $inputData, int $storeId): void
     {
-        $mainImageHashName = $input['main_image']->hashName();
-        $mainImageThumbnail = $this->productImageModel->createImageThumbnail($input['main_image']);
+        $this->loadMainImage($inputData, $storeId);
+        $this->mergeAttributeArrays($inputData);
 
-        $this->productImageModel->saveImageWithThumbnail(
-            config('wish.storage.products.main_images_path'),
-            config('wish.storage.products.main_images_thumb_path'),
-            $mainImageHashName,
-            $mainImageThumbnail,
-            $storeId,
-            $input['main_image']
-        );
-
-        $mainImagePath = $storeId . '/' . $mainImageHashName;
-        $input['main_image'] = $mainImagePath;
-        $input['attributes'] = AttributesHelper::mergeAttributes($input['attributes'] ?? []);
-        $input['store_id'] = $storeId;
+        $inputData['store_id'] = $storeId;
 
         $productRepository = app()[ProductRepository::class];
-        $product = $productRepository->create($input);
+        $product = $productRepository->create($inputData);
 
-        if (isset($input['product_gallery'])) {
-            $this->productImageModel->saveGalleryImages($input['product_gallery'], $product->id, $storeId);
+        $this->loadAdditionalImages($inputData, $product);
+    }
+
+    /**
+     * @param array $inputData
+     */
+    public function updateProduct(array $inputData)
+    {
+        $this->deleteOldImages($inputData);
+        $this->loadMainImage($inputData);
+        $this->loadAdditionalImages($inputData, $this);
+        $this->mergeAttributeArrays($inputData);
+
+        $productRepository = app()[ProductRepository::class];
+        $productRepository->update($inputData, $this->id);
+    }
+
+    /**
+     * Merge separated attribute array by types into one array
+     *
+     * @param array $inputData
+     */
+    protected function mergeAttributeArrays(array &$inputData)
+    {
+        $inputData['attributes'] = AttributesHelper::mergeAttributes($inputData['attributes'] ?? []);
+    }
+
+    /**
+     * @param array    $inputData
+     * @param int|null $storeId
+     */
+    protected function loadMainImage(array &$inputData, int $storeId = null)
+    {
+        if (!$storeId) {
+            $storeId = $this->store_id;
+        }
+
+        if (isset($inputData['main_image'])) {
+            $mainImageThumbnail = $this->productImageModel->createImageThumbnail($inputData['main_image']);
+
+            $this->productImageModel->saveImageWithThumbnail(
+                config('wish.storage.products.main_images_path'),
+                config('wish.storage.products.main_images_thumb_path'),
+                $inputData['main_image']->hashName(),
+                $mainImageThumbnail,
+                $storeId,
+                $inputData['main_image']
+            );
+
+            $inputData['main_image'] = join('/', [$storeId, $inputData['main_image']->hashName()]);
         }
     }
+
+    /**
+     * @param array $inputData
+     */
+    protected function loadAdditionalImages(array $inputData, Product $product)
+    {
+        if (isset($inputData['product_gallery'])) {
+            $this->productImageModel->saveGalleryImages($inputData['product_gallery'], $product->id, $product->store_id);
+        }
+    }
+
+    /**
+     * Remove old images from storage if new were uploaded
+     *
+     * @param array $inputData
+     */
+    protected function deleteOldImages(array $inputData)
+    {
+        $filesForDeleting = [];
+
+        if (isset($inputData['main_image'])) {
+            $filesForDeleting += [
+                join('/', [config('wish.storage.products.main_images_path'), $this->main_image]),
+                join('/', [config('wish.storage.products.main_images_thumb_path'), $this->main_image]),
+            ];
+        }
+
+        foreach (array_unique($inputData['imgs_to_remove']) as $imageUrl) {
+            $filesForDeleting += [
+                join('/', [config('wish.storage.products.gallery_images_path'), $imageUrl]),
+                join('/', [config('wish.storage.products.gallery_images_thumb_path'), $imageUrl]),
+            ];
+
+            $imgName = pathinfo($imageUrl)['filename'];
+            $productImageRepository = app(ProductImageRepository::class);
+
+            $productImageRepository
+                ->findWhere([['image', 'like', "%$imgName%"]])
+                ->first()
+                ->delete();
+        }
+
+        Storage::delete($filesForDeleting);
+    }
 }
+

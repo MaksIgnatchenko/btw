@@ -40,3 +40,7 @@
     cursor: not-allowed;
     color: black!important;
 }
+
+.ezv-container {
+    max-width: none;
+}
