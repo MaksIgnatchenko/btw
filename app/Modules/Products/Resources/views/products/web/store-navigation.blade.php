@@ -4,8 +4,8 @@
 
     @if(!ProductsViewHelper::isSearchResults() || !$products->isEmpty())
         <div class="shop-top-settings__change">
-            <a href="?template={{ ProductsViewTemplateEnum::GALLERY }}&page={{ $products->currentPage() }}{{ null !== (request()->get('search')) ? '&search=' . request()->get('search') : '' }}"{{ ProductsViewHelper::checkTemplate(ProductsViewTemplateEnum::GALLERY) ? "class=change-active" :  ''}}>{{ __('store.view_gallery') }}</a>
-            <a href="?template={{ ProductsViewTemplateEnum::LIST }}&page={{ $products->currentPage() }}{{ null !== (request()->get('search')) ? '&search=' . request()->get('search') : '' }}"{{ ProductsViewHelper::checkTemplate(ProductsViewTemplateEnum::LIST) ? "class=change-active" :  ''}}>{{ __('store.view_list') }}</a>
+            <a href="{{ ProductsViewHelper::getViewTemplateSwitcherLink(ProductsViewTemplateEnum::GALLERY, $products) }}"{{ ProductsViewHelper::getTemplateSwitcherClass(ProductsViewTemplateEnum::GALLERY) }}>{{ __('store.view_gallery') }}</a>
+            <a href="{{ ProductsViewHelper::getViewTemplateSwitcherLink(ProductsViewTemplateEnum::LIST, $products) }}"{{ ProductsViewHelper::getTemplateSwitcherClass(ProductsViewTemplateEnum::LIST) }}>{{ __('store.view_list') }}</a>
         </div>
     @endif
 </div>
