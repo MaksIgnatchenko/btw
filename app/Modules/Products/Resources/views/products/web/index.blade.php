@@ -21,13 +21,18 @@
 
             @include('flash::message')
 
-            <div class="container {{ $products->isEmpty() ? 'main-shop-empty' : ''}}">
+            <div class="container {{ $products->isEmpty() && !ProductsViewHelper::isSearchResults() ? 'main-shop-empty' : ''}}">
                 @if($products->isEmpty())
-                    @include('products.web.shop-empty')
+                    @if(ProductsViewHelper::isSearchResults())
+                        @include('products.web.store-navigation')
+                        @include('products.web.search-empty')
+                    @else
+                        @include('products.web.shop-empty')
+                    @endif
                 @else
                     @include('products.web.store-navigation')
                     @include('products.web.product-list')
-                    {{ $products->appends(['template' => ProductsViewHelper::getTemplate()])->links() }}
+                    {{ $products->appends(['search' => request()->get('search')])->links() }}
                 @endif
             </div>
         </div><!-- /. main shop wrapper -->
