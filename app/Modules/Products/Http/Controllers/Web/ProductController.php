@@ -41,6 +41,8 @@ class ProductController extends Controller
         $this->categoryRepository = $categoriesRepository;
         $this->categoryModel = $categoryModel;
         $this->productRepository = $productRepository;
+
+        $this->middleware('owns:product', ['only' => ['edit', 'show', 'update']]);
     }
 
     /**
@@ -138,12 +140,6 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        $merchant = Auth::user();
-
-        if (!$merchant->owns($product, 'customer_id')) {
-            abort(404);
-        }
-
         return view('products.web.single', [
             'product' => $product,
         ]);
@@ -155,12 +151,10 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(EditProductRequest $request, $id)
+    public function update(EditProductRequest $request, Product $product)
     {
-        /** @var Product $product */
-        $product = $this->productRepository->find($id);
         $product->updateProduct($request->all());
 
-        return redirect()->route('products.show', ['product' => $product->id]);
+        return redirect()->route('products.show', ['product' => $product]);
     }
 }
