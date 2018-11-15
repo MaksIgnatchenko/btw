@@ -19,7 +19,14 @@ class AttributesHelper
 
         foreach ($attributes as $type => $attributeArray) {
             if (AttributeTypesEnum::check($type)) {
-                $mergedAttributes = array_merge($mergedAttributes, $attributeArray);
+
+                // TODO is it should be refactored??
+                foreach ($attributeArray as $key => $value) {
+                    $mergedAttributes[$key] = [
+                        'type' => $type,
+                        'value' => $value,
+                    ];
+                }
             }
         }
 

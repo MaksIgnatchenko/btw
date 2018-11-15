@@ -44,3 +44,7 @@
 .search-results.empty {
     text-align: center;
 }
+
+.ezv-container {
+    max-width: none;
+}

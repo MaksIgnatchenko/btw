@@ -18,4 +18,7 @@ return [
     'create_price' => 'Price',
     'create_price_description' => 'Attention! 15% of the item’s price is transferred to the website.',
     'create_submit' => 'Create',
+    'edit_product_section_title' => 'Edit product',
+    'update_submit' => 'Update',
+    'edit' => 'Edit',
 ];

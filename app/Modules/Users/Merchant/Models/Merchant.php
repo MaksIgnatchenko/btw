@@ -11,10 +11,11 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Laratrust\Traits\LaratrustUserTrait;
 
 class Merchant extends Authenticatable
 {
-    use Notifiable;
+    use Notifiable, LaratrustUserTrait;
 
     /**
      * The attributes that are mass assignable.
