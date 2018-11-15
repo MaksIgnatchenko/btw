@@ -12,11 +12,25 @@ class ProductsViewHelper
     /**
      * @return string
      */
-    public static function getTemplate(): string
+    protected static function getTemplate(): string
     {
         $requestedTemplate = request()->get('template', ProductsViewTemplateEnum::GALLERY);
 
         return self::getValidTemplate($requestedTemplate);
+    }
+
+    /**
+     * @return string
+     */
+    protected static function getTemplateFromSession(): string
+    {
+        if (request()->session()->exists('template')) {
+            $template = request()->session()->get('template');
+        } else {
+            $template = ProductsViewTemplateEnum::GALLERY;
+        }
+
+        return self::getValidTemplate($template);
     }
 
     /**
@@ -46,20 +60,6 @@ class ProductsViewHelper
         }
 
         return $template;
-    }
-
-    /**
-     * @return string
-     */
-    public static function getTemplateFromSession(): string
-    {
-        if (request()->session()->exists('template')) {
-            $template = request()->session()->get('template');
-        } else {
-            $template = ProductsViewTemplateEnum::GALLERY;
-        }
-
-        return self::getValidTemplate($template);
     }
 
     /**
