@@ -11,7 +11,7 @@
             <p class="product__card__price"><span>$</span>{{ $product->price }}</p>
         </div>
         <div class="product__card__link-wr">
-            <a href="#" class="product__card__link">{{ __('store.product_info_text') }}</a>
+            <a href="{{ route('products.show', $product->id) }}" class="product__card__link">{{ __('store.product_info_text') }}</a>
         </div>
     </section>
 </li>
