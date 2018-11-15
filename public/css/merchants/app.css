@@ -40,3 +40,7 @@
     cursor: not-allowed;
     color: black!important;
 }
+
+.search-results.empty {
+    text-align: center;
+}
