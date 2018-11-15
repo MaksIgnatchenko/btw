@@ -389,34 +389,32 @@ class Product extends Model implements Ownable
     /**
      * Remove old images from storage if new were uploaded
      *
-     * @param array $newImages
+     * @param array $inputData
      */
-    protected function deleteOldImages(array $newImages)
+    protected function deleteOldImages(array $inputData)
     {
         $filesForDeleting = [];
 
-        if (isset($newImages['main_image'])) {
+        if (isset($inputData['main_image'])) {
             $filesForDeleting += [
                 join('/', [config('wish.storage.products.main_images_path'), $this->main_image]),
                 join('/', [config('wish.storage.products.main_images_thumb_path'), $this->main_image]),
             ];
+        }
 
-            if (isset($newImages['product_gallery']) && $galleryImagesCount = \count('product_gallery')) {
-                $existedGalleryImages = ProductImageRepository::where('product_id', $this->id)->toArray();
+        foreach (array_unique($inputData['imgs_to_remove']) as $imageUrl) {
+            $filesForDeleting += [
+                join('/', [config('wish.storage.products.gallery_images_path'), $imageUrl]),
+                join('/', [config('wish.storage.products.gallery_images_thumb_path'), $imageUrl]),
+            ];
 
-                foreach ($existedGalleryImages as $index => $image) {
-                    $filesForDeleting += [
-                        join('/', [config('wish.storage.products.gallery_images_path'), $image['image']]),
-                        join('/', [config('wish.storage.products.gallery_images_thumb_path'), $image['image']]),
-                    ];
+            $imgName = pathinfo($imageUrl)['filename'];
+            $productImageRepository = app(ProductImageRepository::class);
 
-                    ProductImageRepository::find($image['id'])->delete();
-
-                    if ($index === $galleryImagesCount) {
-                        break;
-                    }
-                }
-            }
+            $productImageRepository
+                ->findWhere([['image', 'like', "%$imgName%"]])
+                ->first()
+                ->delete();
         }
 
         Storage::delete($filesForDeleting);
