@@ -7,6 +7,7 @@ namespace App\Modules\Products\Helpers;
 
 use App\Modules\Products\Enums\ProductsViewTemplateEnum;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class ProductsViewHelper
 {
@@ -88,5 +89,34 @@ class ProductsViewHelper
         $request = app()[Request::class];
 
         return null !== $request->get('search');
+    }
+
+    /**
+     * @param string $template
+     * @param LengthAwarePaginator $paginator
+     * @return string
+     */
+    public static function getViewTemplateSwitcherLink(string $template, LengthAwarePaginator $paginator): string
+    {
+        $request = app()[Request::class];
+        $currentPage = $paginator->currentPage();
+
+        $link = "?template=$template";
+        $link .= "&page=$currentPage";
+
+        if (null !== $request->get('search')) {
+            $link .= "&search=$request->get('search')";
+        }
+
+        return $link;
+    }
+
+    /**
+     * @param string $template
+     * @return string
+     */
+    public static function getTemplateSwitcherClass(string $template): string
+    {
+        return self::checkTemplate($template) ? "class=change-active" : '';
     }
 }
