@@ -419,5 +419,18 @@ class Product extends Model implements Ownable
 
         Storage::delete($filesForDeleting);
     }
+
+    /**
+     * @param int $storeId
+     * @param string $searchText
+     * @return mixed
+     */
+    public function search(int $storeId, string $searchText)
+    {
+        $productRepository = app()[ProductRepository::class];
+        $productsPerPage = config('wish.store.pagination');
+
+        return $productRepository->findStoreProductsBySearchTextWithPagination($storeId, $searchText, $productsPerPage);
+    }
 }
 

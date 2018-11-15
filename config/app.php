@@ -203,11 +203,12 @@ return [
         App\Modules\Users\Merchant\Providers\GeographyServiceProvider::class,
         App\Modules\Users\Merchant\Providers\ApiRouteServiceProvider::class,
         App\Modules\Products\Providers\WebRouteServiceProvider::class,
-        \App\Modules\Categories\Providers\ServiceRouteServiceProvider::class,
+        App\Modules\Categories\Providers\ServiceRouteServiceProvider::class,
         App\Providers\ComposerServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
 
         Laravel\Socialite\SocialiteServiceProvider::class,
+        Illuminate\Pagination\PaginationServiceProvider::class,
 
     ],
 
@@ -278,5 +279,7 @@ return [
         'Socialite' => Laravel\Socialite\Facades\Socialite::class,
         'Geography' => App\Modules\Users\Merchant\Facades\Geography::class,
         'Image' => Intervention\Image\Facades\Image::class,
+        'ProductsViewHelper' => App\Modules\Products\Helpers\ProductsViewHelper::class,
+        'ProductsViewTemplateEnum' => App\Modules\Products\Enums\ProductsViewTemplateEnum::class,
     ],
 ];

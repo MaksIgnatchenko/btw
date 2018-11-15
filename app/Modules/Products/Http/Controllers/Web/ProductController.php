@@ -7,6 +7,7 @@ namespace App\Modules\Products\Http\Controllers\Web;
 
 use App\Modules\Categories\Repositories\CategoryRepository;
 use App\Modules\Categories\Models\Category;
+use App\Modules\Products\Helpers\ProductsViewHelper;
 use App\Modules\Products\Models\Product;
 use App\Modules\Products\Repositories\ProductRepository;
 use App\Modules\Products\Requests\Web\CreateProductRequest;
@@ -52,7 +53,10 @@ class ProductController extends Controller
      */
     public function index(): View
     {
-        return view('products.web.index');
+        $products = Auth::user()->products()->paginate(config('wish.store.pagination'));
+        ProductsViewHelper::storeTemplateToSession();
+
+        return view('products.web.index', ['products' => $products]);
     }
 
     /**
