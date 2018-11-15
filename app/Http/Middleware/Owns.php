@@ -20,9 +20,9 @@ class Owns
     {
         $user = Auth::user();
 
-        if (!$user ||
-            !method_exists($user, 'owns') ||
-            !$user->owns($request->$relatedObjectName, 'customer_id')) {
+        if (!$user
+            || !method_exists($user, 'owns')
+            || !$user->owns($request->$relatedObjectName, 'customer_id')) {
             abort(404);
         }
 
