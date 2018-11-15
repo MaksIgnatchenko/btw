@@ -3,6 +3,7 @@
 namespace App\Modules\Products\Repositories;
 
 use App\Modules\Products\Models\Product;
+use App\Modules\Users\Merchant\Models\Store;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
@@ -207,5 +208,12 @@ class ProductRepository extends BaseRepository
     public function incrementCounter(int $productId, int $count): void
     {
         Product::whereId($productId)->increment('purchase_count', $count);
+    }
+
+    public function findStoreProductsBySearchTextWithPagination(int $storeId, string $searchText, int $perPage = 10)
+    {
+        return Product::where('products.name', 'LIKE', '%' . $searchText . '%')
+            ->where('store_id', $storeId)
+            ->paginate($perPage);
     }
 }

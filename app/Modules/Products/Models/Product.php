@@ -326,4 +326,17 @@ class Product extends Model
             $this->productImageModel->saveGalleryImages($input['product_gallery'], $product->id, $storeId);
         }
     }
+
+    /**
+     * @param int $storeId
+     * @param string $searchText
+     * @return mixed
+     */
+    public function search(int $storeId, string $searchText)
+    {
+        $productRepository = app()[ProductRepository::class];
+        $productsPerPage = config('wish.store.pagination');
+
+        return $productRepository->findStoreProductsBySearchTextWithPagination($storeId, $searchText, $productsPerPage);
+    }
 }
