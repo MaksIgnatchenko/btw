@@ -2,7 +2,7 @@
 
 <div class="row">
     <div class="col-md-4">
-        <img src="{{ ImagesPathHelper::getProductImagePath($product->main_image) }}" class="img-thumbnail"
+        <img src="{{ $product->main_image }}" class="img-thumbnail"
              alt="Product image">
 
     </div>
@@ -21,11 +21,11 @@
                 {!! $order->quantity !!}
             </p>
             <p>
-                {!! Form::label('amount', 'Amount:') !!}
+                {!! Form::label('amount', 'Price:') !!}
                 {!! $product->price !!} USD
             </p>
             <p>
-                {!! Form::label('amount', 'Total amount:') !!}
+                {!! Form::label('amount', 'Amount:') !!}
                 {!! $product->price * $order->quantity !!} USD
             </p>
             <p>
