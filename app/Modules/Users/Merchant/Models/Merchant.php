@@ -6,6 +6,8 @@
 namespace App\Modules\Users\Merchant\Models;
 
 use App\Modules\Products\Models\Product;
+use App\Modules\Users\Merchant\Helpers\GeographyHelper;
+use App\Modules\Users\Merchant\Repositories\MerchantRepository;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Hash;
@@ -62,7 +64,16 @@ class Merchant extends Authenticatable
     public function getAvatarAttribute($value)
     {
         if ($value) {
-            return Storage::url($value);
+            return Storage::url(join('/', [config('wish.storage.merchants.avatar_path'), $value]));
+        }
+
+        return null;
+    }
+
+    public function getBackgroundImgAttribute($value)
+    {
+        if ($value) {
+            return Storage::url(join('/', [config('wish.storage.merchants.background_path'), $value]));
         }
 
         return null;
@@ -94,5 +105,21 @@ class Merchant extends Authenticatable
     public function products(): HasManyThrough
     {
         return $this->hasManyThrough(Product::class, Store::class);
+    }
+
+    /**
+     * @param array $data
+     *
+     * @return $this
+     */
+    public function updateAccountInfo(array $data) {
+        GeographyHelper::resolveGeographyNames($data);
+
+        $this->address->update($data);
+
+        $merchantRepository = app(MerchantRepository::class);
+        $merchantRepository->update($data, $this->id);
+
+        return $this;
     }
 }
