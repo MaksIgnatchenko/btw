@@ -7,7 +7,7 @@ namespace App\Modules\Users\Merchant\Models\Geography;
 
 use Illuminate\Database\Eloquent\Model;
 
-class GeographyState extends Model
+class GeographyState extends Model implements GeographyInterface
 {
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
@@ -15,5 +15,13 @@ class GeographyState extends Model
     public function cities()
     {
         return $this->hasMany(GeographyState::class);
+    }
+
+    /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this->name;
     }
 }

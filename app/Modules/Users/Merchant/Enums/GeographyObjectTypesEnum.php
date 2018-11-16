@@ -5,6 +5,10 @@
 
 namespace App\Modules\Users\Merchant\Enums;
 
+use App\Modules\Users\Merchant\Models\Geography\GeographyCity;
+use App\Modules\Users\Merchant\Models\Geography\GeographyCountry;
+use App\Modules\Users\Merchant\Models\Geography\GeographyState;
+
 class GeographyObjectTypesEnum
 {
     public const COUNTRY = 'country';
@@ -29,5 +33,17 @@ class GeographyObjectTypesEnum
     public static function toString(): string
     {
         return implode(',', self::toArray());
+    }
+
+    /**
+     * @return array
+     */
+    public static function relatedModelsArray()
+    {
+        return [
+            self::COUNTRY => GeographyCountry::class,
+            self::STATE => GeographyState::class,
+            self::CITY => GeographyCity::class,
+        ];
     }
 }
