@@ -21,7 +21,7 @@ use Illuminate\Support\Facades\Auth;
 class RegistrationController extends Controller
 {
     /** @var MerchantRepository */
-    protected $merchantRepository;
+    protected $merchantModel;
 
     /** @var GeographyServiceInterface */
     protected $geographyService;
@@ -32,17 +32,17 @@ class RegistrationController extends Controller
     /**
      * RegistrationController constructor.
      *
-     * @param MerchantRepository        $merchantRepository
+     * @param Merchant                  $merchantModel
      * @param CategoryRepository        $categoryRepository
      * @param GeographyServiceInterface $geographyService
      */
     public function __construct(
-        MerchantRepository $merchantRepository,
+        Merchant $merchantModel,
         CategoryRepository $categoryRepository,
         GeographyServiceInterface $geographyService
     )
     {
-        $this->merchantRepository = $merchantRepository;
+        $this->merchantModel = $merchantModel;
         $this->geographyService = $geographyService;
         $this->categoryRepository = $categoryRepository;
     }
@@ -113,7 +113,7 @@ class RegistrationController extends Controller
      */
     public function setStoreInfo(RegisterMerchantCompanyRequest $request)
     {
-        $merchant = $this->merchantRepository
+        $merchant = $this->merchantModel
             ->createWithRelations(array_merge($request->session()->all(), $request->all()));
 
         $request->session()->flush();

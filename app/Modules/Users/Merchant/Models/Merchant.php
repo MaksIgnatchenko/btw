@@ -7,7 +7,9 @@ namespace App\Modules\Users\Merchant\Models;
 
 use App\Modules\Products\Models\Product;
 use App\Modules\Users\Merchant\Helpers\GeographyHelper;
+use App\Modules\Users\Merchant\Models\Geography\GeographyCountry;
 use App\Modules\Users\Merchant\Repositories\MerchantRepository;
+use App\Modules\Users\Merchant\Repositories\StoreRepository;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Hash;
@@ -112,7 +114,8 @@ class Merchant extends Authenticatable
      *
      * @return $this
      */
-    public function updateAccountInfo(array $data) {
+    public function updateAccountInfo(array $data): self
+    {
         GeographyHelper::resolveGeographyNames($data);
 
         $this->address->update($data);
@@ -121,5 +124,42 @@ class Merchant extends Authenticatable
         $merchantRepository->update($data, $this->id);
 
         return $this;
+    }
+
+    /**
+     * @param array $data
+     *
+     * @return Merchant
+     * @throws \Prettus\Validator\Exceptions\ValidatorException
+     */
+    public function createWithRelations(array $data): Merchant
+    {
+        GeographyHelper::resolveGeographyNames($data);
+
+        /** @var MerchantRepository $merchantRepository */
+        $merchantRepository = app(MerchantRepository::class);
+
+        /** @var Merchant $merchant */
+        $merchant = $merchantRepository->create(array_merge($data, [
+            'phone' => $data['phone_code'] . $data['phone_number'],
+        ]));
+
+        $merchant->address()->create($data);
+
+        $storeData = array_merge($data, [
+            'country' => GeographyCountry::find($data['store_country'])->sortname,
+            'city' => $data['store_city'],
+            'name' => $data['store'],
+        ]);
+
+        /** @var StoreRepository $storeRepository */
+        $storeRepository = app(StoreRepository::class);
+
+        /** @var Store $store */
+        $store = $storeRepository->create($data);
+        $store->merchant()->associate($store);
+        $store->categories()->attach($data['categories']);
+
+        return $merchant;
     }
 }
