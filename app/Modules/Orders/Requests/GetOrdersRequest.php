@@ -25,7 +25,7 @@ class GetOrdersRequest extends FormRequest
         return [
             'filter' => [
                 'required',
-                Rule::in(array_merge(OrderFilterEnum::toArray(), OrderMerchantFilterEnum::toArray()))
+                Rule::in(OrderFilterEnum::toArray())
             ],
             'offset' => 'numeric',
         ];
@@ -39,9 +39,6 @@ class GetOrdersRequest extends FormRequest
         return [
             'filter.in' => 'Wrong value. Available values - '
                 . OrderFilterEnum::toString()
-                . ' for customer, '
-                . OrderMerchantFilterEnum::toString()
-                . ' for merchant'
         ];
     }
 }

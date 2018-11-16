@@ -6,16 +6,22 @@
 namespace App\Modules\Orders\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Modules\Orders\Exceptions\WrongReturnDetailsException;
-use App\Modules\Orders\Factories\FiltersFactory;
+use App\Modules\Orders\Factories\FilterOrderFactory;
 use App\Modules\Orders\Repositories\OrderRepository;
 use App\Modules\Orders\Requests\GetOrdersRequest;
-use App\Modules\Users\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
+    /**
+     * @return mixed
+     */
+    protected function guard()
+    {
+        return Auth::guard('auth:customer');
+    }
+
     /**
      * @param GetOrdersRequest $request
      *
@@ -28,13 +34,9 @@ class OrderController extends Controller
         $user = Auth::user();
         $filter = $request->get('filter');
         $offset = $request->get('offset', 0);
-        $role = $user->roles()->get()[0];
-        $userTypeId = $user->getUserTypeId();
 
-        $filterFactory = FiltersFactory::get($role->name);
-        $filter = $filterFactory->get($filter);
-
-        $orders = $filter->getOrders($userTypeId, $offset);
+        $filter = FilterOrderFactory::get($filter);
+        $orders = $filter->getOrders($user->id, $offset);
 
         return response()->json([
             'orders' => $orders,
@@ -42,58 +44,27 @@ class OrderController extends Controller
     }
 
     /**
-     * @param string $qrCode
-     *
+     * @param int $id
      * @return JsonResponse
      */
-    public function show(string $qrCode): JsonResponse
+    public function show(int $id): JsonResponse
     {
         $user = Auth::user();
-        $merchantId = $user->merchant->id;
-        $order = $this->getOrder($qrCode, $merchantId);
+        $order = $this->getOrder($id, $user->id);
 
         return response()->json(['order' => $order]);
     }
 
     /**
-     * @param string $qrCode
-     *
-     * @return JsonResponse
-     * @throws \App\Modules\Orders\Exceptions\WrongOrderStatusException
+     * @param int $orderId
+     * @param int $customerId
+     * @return \App\Modules\Orders\Models\Order|null
      */
-    public function update(string $qrCode): JsonResponse
-    {
-        $user = Auth::user();
-        $merchantId = $user->merchant->id;
-        $order = $this->getOrder($qrCode, $merchantId);
-
-        try {
-            $order->updateStatus();
-        } catch (WrongReturnDetailsException $e) {
-            report($e);
-
-            return response()->json([
-                'message' => $e->getMessage(),
-                'errors'  => [
-                    'qr_code' => [$e->getMessage()],
-                ],
-            ], 400);
-        }
-
-        return response()->json(['success' => true]);
-    }
-
-    /**
-     * @param string $qrCode
-     * @param int $merchantId
-     *
-     * @return \App\Modules\Orders\Models\Order|JsonResponse
-     */
-    protected function getOrder(string $qrCode, int $merchantId)
+    protected function getOrder(int $orderId, int $customerId)
     {
         /** @var OrderRepository $orderRepository */
         $orderRepository = app(OrderRepository::class);
-        $order = $orderRepository->findByQrCode($qrCode, $merchantId);
+        $order = $orderRepository->findCustomerOrderById($orderId, $customerId);
 
         if (null === $order) {
             abort(400, 'There is no such order');
