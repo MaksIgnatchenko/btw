@@ -129,7 +129,7 @@ class OrderRepository extends BaseRepository
         return Order::where('merchant_id', $merchantId)
             ->forCustomer()
             ->withoutQrCode()
-            ->where('status', OrderStatusEnum::PENDING)
+            ->where('status', OrderStatusEnum::IN_PROCESS)
             ->whereNull('outcome_id')
             ->orderBy('created_at', 'desc')
             ->skip($offset)

@@ -12,15 +12,9 @@ class IncomeStatisticDto
     /** @var float */
     protected $amount;
     /** @var int */
-    protected $pending;
+    protected $inProcess;
     /** @var int */
-    protected $pickedUp;
-    /** @var int */
-    protected $refunded;
-    /** @var int */
-    protected $returned;
-    /** @var int */
-    protected $closed;
+    protected $shipped;
 
     /**
      * @return int
@@ -65,19 +59,19 @@ class IncomeStatisticDto
     /**
      * @return int
      */
-    public function getPending(): int
+    public function getInProcess(): int
     {
-        return $this->pending;
+        return $this->inProcess;
     }
 
     /**
-     * @param int $pending
+     * @param int $inProcess
      *
      * @return IncomeStatisticDto
      */
-    public function setPending(int $pending): IncomeStatisticDto
+    public function setInProcess(int $inProcess): IncomeStatisticDto
     {
-        $this->pending = $pending;
+        $this->inProcess = $inProcess;
 
         return $this;
     }
@@ -85,79 +79,19 @@ class IncomeStatisticDto
     /**
      * @return int
      */
-    public function getPickedUp(): int
+    public function getShipped(): int
     {
-        return $this->pickedUp;
+        return $this->shipped;
     }
 
     /**
-     * @param int $pickedUp
+     * @param int $shipped
      *
      * @return IncomeStatisticDto
      */
-    public function setPickedUp(int $pickedUp): IncomeStatisticDto
+    public function setShipped(int $shipped): IncomeStatisticDto
     {
-        $this->pickedUp = $pickedUp;
-
-        return $this;
-    }
-
-    /**
-     * @return int
-     */
-    public function getRefunded(): int
-    {
-        return $this->refunded;
-    }
-
-    /**
-     * @param int $refunded
-     *
-     * @return IncomeStatisticDto
-     */
-    public function setRefunded(int $refunded): IncomeStatisticDto
-    {
-        $this->refunded = $refunded;
-
-        return $this;
-    }
-
-    /**
-     * @return int
-     */
-    public function getReturned(): int
-    {
-        return $this->returned;
-    }
-
-    /**
-     * @param int $returned
-     *
-     * @return IncomeStatisticDto
-     */
-    public function setReturned(int $returned): IncomeStatisticDto
-    {
-        $this->returned = $returned;
-
-        return $this;
-    }
-
-    /**
-     * @return int
-     */
-    public function getClosed(): int
-    {
-        return $this->closed;
-    }
-
-    /**
-     * @param int $closed
-     *
-     * @return IncomeStatisticDto
-     */
-    public function setClosed(int $closed): IncomeStatisticDto
-    {
-        $this->closed = $closed;
+        $this->shipped = $shipped;
 
         return $this;
     }

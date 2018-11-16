@@ -26,6 +26,6 @@ class OrderStatusEnum
      */
     public static function toString(): string
     {
-        return self::IN_PROCESS . ',' . self::SHIPPED;
+        return join(',', array_keys(self::toArray()));
     }
 }
