@@ -7,10 +7,8 @@ namespace App\Modules\Orders\Enums;
 
 class OrderStatusEnum
 {
-    public const PENDING = 'pending';
-    public const PICKED_UP = 'picked_up';
-    public const RETURNED = '__returned';
-    public const REFUNDED = '_refunded';
+    public const IN_PROCESS = 'in_process';
+    public const SHIPPED = 'shipped';
 
     /**
      * @return array
@@ -18,10 +16,8 @@ class OrderStatusEnum
     public static function toArray(): array
     {
         return [
-            self::PENDING   => 'Pending pickup',
-            self::PICKED_UP => 'Picked up',
-            self::REFUNDED  => 'Refunded',
-            self::RETURNED  => 'Returned',
+            self::IN_PROCESS   => 'In Process',
+            self::SHIPPED => 'Shipped',
         ];
     }
 
@@ -30,6 +26,6 @@ class OrderStatusEnum
      */
     public static function toString(): string
     {
-        return self::PENDING . ',' . self::PICKED_UP . ',' . self::REFUNDED . ',' . self::RETURNED;
+        return join(',', array_keys(self::toArray()));
     }
 }

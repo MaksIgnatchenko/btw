@@ -133,10 +133,9 @@ class CategoriesController extends Controller
             'parent_category_id' => $request->get('parent_category_id'),
         ];
 
-        // TODO вынести в общий метод
         if ($request->get('is_final')) {
             $attributes += [
-                'attributes' => $request->get('attributes'),
+                'attributes' => $this->attributesToArray($request->get('attributeses')),
             ];
         }
 
@@ -145,6 +144,26 @@ class CategoriesController extends Controller
         Flash::success('Subcategory created successfully');
 
         return redirect(route('categories.index'));
+    }
+
+    /**
+     * @param $attributes
+     *
+     * @return array
+     */
+    protected function attributesToArray($attributes): array
+    {
+        $result = [];
+
+        foreach($attributes as $attribute) {
+            $attribute = json_decode($attribute);
+            $result[] = [
+                'name' => $attribute->name,
+                'type' => $attribute->type,
+            ];
+        }
+
+        return $result;
     }
 
     /**

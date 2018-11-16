@@ -6,6 +6,8 @@
 namespace App\Modules\Products\Helpers;
 
 // TODO move helper to global
+use Illuminate\Support\Facades\Storage;
+
 class ImagesPathHelper
 {
     /**
@@ -15,7 +17,10 @@ class ImagesPathHelper
      */
     public static function getProductImagePath(string $imageName): string
     {
-        return url(config('wish.products.storage.main_images_path') . $imageName);
+        return Storage::url(join('/', [
+            config('wish.products.storage.main_images_path'),
+            $imageName,
+        ]));
     }
 
     /**
@@ -25,7 +30,10 @@ class ImagesPathHelper
      */
     public static function getProductThumbPath(string $imageName): string
     {
-        return url(config('wish.storage.products.main_images_thumb_path') . $imageName);
+        return Storage::url(join('/', [
+            config('wish.storage.products.main_images_thumb_path'),
+            $imageName,
+        ]));
     }
 
     /**
@@ -35,6 +43,9 @@ class ImagesPathHelper
      */
     public static function getAdvertImagePath(string $imageName): string
     {
-        return url(config('wish.storage.products.gallery_images_path') . $imageName);
+        return Storage::url(join('/', [
+            config('wish.storage.products.gallery_images_path'),
+            $imageName,
+        ]));
     }
 }

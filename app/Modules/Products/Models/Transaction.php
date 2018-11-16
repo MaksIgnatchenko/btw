@@ -14,7 +14,6 @@ use App\Modules\Products\Repositories\TransactionRepository;
 use App\Modules\Users\Customer\Models\Customer;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Ramsey\Uuid\Uuid;
 
 class Transaction extends Model
 {
@@ -87,30 +86,18 @@ class Transaction extends Model
         $transactions = $transactionRepository->findActive();
         $orders = $orderRepository->all();
 
-        $refunded = $orders->filter(function ($item) {
-            return OrderStatusEnum::REFUNDED === $item->status;
+        $inProcess = $orders->filter(function ($item) {
+            return OrderStatusEnum::IN_PROCESS === $item->status;
         });
-        $pickedUp = $orders->filter(function ($item) {
-            return OrderStatusEnum::PICKED_UP === $item->status;
-        });
-        $pending = $orders->filter(function ($item) {
-            return OrderStatusEnum::PENDING === $item->status;
-        });
-        $returned = $orders->filter(function ($item) {
-            return OrderStatusEnum::RETURNED === $item->status;
-        });
-        $closed = $orders->filter(function ($item) {
-            return null !== $item->outcome_id;
+        $shipped = $orders->filter(function ($item) {
+            return OrderStatusEnum::SHIPPED === $item->status;
         });
 
         $incomePaymentStatisticDto
             ->setCount($orders->count())
             ->setAmount($transactions->sum('amount'))
-            ->setRefunded($refunded->count())
-            ->setPickedUp($pickedUp->count())
-            ->setPending($pending->count())
-            ->setClosed($closed->count())
-            ->setReturned($returned->count());
+            ->setInProcess($inProcess->count())
+            ->setShipped($shipped->count());
 
         return $incomePaymentStatisticDto;
     }

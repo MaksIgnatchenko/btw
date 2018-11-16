@@ -7,7 +7,6 @@ use App\Modules\Orders\Enums\OrderStatusEnum;
 use App\Modules\Orders\Models\Order;
 use App\Modules\Products\Helpers\ImagesPathHelper;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\DataTableAbstract;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Services\DataTable;
@@ -28,10 +27,7 @@ class IncomeDataTable extends DataTable
         return $dataTable->addColumn('action', 'income.datatables_actions')
             ->editColumn('picture', function (Order $order) {
                 $product = $order->product;
-                $mainImageUrl = '';
-                if (isset($product->main_image)) {
                     $mainImageUrl = ImagesPathHelper::getProductThumbPath($product->main_image);
-                }
 
                 return "<img src='{$mainImageUrl}' alt='product image' height='75'>";
             })
@@ -41,16 +37,12 @@ class IncomeDataTable extends DataTable
             ->editColumn('status', function (Order $order) {
                 $status = OrderStatusEnum::toArray()[$order->status];
 
-                if (OrderStatusEnum::PICKED_UP === $order->status) {
+                if (OrderStatusEnum::SHIPPED === $order->status) {
                     return "<span class='text-green'>{$status}</span>";
                 }
 
-                if (OrderStatusEnum::PENDING === $order->status) {
+                if (OrderStatusEnum::IN_PROCESS === $order->status) {
                     return "<span class='text-yellow'>{$status}</span>";
-                }
-
-                if (OrderStatusEnum::RETURNED === $order->status) {
-                    return "<span class='text-danger'>{$status}</span>";
                 }
 
                 return "<span class='text-red'>{$status}</span>";
@@ -58,7 +50,7 @@ class IncomeDataTable extends DataTable
             ->editColumn('created_at', function (Order $order) {
                 return DateConverter::date($order->created_at);
             })
-            ->rawColumns(['picture', 'action', 'status', 'total_amount']);
+            ->rawColumns(['picture', 'action', 'status', 'amount']);
     }
 
     /**
@@ -71,7 +63,7 @@ class IncomeDataTable extends DataTable
     public function query(Order $model): Builder
     {
         return $model->newQuery()
-            ->withTotalAmount();
+            ->withAmount();
     }
 
     /**
@@ -116,8 +108,8 @@ class IncomeDataTable extends DataTable
             'created_at' => [
                 'title' => 'Purchase date',
             ],
-            'total_amount' => [
-                'title' => 'Total amount',
+            'amount' => [
+                'title' => 'Amount',
                 'searchable' => false,
             ],
             'picture' => [

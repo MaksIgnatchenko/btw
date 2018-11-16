@@ -150,11 +150,11 @@ class Order extends Model
      *
      * @return mixed
      */
-    public function scopeWithTotalAmount($query)
+    public function scopewithAmount($query)
     {
         return $query->select([
             'orders.*',
-            DB::raw('TRUNCATE(product->\'$."price"\' * product->\'$."quantity"\', 2) as total_amount'),
+            DB::raw('TRUNCATE(product->\'$."price"\' * quantity, 2) as amount'),
         ]);
     }
 
