@@ -156,7 +156,7 @@ class Merchant extends Authenticatable
         $storeRepository = app(StoreRepository::class);
 
         /** @var Store $store */
-        $store = $storeRepository->create($data);
+        $store = $storeRepository->create($storeData);
         $store->merchant()->associate($store);
         $store->categories()->attach($data['categories']);
 

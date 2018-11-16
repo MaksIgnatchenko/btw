@@ -8,8 +8,6 @@ namespace App\Modules\Users\Merchant\Models;
 use App\Modules\Categories\Models\Category;
 use App\Modules\Products\Models\Product;
 use App\Modules\Users\Merchant\Helpers\GeographyHelper;
-use App\Modules\Users\Merchant\Models\Merchant;
-use App\Modules\Users\Merchant\Repositories\MerchantRepository;
 use App\Modules\Users\Merchant\Repositories\StoreRepository;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -53,7 +51,12 @@ class Store extends Model
         return $this->hasMany(Product::class);
     }
 
-    public function updateStoreInfo(array $data)
+    /**
+     * @param array $data
+     *
+     * @return $this
+     */
+    public function updateStoreInfo(array $data): self
     {
         GeographyHelper::resolveGeographyNames($data);
 
