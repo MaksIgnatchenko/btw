@@ -135,7 +135,7 @@ class CategoriesController extends Controller
 
         if ($request->get('is_final')) {
             $attributes += [
-                'attributes' => $this->attributesToArray($request->get('attributeses')),
+                'attributes' => $this->attributesToArray($request->get('attributes')),
             ];
         }
 
@@ -151,7 +151,7 @@ class CategoriesController extends Controller
      *
      * @return array
      */
-    protected function attributesToArray($attributes): array
+    protected function attributesToArray(array $attributes = []): array
     {
         $result = [];
 
