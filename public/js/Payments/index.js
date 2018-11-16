@@ -2,11 +2,8 @@ $(document).ready(function () {
 
     var html = '<select class="form-control">' +
         "<option value=' '>All statuses</option>" +
-        "<option value='returned'>Returned</option>" +
-        "<option value='refunded'>Refunded</option>" +
-        "<option value='pending'>Pending pickup</option>" +
-        "<option value='picked_up'>Picked up</option>" +
-
+        "<option value='in_progress'>In progress</option>" +
+        "<option value='shipped'>Shipped</option>" +
         "</select>";
 
     $('#status-filter').html(html);

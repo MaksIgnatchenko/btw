@@ -148,7 +148,7 @@ class Product extends Model implements Ownable
                 if (!$categoryModel::find($id)->is_final) {
                     $categories = array_merge($categories, $categoryModel
                         ->getFinalCategories($id)
-                        ->pluck('id'));
+                        ->pluck('id')->toArray());
                 } else {
                     $categories[] = (int)$id;
                 }
@@ -402,27 +402,30 @@ class Product extends Model implements Ownable
             ];
         }
 
-        foreach (array_unique($inputData['imgs_to_remove']) as $imageUrl) {
-            $filesForDeleting += [
-                join('/', [config('wish.storage.products.gallery_images_path'), $imageUrl]),
-                join('/', [config('wish.storage.products.gallery_images_thumb_path'), $imageUrl]),
-            ];
+        if (isset($inputData['imgs_to_remove'])) {
+            foreach (array_unique($inputData['imgs_to_remove']) as $imageUrl) {
+                $filesForDeleting += [
+                    join('/', [config('wish.storage.products.gallery_images_path'), $imageUrl]),
+                    join('/', [config('wish.storage.products.gallery_images_thumb_path'), $imageUrl]),
+                ];
 
-            $imgName = pathinfo($imageUrl)['filename'];
-            $productImageRepository = app(ProductImageRepository::class);
+                $imgName = pathinfo($imageUrl)['filename'];
+                $productImageRepository = app(ProductImageRepository::class);
 
-            $productImageRepository
-                ->findWhere([['image', 'like', "%$imgName%"]])
-                ->first()
-                ->delete();
+                $productImageRepository
+                    ->findWhere([['image', 'like', "%$imgName%"]])
+                    ->first()
+                    ->delete();
+            }
         }
 
         Storage::delete($filesForDeleting);
     }
 
     /**
-     * @param int $storeId
+     * @param int    $storeId
      * @param string $searchText
+     *
      * @return mixed
      */
     public function search(int $storeId, string $searchText)
