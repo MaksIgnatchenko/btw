@@ -12,7 +12,7 @@
 
 @section('script')
     <script src="{{asset('vendor/Image-PDF-Viewer-EZView/EZView.js')}}"></script>
-    <script src="{{asset('js/marchants/products/ezview.js')}}"></script>
+    <script src="{{asset('js/merchants/products/ezview.js')}}"></script>
 @endsection
 
 @section('content')
