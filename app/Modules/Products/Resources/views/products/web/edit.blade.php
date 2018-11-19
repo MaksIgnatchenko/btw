@@ -11,11 +11,11 @@
 @endsection
 
 @section('script')
-    <script src="{{asset('js/marchants/products/category-tree.js')}}"></script>
+    <script src="{{asset('js/merchants/products/category-tree.js')}}"></script>
     <script src="{{asset('js/marchants/products/remove-old-images.js')}}"></script>
     <script src="{{asset('js/Validator.js')}}"></script>
     <script src="{{asset('js/SelectDecorator.js')}}"></script>
-    <script src="{{asset('js/marchants/products/selectDecorator.js')}}"></script>
+    <script src="{{asset('js/merchants/products/selectDecorator.js')}}"></script>
 @endsection
 
 @section('content')
