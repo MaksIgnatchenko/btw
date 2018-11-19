@@ -221,7 +221,7 @@ window.onload = function () {
 
         // Check image size
         function validateFileSize(size) {
-            var imgSize = _W.maxFileSizeMb * 1024 * 1024;
+            var imgSize = _W.maxFileSize;
             if (size > imgSize) {
                 return true;
             }

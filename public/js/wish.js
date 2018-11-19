@@ -56,7 +56,7 @@
     this.geography = new Geography();
     this.selectHelper = SelectHelper;
 
-    this.maxFileSizeMb = 5;
+    this.maxFileSize = $('#configs').find('input[name=image_max_size]').data('value');
 
     window._W = this;
 })();
