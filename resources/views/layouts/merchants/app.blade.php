@@ -21,6 +21,9 @@
 
 <!-- Footer -->
 <footer class="@yield('footer-class')">
+    <div id="configs">
+        @each('layouts.merchants.configs', $configs, 'configs')
+    </div>
     <div class="container">
         <p class="footer__copy">&copy; {{date('Y')}} Better than Wish</p>
     </div>

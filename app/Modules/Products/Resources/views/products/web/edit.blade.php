@@ -11,8 +11,11 @@
 @endsection
 
 @section('script')
-    <script src="{{asset('js/marchants/products/category-tree.js')}}"></script>
-    <script src="{{asset('js/marchants/products/remove-old-images.js')}}"></script>
+    <script src="{{asset('js/merchants/products/category-tree.js')}}"></script>
+    <script src="{{asset('js/merchants/products/remove-old-images.js')}}"></script>
+    <script src="{{asset('js/Validator.js')}}"></script>
+    <script src="{{asset('js/SelectDecorator.js')}}"></script>
+    <script src="{{asset('js/merchants/products/selectDecorator.js')}}"></script>
 @endsection
 
 @section('content')
@@ -39,7 +42,8 @@
                             {!! Form::text('name', null, [
                             'placeholder' => __('products.create_name_placeholder'),
                             'maxlength' => '170',
-                            'class' => 'form-item__inp']
+                            'class' => 'form-item__inp',
+                            'required']
                             ) !!}
                             @if ($errors->has('name'))
                                 <div class="alert alert-danger" role="alert">
@@ -54,7 +58,7 @@
                         </div>
                         <div class="form-item__wrapper form-item__wrapper--field">
                             <div class="custom-select">
-                                {{ Form::select('category_id', ['Category'] + $categories, $product->category_id, ['name' => 'category_id', 'id' => 'categories', 'onChange' => 'getCategoryAttributes($(this).children(":selected").attr("value"))']) }}
+                                {{ Form::select('category_id', ['Category'] + $categories, $product->category_id, ['name' => 'category_id', 'id' => 'categories']) }}
                             </div>
                             @if ($errors->has('category_id'))
                                 <div class="alert alert-danger" role="alert">
@@ -77,7 +81,8 @@
                             'placeholder' => __('products.create_description_placeholder'),
                             'rows' => '10',
                             'maxlength' => '1000',
-                            'class' => 'form-item__area']
+                            'class' => 'form-item__area',
+                            'required']
                             ) !!}
                             @if ($errors->has('description'))
                                 <div class="alert alert-danger" role="alert">
@@ -99,7 +104,8 @@
                             {!! Form::text('quantity', null, [
                             'placeholder' => __('products.create_attribute_section_placeholder'),
                             'maxlength' => '7',
-                            'class' => 'form-item__inp']
+                            'class' => 'form-item__inp',
+                            'required']
                             ) !!}
                             @if ($errors->has('quantity'))
                                 <div class="alert alert-danger" role="alert">
@@ -117,7 +123,7 @@
                                 <div class="form-item__wrapper form-item__wrapper--field">
                                     {!! Form::text("attributes[{$data['type']}][{$key}]", $data['value'], [
                                     'placeholder' => __('products.create_attribute_section_placeholder'),
-                                    'class' => 'form-item__inp']
+                                    'class' => 'form-item__inp', 'required']
                                     ) !!}
                                     @if($errors->has("attributes.{$data['type']}.$key"))
                                         <div class="alert alert-danger" role="alert">
@@ -198,7 +204,8 @@
                             'max' => '9999999',
                             'step' => '.01',
                             'maxlength' => '9',
-                            'class' => 'form-item__inp form-item__inp--price']
+                            'class' => 'form-item__inp form-item__inp--price',
+                            'required']
                             ) !!}
                             @if ($errors->has('price'))
                                 <div class="alert alert-danger" role="alert">
