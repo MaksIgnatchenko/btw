@@ -16,7 +16,7 @@ class OrderStatusEnum
     public static function toArray(): array
     {
         return [
-            self::IN_PROCESS   => 'In Process',
+            self::IN_PROCESS   => 'In process',
             self::SHIPPED => 'Shipped',
         ];
     }

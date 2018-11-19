@@ -1,6 +1,6 @@
 <?php
 /**
- * Created by Artem Petrov, Appus Studio LP on 12.01.2018
+ * Created by Andrei Podgornyi, Appus Studio LP on 16.11.2018
  */
 
 namespace App\Modules\Orders\Factories\FilterOrder;
@@ -8,7 +8,7 @@ namespace App\Modules\Orders\Factories\FilterOrder;
 use App\Modules\Orders\Factories\OrdersInterface;
 use Illuminate\Support\Collection;
 
-class RedeemedOrders extends AbstractOrders implements OrdersInterface
+class InProcessOrders extends AbstractOrders implements OrdersInterface
 {
     /**
      * @param int $customerId
@@ -18,6 +18,6 @@ class RedeemedOrders extends AbstractOrders implements OrdersInterface
      */
     public function getOrders(int $customerId, int $offset): Collection
     {
-        return $this->orderRepository->getRedeemed($customerId, $offset);
+        return $this->orderRepository->getInProcess($customerId, $offset);
     }
 }

@@ -187,7 +187,7 @@ return [
         App\Modules\Products\Providers\BraintreeServiceProvider::class,
 //        App\Modules\Orders\Providers\OrderEventServiceProvider::class,
         App\Modules\Orders\Providers\OrderEventServiceProvider::class,
-//        App\Modules\Orders\Providers\OrderApiRouteServiceProvider::class,
+        App\Modules\Orders\Providers\OrderApiRouteServiceProvider::class,
         App\Modules\Orders\Providers\OrderAdminRouteServiceProvider::class,
 
 //        Edujugon\PushNotification\Providers\PushNotificationServiceProvider::class,

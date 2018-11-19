@@ -7,10 +7,8 @@ namespace App\Modules\Orders\Enums;
 
 class OrderFilterEnum
 {
-    public const REDEEMED = 'redeemed';
-    public const UNREDEEMED = 'unredeemed';
-    public const REFUNDED = 'refunded';
-    public const RETURNED = 'returned';
+    public const IN_PROCESS = 'in_process';
+    public const SHIPPED = 'shipped';
     public const ALL = 'all';
 
     /**
@@ -19,10 +17,8 @@ class OrderFilterEnum
     public static function toArray(): array
     {
         return [
-            self::REDEEMED,
-            self::UNREDEEMED,
-            self::REFUNDED,
-            self::RETURNED,
+            self::IN_PROCESS,
+            self::SHIPPED,
             self::ALL,
         ];
     }
@@ -32,6 +28,6 @@ class OrderFilterEnum
      */
     public static function toString(): string
     {
-        return self::REDEEMED . ',' . self::UNREDEEMED . ',' . self::REFUNDED . ',' . self::RETURNED . ',' . self::ALL;
+        return self::IN_PROCESS . ',' . self::SHIPPED . ',' . self::ALL;
     }
 }

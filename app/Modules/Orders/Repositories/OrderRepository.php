@@ -45,88 +45,35 @@ class OrderRepository extends BaseRepository
      *
      * @return Collection
      */
-    public function getRedeemed(int $customerId, int $offset): Collection
-    {
-        return Order::where([
-            'customer_id' => $customerId,
-            'status'      => OrderStatusEnum::PICKED_UP,
-        ])
-            ->with('merchant.rating')
-            ->offset($offset)
-            ->limit(Order::PAGE_LIMIT)
-            ->orderBy('created_at', 'DESC')
-            ->get();
-    }
-
-    /**
-     * @param int $customerId
-     * @param int $offset
-     *
-     * @return Collection
-     */
-    public function getUnredeemed(int $customerId, int $offset): Collection
-    {
-        return Order::where([
-            'customer_id' => $customerId,
-            'status'      => OrderStatusEnum::PENDING,
-        ])
-            ->with('merchant.rating')
-            ->offset($offset)
-            ->limit(Order::PAGE_LIMIT)
-            ->orderBy('created_at', 'DESC')
-            ->get();
-    }
-
-    /**
-     * @param int $customerId
-     * @param int $offset
-     *
-     * @return Collection
-     */
     public function getAll(int $customerId, int $offset): Collection
     {
         return Order::where([
             'customer_id' => $customerId,
         ])
-            ->with('merchant.rating')
             ->offset($offset)
             ->limit(Order::PAGE_LIMIT)
             ->orderBy('created_at', 'DESC')
             ->get();
     }
 
-    /**
-     * @param int $customerId
-     * @param int $offset
-     *
-     * @return Collection
-     */
-    public function getRefunded(int $customerId, int $offset): Collection
+    public function getShipped(int $customerId, int $offset): Collection
     {
         return Order::where([
             'customer_id' => $customerId,
-            'status'      => OrderStatusEnum::REFUNDED,
+            'status'      => OrderStatusEnum::SHIPPED,
         ])
-            ->with('merchant.rating')
             ->offset($offset)
             ->limit(Order::PAGE_LIMIT)
             ->orderBy('created_at', 'DESC')
             ->get();
     }
 
-    /**
-     * @param int $customerId
-     * @param int $offset
-     *
-     * @return Collection
-     */
-    public function getReturned(int $customerId, int $offset): Collection
+    public function getInProcess(int $customerId, int $offset): Collection
     {
         return Order::where([
             'customer_id' => $customerId,
-            'status'      => OrderStatusEnum::RETURNED,
+            'status'      => OrderStatusEnum::IN_PROCESS,
         ])
-            ->with('merchant.rating')
             ->offset($offset)
             ->limit(Order::PAGE_LIMIT)
             ->orderBy('created_at', 'DESC')
@@ -190,23 +137,12 @@ class OrderRepository extends BaseRepository
             ->get();
     }
 
-    /**
-     * @param string $qrCode
-     * @param $merchantId
-     *
-     * @return Order|null
-     */
-    public function findByQrCode(string $qrCode, $merchantId): ?Order
+    public function findCustomerOrderById(int $orderId, int $merchantId): ?Order
     {
         return Order::where([
             'merchant_id' => $merchantId,
-            'qr_code'     => $qrCode,
-        ])
-            ->whereIn('status', [
-                OrderStatusEnum::IN_PROCESS,
-            ])
-            ->forCustomer()
-            ->first();
+            'id'          => $orderId,
+        ])->first();
     }
 
     /**
