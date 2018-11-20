@@ -231,7 +231,7 @@ window.onload = function () {
         // Clear input
         function clearInput(element) {
             element.value = "";
-            element.removeAttribute('readonly');
+            element.removeAttribute('disabled');
         }
 
         // Clear background-image
@@ -264,40 +264,240 @@ window.onload = function () {
             var block = blocks[index],
                 element = inputs[index],
                 file = element.files[0];
-            if( validateFileSize(file.size) ) {
+            if (validateFileSize(file.size)) {
                 clearInput(element);
-                if( block.lastElementChild.nodeName.toUpperCase() !== 'P' ) {
+                if (block.lastElementChild.nodeName.toUpperCase() !== 'P') {
                     showErrorMessage(block);
                 }
             } else {
-                if( block.lastElementChild.nodeName.toUpperCase() === 'P' ) {
+                if (block.lastElementChild.nodeName.toUpperCase() === 'P') {
                     block.removeChild(block.lastElementChild);
                 }
-                element.setAttribute('readonly', true);
-                block.style.backgroundImage = 'url('+ window.URL.createObjectURL(file) +')';
+                element.setAttribute('disabled', true);
+                block.style.backgroundImage = 'url(' + window.URL.createObjectURL(file) + ')';
                 block.firstElementChild.classList.add('form-item__label--remove');
                 eventToBlock = clearBlock.bind(null, block, element);
                 block.addEventListener('click', eventToBlock, false);
             }
         }
 
+        /* Clear disable attribute on input type file before send form */
+        function clearDisabledAttr(event, elements) {
+            event.preventDefault();
+            for (var i = 0; i < elements.length; i++) {
+                elements[i].removeAttribute('disabled');
+            }
+            event.target.submit();
+        }
+
         /* Add listener to inputs */
-        if(inputs) {
-            for(var i = 0; i < inputs.length; i++) {
+        if (inputs.length) {
+            for (var i = 0; i < inputs.length; i++) {
                 inputs[i].addEventListener('change', addFile.bind(null, i));
             }
+            document.querySelector('form[name="add-new-product"]').addEventListener('submit', function (event) {
+                clearDisabledAttr(event, inputs);
+            });
+        }
+    })();
+
+    /* Prohibit the input of all characters except numeric */
+    (function () {
+        var addQuantity = document.querySelector('input[name="add-new-quantity"]');
+
+        function checkInputValue(event) {
+            var filteredValue = event.target.value.replace(/\D/g, '');
+            event.target.value = filteredValue;
+        }
+
+        if (addQuantity) {
+            addQuantity.addEventListener('input', checkInputValue);
+        }
+    })();
+
+    /* Tabs */
+    (function () {
+        var tabsWrapper = document.querySelector('.tabs-wrapper');
+
+        function initTabs() {
+            var headerBlock = tabsWrapper.querySelector('.tabs-header'),
+                bodyBlock = tabsWrapper.querySelector('.tabs-body'),
+                headerItems = headerBlock.querySelectorAll('.tabs-item'),
+                bodyItems = bodyBlock.querySelectorAll('.tabs-item');
+
+            function changeVisibleTab(event) {
+                event.preventDefault();
+                var index = null;
+
+                // find index of current element
+                for (var i = 0; i < headerItems.length; i++) {
+                    if (headerItems[i] === event.currentTarget) {
+                        index = i;
+                        break;
+                    }
+                }
+
+                changeTab(headerItems, bodyItems, index);
+            }
+
+            /* After init add active class to first head link and add click listener to all links */
+            function addEvent(items) {
+                for (var i = 0; i < items.length; i++) {
+                    items[i].addEventListener('click', changeVisibleTab);
+                }
+            }
+
+            /* Add hidden class to all list item and remove to current item */
+            function changeTab(listHeader, listBody, index) {
+                var count = listHeader.length;
+
+                for (var i = 0; i < count; i++) {
+                    listBody[i].classList.add('tabs-item--hide');
+                    listHeader[i].classList.remove('tabs-item--active');
+                }
+                listBody[index].classList.remove('tabs-item--hide');
+                listHeader[index].classList.add('tabs-item--active');
+            }
+
+            addEvent(headerItems);
+            changeTab(headerItems, bodyItems, 0);
+        }
+
+        if (tabsWrapper) {
+            initTabs(tabsWrapper);
+        }
+    })();
+
+    /* Сheck for new password identity */
+    (function () {
+        var newPass = document.getElementById('new-pass'),
+            confirmPass = document.getElementById('new-pass-confirm');
+
+        function createMessage(el) {
+            var p = document.createElement('P');
+            p.classList.add('alert', 'alert-danger');
+            p.innerHTML = "Passwords do not match";
+            el.appendChild(p);
+        }
+
+        function checkIdentity(event) {
+            var checkedValue = '',
+                referenceValue = '';
+
+            if (event.target === confirmPass) {
+                checkedValue = event.target.value;
+                referenceValue = newPass.value;
+
+                if (checkedValue !== referenceValue) {
+                    if (!event.target.classList.contains('form-item__inp--error')) {
+                        event.target.classList.add('form-item__inp--error');
+                        createMessage(event.target.parentElement);
+                    }
+
+                } else {
+                    if (event.target.classList.contains('form-item__inp--error')) {
+                        event.target.classList.remove('form-item__inp--error');
+                        event.target.parentElement.removeChild(event.target.nextElementSibling);
+                    }
+                }
+            }
+        }
+
+        if (newPass) {
+            newPass.addEventListener('blur', checkIdentity);
+            confirmPass.addEventListener('blur', checkIdentity);
+        }
+    })();
+
+    /* Change photo on Settings page */
+    (function () {
+        var fileEl = document.getElementById('edit-photo'),
+            label = document.querySelector('.edit-photo-btn');
+
+        function clearInput() {
+            fileEl.previousElementSibling.innerHTML = "Add photo";
+            fileEl.value = '';
+            document.querySelector('.form-container-decor-abs').style.backgroundImage = '';
+            setTimeout(function () {
+                fileEl.removeAttribute('disabled');
+            }, 100);
+        }
+
+        function getFile(event) {
+            var element = event.target,
+                file = element.files[0],
+                imgSrc = window.URL.createObjectURL(file),
+                parentEl = document.querySelector('.form-container-decor-abs');
+
+            parentEl.style.backgroundImage = "url(" + imgSrc + ")";
+            element.previousElementSibling.innerHTML = "Remove photo";
+            element.setAttribute('disabled', 'disabled');
+            label.addEventListener('click', clearInput);
+        }
+
+        if (fileEl) {
+            fileEl.addEventListener('change', getFile);
+            document.querySelector('form[name="change-store"]').addEventListener('submit', function (event) {
+                event.preventDefault();
+                fileEl.removeAttribute('disabled');
+                event.target.submit();
+            });
+        }
+    })();
+
+    /* Change Avatar photo on Settings page */
+    (function () {
+        var fileEl = document.getElementById('user-avatar');
+
+        function clearInput(event) {
+            var el = event.target,
+                img = document.querySelector('.user-component__img');
+
+            fileEl.value = '';
+            setTimeout(function () {
+                fileEl.removeAttribute('disabled');
+                el.removeEventListener('click', clearInput);
+            }, 100);
+        }
+
+        function getFile(event) {
+            var element = event.target,
+                file = element.files[0],
+                imgSrc = window.URL.createObjectURL(file),
+                label = element.previousElementSibling,
+                img = document.querySelector('.user-component__img');
+
+            img.setAttribute('src', imgSrc);
+            element.setAttribute('disabled', 'disabled');
+            label.classList.add('user-component__btn-icon--del');
+            label.addEventListener('click', clearInput);
+        }
+
+        if (fileEl) {
+            fileEl.addEventListener('change', getFile);
+
+            /*
+                !!!!!!
+            --> The form will be sent via Ajax request. Before sending, you need to remove the art attribute block from the input. Example below
+
+             */
+            // document.querySelector('form[name="change-store"]').addEventListener('submit', function(event){
+            //     event.preventDefault();
+            //     fileEl.removeAttribute('disabled');
+            //     event.target.submit();
+            // });
         }
     })();
 
     /* Show Logout button */
-    (function(){
+    (function () {
         var userBlock = document.querySelector('.user__name');
 
         function logoutHandler() {
             userBlock.classList.toggle('user__name--logout');
         }
 
-        if( userBlock ) {
+        if (userBlock) {
             userBlock.addEventListener('click', logoutHandler);
         }
     })();
@@ -318,8 +518,8 @@ function divSelectClickEvent(e) {
                 y[k].removeAttribute("class");
             }
             /* pass through select and remove attribute selected */
-            for ( ki = 0; ki < s.options.length; ki++ ) {
-                if( s.options[ki].hasAttribute('selected') ) {
+            for (ki = 0; ki < s.options.length; ki++) {
+                if (s.options[ki].hasAttribute('selected')) {
                     s.options[ki].removeAttribute('selected');
                 }
             }
