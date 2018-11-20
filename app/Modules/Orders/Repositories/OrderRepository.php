@@ -107,12 +107,9 @@ class OrderRepository extends BaseRepository
      * @param int $merchantId
      * @return mixed
      */
-    public function getMerchantOrderById(int $orderId, int $merchantId): ?Order
+    public function getMerchantOrderById(int $orderId): ?Order
     {
-        return Order::where([
-            'merchant_id' => $merchantId,
-            'id'          => $orderId,
-        ])->with('customer')->first();
+        return Order::where('id', $orderId)->with('customer')->first();
     }
 
     /**
@@ -135,19 +132,15 @@ class OrderRepository extends BaseRepository
     }
 
     /**
-     * @param int $orderId
-     * @param int $merchantId
+     * @param Order $order
      */
-    public function changeMerchantOrderStatusToShippedById(int $orderId, int $merchantId):void
+    public function changeOrderStatusToShipped(Order $order):void
     {
-        $order = Order::where([
-           'merchant_id' => $merchantId,
-           'id' => $orderId,
-           'status' => OrderStatusEnum::IN_PROCESS,
-        ])->firstOrFail();
-
-        $order->status = OrderStatusEnum::SHIPPED;
-        $order->save();
+        if ($order->status === OrderStatusEnum::IN_PROCESS) {
+            $order->update([
+                'status' => OrderStatusEnum::SHIPPED
+            ]);
+        }
     }
 
     /**
