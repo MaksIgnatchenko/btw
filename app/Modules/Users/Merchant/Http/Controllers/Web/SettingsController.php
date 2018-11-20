@@ -7,16 +7,21 @@ namespace App\Modules\Users\Merchant\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
 use App\Modules\Categories\Models\Category;
+use App\Modules\Users\Merchant\Http\Controllers\Web\Traits\MerchantImageUploader;
 use App\Modules\Users\Merchant\Models\Geography\GeographyCountry;
 use App\Modules\Users\Merchant\Models\Merchant;
 use App\Modules\Users\Merchant\Repositories\MerchantRepository;
 use App\Modules\Users\Merchant\Requests\UpdateAccountSettingsRequest;
+use App\Modules\Users\Merchant\Requests\UpdateAvatarRequest;
+use App\Modules\Users\Merchant\Requests\UpdateBackgroundImage;
 use App\Modules\Users\Merchant\Requests\UpdateStoreSettingsRequest;
 use App\Modules\Users\Merchant\Services\Geography\GeographyServiceInterface;
 use Illuminate\Support\Facades\Auth;
 
 class SettingsController extends Controller
 {
+    use MerchantImageUploader;
+
     /** @var GeographyServiceInterface */
     protected $geographyService;
 
@@ -51,7 +56,7 @@ class SettingsController extends Controller
         $merchantStateId = $this->geographyService
             ->getStateByName($merchant->address->state, $merchantCountry->id)->id;
 
-        if(!empty($merchant->address->city)) {
+        if (!empty($merchant->address->city)) {
             $merchantCityId = $this->geographyService
                 ->getCityByName($merchant->address->city, $merchantStateId)->id;
 
@@ -103,8 +108,65 @@ class SettingsController extends Controller
         /** @var Merchant $merchant */
         $merchant = Auth::user();
 
-        $merchant->store->updateStoreInfo($request->all());
+        $merchant->store->updateStoreInfo(array_merge($request->all(), [
+            'country' => $request->store_country,
+            'city' => $request->store_city,
+        ]));
 
         return back();
+    }
+
+    /**
+     * @param UpdateAvatarRequest $request
+     *
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Prettus\Validator\Exceptions\ValidatorException
+     */
+    public function updateAvatar(UpdateAvatarRequest $request)
+    {
+        return response()->json([
+            'avatar_url' => $this->uploadImage(
+                $request->file('avatar'),
+                config('wish.storage.merchants.avatar_path'),
+                'avatar'),
+        ]);
+    }
+
+    /**
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function deleteAvatar()
+    {
+        $this->removeImage('avatar');
+
+        return response()->json([
+            'default_avatar_url' => config('wish.storage.merchants.default_avatar_url'),
+        ]);
+    }
+
+    /**
+     * @param UpdateBackgroundImage $request
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function updateBackgroundImg(UpdateBackgroundImage $request)
+    {
+        return response()->json([
+            'background_img_url' => $this->uploadImage(
+                $request->file('background_image'),
+                config('wish.storage.merchants.background_path'),
+                'background_img'),
+        ]);
+    }
+
+    /**
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function deleteBackgroundImg()
+    {
+
+        return response()->json([
+            'success' => $this->removeImage('background_image'),
+        ]);
     }
 }
