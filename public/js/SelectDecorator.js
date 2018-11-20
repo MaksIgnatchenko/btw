@@ -18,9 +18,7 @@ var SelectDecorator = function (element) {
                 if (_self._bufferedValues[_self._oldValue] === undefined) {
                     _self._bufferedValues[_self._oldValue] = {};
                 }
-                var name = $(this).attr('name');
-                var regex = /\[([a-zA-Z0-9\s]+)\]$/i; // find name of category attribute
-                _self._bufferedValues[_self._oldValue][$(this).attr('name').match(regex)[1]] = $(this).val();
+                _self._bufferedValues[_self._oldValue][$(this).data('name')] = $(this).val();
             });
             _self._oldValue = $(this).val();
             (new Promise(getCategoryAttributes)).then(function() {
@@ -78,6 +76,7 @@ var SelectDecorator = function (element) {
                         }
                         input.setAttribute('required', 'required');
                         input.setAttribute('name', 'attributes[' + attribute.type + ']' + '[' + attribute.name + ']');
+                        input.setAttribute('data-name', attribute.name);
                         input.setAttribute('maxlength', 100);
                         input.setAttribute('placeholder', 'Enter the value');
 

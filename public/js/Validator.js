@@ -12,7 +12,6 @@ var Validator = function (form, fields) {
 
     this.validate = function () {
         $('.alert.alert-danger').remove();
-        var categorySelect = $('select[name^=category_id]');
         for (var i = 0; i < this.fields.length; i++) {
             var field = this.fields[i];
             if (!validateRules(field)) {
@@ -23,7 +22,7 @@ var Validator = function (form, fields) {
     };
 
     var validateRules = function (field) {
-        var fieldElement = $(`${field.type}[name^=${field.name}]`);
+        var fieldElement = $(`${field.type}[name='${field.name}']`);
         for (var rule in field.rules) {
             if (!field.rules[rule]) {
                 continue;
