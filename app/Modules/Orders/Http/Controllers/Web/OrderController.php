@@ -7,6 +7,8 @@ namespace App\Modules\Orders\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
 use App\Modules\Orders\Enums\OrderStatusEnum;
+use App\Modules\Orders\Helpers\OrderViewHelper;
+use App\Modules\Orders\Models\Order;
 use App\Modules\Orders\Repositories\OrderRepository;
 use Illuminate\Support\Facades\Auth;
 
@@ -16,11 +18,6 @@ class OrderController extends Controller
      * @var OrderRepository
      */
     protected $orderRepository;
-
-    /**
-     * @var OrderStatusEnum
-     */
-    protected $orderStatusEnum;
 
     /**
      * @return mixed
@@ -35,10 +32,10 @@ class OrderController extends Controller
      * @param OrderRepository $orderRepository
      * @param OrderStatusEnum $orderStatusEnum
      */
-    public function __construct(OrderRepository $orderRepository, OrderStatusEnum $orderStatusEnum)
+    public function __construct(OrderRepository $orderRepository)
     {
         $this->orderRepository = $orderRepository;
-        $this->orderStatusEnum = $orderStatusEnum::toArray();
+        $this->middleware('owns:order', ['only' => ['show', 'update']]);
     }
 
     /**
@@ -46,33 +43,34 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $merchantId = Auth::user()->id;
+        $merchantId = Auth::id();
         $orders = $this->orderRepository->getAllMerchantOrdersWithPagination($merchantId);
+        $showSearch = OrderViewHelper::showSearch($orders);
 
-        return view('orders.web.index', ['orders' => $orders, 'orderStatusEnum' => $this->orderStatusEnum]);
+        return view('orders.web.index', [
+            'orders' => $orders,
+            'orderStatuses' => OrderStatusEnum::toArray(),
+            'showSearch' => $showSearch,
+        ]);
     }
 
     /**
-     * @param $id
+     * @param Order $order
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function show(int $id)
+    public function show(Order $order)
     {
-        $merchantId = Auth::user()->id;
-        $order = $this->orderRepository->getMerchantOrderById($id, $merchantId);
-
-        return view('orders.web.show', ['order' => $order, 'orderStatusEnum' => $this->orderStatusEnum]);
+        return view('orders.web.show', ['order' => $order, 'orderStatuses' => OrderStatusEnum::toArray()]);
     }
 
     /**
-     * @param int $id
+     * @param Order $order
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function update(int $id)
+    public function update(Order $order)
     {
-        $merchantId = Auth::user()->id;
-        $this->orderRepository->changeMerchantOrderStatusToShippedById($id, $merchantId);
+        $this->orderRepository->changeOrderStatusToShipped($order);
 
-        return redirect(route('web.orders.show', $id));
+        return redirect(route('web.orders.show', $order->id));
     }
 }

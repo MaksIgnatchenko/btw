@@ -7,6 +7,7 @@ namespace App\Modules\Orders\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
 use App\Modules\Orders\Enums\OrderStatusEnum;
+use App\Modules\Orders\Helpers\OrderViewHelper;
 use App\Modules\Orders\Models\Order;
 use App\Modules\Orders\Requests\SearchOrderRequest;
 use Illuminate\Support\Facades\Auth;
@@ -19,19 +20,13 @@ class SearchController extends Controller
     protected $orderModel;
 
     /**
-     * @var OrderStatusEnum
-     */
-    protected $orderStatusEnum;
-
-    /**
      * SearchController constructor.
      * @param Order $orderModel
      * @param OrderStatusEnum $orderStatusEnum
      */
-    public function __construct(Order $orderModel, OrderStatusEnum $orderStatusEnum)
+    public function __construct(Order $orderModel)
     {
         $this->orderModel = $orderModel;
-        $this->orderStatusEnum = $orderStatusEnum->toArray();
     }
 
     /**
@@ -41,10 +36,16 @@ class SearchController extends Controller
     public function index(SearchOrderRequest $request)
     {
         $searchText = $request->get('search');
-        $merchantId = Auth::user()->id;
+        $merchantId = Auth::id();
 
         $orders = $this->orderModel->search($merchantId, $searchText);
+        $showSearch = OrderViewHelper::showSearch($orders, $searchText);
 
-        return view('orders.web.index', ['orders' => $orders, 'orderStatusEnum' => $this->orderStatusEnum]);
+        return view('orders.web.index', [
+            'orders' => $orders,
+            'orderStatuses' => OrderStatusEnum::toArray(),
+            'searchText' => $searchText,
+            'showSearch' => $showSearch,
+        ]);
     }
 }
