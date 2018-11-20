@@ -107,6 +107,16 @@ class Order extends Model
     }
 
     /**
+     * @return int
+     */
+    public function getAmountAttribute(): int
+    {
+        $product = json_decode($this->attributes['product']);
+
+        return $this->attributes['quantity'] * $product->price;
+    }
+
+    /**
      * @param int $merchantId
      * @param string $searchText
      * @return LengthAwarePaginator
