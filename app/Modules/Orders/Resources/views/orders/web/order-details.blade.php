@@ -20,12 +20,30 @@
             </div>
             <!-- body line -->
             <div class="table-custom__line table-custom__line--body">
-                <div class="table-custom__prod"><p class="table-custom__mobile-title">{{ __('orders.order_details.product') }}</p>{{ $order->product->name }}</div>
-                <div class="table-custom__purchase"><p class="table-custom__mobile-title">{{ __('orders.order_details.purchase_date') }}</p>{{ OrderViewHelper::formatDate($order->created_at) }}</div>
-                <div class="table-custom__price"><p class="table-custom__mobile-title">{{ __('orders.order_details.price') }}</p>${{ $order->product->price }}</div>
-                <div class="table-custom__quantity"><p class="table-custom__mobile-title">{{ __('orders.order_details.quantity') }}</p>{{ $order->quantity }}</div>
-                <div class="table-custom__amount"><p class="table-custom__mobile-title">{{ __('orders.order_details.amount') }}</p>${{ OrderViewHelper::getAmount($order) }}</div>
-                <div class="table-custom__status"><p class="table-custom__mobile-title">{{ __('orders.order_details.status') }}</p>{{ $orderStatusEnum[$order->status] }}</div>
+                <div class="table-custom__prod">
+                    <p class="table-custom__mobile-title">{{ __('orders.order_details.product') }}</p>
+                    {{ $order->product->name }}
+                </div>
+                <div class="table-custom__purchase">
+                    <p class="table-custom__mobile-title">{{ __('orders.order_details.purchase_date') }}</p>
+                    {{ OrderViewHelper::formatDate($order->created_at) }}
+                </div>
+                <div class="table-custom__price">
+                    <p class="table-custom__mobile-title">{{ __('orders.order_details.price') }}</p>
+                    ${{ $order->product->price }}
+                </div>
+                <div class="table-custom__quantity">
+                    <p class="table-custom__mobile-title">{{ __('orders.order_details.quantity') }}</p>
+                    {{ $order->quantity }}
+                </div>
+                <div class="table-custom__amount">
+                    <p class="table-custom__mobile-title">{{ __('orders.order_details.amount') }}</p>
+                    ${{ $order->amount }}
+                </div>
+                <div class="table-custom__status">
+                    <p class="table-custom__mobile-title">{{ __('orders.order_details.status') }}</p>
+                    {{ $orderStatuses[$order->status] }}
+                </div>
             </div>
         </div><!-- /. end custom table -->
 
@@ -34,7 +52,7 @@
     @if(!OrderViewHelper::isShipped($order))
 
         <div class="t-a-right">
-            <a href="{{ route('web.orders.update', $order->id) }}" class="btn" onclick="event.preventDefault(); document.getElementById('update-status-form').submit();">{{ $orderStatusEnum[OrderStatusEnum::SHIPPED] }}</a>
+            <a href="{{ route('web.orders.update', $order->id) }}" class="btn update-order">{{ $orderStatuses[OrderStatusEnum::SHIPPED] }}</a>
         </div>
         <form id="update-status-form" action="{{ route('web.orders.update', $order->id) }}" method="post"
               style="display: none;">

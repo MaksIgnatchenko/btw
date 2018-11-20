@@ -9,12 +9,10 @@
             <th class="col-status">{{ __('orders.table_head.status') }}</th>
             <th class="col-view"></th>
         </tr>
-        @if(null !== $orders)
-            @foreach($orders as $order)
+        @foreach($orders as $order)
 
-                @include('orders.web.order', ['order' => $order])
+            @include('orders.web.order', ['order' => $order])
 
-            @endforeach
-        @endif
+        @endforeach
     </table>
 </div><!-- /. end orders table -->

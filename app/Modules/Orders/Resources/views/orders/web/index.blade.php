@@ -20,7 +20,7 @@
         <div class="main-shop-wrapper">
             <div class="container">
 
-                @if(!$orders->isEmpty() || OrderViewHelper::isSearchResults())
+                @if($showSearch)
                     <div class="shop-top-settings">
 
                         @include('orders.web.search')
@@ -32,7 +32,7 @@
 
                 @include('orders.web.orders-table')
 
-                {{ $orders->appends(['search' => request()->get('search')])->links() }}
+                {{ $orders->appends(['search' => $searchText ?? null])->links() }}
 
             </div>
         </div><!-- /. main shop wrapper -->
