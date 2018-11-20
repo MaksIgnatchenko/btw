@@ -101,7 +101,7 @@
                             <p class="form-item__title">{{__('products.create_quantity')}}</p>
                         </div>
                         <div class="form-item__wrapper form-item__wrapper--field">
-                            {!! Form::text('quantity', null, [
+                            {!! Form::number('quantity', null, [
                             'placeholder' => __('products.create_attribute_section_placeholder'),
                             'maxlength' => '7',
                             'class' => 'form-item__inp',
@@ -121,10 +121,15 @@
                                     <p class="form-item__title">{{$key}}</p>
                                 </div>
                                 <div class="form-item__wrapper form-item__wrapper--field">
-                                    {!! Form::text("attributes[{$data['type']}][{$key}]", $data['value'], [
-                                    'placeholder' => __('products.create_attribute_section_placeholder'),
-                                    'class' => 'form-item__inp', 'required']
-                                    ) !!}
+                                    @if($data['type'] === 'text')
+                                        @php $fieldType = 'text'; @endphp
+                                        @else
+                                        @php $fieldType = 'number'; @endphp
+                                    @endif
+                                        {!! Form::$fieldType("attributes[{$data['type']}][{$key}]", $data['value'], [
+                                     'placeholder' => __('products.create_attribute_section_placeholder'),
+                                     'class' => 'form-item__inp', 'required']
+                                     ) !!}
                                     @if($errors->has("attributes.{$data['type']}.$key"))
                                         <div class="alert alert-danger" role="alert">
                                             <strong>{{ $errors->first("attributes.{$data['type']}.$key") }}</strong>
@@ -159,7 +164,8 @@
 
                                 @foreach ($product->images as $image)
                                     @php $imgCount++; @endphp
-                                    <li class="form-item__block photo-additional" style="background-image: url({{$image->image}});" data-url="{{$image->image}}">
+                                    <li class="form-item__block photo-additional"
+                                        style="background-image: url({{$image->image}});" data-url="{{$image->image}}">
                                         <label class="form-item__label form-item__label--remove">
                                             <span class="form-item__label-decor"></span>
                                             <input class="form-item__inp-file" type="file" name="product_gallery[]"

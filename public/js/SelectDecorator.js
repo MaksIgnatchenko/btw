@@ -19,7 +19,7 @@ var SelectDecorator = function (element) {
                     _self._bufferedValues[_self._oldValue] = {};
                 }
                 var name = $(this).attr('name');
-                var regex = /\[([a-z]+)\]$/i; // find name of category attribute
+                var regex = /\[([a-zA-Z0-9\s]+)\]$/i; // find name of category attribute
                 _self._bufferedValues[_self._oldValue][$(this).attr('name').match(regex)[1]] = $(this).val();
             });
             _self._oldValue = $(this).val();
@@ -33,7 +33,7 @@ var SelectDecorator = function (element) {
         var previous_values;
         if (previous_values = _self._bufferedValues[id]) {
             for (var value in previous_values) {
-                $('.attributes-container').find(`input[name*=${value}]`).val(previous_values[value]);
+                $('.attributes-container').find(`input[name*='${value}']`).val(previous_values[value]);
             }
         }
     }
