@@ -164,7 +164,6 @@ class SettingsController extends Controller
      */
     public function deleteBackgroundImg()
     {
-
         return response()->json([
             'success' => $this->removeImage('background_image'),
         ]);
