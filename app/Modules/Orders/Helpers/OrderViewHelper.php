@@ -5,13 +5,16 @@
 
 namespace App\Modules\Orders\Helpers;
 
-use Illuminate\Http\Request;
 use App\Modules\Orders\Enums\OrderStatusEnum;
 use App\Modules\Orders\Models\Order;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class OrderViewHelper
 {
     /**
+     * example: id:58 -> id:000000058
+     *          id:2  -> id:000000002
+     *
      * @param int $id
      * @return string
      */
@@ -30,22 +33,13 @@ class OrderViewHelper
     }
 
     /**
-     * @param Order $order
-     * @return int
-     */
-    public static function getAmount(Order $order): int
-    {
-        return $order->quantity * $order->product->price;
-    }
-
-    /**
+     * @param LengthAwarePaginator $orders
+     * @param null|string $searchText
      * @return bool
      */
-    public static function isSearchResults(): bool
+    public static function showSearch(LengthAwarePaginator $orders, ?string $searchText = null): bool
     {
-        $request = app()[Request::class];
-
-        return null !== $request->get('search');
+        return (!$orders->isEmpty() || null !== $searchText);
     }
 
     /**
