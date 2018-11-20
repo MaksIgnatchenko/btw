@@ -27,7 +27,7 @@ class SearchOrderRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'search' => 'required|string',
+            'search' => 'required|string|max:' . config('wish.orders.search_max_length'),
         ];
     }
 }
