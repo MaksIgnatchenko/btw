@@ -172,11 +172,7 @@ class ProductRepository extends BaseRepository
             'category',
         ])->find($id);
 
-        if (!$product) {
-            return null;
-        }
-
-        return $product->makeVisible('is_in_wish_list');
+        return $product ? $product->makeVisible('is_in_wish_list'): null;
     }
 
     /**
