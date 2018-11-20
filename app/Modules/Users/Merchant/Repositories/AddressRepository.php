@@ -25,7 +25,7 @@ class AddressRepository extends BaseRepository
      */
     public function save(Address $address): bool
     {
-        $address->save();
+        return $address->save();
     }
 
     /**
