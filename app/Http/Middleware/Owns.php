@@ -4,6 +4,8 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Support\Facades\Auth;
+use App\Modules\Users\Merchant\Models\Merchant;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class Owns
 {
@@ -22,10 +24,25 @@ class Owns
 
         if (!$user
             || !method_exists($user, 'owns')
-            || !$user->owns($request->$relatedObjectName, 'customer_id')) {
+            || !$user->owns($request->$relatedObjectName, $this->getOwnerIdColumnName($user))) {
             abort(404);
         }
 
         return $next($request);
+    }
+
+    /**
+     * @param Authenticatable $user
+     * @return string
+     */
+    protected function getOwnerIdColumnName(Authenticatable $user): string
+    {
+        if ($user instanceof Merchant) {
+            $IdColumnName = 'merchant_id';
+        } else {
+            $IdColumnName = 'customer_id';
+        }
+
+        return $IdColumnName;
     }
 }
