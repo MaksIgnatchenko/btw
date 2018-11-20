@@ -1,7 +1,7 @@
 @extends('layouts.merchants.app')
 
 @section('script')
-    <script src="{{asset('js/marchants/registration/store-data.js')}}"></script>
+    <script src="{{asset('js/merchants/registration/store-data.js')}}"></script>
 @endsection
 
 @section('title', __('merchants.page_titles.store_info'))
@@ -9,7 +9,7 @@
 @section('footer-class', 'footer')
 
 @section('header')
-    @include('merchants.web.header')
+    @include('layouts.merchants.header')
 @stop
 
 @section('content')

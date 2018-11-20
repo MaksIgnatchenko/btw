@@ -7,4 +7,5 @@ Route::get('/', function () {
     return redirect()->route('products.index');
 });
 
+Route::get('products/search', 'SearchController@index')->middleware(['auth:merchant'])->name('products.search');
 Route::resource('products', 'ProductController')->middleware(['auth:merchant']);

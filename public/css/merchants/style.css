@@ -379,8 +379,8 @@ template {
     font-style: normal;
 }
 
-/** 
- * Base 
+/**
+ * Base
  */
 
 *, *::before, *::after {
@@ -2143,7 +2143,7 @@ input.form-item__inp::placeholder {color: #999;}
 .form-item__area {
     padding: 8px 10px;
     border-color: #e5e5e5;
- }
+}
 
 textarea.form-item__area::-moz-placeholder {color: #999;}
 textarea.form-item__area::-webkit-input-placeholder {color: #999;}
@@ -3377,7 +3377,7 @@ textarea.form-item__area::placeholder {color: #999;}
     .form-item__wrapper--field {
         padding-right: 0;
     }
-    
+
     .form-item__descr {
         margin: 2px 0 10px 0;
         max-width: 100%;

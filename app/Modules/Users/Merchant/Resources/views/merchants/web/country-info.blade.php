@@ -1,8 +1,8 @@
 @extends('layouts.merchants.app')
 
 @section('script')
-    <script src="{{asset('js/marchants/registration/contact-data.js')}}"></script>
-    <script src="{{asset('js/vendor/imask.js')}}"></script>
+    <script src="{{asset('js/merchants/registration/contact-data.js')}}"></script>
+    <script src="{{asset('vendor/imask.js')}}"></script>
 @endsection
 
 @section('title', __('merchants.page_titles.contact_info'))
@@ -10,7 +10,7 @@
 @section('footer-class', 'footer')
 
 @section('header')
-    @include('merchants.web.header')
+    @include('layouts.merchants.header')
 @stop
 
 @section('content')

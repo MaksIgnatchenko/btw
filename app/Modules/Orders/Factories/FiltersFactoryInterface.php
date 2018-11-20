@@ -7,5 +7,5 @@ namespace App\Modules\Orders\Factories;
 
 interface FiltersFactoryInterface
 {
-    public function get(string $filter): OrdersInterface;
+    public static function get(string $filter): OrdersInterface;
 }

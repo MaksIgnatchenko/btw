@@ -62,7 +62,7 @@ class CompletedTransactionOrdersSubscriber
 
                 'product'  => $product->toJson(),
                 'quantity' => $cart->quantity,
-                'status'   => OrderStatusEnum::PENDING,
+                'status'   => OrderStatusEnum::IN_PROCESS,
 
                 'created_at' => new Carbon(),
                 'updated_at' => new Carbon(),

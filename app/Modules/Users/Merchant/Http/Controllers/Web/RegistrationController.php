@@ -55,8 +55,14 @@ class RegistrationController extends Controller
     public function signUp(Request $request)
     {
         if ($request->session()->has('first_name')) {
-            $countries = $this->geographyService->getCountries()->pluck('name', 'id');
-            $categories = $this->categoryRepository->all()->pluck('name', 'id');
+            $countries = $this->geographyService
+                ->getCountries()
+                ->pluck('name', 'id');
+
+            $categories = $this->categoryRepository
+                ->findRootCategories()
+                ->pluck('name', 'id');
+
             return view('merchants.web.tell-form', [
                 'countries' => $countries,
                 'categories' => $categories,

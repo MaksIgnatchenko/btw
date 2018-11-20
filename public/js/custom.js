@@ -221,8 +221,8 @@ window.onload = function () {
 
         // Check image size
         function validateFileSize(size) {
-            // 20971520 -> 20 Mb
-            if (size > 20971520) {
+            var imgSize = _W.maxFileSize;
+            if (size > imgSize) {
                 return true;
             }
             return false;
@@ -281,13 +281,39 @@ window.onload = function () {
             }
         }
 
-        /* Clear disable attribute on input type file before send form */
-        function clearDisabledAttr(event, elements) {
+        function onProductFormSubmit(event, elements) {
             event.preventDefault();
+            /* Clear disable attribute on input type file before send form */
             for (var i = 0; i < elements.length; i++) {
                 elements[i].removeAttribute('disabled');
             }
-            event.target.submit();
+            /* Validate form */
+            var validationFields = [
+                {
+                    name: 'category_id',
+                    type: 'select',
+                    friendly_name: 'category',
+                    rules:
+                        {
+                            notNull: true,
+                        }
+                }
+            ];
+            if(event.target.getAttribute('name') === 'add-new-product') {
+                validationFields.push({
+                    name: 'main_image',
+                    type: 'input',
+                    friendly_name: 'main image',
+                    rules:
+                        {
+                            notNull: true,
+                        }
+                });
+            }
+            var validator = new Validator(event.target, validationFields);
+            if(validator.validate()) {
+                event.target.submit();
+            }
         }
 
         /* Add listener to inputs */
@@ -295,9 +321,12 @@ window.onload = function () {
             for (var i = 0; i < inputs.length; i++) {
                 inputs[i].addEventListener('change', addFile.bind(null, i));
             }
-            document.querySelector('form[name="add-new-product"]').addEventListener('submit', function (event) {
-                clearDisabledAttr(event, inputs);
-            });
+            var form;
+            if (form = document.querySelector('form[name="add-new-product"], form[name="edit-product"]')) {
+                form.addEventListener('submit', function (event) {
+                    onProductFormSubmit(event, inputs);
+                });
+            }
         }
     })();
 
@@ -454,6 +483,7 @@ window.onload = function () {
                 img = document.querySelector('.user-component__img');
 
             fileEl.value = '';
+
             setTimeout(function () {
                 fileEl.removeAttribute('disabled');
                 el.removeEventListener('click', clearInput);

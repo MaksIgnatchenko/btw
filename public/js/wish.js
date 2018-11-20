@@ -56,56 +56,20 @@
     this.geography = new Geography();
     this.selectHelper = SelectHelper;
 
+    this.maxFileSize = $('#configs').find('input[name=image_max_size]').data('value');
+
     window._W = this;
 })();
 
-function getCategoryAttributes(id) {
-    $.ajax({
-        type:'GET',
-        url:'/categories/' + id + '/attributes',
-        success: function (data) {
+var searchSubmitCallback = function(event) {
+    event.preventDefault();
 
-            var attributeContaier = $('.attributes-container');
-            attributeContaier.empty();
+    var searchText = $(this).find('input[name="search"]').val();
 
-            var attribute;
-            var wrapper;
-            var textWrapper;
-            var label;
-            var inputWrapper;
-            var input;
+    if (searchText.length !== 0) {
+        $(this).off('submit', searchSubmitCallback);
+        $(this).submit();
+    }
+};
 
-            if ($.isArray(data)) {
-                $.each(data, function (index, value) {
-
-                    attribute = JSON.parse(value);
-
-                    wrapper = document.createElement('div');
-                    textWrapper = document.createElement('div');
-                    label = document.createElement('p');
-                    inputWrapper = document.createElement('div');
-                    input = document.createElement('input');
-
-                    $(wrapper).addClass('form-line__wrapper form-line__wrapper--min-margin');
-                    $(textWrapper).addClass('form-item__wrapper form-item__wrapper--text');
-                    $(label).addClass('form-item__title');
-                    $(inputWrapper).addClass('form-item__wrapper form-item__wrapper--field');
-
-                    $(input).addClass('form-item__inp');
-                    input.setAttribute('type', 'text');
-                    input.setAttribute('name', 'attributes[' + attribute.type + ']' + '[' + attribute.name + ']' );
-                    input.setAttribute('maxlength', 100);
-                    input.setAttribute('placeholder', 'Enter the value');
-
-                    label.innerHTML = attribute.name;
-                    wrapper.appendChild(textWrapper);
-                    wrapper.appendChild(inputWrapper);
-                    textWrapper.appendChild(label);
-                    inputWrapper.appendChild(input);
-
-                    $('.attributes-container').append(wrapper);
-                })
-            }
-        }
-    });
-}
+$('.shop-top-settings__form').on('submit', searchSubmitCallback);

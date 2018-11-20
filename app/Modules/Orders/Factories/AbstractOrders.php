@@ -7,7 +7,7 @@ namespace App\Modules\Orders\Factories\FilterOrder;
 
 use App\Modules\Orders\Repositories\OrderRepository;
 
-class AbstractOrders
+abstract class AbstractOrders
 {
     /** @var OrderRepository */
     protected $orderRepository;

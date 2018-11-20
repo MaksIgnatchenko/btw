@@ -4,14 +4,7 @@
  */
 
 $this->group([
-    'middleware' => ['auth:merchant'],
+    'middleware' => ['auth:customer'],
 ], function () {
-    Route::apiResource('order', 'OrderController', ['except' => ['show']]);
-});
-
-Route::group([
-    'middleware' => ['auth:merchant'],
-    'prefix'     => 'order',
-], function () {
-    Route::get('/', 'OrderController@index')->name('order.index');
+    Route::apiResource('orders', 'OrderController', ['only' => ['index', 'show']]);
 });

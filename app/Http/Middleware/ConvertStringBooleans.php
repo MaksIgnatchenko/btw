@@ -28,3 +28,5 @@ class ConvertStringBooleans extends TransformsRequest
         return $value;
     }
 }
+
+

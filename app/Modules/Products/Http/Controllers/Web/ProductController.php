@@ -7,9 +7,12 @@ namespace App\Modules\Products\Http\Controllers\Web;
 
 use App\Modules\Categories\Repositories\CategoryRepository;
 use App\Modules\Categories\Models\Category;
+use App\Modules\Products\Helpers\ProductsViewHelper;
 use App\Modules\Products\Models\Product;
+use App\Modules\Products\Repositories\ProductRepository;
 use App\Modules\Products\Requests\Web\CreateProductRequest;
 use App\Http\Controllers\Controller;
+use App\Modules\Products\Requests\Web\EditProductRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 use Laracasts\Flash\Flash;
@@ -19,6 +22,7 @@ class ProductController extends Controller
     protected $productModel;
     protected $categoryModel;
     protected $categoryRepository;
+    protected $productRepository;
 
     /**
      * ProductController constructor.
@@ -26,12 +30,20 @@ class ProductController extends Controller
      * @param Product            $product
      * @param CategoryRepository $categoriesRepository
      * @param Category           $categoryModel
+     * @param ProductRepository  $productRepository
      */
-    public function __construct(Product $product, CategoryRepository $categoriesRepository, Category $categoryModel)
+    public function __construct(
+        Product $product,
+        CategoryRepository $categoriesRepository,
+        Category $categoryModel,
+        ProductRepository $productRepository)
     {
         $this->productModel = $product;
         $this->categoryRepository = $categoriesRepository;
         $this->categoryModel = $categoryModel;
+        $this->productRepository = $productRepository;
+
+        $this->middleware('owns:product', ['only' => ['edit', 'show', 'update']]);
     }
 
     /**
@@ -41,7 +53,10 @@ class ProductController extends Controller
      */
     public function index(): View
     {
-        return view('products.web.index');
+        $products = Auth::user()->products()->paginate(config('wish.store.pagination'));
+        ProductsViewHelper::storeTemplateToSession();
+
+        return view('products.web.index', ['products' => $products]);
     }
 
     /**
@@ -54,6 +69,21 @@ class ProductController extends Controller
         $categories = $this->getAllowedMerchantCategoriesAsArray();
 
         return view('products.web.create', ['categories' => $categories]);
+    }
+
+    /**
+     * @param Product $product
+     *
+     * @return View
+     */
+    public function edit(Product $product): View
+    {
+        $categories = $this->getAllowedMerchantCategoriesAsArray();
+
+        return view('products.web.edit', [
+            'categories' => $categories,
+            'product' => $product,
+        ]);
     }
 
     /**
@@ -105,5 +135,30 @@ class ProductController extends Controller
         Flash::success('Product has been created successfully');
 
         return redirect(route('products.index'));
+    }
+
+    /**
+     * @param Product $product
+     *
+     * @return \Illuminate\Contracts\View\Factory|View
+     */
+    public function show(Product $product)
+    {
+        return view('products.web.single', [
+            'product' => $product,
+        ]);
+    }
+
+    /**
+     * @param EditProductRequest $request
+     * @param                    $id
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function update(EditProductRequest $request, Product $product)
+    {
+        $product->updateProduct($request->all());
+
+        return redirect()->route('products.show', ['product' => $product]);
     }
 }

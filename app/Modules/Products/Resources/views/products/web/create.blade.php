@@ -7,24 +7,27 @@
 @section('footer-class', 'footer-shop')
 
 @section('header')
-    @include('products.web.header')
+    @include('layouts.merchants.header', ['header_class' => 'header-black'])
 @endsection
 
 @section('script')
-    <script src="{{asset('js/marchants/products/category-tree.js')}}"></script>
+    <script src="{{asset('js/merchants/products/category-tree.js')}}"></script>
+    <script src="{{asset('js/Validator.js')}}"></script>
+    <script src="{{asset('js/SelectDecorator.js')}}"></script>
+    <script src="{{asset('js/merchants/products/selectDecorator.js')}}"></script>
 @endsection
 
 @section('content')
     <!-- Main -->
     <div class="main-shop">
 
-        @include('products.web.navigation')
+        @include('layouts.merchants.navigation', ['active' => 'products'])
 
         <!-- Main shop wrapper -->
         <div class="main-shop-wrapper">
             <div class="container">
                 <!-- Add new -->
-                {!! Form::model(null, ['route' => ['products.store'], 'method' => 'POST', 'files' => true, 'name' => 'add-new-product']) !!}
+                {!! Form::model(null, ['route' => ['products.store'], 'method' => 'POST', 'files' => true, 'name' => 'add-new-product', 'id'=>'add-new-product']) !!}
                     <p class="form-title">{{__('products.create_product_section_title')}}</p>
                     <hr class="form-hr">
 
@@ -35,7 +38,7 @@
                                 <p class="form-item__title">{{__('products.create_name')}}</p>
                             </div>
                             <div class="form-item__wrapper form-item__wrapper--field">
-                                {!! Form::text('name', null, ['class' => 'form-item__inp', 'placeholder' => __('products.create_name_placeholder')]) !!}
+                                {!! Form::text('name', null, ['class' => 'form-item__inp', 'placeholder' => __('products.create_name_placeholder'), 'required']) !!}
                                 @if ($errors->has('name'))
                                     <div class="alert alert-danger" role="alert"><strong>{{ $errors->first('name') }}</strong></div>
                                 @endif
@@ -48,8 +51,7 @@
                             </div>
                             <div class="form-item__wrapper form-item__wrapper--field">
                                 <div class="custom-select">
-                                    {{ Form::select('category_id', ['Category'] + $categories, 'Category', ['name' => 'category_id', 'id' => 'categories', 'onChange' => 'getCategoryAttributes($(this).children(":selected").attr("value"))']) }}
-                                    {{ Form::select('category_id', $categories, null, ['name' => 'category_id', 'id' => 'categories', 'onChange' => 'getCategoryAttributes($(this).children(":selected").attr("value"))']) }}
+                                    {{ Form::select('category_id', $categories, null, ['name' => 'category_id', 'id' => 'categories', 'placeholder' => 'Category']) }}
                                     @if ($errors->has('category_id'))
                                         <div class="alert alert-danger" role="alert"><strong>{{ $errors->first('category_id') }}</strong></div>
                                     @endif
@@ -67,7 +69,7 @@
                                 <p class="form-item__title">{{__('products.create_description')}}</p>
                             </div>
                             <div class="form-item__wrapper form-item__wrapper--field">
-                                {!! Form::textarea('description', null, ['class' => 'form-item__area', 'rows' => 10, 'maxlength' => 1000, 'placeholder' => __('products.create_description_placeholder')]) !!}
+                                {!! Form::textarea('description', null, ['class' => 'form-item__area', 'rows' => 10, 'maxlength' => 1000, 'placeholder' => __('products.create_description_placeholder'), 'required']) !!}
                                 @if ($errors->has('description'))
                                     <div class="alert alert-danger" role="alert"><strong>{{ $errors->first('description') }}</strong></div>
                                 @endif
@@ -84,7 +86,7 @@
                                 <p class="form-item__title">{{__('products.create_quantity')}}</p>
                             </div>
                             <div class="form-item__wrapper form-item__wrapper--field">
-                                {!! Form::text('quantity', null, ['class' => 'form-item__inp', 'maxlength' => 4, 'placeholder' => __('products.create_attribute_section_placeholder')]) !!}
+                                {!! Form::number('quantity', null, ['class' => 'form-item__inp', 'maxlength' => 4, 'placeholder' => __('products.create_attribute_section_placeholder'), 'required']) !!}
                                 @if ($errors->has('quantity'))
                                     <div class="alert alert-danger" role="alert"><strong>{{ $errors->first('quantity') }}</strong></div>
                                 @endif
@@ -161,7 +163,7 @@
                             </div>
                             <div class="form-item__wrapper form-item__wrapper--field">
                                 <span class="form-item__currency">$</span>
-                                {!! Form::number('price', null, ['class' => 'form-item__inp form-item__inp--price', 'min' => 0.01, 'max' => 9999999, 'step' => '.01', 'maxlength' => 9]) !!}
+                                {!! Form::number('price', null, ['class' => 'form-item__inp form-item__inp--price', 'min' => 0.01, 'max' => 9999999, 'step' => '.01', 'maxlength' => 9, 'required']) !!}
                                 @if ($errors->has('price'))
                                     <div class="alert alert-danger" role="alert"><strong>{{ $errors->first('price') }}</strong></div>
                                 @endif

@@ -1,14 +1,14 @@
 <?php
 /**
- * Created by Artem Petrov, Appus Studio LP on 19.03.2018
+ * Created by Andrei Podgornyi, Appus Studio LP on 16.11.2018
  */
 
 namespace App\Modules\Orders\Factories\FilterOrder;
 
-use Illuminate\Support\Collection;
 use App\Modules\Orders\Factories\OrdersInterface;
+use Illuminate\Support\Collection;
 
-class ReturnedOrders extends AbstractOrders implements OrdersInterface
+class ShippedOrders extends AbstractOrders implements OrdersInterface
 {
     /**
      * @param int $customerId
@@ -18,6 +18,6 @@ class ReturnedOrders extends AbstractOrders implements OrdersInterface
      */
     public function getOrders(int $customerId, int $offset): Collection
     {
-        return $this->orderRepository->getReturned($customerId, $offset);
+        return $this->orderRepository->getShipped($customerId, $offset);
     }
 }

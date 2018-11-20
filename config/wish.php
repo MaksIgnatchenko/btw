@@ -24,4 +24,7 @@ return [
             'default_avatar_url' => env('MERCHANT_DEFAULT_AVATAR_URL', '/img/user-icon-color.svg'),
         ],
     ],
+    'store' => [
+        'pagination' => env('PRODUCTS_PAGINATION', 12),
+    ]
 ];

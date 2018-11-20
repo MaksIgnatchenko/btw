@@ -129,8 +129,6 @@ $(document).ready(function () {
         switch (status) {
             case 'picked_up':
                 return 'Picked up';
-            case 'pending':
-                return 'Pending';
             case '__returned':
                 return 'Returned';
             case '_refunded':
