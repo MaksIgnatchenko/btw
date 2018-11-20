@@ -38,7 +38,7 @@ trait MerchantImageUploader
      *
      * @return bool
      */
-    protected function  removeImage(string $fieldName): bool
+    protected function removeImage(string $fieldName): bool
     {
         /** @var Merchant $merchant */
         $merchant = Auth::user();
