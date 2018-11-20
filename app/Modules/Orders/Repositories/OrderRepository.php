@@ -8,6 +8,8 @@ namespace App\Modules\Orders\Repositories;
 use App\Modules\Orders\Enums\OrderStatusEnum;
 use App\Modules\Orders\Models\Order;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 use InfyOm\Generator\Common\BaseRepository;
 
@@ -82,6 +84,39 @@ class OrderRepository extends BaseRepository
 
     /**
      * @param int $merchantId
+     * @return Builder
+     */
+    protected function getAllMerchantOrdersQueryBuilder(int $merchantId): Builder
+    {
+        return Order::where([
+            'merchant_id' => $merchantId,
+        ])->orderBy('created_at', 'DESC')->with(['customer', 'transaction']);
+    }
+
+    /**
+     * @param int $merchantId
+     * @return LengthAwarePaginator
+     */
+    public function getAllMerchantOrdersWithPagination(int $merchantId): LengthAwarePaginator
+    {
+        return $this->getAllMerchantOrdersQueryBuilder($merchantId)->paginate(config('wish.orders.pagination'));
+    }
+
+    /**
+     * @param int $orderId
+     * @param int $merchantId
+     * @return mixed
+     */
+    public function getMerchantOrderById(int $orderId, int $merchantId): ?Order
+    {
+        return Order::where([
+            'merchant_id' => $merchantId,
+            'id'          => $orderId,
+        ])->with('customer')->first();
+    }
+
+    /**
+     * @param int $merchantId
      * @param int $offset
      *
      * @return Collection
@@ -97,6 +132,41 @@ class OrderRepository extends BaseRepository
             ->skip($offset)
             ->take(Order::PAGE_LIMIT)
             ->get();
+    }
+
+    /**
+     * @param int $orderId
+     * @param int $merchantId
+     */
+    public function changeMerchantOrderStatusToShippedById(int $orderId, int $merchantId):void
+    {
+        $order = Order::where([
+           'merchant_id' => $merchantId,
+           'id' => $orderId,
+           'status' => OrderStatusEnum::IN_PROCESS,
+        ])->firstOrFail();
+
+        $order->status = OrderStatusEnum::SHIPPED;
+        $order->save();
+    }
+
+    /**
+     * @param int $merchantId
+     * @param string $searchText
+     * @return LengthAwarePaginator
+     */
+    public function findMerchantOrdersBySearchTextWithPagination(int $merchantId, string $searchText): LengthAwarePaginator
+    {
+        return Order::with('customer')
+        ->where('merchant_id', $merchantId)
+        ->join('customers', 'orders.customer_id', '=', 'customers.id')
+        ->where(function ($query) use ($searchText) {
+            $query->where('orders.id', 'LIKE', '%' . $searchText . '%');
+            $query->orWhere('customers.first_name', 'LIKE', '%' . $searchText . '%');
+            $query->orWhere('customers.last_name', 'LIKE', '%' . $searchText . '%');
+        })
+            ->select('orders.*', 'customers.first_name', 'last_name')
+            ->paginate(config('wish.orders.pagination'));
     }
 
     /**
