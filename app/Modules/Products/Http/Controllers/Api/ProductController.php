@@ -40,17 +40,18 @@ class ProductController extends Controller
     /**
      * ContentController constructor.
      *
-     * @param ProductRepository $productRepository
+     * @param ProductRepository      $productRepository
      * @param ProductImageRepository $productImageRepository
-     * @param Product $product
-     * @param ProductImage $productImage
+     * @param Product                $product
+     * @param ProductImage           $productImage
      */
     public function __construct(
         ProductRepository $productRepository,
         ProductImageRepository $productImageRepository,
         Product $product,
         ProductImage $productImage
-    ) {
+    )
+    {
         $this->productRepository = $productRepository;
         $this->productImageRepository = $productImageRepository;
 
@@ -78,15 +79,15 @@ class ProductController extends Controller
 
         $productData = array_merge($request->all(), [
             'main_image' => $mainImage->hashName(),
-            'user_id'    => Auth::id(),
+            'user_id' => Auth::id(),
         ]);
         $this->product->fill($productData);
         $this->productRepository->save($this->product);
 
         $productLocalDelivery->fill([
             'product_id' => $this->product->id,
-            'active'     => $request->get('local_delivery'),
-            'distance'   => $request->get('local_delivery_distance', 0),
+            'active' => $request->get('local_delivery'),
+            'distance' => $request->get('local_delivery_distance', 0),
         ]);
         $productLocalDeliveryRepository->save($productLocalDelivery);
 
@@ -198,17 +199,23 @@ class ProductController extends Controller
     {
         /** @var ProductRepository $productRepository */
         $productRepository = app()[ProductRepository::class];
-        $product = $productRepository->getById((int)$id);
+
+        if(!$product = $productRepository->getById((int)$id)) {
+            return response()->json([
+                'message' => 'Product not found',
+            ], 404);
+        }
+
         $product->category->setVisible(['id', 'name']);
 
         if (null === $product) {
             return response()->json([
-                'product'  => new \stdClass(),
+                'product' => new \stdClass(),
             ]);
         }
 
         return response()->json([
-            'product'  => $product,
+            'product' => $product,
         ]);
     }
 
@@ -259,7 +266,7 @@ class ProductController extends Controller
         $productLocalDeliveryRepository->updateOrCreate(
             ['product_id' => $product->id],
             [
-                'active'   => $request->get('local_delivery'),
+                'active' => $request->get('local_delivery'),
                 'distance' => $request->get('local_delivery_distance', 0),
             ]
         );

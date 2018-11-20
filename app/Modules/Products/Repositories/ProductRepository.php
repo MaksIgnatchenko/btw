@@ -166,12 +166,16 @@ class ProductRepository extends BaseRepository
      */
     public function getById(int $id): ?Product
     {
-        return Product::with([
+        $product = Product::with([
             'images',
             'category',
-        ])
-            ->find($id)
-            ->makeVisible('is_in_wish_list');
+        ])->find($id);
+
+        if (!$product) {
+            return null;
+        }
+
+        return $product->makeVisible('is_in_wish_list');
     }
 
     /**
