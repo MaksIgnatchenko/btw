@@ -32,10 +32,17 @@ Route::group([
 
 /* --- Settings --- */
 Route::group([
-    'middleware' => ['web'],
+    'middleware' => ['web', 'auth:merchant'],
     'prefix' => 'settings',
 ], function () {
-    $this->get('/', 'SettingsController@index');
+    $this->get('/', 'SettingsController@index')->name('merchant.settings');
+    $this->post('/account', 'SettingsController@updateAccountSettings')->name('merchant.settings.account');
+    $this->post('/store', 'SettingsController@updateStoreSettings')->name('merchant.settings.store');
+    $this->post('/avatar', 'SettingsController@updateAvatar');
+    $this->delete('/avatar', 'SettingsController@deleteAvatar');
+    $this->post('/background', 'SettingsController@updateBackgroundImg');
+    $this->delete('/background', 'SettingsController@deleteBackgroundImg');
+    $this->post('/password', 'Auth\ChangePasswordController@change')->name('merchant.settings.password');
 });
 /* ------------------- */
 
