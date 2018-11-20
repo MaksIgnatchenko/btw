@@ -31,7 +31,7 @@ $this->group([
 ], function () {
     $this->get('/', 'WishController@get');
     $this->post('add/{product}', 'WishController@add');
-    $this->post('remove/{product}', 'WishController@remove');
+    $this->delete('remove/{product}', 'WishController@remove');
 });
 
 $this->post('register', 'RegisterController@register');
