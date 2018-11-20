@@ -122,3 +122,18 @@ var searchSubmitCallback = function(event) {
 };
 
 $('.shop-top-settings__form').on('submit', searchSubmitCallback);
+
+var searchForm = $('.shop-top-settings__form');
+var searchParams = new URLSearchParams(window.location.search);
+var searchInput = $(searchForm).find('input[name="search"]');
+
+if (searchParams.has('search')) {
+    var resetButton = document.createElement('span');
+    $(searchInput).addClass('reset');
+    $(resetButton).addClass('reset-search');
+    searchForm.append(resetButton);
+}
+
+$(resetButton).on('click', function() {
+    document.location.href = '/orders';
+});
