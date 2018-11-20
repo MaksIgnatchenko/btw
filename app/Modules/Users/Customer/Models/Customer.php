@@ -72,6 +72,9 @@ class Customer extends Authenticatable implements JWTSubject
         return null;
     }
 
+    /**
+     * @return string
+     */
     public function getFullNameAttribute(): string
     {
         return ucwords($this->attributes['first_name'] . ' ' . $this->attributes['last_name']);
