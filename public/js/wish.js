@@ -62,8 +62,6 @@
 })();
 
 $(function () {
-    $('.shop-top-settings__form').on('submit', searchSubmitCallback);
-
     var searchSubmitCallback = function(event) {
         event.preventDefault();
 
@@ -75,6 +73,10 @@ $(function () {
         }
     };
 
+    $('.shop-top-settings__form').on('submit', searchSubmitCallback);
+});
+
+$(function () {
     var searchForm = $('.shop-top-settings__form');
     var searchParams = new URLSearchParams(window.location.search);
     var searchInput = $(searchForm).find('input[name="search"]');
@@ -83,10 +85,23 @@ $(function () {
         var resetButton = document.createElement('span');
         $(searchInput).addClass('reset');
         $(resetButton).addClass('reset-search');
+
+        var relativePath = window.location.pathname;
+
+        if (relativePath === '/products/search') {
+            $(resetButton).addClass('products')
+        } else {
+            $(resetButton).addClass('orders')
+        }
+
         searchForm.append(resetButton);
     }
 
-    $(resetButton).on('click', function() {
+    $('.reset-search.products').on('click', function() {
+        document.location.href = '/products';
+    });
+
+    $('.reset-search.orders').on('click', function() {
         document.location.href = '/orders';
     });
 });

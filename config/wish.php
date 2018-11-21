@@ -25,10 +25,11 @@ return [
     ],
     'store' => [
         'pagination' => env('PRODUCTS_PAGINATION', 12),
+        'search_max_length' => env('STORE_SEARCH_MAX_LENGTH', 50),
     ],
     'orders' => [
         'pagination' => env('ORDERS_PAGINATION', 17),
         'date_format' => env('ORDERS_DATE_FORMAT', 'd/m/y'),
-        'search_max_length' => env('ORDERS_SEARCH_MAX_LENGTH', 50)
+        'search_max_length' => env('ORDERS_SEARCH_MAX_LENGTH', 50),
     ]
 ];
