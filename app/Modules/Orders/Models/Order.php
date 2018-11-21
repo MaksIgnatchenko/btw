@@ -111,9 +111,7 @@ class Order extends Model
      */
     public function getAmountAttribute(): int
     {
-        $product = json_decode($this->attributes['product']);
-
-        return $this->attributes['quantity'] * $product->price;
+        return $this->quantity * $this->product->price;
     }
 
     /**
