@@ -44,9 +44,9 @@ class DisplayValues
      *
      * @return string
      */
-    public static function getAttributeTypeText(string $string): string
+    public static function getAttributeTypeText(array $attribute): string
     {
-        $type = \GuzzleHttp\json_decode($string)->type;
+        $type = $attribute['type'];
 
         if (AttributeTypesEnum::check($type)) {
             return AttributeTypesEnum::toArray()[$type];

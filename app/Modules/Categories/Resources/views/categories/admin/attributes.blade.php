@@ -24,7 +24,7 @@
                 @foreach($displayingAttributes as $attribute)
                     <tr>
 
-                        <td>{{DisplayValues::get($attribute, 'name')}}</td>
+                        <td>{{$attribute['name']}}</td>
                         <td>{{DisplayValues::getAttributeTypeText($attribute)}}</td>
 
                         <td>
@@ -37,7 +37,7 @@
                         </td>
 
                         <input type="hidden" name="attributes[]"
-                               value='{{$attribute}}'>
+                               value='{{json_encode($attribute)}}'>
                     </tr>
                 @endforeach
                 </tbody>
