@@ -7,6 +7,7 @@ namespace App\Helpers;
 
 use App\Modules\Categories\Http\Controllers\Admin\CategoriesController;
 use App\Modules\Content\Http\Controllers\Admin\ContentController;
+use App\Modules\Orders\Http\Controllers\Admin\IncomeController;
 use App\Modules\Users\Admin\Http\Controllers\DashboardController;
 use App\Modules\Users\Customer\Http\Controllers\Admin\CustomerController;
 use App\Modules\Users\Merchant\Http\Controllers\Admin\MerchantController;
@@ -72,6 +73,16 @@ class ActiveLink
         $controller = self::getControllerInstance();
 
         return $controller instanceof DashboardController;
+    }
+
+    /**
+     * @return bool
+     */
+    public static function checkIncome(): bool
+    {
+        $controller = self::getControllerInstance();
+
+        return $controller instanceof IncomeController;
     }
 
     /**
