@@ -7,7 +7,6 @@ namespace App\Modules\Users\Merchant\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
 use App\Modules\Categories\Models\Category;
-use App\Modules\Users\Merchant\Http\Controllers\Web\Traits\MerchantImageUploader;
 use App\Modules\Users\Merchant\Models\Geography\GeographyCountry;
 use App\Modules\Users\Merchant\Models\Merchant;
 use App\Modules\Users\Merchant\Repositories\MerchantRepository;
@@ -16,12 +15,12 @@ use App\Modules\Users\Merchant\Requests\UpdateAvatarRequest;
 use App\Modules\Users\Merchant\Requests\UpdateBackgroundImage;
 use App\Modules\Users\Merchant\Requests\UpdateStoreSettingsRequest;
 use App\Modules\Users\Merchant\Services\Geography\GeographyServiceInterface;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class SettingsController extends Controller
 {
-    use MerchantImageUploader;
-
     /** @var GeographyServiceInterface */
     protected $geographyService;
 
@@ -148,6 +147,7 @@ class SettingsController extends Controller
      * @param UpdateBackgroundImage $request
      *
      * @return \Illuminate\Http\JsonResponse
+     * @throws \Prettus\Validator\Exceptions\ValidatorException
      */
     public function updateBackgroundImg(UpdateBackgroundImage $request)
     {
@@ -167,5 +167,42 @@ class SettingsController extends Controller
         return response()->json([
             'success' => $this->removeImage('background_image'),
         ]);
+    }
+
+    /**
+     * @param UploadedFile $img
+     * @param string       $path
+     * @param string       $fieldName
+     *
+     * @return string
+     * @throws \Prettus\Validator\Exceptions\ValidatorException
+     */
+    protected function uploadImage(UploadedFile $img, string $path, string $fieldName): string
+    {
+        $imgUrl = $img->store($path);
+
+        /** @var Merchant $merchant */
+        $merchant = Auth::user();
+
+        $this->merchantRepository->update([
+            $fieldName => $img->hashName(),
+        ], $merchant->id);
+
+        return $imgUrl;
+    }
+
+    /**
+     * @param string $fieldName
+     *
+     * @return bool
+     */
+    protected function removeImage(string $fieldName): bool
+    {
+        /** @var Merchant $merchant */
+        $merchant = Auth::user();
+
+        $imgUrl = str_replace(Storage::url(''), null, $merchant->$fieldName);
+
+        return Storage::delete($imgUrl);
     }
 }
