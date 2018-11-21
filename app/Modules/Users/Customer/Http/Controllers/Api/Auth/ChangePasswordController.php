@@ -7,12 +7,16 @@ namespace App\Modules\Users\Customer\Http\Controllers\Api\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Modules\Users\Customer\Http\Requests\Api\ChangePasswordRequest;
+use App\Modules\Users\Http\Controllers\ChangePasswordInterface;
+use App\Modules\Users\Http\Traits\ChangePassword;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
 
-class ChangePasswordController extends Controller
+class ChangePasswordController extends Controller implements ChangePasswordInterface
 {
+    use ChangePassword {
+        change as changeUserPassword;
+    }
+
     /**
      * Create a new AuthController instance.
      */
@@ -24,19 +28,26 @@ class ChangePasswordController extends Controller
     /**
      * @param ChangePasswordRequest $request
      *
-     * @return \Illuminate\Http\JsonResponse
+     * @return mixed
      */
-    public function change(ChangePasswordRequest $request): JsonResponse
+    public function change(ChangePasswordRequest $request)
     {
-        $user = Auth::user();
+        return $this->changeUserPassword($request);
+    }
 
-        if (!Hash::check($request->get('old_password'), $user->password)) {
-            return response()->json(['message' => 'Wrong old password. Please try again'], 400);
-        }
+    /**
+     * @return JsonResponse|mixed
+     */
+    public function onWrongPassword()
+    {
+        return response()->json(['message' => 'Wrong old password. Please try again'], 400);
+    }
 
-        $user->password = $request->get('new_password');
-        $user->save();
-
+    /**
+     * @return JsonResponse|mixed
+     */
+    public function returnSuccessResult()
+    {
         return response()->json(['message' => 'Password changed successfully']);
     }
 }

@@ -5,10 +5,11 @@
 
 namespace App\Modules\Users\Merchant\Requests;
 
+use App\Modules\Users\Http\Requests\ChangePasswordRequestAbstract;
 use App\Modules\Users\Merchant\Rules\PasswordRule;
-use Illuminate\Foundation\Http\FormRequest;
 
-class ChangePasswordRequest extends FormRequest
+
+class ChangePasswordRequest extends ChangePasswordRequestAbstract
 {
     /**
      * Get the password reset validation rules.
@@ -17,28 +18,14 @@ class ChangePasswordRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            'old_password' => [
-                'required',
-                'min:6',
-                'max:50',
-                new PasswordRule(),
-            ],
-            'new_password' => [
-                'required',
-                'min:6',
-                'max:50',
-                'confirmed',
-                new PasswordRule(),
-            ],
-        ];
-    }
-
-    /**
-     * @return bool
-     */
-    public function authorize(): bool
-    {
-        return true;
+        return parent::rules() + [
+                'old_password' => [
+                    new PasswordRule(),
+                ],
+                'new_password' => [
+                    'confirmed',
+                    new PasswordRule(),
+                ],
+            ];
     }
 }

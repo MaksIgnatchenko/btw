@@ -6,31 +6,39 @@
 namespace App\Modules\Users\Merchant\Http\Controllers\Web\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Modules\Users\Merchant\Models\Merchant;
+use App\Modules\Users\Http\Controllers\ChangePasswordInterface;
+use App\Modules\Users\Http\Traits\ChangePassword;
 use App\Modules\Users\Merchant\Requests\ChangePasswordRequest;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
 
-class ChangePasswordController extends Controller
+class ChangePasswordController extends Controller implements ChangePasswordInterface
 {
+    use ChangePassword {
+        change as changeUserPassword;
+    }
+
     /**
      * @param ChangePasswordRequest $request
      *
-     * @return \Illuminate\Http\JsonResponse
+     * @return mixed
      */
-    public function change(ChangePasswordRequest $request): JsonResponse
+    public function change(ChangePasswordRequest $request)
     {
-        /** @var Merchant $merchant */
-        $merchant = Auth::user();
+        return $this->changeUserPassword($request);
+    }
 
-        if (!Hash::check($request->get('old_password'), $merchant->password)) {
-            return response()->json(['message' => 'Wrong old password. Please try again'], 400);
-        }
+    /**
+     * @return \Illuminate\Http\RedirectResponse|mixed
+     */
+    public function onWrongPassword()
+    {
+        return back()->withErrors(['old_password' => ['Wrong old password. Please try again']]);
+    }
 
-        $merchant->password = $request->get('new_password');
-        $merchant->save();
-
-        return response()->json(['message' => 'Password changed successfully']);
+    /**
+     * @return \Illuminate\Http\RedirectResponse|mixed
+     */
+    public function returnSuccessResult()
+    {
+        return back();
     }
 }
