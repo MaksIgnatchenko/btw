@@ -38,11 +38,9 @@ class Owns
     protected function getOwnerIdColumnName(Authenticatable $user): string
     {
         if ($user instanceof Merchant) {
-            $IdColumnName = 'merchant_id';
-        } else {
-            $IdColumnName = 'customer_id';
+            return 'merchant_id';
         }
 
-        return $IdColumnName;
+        return 'customer_id';
     }
 }
