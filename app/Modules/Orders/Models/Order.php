@@ -17,6 +17,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\DB;
 
 class Order extends Model
@@ -103,6 +104,26 @@ class Order extends Model
         $orderRepository = app(OrderRepository::class);
 
         return $orderRepository->findMerchantNotPaidOrders($merchantId);
+    }
+
+    /**
+     * @return int
+     */
+    public function getAmountAttribute(): int
+    {
+        return $this->quantity * $this->product->price;
+    }
+
+    /**
+     * @param int $merchantId
+     * @param string $searchText
+     * @return LengthAwarePaginator
+     */
+    public function search(int $merchantId, string $searchText): LengthAwarePaginator
+    {
+        $orderRepository = app()[OrderRepository::class];
+
+        return $orderRepository->findMerchantOrdersBySearchTextWithPagination($merchantId, $searchText);
     }
 
 

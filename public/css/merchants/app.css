@@ -48,3 +48,25 @@
 .ezv-container {
     max-width: none;
 }
+
+.reset-search {
+    z-index: 2;
+    position: absolute;
+    top: 8px;
+    right: 10px;
+    width: 22px;
+    height: 22px;
+    text-indent: -9999px;
+    background: transparent url('../../img/cancel.svg')no-repeat center center;
+    -webkit-background-size: contain;
+    background-size: contain;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+input.reset::-webkit-search-decoration,
+input.reset::-webkit-search-cancel-button,
+input.reset::-webkit-search-results-button,
+input.reset::-webkit-search-results-decoration {
+    display: none;
+}

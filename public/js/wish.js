@@ -61,15 +61,39 @@
     window._W = this;
 })();
 
-var searchSubmitCallback = function(event) {
-    event.preventDefault();
+$(function () {
+    $('.shop-top-settings__form').on('submit', searchSubmitCallback);
 
-    var searchText = $(this).find('input[name="search"]').val();
+    var searchSubmitCallback = function(event) {
+        event.preventDefault();
 
-    if (searchText.length !== 0) {
-        $(this).off('submit', searchSubmitCallback);
-        $(this).submit();
+        var searchText = $(this).find('input[name="search"]').val();
+
+        if (searchText.length !== 0) {
+            $(this).off('submit', searchSubmitCallback);
+            $(this).submit();
+        }
+    };
+
+    var searchForm = $('.shop-top-settings__form');
+    var searchParams = new URLSearchParams(window.location.search);
+    var searchInput = $(searchForm).find('input[name="search"]');
+
+    if (searchParams.has('search')) {
+        var resetButton = document.createElement('span');
+        $(searchInput).addClass('reset');
+        $(resetButton).addClass('reset-search');
+        searchForm.append(resetButton);
     }
-};
 
-$('.shop-top-settings__form').on('submit', searchSubmitCallback);
+    $(resetButton).on('click', function() {
+        document.location.href = '/orders';
+    });
+});
+
+$(function () {
+    $('.update-order').on('click', function (event) {
+        event.preventDefault();
+        document.getElementById('update-status-form').submit();
+    })
+});

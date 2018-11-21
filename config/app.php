@@ -189,6 +189,7 @@ return [
         App\Modules\Orders\Providers\OrderEventServiceProvider::class,
         App\Modules\Orders\Providers\OrderApiRouteServiceProvider::class,
         App\Modules\Orders\Providers\OrderAdminRouteServiceProvider::class,
+        App\Modules\Orders\Providers\OrderWebRoutesServiceProvider::class,
 
 //        Edujugon\PushNotification\Providers\PushNotificationServiceProvider::class,
 //        Maatwebsite\Excel\ExcelServiceProvider::class,
@@ -281,5 +282,6 @@ return [
         'Image' => Intervention\Image\Facades\Image::class,
         'ProductsViewHelper' => App\Modules\Products\Helpers\ProductsViewHelper::class,
         'ProductsViewTemplateEnum' => App\Modules\Products\Enums\ProductsViewTemplateEnum::class,
+        'OrderViewHelper' => App\Modules\Orders\Helpers\OrderViewHelper::class,
     ],
 ];
