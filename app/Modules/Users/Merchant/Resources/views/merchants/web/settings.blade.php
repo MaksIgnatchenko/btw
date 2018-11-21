@@ -7,7 +7,7 @@
 @section('footer-class', 'footer-shop')
 
 @section('header')
-    @include('merchants.web.header', ['header_class' => 'header-black'])
+    @include('layouts.merchants.header', ['header_class' => 'header-black'])
 @stop
 
 @section('script')
@@ -59,7 +59,7 @@
                         <!-- Tabs header -->
                         <ul class="tabs-header">
                             <li class="tabs-item">
-                                <a href="#" class="tabs-link">
+                                <a href="#" class="tabs-link" data-page="account">
                                 <span class="tabs-link__icon">
                                     <img src="{{ asset('img/user-icon.svg') }}" alt="user icon">
                                 </span>
@@ -67,7 +67,7 @@
                                 </a>
                             </li>
                             <li class="tabs-item">
-                                <a href="#" class="tabs-link">
+                                <a href="#" class="tabs-link" data-page="store">
                                 <span class="tabs-link__icon">
                                     <img src="{{ asset('img/store-icon.svg') }}" alt="store icon">
                                 </span>
@@ -75,7 +75,7 @@
                                 </a>
                             </li>
                             <li class="tabs-item">
-                                <a href="#" class="tabs-link">
+                                <a href="#" class="tabs-link" data-page="password">
                                 <span class="tabs-link__icon">
                                     <img src="{{ asset('img/shield-icon.svg') }}" alt="shield icon">
                                 </span>

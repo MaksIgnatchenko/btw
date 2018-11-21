@@ -17,7 +17,7 @@ class UploadAvatarRequest extends FormRequest
     public function rules()
     {
         return [
-            'avatar' => 'required|image|min:50|max:5120',
+            'avatar' => 'bail|required|image|min:50|max:5120',
         ];
     }
 
