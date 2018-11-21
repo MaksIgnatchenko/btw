@@ -170,9 +170,9 @@ class ProductRepository extends BaseRepository
         $product = Product::with([
             'images',
             'category',
-        ])->find($id);
-
-        return $product ? $product->makeVisible('is_in_wish_list'): null;
+        ])
+            ->findOrFail($id)
+            ->makeVisible('is_in_wish_list');
     }
 
     /**
@@ -198,7 +198,8 @@ class ProductRepository extends BaseRepository
             ->where('store_id', $storeId)
             ->offset($offset)
             ->limit(Product::PRODUCTS_PAGE_LIMIT)
-            ->get();
+            ->get()
+            ->makeVisible('is_in_wish_list');
     }
 
     /**

@@ -199,13 +199,7 @@ class ProductController extends Controller
     {
         /** @var ProductRepository $productRepository */
         $productRepository = app()[ProductRepository::class];
-
-        if(!$product = $productRepository->getById((int)$id)) {
-            return response()->json([
-                'message' => 'Product not found',
-            ], 404);
-        }
-
+        $product = $productRepository->getById((int)$id);
         $product->category->setVisible(['id', 'name']);
 
         if (null === $product) {
