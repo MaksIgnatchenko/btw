@@ -44,7 +44,8 @@ abstract class GeographyHelper
     public static function resolveGeographyNames(array &$objects): void
     {
         foreach (GeographyObjectTypesEnum::relatedModelsArray() as $geographyObjectTypeName => $geographyObjectClass) {
-            // intval checking prevent broken results when input data already contains object name
+            // intval checking prevents broken results
+            // when input data already present as object name instead of ID
             $object = &$objects[$geographyObjectTypeName];
             if (isset($object) && intval($object)) {
                 $object = $geographyObjectClass::find($object)->getName();
