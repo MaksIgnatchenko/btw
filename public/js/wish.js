@@ -62,6 +62,8 @@
 })();
 
 $(function () {
+    $('.shop-top-settings__form').on('submit', searchSubmitCallback);
+
     var searchSubmitCallback = function(event) {
         event.preventDefault();
 
@@ -72,10 +74,6 @@ $(function () {
             $(this).submit();
         }
     };
-});
-
-$(function () {
-    $('.shop-top-settings__form').on('submit', searchSubmitCallback);
 
     var searchForm = $('.shop-top-settings__form');
     var searchParams = new URLSearchParams(window.location.search);
