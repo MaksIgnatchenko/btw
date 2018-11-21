@@ -1,7 +1,3 @@
-/*
- * Created by Ilya Kobus, Appus Studio LP on 14.11.2018
- */
-
 /*! normalize.css v8.0.0 | MIT License | github.com/necolas/normalize.css */
 
 /* Document
@@ -871,6 +867,7 @@ textarea::-moz-placeholder, textarea:-moz-placeholder {opacity: 1}
     position: absolute;
     bottom: -45px;
     right: 4px;
+    min-width: 86px;
     padding: 8px 10px 8px 10px;
     background-color: #fff;
     box-shadow: 0 2px 4px 0px rgba(0,0,0, 0.14);
@@ -1608,6 +1605,10 @@ textarea::-moz-placeholder, textarea:-moz-placeholder {opacity: 1}
     flex: 1 0 auto;
     margin-right: 5px;
     box-shadow: 0 2px 16px 0 rgba(0,0,0,0.06);
+}
+
+.shop-top-settings__form--no-marg {
+    margin-right: auto;
 }
 
 .search-icon {
@@ -2766,6 +2767,10 @@ textarea.form-item__area::placeholder {color: #999;}
     width: 7.45%;
 }
 
+.table-wrapper {
+    margin-bottom: 20px;
+}
+
 .table-orders {
     color: #1d1d1d;
     font-size: 18px;
@@ -2795,6 +2800,100 @@ textarea.form-item__area::placeholder {color: #999;}
 .table-orders a {
     color: #008fff;
     text-decoration: none;
+}
+
+/* Order Page */
+.order-header {
+    margin-bottom: 20px;
+    color: #1d1d1d;
+}
+
+.order__num {
+    margin-bottom: 5px;
+    font-size: 24px;
+    font-weight: 500;
+    line-height: 1;
+}
+
+.order__nik {
+    margin-bottom: 5px;
+    font-size: 18px;
+    font-weight: 300;
+}
+
+.order__nik a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.order-hint {
+    margin-top: 20px;
+    color: #a8a8a8;
+    font-weight: 300;
+}
+
+.table-custom {
+    margin-bottom: 10px;
+}
+
+.table-custom__line {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+
+    width: 100%;
+    padding: 10px 0;
+    color: #1d1d1d;
+    font-size: 18px;
+    font-weight: 300;
+}
+
+.table-custom__line--header {
+    font-weight: 500;
+    border-bottom: 1px solid #e2e2e2;
+}
+
+.table-custom__line--body .table-custom__prod {
+    font-size: 20px;
+}
+
+.table-custom__mobile-title {
+    display: none;
+    font-weight: 500;
+}
+
+.table-custom__prod {
+    padding-right: 10px;
+    width: 37.8%;
+}
+
+.table-custom__price {
+    width: 10.1%;
+    padding: 0 5px;
+}
+
+.table-custom__purchase {
+    width: 18%;
+    padding: 0 10px;
+}
+
+.table-custom__quantity {
+    width: 7.55%;
+    text-align: center;
+}
+
+.table-custom__amount {
+    padding-left: 25px;
+    width: 12.55%;
+    text-align: center;
+}
+
+.table-custom__status {
+    width: 14%;
+    text-align: right;
 }
 
 /**
@@ -3096,6 +3195,19 @@ textarea.form-item__area::placeholder {color: #999;}
     .table-orders {
         font-size: 16px;
     }
+
+    .order__num {
+        font-size: 22px;
+    }
+
+    .order__nik,
+    .table-custom__line {
+        font-size: 16px;
+    }
+
+    .table-custom__line--body .table-custom__prod {
+        font-size: 18px;
+    }
 }
 
 @media screen and (max-width: 800px) {
@@ -3227,6 +3339,42 @@ textarea.form-item__area::placeholder {color: #999;}
 
     .edit-item__category-wr .tell-form-category__list {
         top: 56px;
+    }
+
+    .table-custom__line--header {
+        display: none;
+    }
+
+    .table-custom__mobile-title {
+        display: block;
+        margin-bottom: 4px;
+    }
+
+    .table-custom__line--body {
+        -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+        -webkit-box-align: normal;
+        -ms-flex-align: normal;
+        align-items: normal;
+    }
+
+    .table-custom__prod,
+    .table-custom__price,
+    .table-custom__purchase,
+    .table-custom__quantity,
+    .table-custom__amount {
+        width: 50%;
+        padding: 5px 10px;
+        text-align: center;
+        border: 1px dotted #e2e2e2;
+    }
+
+    .table-custom__status,
+    .table-custom__amount {
+        width: 100%;
+        padding: 5px 10px;
+        text-align: center;
+        border: 1px dotted #e2e2e2;
     }
 }
 
@@ -3445,6 +3593,14 @@ textarea.form-item__area::placeholder {color: #999;}
 
     .shop-top-settings__form input {
         font-size: 16px;
+    }
+
+    .table-custom__prod,
+    .table-custom__price,
+    .table-custom__purchase,
+    .table-custom__quantity,
+    .table-custom__amount {
+        width: 100%;
     }
 }
 
