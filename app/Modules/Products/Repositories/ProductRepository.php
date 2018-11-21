@@ -167,7 +167,7 @@ class ProductRepository extends BaseRepository
      */
     public function getById(int $id): ?Product
     {
-        $product = Product::with([
+        return Product::with([
             'images',
             'category',
         ])
