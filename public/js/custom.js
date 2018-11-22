@@ -312,6 +312,10 @@ window.onload = function () {
             }
             var validator = new Validator(event.target, validationFields);
             if(validator.validate()) {
+
+                $('.create-product.submit').prop('disabled', true);
+                $('.create-product.submit').addClass('loading');
+
                 event.target.submit();
             }
         }

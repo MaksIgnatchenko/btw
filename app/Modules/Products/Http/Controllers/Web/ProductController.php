@@ -53,7 +53,11 @@ class ProductController extends Controller
      */
     public function index(): View
     {
-        $products = Auth::user()->products()->paginate(config('wish.store.pagination'));
+        $products = Auth::user()
+            ->products()
+            ->orderBy('updated_at', 'DESC')
+            ->paginate(config('wish.store.pagination'));
+
         ProductsViewHelper::storeTemplateToSession();
 
         return view('products.web.index', ['products' => $products]);
