@@ -36,6 +36,6 @@ class SearchController extends Controller
 
         $products = $this->productModel->search($storeId, $searchText);
 
-        return view('products.web.index', ['products' => $products]);
+        return view('products.web.index', ['products' => $products, 'searchText' => $searchText]);
     }
 }

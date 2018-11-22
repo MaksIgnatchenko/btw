@@ -200,10 +200,10 @@ class OrderRepository extends BaseRepository
             ->get();
     }
 
-    public function findCustomerOrderById(int $orderId, int $merchantId): ?Order
+    public function findCustomerOrderById(int $orderId, int $customerId): ?Order
     {
         return Order::where([
-            'merchant_id' => $merchantId,
+            'customer_id' => $customerId,
             'id'          => $orderId,
         ])->first();
     }
