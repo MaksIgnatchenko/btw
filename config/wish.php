@@ -21,6 +21,7 @@ return [
         'merchants' => [
             'avatar_path' => env('MERCHANT_AVATAR_PATH', 'merchants/avatars'),
             'background_path' => env('MERCHANT_BACKGROUND_PATH', 'merchants/backgrounds'),
+            'default_avatar_url' => env('MERCHANT_DEFAULT_AVATAR_URL', '/img/user-icon-color.svg'),
         ],
     ],
     'store' => [

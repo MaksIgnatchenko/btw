@@ -27,7 +27,8 @@
             <h6 class="tell-form__title">{{__('registration.store.location_title')}}</h6>
             <div class="tell-form-wrapper">
                 <div class="tell-form-country custom-select position-relative">
-                    {!! Form::select('store_country', [__('registration.country')] + $countries->toArray(), Session::get('store_country')) !!}
+                    {!! Form::select('store_country', $countries, Session::get('store_country'),
+                    ['placeholder' => __('registration.country')]) !!}
                     @if ($errors->has('store_country'))
                         <div class="alert alert-danger" role="alert">
                             <strong>{{ $errors->first('store_country') }}</strong></div>

@@ -20,7 +20,7 @@
         {{'nav-line__link--active'}}
         @endif
                 ">
-            <a href="#" class="nav-line__link">{{__('store.settings')}}</a>
+            <a href="{{ route('merchant.settings') }}" class="nav-line__link">{{__('store.settings')}}</a>
         </li>
     </ul>
 </div><!-- /. end navigate link -->

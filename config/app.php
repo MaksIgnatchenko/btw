@@ -196,13 +196,16 @@ return [
 //        App\Modules\Users\Providers\UsersEventServiceProvider::class
 
         App\Modules\Users\Admin\Providers\RouteServiceProvider::class,
+
         App\Modules\Users\Customer\Providers\ApiRouteServiceProvider::class,
         App\Modules\Users\Customer\Providers\WebRouteServiceProvider::class,
         App\Modules\Users\Customer\Providers\AdminRouteServiceProvider::class,
+
         App\Modules\Users\Merchant\Providers\AdminRouteServiceProvider::class,
         App\Modules\Users\Merchant\Providers\WebRouteServiceProvider::class,
         App\Modules\Users\Merchant\Providers\GeographyServiceProvider::class,
         App\Modules\Users\Merchant\Providers\ApiRouteServiceProvider::class,
+
         App\Modules\Products\Providers\WebRouteServiceProvider::class,
         App\Modules\Categories\Providers\ServiceRouteServiceProvider::class,
         App\Providers\ComposerServiceProvider::class,

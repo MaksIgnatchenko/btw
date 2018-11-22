@@ -482,9 +482,8 @@ window.onload = function () {
             var el = event.target,
                 img = document.querySelector('.user-component__img');
 
-            el.classList.remove('user-component__btn-icon--del');
             fileEl.value = '';
-            img.setAttribute('src', '');
+
             setTimeout(function () {
                 fileEl.removeAttribute('disabled');
                 el.removeEventListener('click', clearInput);

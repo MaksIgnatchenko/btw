@@ -71,7 +71,7 @@ HTTP/1.1 200 OK
 ###
 
 ###
-@api {post} /api/customer/wishlist/remove/:id Remove Product from Customer`s WishList
+@api {delete} /api/customer/wishlist/remove/:id Remove Product from Customer`s WishList
 @apiName Remove Product from Customer`s WishList
 @apiGroup WishList
 @apiPermission Customer
