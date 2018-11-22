@@ -77,12 +77,6 @@ $(function () {
 });
 
 $(function () {
-    $('.create-product.form').submit(function () {
-        $(this).find("input[type='submit']").prop('disabled', true);
-    });
-});
-
-$(function () {
     var searchForm = $('.shop-top-settings__form');
     var searchParams = new URLSearchParams(window.location.search);
     var searchInput = $(searchForm).find('input[name="search"]');
