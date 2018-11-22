@@ -5,6 +5,8 @@
 
 namespace App\Modules\Users\Merchant\Requests;
 
+use App\Enums\FileSizeMeasurementEnum;
+use App\Helpers\FileSizeConverter;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateAvatarRequest extends FormRequest
@@ -23,7 +25,10 @@ class UpdateAvatarRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'avatar' => 'required|file|image|min:50|max:' . (config('wish.storage.products.image_max_size') / 1024),
+            'avatar' => 'required|file|image|min:50|max:' . FileSizeConverter::convert(
+                    config('wish.storage.products.image_max_size'),
+                    FileSizeMeasurementEnum::BYTE,
+                    FileSizeMeasurementEnum::KB),
         ];
     }
 }

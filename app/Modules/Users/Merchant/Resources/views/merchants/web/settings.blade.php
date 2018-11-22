@@ -94,7 +94,7 @@
 
                                     {!! Form::model($merchant, [
                                     'route' => ['merchant.settings.account', 'page' => 'settings'],
-                                    'method' => 'post',
+                                    'method' => 'put',
                                     ]) !!}
 
                                     <div class="form-line__wrapper form-line__wrapper--min-margin">
@@ -142,7 +142,7 @@
                                         </div>
                                         <div class="form-item__wrapper form-item__wrapper--field form-item__wrapper--field-settings">
                                             <div class="custom-select">
-                                                {!! Form::select('country', $countries, $merchantCountry->id) !!}
+                                                {!! Form::select('country', $merchantSettingsDto->getCountries(), $merchantSettingsDto->getmerchantCountry()->id) !!}
                                                 @if ($errors->has('country'))
                                                     <div class="alert alert-danger" role="alert">
                                                         <strong>{{ $errors->first('country') }}</strong></div>
@@ -157,7 +157,7 @@
                                         </div>
                                         <div class="form-item__wrapper form-item__wrapper--field form-item__wrapper--field-settings">
                                             <div class="custom-select">
-                                                {!! Form::select('state', $states, $merchantStateId) !!}
+                                                {!! Form::select('state', $merchantSettingsDto->getStates(), $merchantSettingsDto->getMerchantStateId()) !!}
                                                 @if ($errors->has('state'))
                                                     <div class="alert alert-danger" role="alert">
                                                         <strong>{{ $errors->first('state') }}</strong></div>
@@ -172,7 +172,8 @@
                                         </div>
                                         <div class="form-item__wrapper form-item__wrapper--field form-item__wrapper--field-settings">
                                             <div class="custom-select">
-                                                {!! Form::select('city', $cities ?? [__('registration.city')], $merchantCityId) !!}
+                                                {!! Form::select('city', $merchantSettingsDto->getCities() ?? [], $merchantSettingsDto->getMerchantCityId(),
+                                                ['placeholder' => __('registration.city')]) !!}
                                             </div>
                                         </div>
                                     </div>
@@ -209,14 +210,14 @@
                                         </div>
                                         <div class="form-item__wrapper form-item__wrapper--field form-item__wrapper--field-settings form-item__inner-wrapper">
                                             <div class="form-item__inner form-item__inner--mini">
-                                                {!! Form::text('phone_code', $merchantCountry->phoneCode, ['class' => 'form-item__inp', 'readonly']) !!}
+                                                {!! Form::text('phone_code', $merchantSettingsDto->getMerchantCountry()->phoneCode, ['class' => 'form-item__inp', 'readonly']) !!}
                                                 @if ($errors->has('phone_code'))
                                                     <div class="alert alert-danger" role="alert">
                                                         <strong>{{ $errors->first('phone_code') }}</strong></div>
                                                 @endif
                                             </div>
                                             <div class="form-item__inner form-item__inner--large">
-                                                {!! Form::text('phone_number', $merchant->phone, ['class' => 'form-item__inp']) !!}
+                                                {!! Form::text('phone_number', $merchant->shortPhone, ['class' => 'form-item__inp']) !!}
                                                 @if ($errors->has('phone_number'))
                                                     <div class="alert alert-danger" role="alert">
                                                         <strong>{{ $errors->first('phone_number') }}</strong></div>
@@ -261,7 +262,7 @@
                                         download a rectangular image.</p>
                                     {!! Form::open([
                                     'route' => 'merchant.settings.store',
-                                    'method' => 'post',
+                                    'method' => 'put',
                                     'name' => 'change-store',
                                     ]) !!}
 
@@ -301,7 +302,7 @@
                                             <div class="form-item__wrapper form-item__wrapper--field form-item__wrapper--field-settings form-item__inner-wrapper">
                                                 <div class="form-item-inner form-item__inner--half">
                                                     <div class="custom-select">
-                                                        {!! Form::select('store_country', $countries, $merchantStoreCountry->id) !!}
+                                                        {!! Form::select('store_country', $merchantSettingsDto->getCountries(), $merchantSettingsDto->getMerchantStoreCountry()->id) !!}
                                                     </div>
                                                     @if ($errors->has('store_country'))
                                                         <div class="alert alert-danger" role="alert">
@@ -338,7 +339,7 @@
                                             </div>
                                             <div class="form-item__wrapper form-item__wrapper--field form-item__wrapper--field-settings settings-item-float-cont clearfix">
                                                 <div class="edit-item__category-wr">
-                                                    {!! Form::select('categories[]', $categories, $storeCategories, [
+                                                    {!! Form::select('categories[]', $merchantSettingsDto->getCategories(), $merchantSettingsDto->getStoreCategories(), [
                                                     'class' => 'form-control',
                                                     'multiple',
                                                     'hidden',
@@ -351,7 +352,7 @@
                                                         Categories</p>
                                                     <ul class="tell-form-category__list tell-form-category__list--close"
                                                         id="tell-categories">
-                                                        @foreach ($categories as $id => $name)
+                                                        @foreach ($merchantSettingsDto->getCategories() as $id => $name)
                                                             <li class="tell-form-category__item"
                                                                 id="{{$id}}">{{$name}}</li>
                                                         @endforeach
@@ -387,7 +388,7 @@
                                     <p class="tabs-content__title"><span>Changes password</span></p>
                                     {!! Form::open([
                                     'route' => 'merchant.settings.password',
-                                    'method' => 'post',
+                                    'method' => 'put',
                                     'name' => 'changes-password',
                                     ]) !!}
                                         <div class="form-line__wrapper form-line__wrapper--min-margin">

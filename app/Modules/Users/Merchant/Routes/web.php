@@ -36,13 +36,13 @@ Route::group([
     'prefix' => 'settings',
 ], function () {
     $this->get('/', 'SettingsController@index')->name('merchant.settings');
-    $this->post('/account', 'SettingsController@updateAccountSettings')->name('merchant.settings.account');
-    $this->post('/store', 'SettingsController@updateStoreSettings')->name('merchant.settings.store');
+    $this->put('/account', 'SettingsController@updateAccountSettings')->name('merchant.settings.account');
+    $this->put('/store', 'SettingsController@updateStoreSettings')->name('merchant.settings.store');
     $this->post('/avatar', 'SettingsController@updateAvatar');
     $this->delete('/avatar', 'SettingsController@deleteAvatar');
     $this->post('/background', 'SettingsController@updateBackgroundImg');
     $this->delete('/background', 'SettingsController@deleteBackgroundImg');
-    $this->post('/password', 'Auth\ChangePasswordController@change')->name('merchant.settings.password');
+    $this->put('/password', 'Auth\ChangePasswordController@change')->name('merchant.settings.password');
 });
 /* ------------------- */
 

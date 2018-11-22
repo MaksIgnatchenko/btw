@@ -8,7 +8,6 @@ namespace App\Modules\Users\Merchant\Requests;
 use App\Modules\Users\Http\Requests\ChangePasswordRequestAbstract;
 use App\Modules\Users\Merchant\Rules\PasswordRule;
 
-
 class ChangePasswordRequest extends ChangePasswordRequestAbstract
 {
     /**

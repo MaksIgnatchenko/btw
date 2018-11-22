@@ -10,6 +10,7 @@ use App\Modules\Users\Merchant\Helpers\GeographyHelper;
 use App\Modules\Users\Merchant\Models\Geography\GeographyCountry;
 use App\Modules\Users\Merchant\Repositories\MerchantRepository;
 use App\Modules\Users\Merchant\Repositories\StoreRepository;
+use App\Modules\Users\Merchant\Services\Geography\GeographyServiceInterface;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Hash;
@@ -62,6 +63,19 @@ class Merchant extends Authenticatable
     }
 
     /**
+     * Return phone without country code
+     *
+     * @return string
+     */
+    public function getShortPhoneAttribute(): string
+    {
+        $geographyService = app(GeographyServiceInterface::class);
+        $country = $geographyService->getCountryByShortName($this->address->country);
+
+        return str_replace($country->phoneCode, '', $this->phone);
+    }
+
+    /**
      * @param $value
      *
      * @return null
@@ -75,6 +89,11 @@ class Merchant extends Authenticatable
         return null;
     }
 
+    /**
+     * @param $value
+     *
+     * @return null
+     */
     public function getBackgroundImgAttribute($value)
     {
         if ($value) {

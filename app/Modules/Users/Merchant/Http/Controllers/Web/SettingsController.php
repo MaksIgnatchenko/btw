@@ -6,8 +6,7 @@
 namespace App\Modules\Users\Merchant\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
-use App\Modules\Categories\Models\Category;
-use App\Modules\Users\Merchant\Models\Geography\GeographyCountry;
+use App\Modules\Users\Merchant\Helpers\SettingsControllerHelper;
 use App\Modules\Users\Merchant\Models\Merchant;
 use App\Modules\Users\Merchant\Repositories\MerchantRepository;
 use App\Modules\Users\Merchant\Requests\UpdateAccountSettingsRequest;
@@ -43,43 +42,11 @@ class SettingsController extends Controller
      */
     public function index()
     {
-        $merchant = Auth::guard('merchant')->user();
-        $countries = $this->geographyService->getCountries()->pluck('name', 'id');
-
-        $merchantCountry = GeographyCountry::where('sortname', $merchant->address->country)->first();
-        $merchant->phone = str_replace($merchantCountry->phoneCode, '', $merchant->phone);
-
-        $states = $this->geographyService
-            ->getStates($merchantCountry->id)->pluck('name', 'id');
-
-        $merchantStateId = $this->geographyService
-            ->getStateByName($merchant->address->state, $merchantCountry->id)->id;
-
-        if (!empty($merchant->address->city)) {
-            $merchantCityId = $this->geographyService
-                ->getCityByName($merchant->address->city, $merchantStateId)->id;
-
-            $cities = $this->geographyService
-                ->getCities($merchantStateId)->pluck('name', 'id');
-        }
-
-        $storeCategories = $merchant->store->categories->pluck('id');
-        $categories = Category::where('parent_category_id', null)->pluck('name', 'id');
-
-        $merchantStoreCountry = GeographyCountry::where('sortname', $merchant->store->country)->first();
-
+        $merchant = Auth::user();
 
         return view('merchants.web.settings', [
             'merchant' => $merchant,
-            'countries' => $countries,
-            'states' => $states,
-            'cities' => $cities ?? [],
-            'categories' => $categories,
-            'storeCategories' => $storeCategories,
-            'merchantCountry' => $merchantCountry,
-            'merchantStoreCountry' => $merchantStoreCountry,
-            'merchantStateId' => $merchantStateId,
-            'merchantCityId' => $merchantCityId ?? null,
+            'merchantSettingsDto' => SettingsControllerHelper::getMerchantSettingsData($merchant),
         ]);
     }
 

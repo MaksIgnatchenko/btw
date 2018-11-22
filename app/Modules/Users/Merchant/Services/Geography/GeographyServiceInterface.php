@@ -25,18 +25,18 @@ interface GeographyServiceInterface
     public function getCountryById($id): GeographyCountry;
 
     /**
-     * @param int|null $country
+     * @param int|null $countryId
      *
      * @return Collection
      */
-    public function getStates(int $country = null): Collection;
+    public function getStates(int $countryId = null): Collection;
 
     /**
-     * @param int|null $state
+     * @param int|null $stateId
      *
      * @return Collection
      */
-    public function getCities(int $state = null): Collection;
+    public function getCities(int $stateId = null): Collection;
 
     /**
      * @param string $shortName
@@ -47,18 +47,18 @@ interface GeographyServiceInterface
 
     /**
      * @param string   $name
-     * @param int|null $country
+     * @param int|null $countryId
      *
      * @return GeographyState
      */
-    public function getStateByName(string $name, int $country = null): GeographyState;
+    public function getStateByName(string $name, int $countryId = null): GeographyState;
 
     /**
      * @param string   $name
-     * @param int|null $state
+     * @param int|null $stateId
      *
      * @return GeographyCity
      */
-    public function getCityByName(string $name, int $state = null): GeographyCity;
+    public function getCityByName(string $name, int $stateId = null): GeographyCity;
 
 }

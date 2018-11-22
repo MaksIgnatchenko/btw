@@ -23,7 +23,7 @@ class StoreDataRequestAbstract extends FormRequest
     public function rules(): array
     {
         return [
-            'store_country' => 'required|integer|not_in:0',
+            'store_country' => 'required|integer',
             'store_city' => 'required|string|max:255',
             'info' => 'required|string|max:5000',
             'categories' => 'required|array',

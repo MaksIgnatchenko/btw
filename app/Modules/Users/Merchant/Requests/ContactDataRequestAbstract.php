@@ -28,8 +28,8 @@ abstract class ContactDataRequestAbstract extends FormRequest
             'first_name' => 'required|string|max:100',
             'last_name' => 'required|string|max:100',
             'street' => 'required|string|max:255',
-            'country' => 'required|integer|not_in:0',
-            'state' => 'required|integer|not_in:0',
+            'country' => 'required|integer',
+            'state' => 'required|integer',
             'city' => 'nullable|string|max:255',
             'zipcode' => [
                 'required',

@@ -5,9 +5,8 @@
 
 namespace App\Modules\Users\Merchant\Requests;
 
-use App\Modules\Users\Merchant\Rules\CountryZipCodeRule;
-use App\Modules\Users\Merchant\Rules\PhoneNumberRule;
-use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
 
 class UpdateAccountSettingsRequest extends ContactDataRequestAbstract
 {
@@ -18,7 +17,7 @@ class UpdateAccountSettingsRequest extends ContactDataRequestAbstract
     public function rules(): array
     {
         return parent::rules() + [
-            'email' => 'required|email|max:255|unique:merchants,email',
+            'email' => 'required|email|max:255|' . Rule::unique('merchants')->ignore(Auth::id()),
         ];
     }
 }
