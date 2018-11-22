@@ -49,4 +49,10 @@ return [
         'add_category' => 'Add Category',
         'cancel' => 'Cancel',
     ],
+
+    '404_page' => [
+        'title' => '404 not found',
+        'error' => 'Sorry, page not found',
+        'back' => 'Back to Dashboard',
+    ]
 ];
