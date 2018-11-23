@@ -16,11 +16,12 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Store extends Model
 {
-     protected $fillable = [
+    protected $fillable = [
          'name',
          'country',
          'city',
          'info',
+         'merchant_id',
      ];
 
     /**

@@ -172,6 +172,7 @@ class Merchant extends Authenticatable
             'country' => GeographyCountry::find($data['store_country'])->sortname,
             'city' => $data['store_city'],
             'name' => $data['store'],
+            'merchant_id' => $merchant->id,
         ]);
 
         /** @var StoreRepository $storeRepository */
