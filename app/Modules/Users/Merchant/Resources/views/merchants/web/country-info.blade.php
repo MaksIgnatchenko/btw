@@ -47,7 +47,8 @@
             </div>
 
             <div class="form-content custom-select position-relative">
-                {!! Form::select('country', [__('registration.contacts.country_region')] + $countries->toArray(), Session::get('country')) !!}
+                {!! Form::select('country', $countries, Session::get('country'),
+                ['placeholder' => __('registration.contacts.country_region')]) !!}
                 @if ($errors->has('country'))
                     <div class="alert alert-danger" role="alert">
                         <strong>{{ $errors->first('country') }}</strong></div>
@@ -67,7 +68,8 @@
                         @endphp
                     @endif
 
-                    {!! Form::select('state', $stateSelectValues ?? [__('registration.contacts.state')], Session::get('state')) !!}
+                    {!! Form::select('state', $stateSelectValues ?? [], Session::get('state'),
+                    ['placeholder' => __('registration.contacts.state')]) !!}
                     @if ($errors->has('state'))
                         <div class="alert alert-danger" role="alert">
                             <strong>{{ $errors->first('state') }}</strong></div>
@@ -96,7 +98,8 @@
                         @endphp
                     @endif
 
-                    {!! Form::select('city', $citySelectValues ?? [__('registration.city')], Session::get('city')) !!}
+                    {!! Form::select('city', $citySelectValues ?? [], Session::get('city'),
+                    ['placeholder' => __('registration.city')]) !!}
                     @if ($errors->has('city'))
                         <div class="alert alert-danger" role="alert">
                             <strong>{{ $errors->first('city') }}</strong></div>

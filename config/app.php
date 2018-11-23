@@ -189,19 +189,23 @@ return [
         App\Modules\Orders\Providers\OrderEventServiceProvider::class,
         App\Modules\Orders\Providers\OrderApiRouteServiceProvider::class,
         App\Modules\Orders\Providers\OrderAdminRouteServiceProvider::class,
+        App\Modules\Orders\Providers\OrderWebRoutesServiceProvider::class,
 
 //        Edujugon\PushNotification\Providers\PushNotificationServiceProvider::class,
 //        Maatwebsite\Excel\ExcelServiceProvider::class,
 //        App\Modules\Users\Providers\UsersEventServiceProvider::class
 
         App\Modules\Users\Admin\Providers\RouteServiceProvider::class,
+
         App\Modules\Users\Customer\Providers\ApiRouteServiceProvider::class,
         App\Modules\Users\Customer\Providers\WebRouteServiceProvider::class,
         App\Modules\Users\Customer\Providers\AdminRouteServiceProvider::class,
+
         App\Modules\Users\Merchant\Providers\AdminRouteServiceProvider::class,
         App\Modules\Users\Merchant\Providers\WebRouteServiceProvider::class,
         App\Modules\Users\Merchant\Providers\GeographyServiceProvider::class,
         App\Modules\Users\Merchant\Providers\ApiRouteServiceProvider::class,
+
         App\Modules\Products\Providers\WebRouteServiceProvider::class,
         App\Modules\Categories\Providers\ServiceRouteServiceProvider::class,
         App\Providers\ComposerServiceProvider::class,
@@ -281,5 +285,6 @@ return [
         'Image' => Intervention\Image\Facades\Image::class,
         'ProductsViewHelper' => App\Modules\Products\Helpers\ProductsViewHelper::class,
         'ProductsViewTemplateEnum' => App\Modules\Products\Enums\ProductsViewTemplateEnum::class,
+        'OrderViewHelper' => App\Modules\Orders\Helpers\OrderViewHelper::class,
     ],
 ];

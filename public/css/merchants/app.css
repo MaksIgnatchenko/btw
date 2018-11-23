@@ -48,3 +48,57 @@
 .ezv-container {
     max-width: none;
 }
+
+.reset-search {
+    z-index: 2;
+    position: absolute;
+    top: 8px;
+    right: 10px;
+    width: 22px;
+    height: 22px;
+    text-indent: -9999px;
+    background: transparent url('../../img/cancel.svg')no-repeat center center;
+    -webkit-background-size: contain;
+    background-size: contain;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+input.reset::-webkit-search-decoration,
+input.reset::-webkit-search-cancel-button,
+input.reset::-webkit-search-results-button,
+input.reset::-webkit-search-results-decoration {
+    display: none;
+}
+
+input[type="submit"].loading{
+    font-size:0;
+    width:30px;
+    height:30px;
+    margin-top:5px;
+    border-radius:15px;
+    padding:0;
+    border:3px solid #f6e346;
+    border-bottom:3px solid rgba(255,255,255,0.0);
+    border-left:3px solid rgba(255,255,255,0.0);
+    background-color:transparent !important;
+    animation-name: rotateAnimation;
+    -webkit-animation-name: wk-rotateAnimation;
+    animation-duration: 1s;
+    -webkit-animation-duration: 1s;
+    animation-delay: 0.2s;
+    -webkit-animation-delay: 0.2s;
+    animation-iteration-count: infinite;
+    -webkit-animation-iteration-count: infinite;
+    cursor: default;
+    margin-right: 73px;
+}
+
+@keyframes rotateAnimation {
+    0%   {transform: rotate(0deg);}
+    100% {transform: rotate(360deg);}
+}
+@-webkit-keyframes wk-rotateAnimation {
+    0%   {-webkit-transform: rotate(0deg);}
+    100% {-webkit-transform: rotate(360deg);}
+}

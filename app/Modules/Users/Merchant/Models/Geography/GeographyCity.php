@@ -7,7 +7,13 @@ namespace App\Modules\Users\Merchant\Models\Geography;
 
 use Illuminate\Database\Eloquent\Model;
 
-class GeographyCity extends Model
+class GeographyCity extends Model implements GeographyInterface
 {
-
+    /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this->name;
+    }
 }

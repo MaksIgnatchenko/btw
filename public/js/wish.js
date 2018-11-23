@@ -61,15 +61,54 @@
     window._W = this;
 })();
 
-var searchSubmitCallback = function(event) {
-    event.preventDefault();
+$(function () {
+    var searchSubmitCallback = function(event) {
+        event.preventDefault();
 
-    var searchText = $(this).find('input[name="search"]').val();
+        var searchText = $(this).find('input[name="search"]').val();
 
-    if (searchText.length !== 0) {
-        $(this).off('submit', searchSubmitCallback);
-        $(this).submit();
+        if (searchText.length !== 0) {
+            $(this).off('submit', searchSubmitCallback);
+            $(this).submit();
+        }
+    };
+
+    $('.shop-top-settings__form').on('submit', searchSubmitCallback);
+});
+
+$(function () {
+    var searchForm = $('.shop-top-settings__form');
+    var searchParams = new URLSearchParams(window.location.search);
+    var searchInput = $(searchForm).find('input[name="search"]');
+
+    if (searchParams.has('search')) {
+        var resetButton = document.createElement('span');
+        $(searchInput).addClass('reset');
+        $(resetButton).addClass('reset-search');
+
+        var relativePath = window.location.pathname;
+
+        if (relativePath === '/products/search') {
+            $(resetButton).addClass('products')
+        } else {
+            $(resetButton).addClass('orders')
+        }
+
+        searchForm.append(resetButton);
     }
-};
 
-$('.shop-top-settings__form').on('submit', searchSubmitCallback);
+    $('.reset-search.products').on('click', function() {
+        document.location.href = '/products';
+    });
+
+    $('.reset-search.orders').on('click', function() {
+        document.location.href = '/orders';
+    });
+});
+
+$(function () {
+    $('.update-order').on('click', function (event) {
+        event.preventDefault();
+        document.getElementById('update-status-form').submit();
+    })
+});

@@ -171,7 +171,7 @@ class ProductRepository extends BaseRepository
             'images',
             'category',
         ])
-            ->find($id)
+            ->findOrFail($id)
             ->makeVisible('is_in_wish_list');
     }
 
@@ -198,7 +198,8 @@ class ProductRepository extends BaseRepository
             ->where('store_id', $storeId)
             ->offset($offset)
             ->limit(Product::PRODUCTS_PAGE_LIMIT)
-            ->get();
+            ->get()
+            ->makeVisible('is_in_wish_list');
     }
 
     /**
@@ -219,6 +220,7 @@ class ProductRepository extends BaseRepository
     {
         return Product::where('products.name', 'LIKE', '%' . $searchText . '%')
             ->where('store_id', $storeId)
+            ->orderBy('updated_at', 'DESC')
             ->paginate(config('wish.store.pagination'));
     }
 }

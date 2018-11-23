@@ -6,6 +6,7 @@
 namespace App\Providers;
 
 use App\Http\ViewComposers\GlobalComposer;
+use App\Http\ViewComposers\SettingsComposer;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\View;
 
@@ -18,6 +19,7 @@ class ComposerServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        View::composer(['*.web.*'], GlobalComposer::class);
+        View::composer(['*.web.*', 'merchants.auth.*'], GlobalComposer::class);
+        View::composer(['layouts.merchants.app'], SettingsComposer::class);
     }
 }

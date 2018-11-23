@@ -27,7 +27,7 @@
         <div class="main-shop-wrapper">
             <div class="container">
                 <!-- Add new -->
-                {!! Form::model(null, ['route' => ['products.store'], 'method' => 'POST', 'files' => true, 'name' => 'add-new-product', 'id'=>'add-new-product']) !!}
+                {!! Form::model(null, ['route' => ['products.store'], 'class' => 'create-product form', 'method' => 'POST', 'files' => true, 'name' => 'add-new-product', 'id'=>'add-new-product']) !!}
                     <p class="form-title">{{__('products.create_product_section_title')}}</p>
                     <hr class="form-hr">
 
@@ -178,7 +178,7 @@
                     </div>
 
                     <div class="form-wrapper__btn form-wrapper__btn--ta-r">
-                        {!! Form::submit(__('products.create_submit')) !!}
+                        {!! Form::submit(__('products.create_submit'), ['class' => 'create-product submit']) !!}
                     </div>
 
             {!! Form::close() !!}<!-- /. end add new -->

@@ -20,6 +20,7 @@
 @yield('content')
 
 <!-- Footer -->
+@section('footer')
 <footer class="@yield('footer-class')">
     <div id="configs">
         @each('layouts.merchants.configs', $configs, 'configs')
@@ -28,6 +29,7 @@
         <p class="footer__copy">&copy; {{date('Y')}} Better than Wish</p>
     </div>
 </footer><!-- /. footer -->
+@show
 
 <script src="{{asset('js/wish.js')}}"></script>
 <script src="{{asset('js/custom.js')}}"></script>
