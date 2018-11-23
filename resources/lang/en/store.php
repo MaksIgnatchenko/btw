@@ -11,4 +11,12 @@ return [
     'view_gallery' => 'Gallery',
     'view_list' => 'List',
     'product_info_text' => 'Info',
+
+    '404_page' => [
+        'title' => '404 not found',
+        'error' => 'Error: 404 Page Not Found',
+        'description_first' => 'Sorry, the page you\'re looking for cannot be accessed.',
+        'description_second' => 'Either check the URL, ',
+        'url_text' => 'go home',
+    ]
 ];

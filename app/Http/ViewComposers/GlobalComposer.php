@@ -16,17 +16,11 @@ class GlobalComposer
     protected $merchant;
 
     /**
-     * @var array
-     */
-    protected $configs;
-
-    /**
      * StoreComposer constructor.
      */
     public function __construct()
     {
         $this->merchant = Auth::user();
-        $this->configs = config('wish.storage');
     }
 
 
@@ -36,6 +30,5 @@ class GlobalComposer
     public function compose(View $view)
     {
         $view->with('merchant', $this->merchant);
-        $view->with('configs', $this->configs);
     }
 }
