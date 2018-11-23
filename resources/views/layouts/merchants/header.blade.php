@@ -8,7 +8,7 @@
                 <div class="header__lang">English<span>EN</span></div>
 
                 @auth('merchant')
-                    @if(Route::currentRouteName() !== 'products.create')
+                    @if(Route::currentRouteName() === 'products.index')
                         <div class="header-shop__add">
                             <a href="{{ route('products.create') }}"
                                class="shop-header__btn"><i></i>{{__('store.add_new_products')}}</a>
