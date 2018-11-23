@@ -62,7 +62,7 @@
                 </div>
 
                 <div class="t-a-center edit-bottom-m">
-                    <a class="btn" href="{{ route('products.edit', ['product' => $product]) }}">{{ __('products.edit') }}</a>
+                    <a class="btn btn--heavy" href="{{ route('products.edit', ['product' => $product]) }}">{{ __('products.edit') }}</a>
                 </div>
 
             </div>
