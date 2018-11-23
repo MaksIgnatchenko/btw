@@ -54,6 +54,10 @@ class Order extends Model
         'status'   => 'string',
     ];
 
+    protected $hidden = [
+        'customer_id',
+    ];
+
     /**
      * @throws WrongOrderStatusException
      * @throws WrongReturnDetailsException
@@ -112,6 +116,27 @@ class Order extends Model
     public function getAmountAttribute(): int
     {
         return $this->quantity * $this->product->price;
+    }
+
+    /**
+     * @param $product
+     * @return \stdClass
+     */
+    public function getProductAttribute($product): \stdClass
+    {
+        $product = json_decode($product, false, 512, JSON_FORCE_OBJECT);
+        $mutatedProduct = [];
+
+        $mutatedProduct['id'] = $product->id;
+        $mutatedProduct['name'] = $product->name;
+        $mutatedProduct['price'] = $product->price;
+        $mutatedProduct['store']['id'] = $product->store->id;
+        $mutatedProduct['store']['name'] = $product->store->name;
+        $mutatedProduct['store']['merchant_id'] = $product->store->merchant_id;
+        $mutatedProduct['main_image'] = $product->main_image;
+        $mutatedProduct['description'] = $product->description;
+
+        return (object) $mutatedProduct;
     }
 
     /**
