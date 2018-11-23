@@ -5,6 +5,8 @@
 @apiPermission Guest
 @apiVersion 0.1.2
 
+@apiParam {Integer} Optional. Result offset
+
 @apiSuccessExample Success-Response:
 HTTP/1.1 200 OK
 {
