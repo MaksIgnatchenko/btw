@@ -37,7 +37,7 @@
                         </td>
 
                         <input type="hidden" name="attributes[]"
-                               value='{{json_encode($attribute)}}'>
+                               value='{{DisplayValues::attributeToJson($attribute)}}'>
                     </tr>
                 @endforeach
                 </tbody>
