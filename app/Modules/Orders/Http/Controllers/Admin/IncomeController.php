@@ -75,6 +75,7 @@ class IncomeController extends Controller
             return redirect(route('payments.income.index'));
         }
 
+        /** @var Product $product */
         $product = app(Product::class);
         $product->forceFill((array)$order->product);
         $product->amount = CalculatorHelper::orderAmount($order);
@@ -83,12 +84,11 @@ class IncomeController extends Controller
     }
 
     /**
-     * Update the specified MerchantReview in storage.
-     *
-     * @param int $id
+     * @param int                $id
      * @param UpdateOrderRequest $request
      *
      * @return RedirectResponse
+     * @throws \Prettus\Validator\Exceptions\ValidatorException
      */
     public function update(int $id, UpdateOrderRequest $request): RedirectResponse
     {

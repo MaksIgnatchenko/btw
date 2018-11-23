@@ -64,7 +64,8 @@ HTTP/1.1 200 OK
 
 @apiHeader {String} Authorization <code><b>token_type</b> <b>access_token</b></code>
 
-@apiParam {String} product_id Product ID
+@apiParam {Integer} product_id Product ID
+@apiParam {Integer} quantity Optional. Product quantity
 
 @apiSuccessExample Success-Response:
 HTTP/1.1 200 OK
@@ -83,7 +84,7 @@ HTTP/1.1 200 OK
 @apiHeader {String} Authorization <code><b>token_type</b> <b>access_token</b></code>
 @apiHeader {String} Content-Type <code>application/x-www-form-urlencoded</code>
 
-@apiParam {String} quantity Product quantity
+@apiParam {Integer} quantity Product quantity
 
 @apiSuccessExample Success-Response:
 HTTP/1.1 200 OK

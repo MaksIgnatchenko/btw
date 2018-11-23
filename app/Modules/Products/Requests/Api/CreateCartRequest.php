@@ -36,6 +36,7 @@ class CreateCartRequest extends FormRequest
     {
         return [
             'product_id' => 'required|exists:products,id',
+            'quantity' => 'sometimes|integer',
         ];
     }
 }

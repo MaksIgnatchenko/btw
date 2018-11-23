@@ -5,8 +5,6 @@
 @apiPermission Guest
 @apiVersion 0.1.2
 
-@apiParam {Integer} Optional. Result offset
-
 @apiSuccessExample Success-Response:
 HTTP/1.1 200 OK
 {
@@ -40,6 +38,8 @@ HTTP/1.1 200 OK
 @apiPermission Guest
 @apiVersion 0.1.2
 
+@apiParam {Integer} offset Optional. Result offset
+
 @apiSuccessExample Success-Response:
 HTTP/1.1 200 OK
 {
@@ -48,7 +48,16 @@ HTTP/1.1 200 OK
             "id": 21,
             "name": "Test Product #1",
             "category_id": 8,
-            "attributes": null,
+            "attributes": {
+                "color": {
+                    "type": "text",
+                    "value": "Red"
+                },
+                "length" {
+                    "type": "digit",
+                    "value": "120"
+                }
+            },
             "quantity": 3,
             "price": "238.67",
             "main_image": "demo.jpeg",
@@ -62,7 +71,16 @@ HTTP/1.1 200 OK
             "id": 22,
             "name": "Test Product #2",
             "category_id": 7,
-            "attributes": null,
+            "attributes": {
+                "color": {
+                    "type": "text",
+                    "value": "Red"
+                },
+                "length" {
+                    "type": "digit",
+                    "value": "120"
+                }
+            },
             "quantity": 10,
             "price": "171.43",
             "main_image": "demo.jpeg",

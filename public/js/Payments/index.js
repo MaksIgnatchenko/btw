@@ -2,7 +2,7 @@ $(document).ready(function () {
 
     var html = '<select class="form-control">' +
         "<option value=' '>All statuses</option>" +
-        "<option value='in_progress'>In progress</option>" +
+        "<option value='in_process'>In process</option>" +
         "<option value='shipped'>Shipped</option>" +
         "</select>";
 
