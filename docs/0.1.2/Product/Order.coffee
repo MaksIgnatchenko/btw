@@ -13,95 +13,48 @@
 HTTP/1.1 200 OK
 {
     "orders": [
-        {
-            "id": 1,
-            "customer_id": 2,
-            "merchant_id": 3,
-            "transaction_id": "5",
-            "product": {
-                "id": 313,
-                "name": "Test Product",
-                "price": 2,
-                "store": {
-                    "id": 2,
-                    "city": "Some city",
-                    "info": "Some store info",
-                    "name": "Test Store",
-                    "country": "DK",
-                    "merchant": {
-                        "id": 2,
-                        "email": "merchant@gmail.com",
-                        "phone": "",
-                        "avatar": null,
-                        "last_name": "First Name",
-                        "created_at": "2018-10-31 11:22:33",
-                        "first_name": "Last Name",
-                        "updated_at": "2018-10-31 11:22:33",
-                        "background_img": null
+         {
+                    "id": 5,
+                    "merchant_id": 2,
+                    "transaction_id": "5",
+                    "product": {
+                        "id": 315,
+                        "name": "Test product",
+                        "price": 3,
+                        "store": {
+                            "id": 2,
+                            "name": "Test Store",
+                            "merchant_id": 2
+                        },
+                        "main_image": "http://wish.appus.work/storage/images/products/main_images/original/2/lJeeIh2fuyzUAtZbMm8IaXPDZKLA2R1HzZdwg7BV.jpeg",
+                        "description": "Test product description"
                     },
-                    "created_at": "2018-10-31 11:22:33",
-                    "updated_at": "2018-10-31 11:22:33",
-                    "merchant_id": 2
+                    "quantity": 1,
+                    "created_at": "2018-11-16 16:06:30",
+                    "updated_at": "2018-11-16 16:06:30",
+                    "status": "in_process"
                 },
-                "quantity": 253,
-                "store_id": 2,
-                "attributes": [],
-                "created_at": "2018-11-16 15:00:01",
-                "main_image": "http://localhost:8050/storage/images/products/main_images/original/2/AiA1hnhRo3nwZxmC6xO8MMsKCbfr88724aa9l79F.jpeg",
-                "updated_at": "2018-11-16 16:06:30",
-                "category_id": 7,
-                "description": "Some nice product"
-            },
-            "quantity": 1,
-            "status": "in_process",
-            "created_at": "2018-11-16 16:06:30",
-            "updated_at": "2018-11-16 16:06:30"
-        },
-        {
-            "id": 2,
-            "customer_id": 2,
-            "merchant_id": 2,
-            "transaction_id": "5",
-            "product": {
-                "id": 314,
-                "name": "Elephant",
-                "price": 68,
-                "store": {
-                    "id": 2,
-                    "city": "Some city",
-                    "info": "Some store info",
-                    "name": "Test Store",
-                    "country": "DK",
-                    "merchant": {
-                        "id": 2,
-                        "email": "merchant@gmail.com",
-                        "phone": "",
-                        "avatar": null,
-                        "last_name": "First Name",
-                        "created_at": "2018-10-31 11:22:33",
-                        "first_name": "Last Name",
-                        "updated_at": "2018-10-31 11:22:33",
-                        "background_img": null
+                {
+                    "id": 6,
+                    "merchant_id": 2,
+                    "transaction_id": "5",
+                    "product": {
+                        "id": 318,
+                        "name": "Test product 2",
+                        "price": 4,
+                        "store": {
+                            "id": 2,
+                            "name": "Test Store",
+                            "merchant_id": 2
+                        },
+                        "main_image": "http://wish.appus.work/storage/images/products/main_images/original/2/lJeeIh2fuyzUAtZbMm8IaXPDZKLA2R1HzZdwg7BV.jpeg",
+                        "description": "Test product description"
                     },
-                    "created_at": "2018-10-31 11:22:33",
-                    "updated_at": "2018-10-31 11:22:33",
-                    "merchant_id": 2
-                },
-                "quantity": 29,
-                "store_id": 2,
-                "attributes": [],
-                "created_at": "2018-11-16 15:00:51",
-                "main_image": "http://localhost:8050/storage/images/products/main_images/original/2/My4bv9OuVDugj97kIxow5IfePRBKpvX5khiNJ9UG.jpeg",
-                "updated_at": "2018-11-16 16:06:30",
-                "category_id": 6,
-                "description": "Some nice elephant"
-            },
-            "quantity": 1,
-            "status": "in_process",
-            "created_at": "2018-11-16 16:06:30",
-            "updated_at": "2018-11-16 16:06:30"
-        },
-
+                    "quantity": 1,
+                    "created_at": "2018-11-16 16:06:30",
+                    "updated_at": "2018-11-21 13:56:48",
+                    "status": "shipped"
+                }
     ]
 }
 
@@ -129,48 +82,26 @@ HTTP/1.1 422 Unprocessable Entity
 HTTP/1.1 200 OK
 {
     "order": {
-        "id": 2,
-        "merchant_id": 2,
-        "transaction_id": "5",
-        "product": {
-            "id": 314,
-            "name": "Elephant",
-            "price": 68,
-            "store": {
-                "id": 2,
-                "city": "Some city",
-                "info": "Some store info",
-                "name": "Test Store",
-                "country": "DK",
-                "merchant": {
-                    "id": 2,
-                    "email": "merchant@gmail.com",
-                    "phone": "",
-                    "avatar": null,
-                    "last_name": "First Name",
-                    "created_at": "2018-10-31 11:22:33",
-                    "first_name": "Last Name",
-                    "updated_at": "2018-10-31 11:22:33",
-                    "background_img": null
-                },
-                "created_at": "2018-10-31 11:22:33",
-                "updated_at": "2018-10-31 11:22:33",
-                "merchant_id": 2
-            },
-            "quantity": 29,
-            "store_id": 2,
-            "attributes": [],
-            "created_at": "2018-11-16 15:00:51",
-            "main_image": "http://localhost:8050/storage/images/products/main_images/original/2/My4bv9OuVDugj97kIxow5IfePRBKpvX5khiNJ9UG.jpeg",
-            "updated_at": "2018-11-16 16:06:30",
-            "category_id": 6,
-            "description": "Some nice elephant"
-        },
-        "quantity": 1,
-        "status": "in_process",
-        "created_at": "2018-11-16 16:06:30",
-        "updated_at": "2018-11-16 16:06:30"
-    }
+                     "id": 5,
+                     "merchant_id": 2,
+                     "transaction_id": "5",
+                     "product": {
+                         "id": 315,
+                         "name": "Test product",
+                         "price": 3,
+                         "store": {
+                             "id": 2,
+                             "name": "Test Store",
+                             "merchant_id": 2
+                         },
+                         "main_image": "http://wish.appus.work/storage/images/products/main_images/original/2/lJeeIh2fuyzUAtZbMm8IaXPDZKLA2R1HzZdwg7BV.jpeg",
+                         "description": "Test product description"
+                     },
+                     "quantity": 1,
+                     "created_at": "2018-11-16 16:06:30",
+                     "updated_at": "2018-11-16 16:06:30",
+                     "status": "in_process"
+                 }
 }
 
 @apiErrorExample Error-Response:
