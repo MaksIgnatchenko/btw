@@ -84,6 +84,8 @@ class IncomeController extends Controller
     }
 
     /**
+     * Update the specified MerchantReview in storage.
+     *
      * @param int                $id
      * @param UpdateOrderRequest $request
      *
