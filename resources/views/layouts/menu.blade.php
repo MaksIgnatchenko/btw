@@ -22,7 +22,7 @@
     </ul>
 </li>
 
-<li class="{{ActiveLink::checkCategories() ? 'active' : ''}}">
+<li class="{{ActiveLink::checkIncome() ? 'active' : ''}}">
     <a href="{{route('payments.income.index')}}"><i class="fa fa-sign-in"></i> <span>Income</span></a>
 </li>
 

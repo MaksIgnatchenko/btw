@@ -4,7 +4,10 @@ namespace App\Exceptions;
 
 use Exception;
 use Illuminate\Auth\AuthenticationException;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Support\Facades\Auth;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Tymon\JWTAuth\Exceptions\TokenExpiredException;
 use Tymon\JWTAuth\Exceptions\TokenInvalidException;
 
@@ -56,11 +59,43 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $e)
     {
+        $requestPath = $request->path();
+
         if ($e instanceof TokenExpiredException) {
             return response()->json(['token_expired'], $e->getStatusCode());
         }
         if ($e instanceof TokenInvalidException) {
             return response()->json(['token_invalid'], $e->getStatusCode());
+        }
+
+        if ($e instanceof NotFoundHttpException) {
+            if ($request->ajax()) {
+                return response()->json(['error' => 'Not Found', 404]);
+            }
+
+            if (strpos($requestPath, 'admin/') !== false) {
+                return response()->view('layouts.404_page', [], 404);
+            }
+
+            $merchant = Auth::user();
+            return response()->view('layouts.merchants.404_page', [
+                'merchant' => $merchant,
+            ], 404);
+        }
+
+        if ($e instanceof ModelNotFoundException) {
+            if ($request->ajax()) {
+                return response()->json(['error' => 'No query results for model', 404]);
+            }
+
+            if (strpos($requestPath, 'admin/') !== false) {
+                return response()->view('layouts.404_page', [], 404);
+            }
+
+            $merchant = Auth::user();
+            return response()->view('layouts.merchants.404_page', [
+                'merchant' => $merchant,
+            ], 404);
         }
 
         return parent::render($request, $e);

@@ -23,6 +23,7 @@ class DisplayValues
     }
 
     // TODO объединить?
+
     /**
      * @param string $string
      *
@@ -44,9 +45,9 @@ class DisplayValues
      *
      * @return string
      */
-    public static function getAttributeTypeText(string $string): string
+    public static function getAttributeTypeText(array $attribute): string
     {
-        $type = \GuzzleHttp\json_decode($string)->type;
+        $type = $attribute['type'];
 
         if (AttributeTypesEnum::check($type)) {
             return AttributeTypesEnum::toArray()[$type];
@@ -55,9 +56,19 @@ class DisplayValues
         return $type;
     }
 
+    /**
+     * @param array $attribute
+     *
+     * @return string|null
+     */
+    public static function attributeToJson(array $attribute): ?string
+    {
+        return json_encode($attribute);
+    }
+
     // TODO объединить???
     /**
-     * @param Category $category
+     * @param Category   $category
      * @param array|null $oldAttributes
      *
      * @return array
@@ -75,7 +86,7 @@ class DisplayValues
     }
 
     /**
-     * @param Category $category
+     * @param Category   $category
      * @param array|null $oldParameters
      *
      * @return array
