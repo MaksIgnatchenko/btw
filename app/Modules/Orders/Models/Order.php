@@ -196,7 +196,7 @@ class Order extends Model
      *
      * @return mixed
      */
-    public function scopewithAmount($query)
+    public function scopeWithAmount($query)
     {
         return $query->select([
             'orders.*',

@@ -38,8 +38,8 @@ class AddProduct extends AbstractAddToCart implements AddToCartInterface
 
         $cart->fill([
             'customer_id' => $this->customerId,
-            'product_id'  => $this->product->id,
-            'quantity'    => $this->quantity,
+            'product_id' => $this->product->id,
+            'quantity' => $this->quantity,
         ]);
 
         $this->cartRepository->save($cart);

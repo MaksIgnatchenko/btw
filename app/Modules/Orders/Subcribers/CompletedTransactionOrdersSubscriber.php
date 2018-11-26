@@ -60,15 +60,14 @@ class CompletedTransactionOrdersSubscriber
                 'customer_id'    => $customer->id,
                 'merchant_id'    => $merchant->id,
 
-                'product'  => json_encode($product->getOriginal()),
+                // TODO make it not so ugly
+                'product'  => array_merge($product->toArray(), ['main_image' => $product->getOriginal('main_image')]),
                 'quantity' => $cart->quantity,
                 'status'   => OrderStatusEnum::IN_PROCESS,
 
                 'created_at' => new Carbon(),
                 'updated_at' => new Carbon(),
-            ])->toArray();
+            ])->save();
         }
-
-        $orderRepository->saveMany($orders);
     }
 }

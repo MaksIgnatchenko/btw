@@ -41,7 +41,7 @@ abstract class SettingsControllerHelper
 
         $disabledStoreCategories = $merchant->store->categories()
             ->whereHas('products')
-            ->pluck('name', 'id')->toArray();
+            ->pluck('name', 'categories.id')->toArray();
 
         return (new MerchantSettingsDTO())
             ->setCountries($geographyService->getCountries()->pluck('name', 'id')->toArray())
