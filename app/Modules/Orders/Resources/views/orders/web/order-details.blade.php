@@ -22,7 +22,9 @@
             <div class="table-custom__line table-custom__line--body">
                 <div class="table-custom__prod">
                     <p class="table-custom__mobile-title">{{ __('orders.order_details.product') }}</p>
-                    {{ $order->product->name }}
+                    <a href="{{route('products.show', $order->product->id)}}" class="order product_link">
+                        {{ $order->product->name }}
+                    </a>
                 </div>
                 <div class="table-custom__purchase">
                     <p class="table-custom__mobile-title">{{ __('orders.order_details.purchase_date') }}</p>
