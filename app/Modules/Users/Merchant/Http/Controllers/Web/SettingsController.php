@@ -101,6 +101,7 @@ class SettingsController extends Controller
 
     /**
      * @return \Illuminate\Http\JsonResponse
+     * @throws \Prettus\Validator\Exceptions\ValidatorException
      */
     public function deleteAvatar()
     {
