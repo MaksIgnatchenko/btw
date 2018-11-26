@@ -43,7 +43,7 @@ abstract class SettingsControllerHelper
             ->whereHas('products', function ($query) use ($merchant) {
                 $query->where('store_id', $merchant->store->id);
             })
-            ->pluck('name', 'id')->toArray();
+            ->pluck('name', 'categories.id')->toArray();
 
         return (new MerchantSettingsDTO())
             ->setCountries($geographyService->getCountries()->pluck('name', 'id')->toArray())
