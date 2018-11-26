@@ -50,8 +50,6 @@ class CartController extends Controller
      * @param CreateCartRequest $request
      *
      * @return JsonResponse
-     * @throws \App\Modules\Products\Exceptions\WrongSourceException
-     * @throws \Illuminate\Database\Eloquent\MassAssignmentException
      */
     public function create(CreateCartRequest $request): JsonResponse
     {
@@ -69,7 +67,18 @@ class CartController extends Controller
             ], 400);
         }
 
-        (new AddProduct($product, $customerId))->execute();
+        $quantity = $request->get('quantity', 1);
+
+        if(!$this->checkQuantity($quantity, $product->quantity)) {
+            return response()->json([
+                'message' => 'The given data is invalid',
+                'errors' => [
+                    'quantity' => 'Quantity must be a value between 1 and product quantity',
+                ],
+            ], 422);
+        }
+
+        (new AddProduct($product, $customerId, $quantity))->execute();
 
         return response()->json(['success' => true]);
     }
@@ -87,10 +96,7 @@ class CartController extends Controller
 
         $this->checkCart($cart);
 
-        if (
-            $request->quantity <= $cart->product->quantity &&
-            $request->quantity >= Cart::PRODUCT_MIN_QUANTITY
-        ) {
+        if ($this->checkQuantity($request->quantity, $cart->product->quantity)) {
             $cart->quantity = $request->quantity;
             $this->cartRepository->save($cart);
 
@@ -106,10 +112,23 @@ class CartController extends Controller
     }
 
     /**
+     * @param int $requiredQuantity
+     * @param int $productQuantity
+     *
+     * @return bool
+     */
+    protected function checkQuantity(int $requiredQuantity, int $productQuantity): bool
+    {
+        return (
+            $requiredQuantity <= $productQuantity &&
+            $requiredQuantity >= Cart::PRODUCT_MIN_QUANTITY
+        );
+    }
+
+    /**
      * @param int $cartId
      *
      * @return JsonResponse
-     * @throws \App\Modules\Products\Exceptions\WrongOperationActionException
      */
     public function delete(int $cartId): JsonResponse
     {

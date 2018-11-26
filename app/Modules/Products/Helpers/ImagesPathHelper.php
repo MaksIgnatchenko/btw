@@ -18,7 +18,7 @@ class ImagesPathHelper
     public static function getProductImagePath(string $imageName): string
     {
         return Storage::url(join('/', [
-            config('wish.products.storage.main_images_path'),
+            config('wish.storage.products.main_images_path'),
             $imageName,
         ]));
     }

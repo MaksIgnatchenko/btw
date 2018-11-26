@@ -31,7 +31,7 @@
                         <div class="user-component__icon-bl">
                             <figure class="user-component__fig">
                                 <img class="user-component__img"
-                                     src="{{ $merchant->avatar ?? asset('img/user-icon-color.svg') }}" alt="user icon">
+                                     src="{{ $merchant->avatar ?? config('wish.storage.merchants.default_avatar_url') }}" alt="user icon">
                             </figure>
                             {!! Form::open([
                                 'id' => 'form-user-avatar',

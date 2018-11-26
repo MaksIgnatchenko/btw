@@ -60,7 +60,7 @@ class CompletedTransactionOrdersSubscriber
                 'customer_id'    => $customer->id,
                 'merchant_id'    => $merchant->id,
 
-                'product'  => $product->toJson(),
+                'product'  => json_encode($product->getOriginal()),
                 'quantity' => $cart->quantity,
                 'status'   => OrderStatusEnum::IN_PROCESS,
 
