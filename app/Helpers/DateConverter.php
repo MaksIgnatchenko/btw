@@ -9,7 +9,7 @@ use Carbon\Carbon;
 
 class DateConverter
 {
-    protected const DATE_FORMAT = 'd M Y';
+    protected const DATE_FORMAT = 'm/d/y';
 
     /**
      * @param string $date
