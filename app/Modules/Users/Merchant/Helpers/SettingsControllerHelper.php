@@ -39,11 +39,16 @@ abstract class SettingsControllerHelper
         /** @var CategoryRepository $categoryRepository */
         $categoryRepository = app(CategoryRepository::class);
 
+        $disabledStoreCategories = $merchant->store->categories()
+            ->whereHas('products')
+            ->pluck('name', 'id')->toArray();
+
         return (new MerchantSettingsDTO())
             ->setCountries($geographyService->getCountries()->pluck('name', 'id')->toArray())
             ->setStates($geographyService->getStates($merchantCountry->id)->pluck('name', 'id')->toArray())
             ->setCities($cities ?? [])
             ->setStoreCategories($merchant->store->categories->pluck('id')->toArray())
+            ->setStoreDisabledCategories($disabledStoreCategories)
             ->setCategories($categoryRepository->findRootCategories()->pluck('name', 'id')->toArray())
             ->setMerchantStoreCountry($geographyService->getCountryByShortName($merchant->store->country))
             ->setMerchantCountry($merchantCountry)

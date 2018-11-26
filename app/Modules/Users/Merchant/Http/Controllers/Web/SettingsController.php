@@ -42,6 +42,7 @@ class SettingsController extends Controller
      */
     public function index()
     {
+        /** @var Merchant $merchant */
         $merchant = Auth::user();
 
         return view('merchants.web.settings', [
