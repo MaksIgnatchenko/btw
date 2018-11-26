@@ -38,7 +38,7 @@
 
 .select-items .not-allowed {
     cursor: not-allowed;
-    color: black!important;
+    color: black !important;
 }
 
 .search-results.empty {
@@ -57,7 +57,7 @@
     width: 22px;
     height: 22px;
     text-indent: -9999px;
-    background: transparent url('../../img/cancel.svg')no-repeat center center;
+    background: transparent url('../../img/cancel.svg') no-repeat center center;
     -webkit-background-size: contain;
     background-size: contain;
     overflow: hidden;
@@ -71,17 +71,17 @@ input.reset::-webkit-search-results-decoration {
     display: none;
 }
 
-input[type="submit"].loading{
-    font-size:0;
-    width:30px;
-    height:30px;
-    margin-top:5px;
-    border-radius:15px;
-    padding:0;
-    border:3px solid #f6e346;
-    border-bottom:3px solid rgba(255,255,255,0.0);
-    border-left:3px solid rgba(255,255,255,0.0);
-    background-color:transparent !important;
+input[type="submit"].loading {
+    font-size: 0;
+    width: 30px;
+    height: 30px;
+    margin-top: 5px;
+    border-radius: 15px;
+    padding: 0;
+    border: 3px solid #f6e346;
+    border-bottom: 3px solid rgba(255, 255, 255, 0.0);
+    border-left: 3px solid rgba(255, 255, 255, 0.0);
+    background-color: transparent !important;
     animation-name: rotateAnimation;
     -webkit-animation-name: wk-rotateAnimation;
     animation-duration: 1s;
@@ -100,10 +100,29 @@ input[type="submit"].loading{
 }
 
 @keyframes rotateAnimation {
-    0%   {transform: rotate(0deg);}
-    100% {transform: rotate(360deg);}
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
 }
+
 @-webkit-keyframes wk-rotateAnimation {
-    0%   {-webkit-transform: rotate(0deg);}
-    100% {-webkit-transform: rotate(360deg);}
+    0% {
+        -webkit-transform: rotate(0deg);
+    }
+    100% {
+        -webkit-transform: rotate(360deg);
+    }
 }
+
+.img-fluid {
+    width: 100%;
+}
+
+li.tell-form-item__disabled span {
+    background-color: #b5b5b5!important;
+    padding-left: 10px!important;
+}
+

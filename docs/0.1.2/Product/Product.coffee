@@ -14,11 +14,19 @@ HTTP/1.1 200 OK
 {
     "products": [
         {
-
             "id": 21,
             "name": "Test Product #1",
             "category_id": 8,
-            "attributes": null,
+            "attributes": {
+                "color": {
+                    "type": "text",
+                    "value": "Red"
+                },
+                "length" {
+                    "type": "digit",
+                    "value": "120"
+                }
+            },
             "quantity": 8,
             "price": "238.67",
             "main_image": "demo.jpeg",
@@ -31,7 +39,16 @@ HTTP/1.1 200 OK
             "id": 22,
             "name": "Test Product #2",
             "category_id": 7,
-            "attributes": null,
+            "attributes": {
+                "color": {
+                    "type": "text",
+                    "value": "Red"
+                },
+                "length" {
+                    "type": "digit",
+                    "value": "120"
+                }
+            },
             "quantity": 10,
             "price": "171.43",
             "main_image": "demo.jpeg",
@@ -83,7 +100,16 @@ HTTP/1.1 200 OK
             "name": "Test Product #10",
             "description": "Test Product #10 Desc",
             "category_id": 6,
-            "attributes": null,
+            "attributes": {
+                "color": {
+                    "type": "text",
+                    "value": "Red"
+                },
+                "length" {
+                    "type": "digit",
+                    "value": "120"
+                }
+            },
             "quantity": 9,
             "price": "721.68",
             "main_image": "demo.jpeg",
@@ -96,7 +122,16 @@ HTTP/1.1 200 OK
             "name": "Test Product #2",
             "description": "Test Product #2 Desc",
             "category_id": 7,
-            "attributes": null,
+            "attributes": {
+                "color": {
+                    "type": "text",
+                    "value": "Red"
+                },
+                "length" {
+                    "type": "digit",
+                    "value": "120"
+                }
+            },
             "quantity": 10,
             "price": "171.43",
             "main_image": "demo.jpeg",
@@ -138,7 +173,16 @@ HTTP/1.1 200 OK
         "name": "Test Product #2",
         "description": "Test Product #2 Desc",
         "category_id": 7,
-        "attributes": null,
+        "attributes": {
+            "color": {
+                "type": "text",
+                "value": "Red"
+            },
+            "length" {
+                "type": "digit",
+                "value": "120"
+            }
+        },
         "quantity": 10,
         "price": "171.43",
         "main_image": "demo.jpeg",

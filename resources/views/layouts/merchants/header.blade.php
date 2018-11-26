@@ -18,7 +18,7 @@
                     <div class="header-shop__user-info">
                         <div class="user__icon">
                             <figure class="user-icon__figure">
-                                <img src="{{asset('img/user-icon.png')}}" alt="User icon">
+                                <img class="img-fluid" src="{{ $merchant->avatar ?? config('wish.storage.merchants.default_avatar_url') }}" alt="User icon">
                             </figure>
                         </div>
                         <div class="user__name">

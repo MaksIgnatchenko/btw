@@ -42,6 +42,7 @@ class SettingsController extends Controller
      */
     public function index()
     {
+        /** @var Merchant $merchant */
         $merchant = Auth::user();
 
         return view('merchants.web.settings', [
@@ -162,6 +163,7 @@ class SettingsController extends Controller
      * @param string $fieldName
      *
      * @return bool
+     * @throws \Prettus\Validator\Exceptions\ValidatorException
      */
     protected function removeImage(string $fieldName): bool
     {
@@ -169,6 +171,10 @@ class SettingsController extends Controller
         $merchant = Auth::user();
 
         $imgUrl = str_replace(Storage::url(''), null, $merchant->$fieldName);
+
+        $this->merchantRepository->update([
+            $fieldName => null,
+        ], $merchant->id);
 
         return Storage::delete($imgUrl);
     }

@@ -106,8 +106,7 @@ window.onload = function () {
         }
 
         /* Generate markdown for category label */
-        function createLabel(id, name) {
-
+        function createLabel(id, name, disabled) {
             /* Create elements */
             var li = document.createElement('LI');
             var span = document.createElement('SPAN');
@@ -116,12 +115,20 @@ window.onload = function () {
             var input = document.createElement('INPUT');
 
             /* To combine elements */
-            span.appendChild(icon);
+            if(!disabled) {
+                span.appendChild(icon);
+            }
+
             span.appendChild(text);
             input.setAttribute('type', 'text');
             input.setAttribute('value', id);
             input.setAttribute('hidden', 'hidden');
             li.classList.add('tell-form-item');
+
+            if(disabled) {
+                li.classList.add('tell-form-item__disabled');
+            }
+
             li.appendChild(span);
             li.appendChild(input);
 
@@ -142,7 +149,8 @@ window.onload = function () {
             if (!that.classList.contains('tell-form-category__item--chosen')) {
                 var text = that.textContent || that.innerText;
                 that.classList.add('tell-form-category__item--chosen');
-                createLabel(that.getAttribute('id'), text);
+                createLabel(that.getAttribute('id'), text,
+                    that.classList.contains('tell-form-category__disabled'));
                 closeCategoryList(e);
             }
         }
@@ -151,8 +159,12 @@ window.onload = function () {
 
         if (cs) {
             cs.querySelectorAll('option[selected]').forEach(function (o) {
-                createLabel(o.getAttribute('value'), o.innerHTML);
-                document.querySelector('.tell-form-category__item[id="' + o.getAttribute('value') + '"]')
+                createLabel(
+                    o.getAttribute('value'),
+                    o.innerHTML,
+                    document.getElementById(o.getAttribute('value'))
+                        .classList.contains('tell-form-category__disabled'));
+                document.getElementById(o.getAttribute('value'))
                     .classList.add('tell-form-category__item--chosen');
             });
         }
@@ -299,7 +311,7 @@ window.onload = function () {
                         }
                 }
             ];
-            if(event.target.getAttribute('name') === 'add-new-product') {
+            if (event.target.getAttribute('name') === 'add-new-product') {
                 validationFields.push({
                     name: 'main_image',
                     type: 'input',
@@ -311,7 +323,7 @@ window.onload = function () {
                 });
             }
             var validator = new Validator(event.target, validationFields);
-            if(validator.validate()) {
+            if (validator.validate()) {
 
                 $('.create-product.submit').prop('disabled', true);
                 $('.create-product.submit').addClass('loading');

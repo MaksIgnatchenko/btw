@@ -6,14 +6,8 @@
 namespace App\Modules\Products\Requests\Api;
 
 use App\Modules\Bidding\Repositories\BidRepository;
-use App\Modules\Products\Enums\CartDeliveryOptionEnum;
-use App\Modules\Products\Enums\CartSourceEnum;
-use App\Modules\Products\Repositories\ProductRepository;
-use Carbon\Carbon;
+use App\Modules\Products\Models\Cart;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Validation\Rule;
-use Illuminate\Validation\Validator;
 
 class CreateCartRequest extends FormRequest
 {
@@ -36,6 +30,7 @@ class CreateCartRequest extends FormRequest
     {
         return [
             'product_id' => 'required|exists:products,id',
+            'quantity' => 'sometimes|integer|min:' . Cart::PRODUCT_MIN_QUANTITY . '|max:99',
         ];
     }
 }
