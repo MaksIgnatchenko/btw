@@ -94,6 +94,11 @@ input[type="submit"].loading{
     margin-right: 73px;
 }
 
+.order.product_link {
+    text-decoration: none;
+    color: #1d1d1d;
+}
+
 @keyframes rotateAnimation {
     0%   {transform: rotate(0deg);}
     100% {transform: rotate(360deg);}
