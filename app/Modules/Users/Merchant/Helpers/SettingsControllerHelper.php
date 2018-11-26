@@ -40,8 +40,10 @@ abstract class SettingsControllerHelper
         $categoryRepository = app(CategoryRepository::class);
 
         $disabledStoreCategories = $merchant->store->categories()
-            ->whereHas('products')
-            ->pluck('name', 'categories.id')->toArray();
+            ->whereHas('products', function ($query) use ($merchant) {
+                $query->where('store_id', $merchant->store->id);
+            })
+            ->pluck('name', 'id')->toArray();
 
         return (new MerchantSettingsDTO())
             ->setCountries($geographyService->getCountries()->pluck('name', 'id')->toArray())
