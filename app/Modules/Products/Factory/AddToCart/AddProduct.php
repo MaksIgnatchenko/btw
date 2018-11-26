@@ -15,7 +15,7 @@ class AddProduct extends AbstractAddToCart implements AddToCartInterface
     /** @var int $customerId */
     protected $customerId;
     /** @var int $customerId */
-    protected $qauntity;
+    protected $quantity;
 
     /**
      * AddProduct constructor.
@@ -29,7 +29,7 @@ class AddProduct extends AbstractAddToCart implements AddToCartInterface
         parent::__construct();
         $this->product = $product;
         $this->customerId = $customerId;
-        $this->qauntity = $quantity;
+        $this->quantity = $quantity;
     }
 
     public function execute(): void
@@ -39,7 +39,7 @@ class AddProduct extends AbstractAddToCart implements AddToCartInterface
         $cart->fill([
             'customer_id' => $this->customerId,
             'product_id'  => $this->product->id,
-            'quantity'    => $this->qauntity,
+            'quantity'    => $this->quantity,
         ]);
 
         $this->cartRepository->save($cart);
