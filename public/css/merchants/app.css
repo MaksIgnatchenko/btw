@@ -115,3 +115,9 @@ input[type="submit"].loading {
 .img-fluid {
     width: 100%;
 }
+
+li.tell-form-item__disabled span {
+    background-color: #b5b5b5!important;
+    padding-left: 10px!important;
+}
+

@@ -31,7 +31,8 @@
                         <div class="user-component__icon-bl">
                             <figure class="user-component__fig">
                                 <img class="user-component__img"
-                                     src="{{ $merchant->avatar ?? config('wish.storage.merchants.default_avatar_url') }}" alt="user icon">
+                                     src="{{ $merchant->avatar ?? config('wish.storage.merchants.default_avatar_url') }}"
+                                     alt="user icon">
                             </figure>
                             {!! Form::open([
                                 'id' => 'form-user-avatar',
@@ -353,7 +354,8 @@
                                                     <ul class="tell-form-category__list tell-form-category__list--close"
                                                         id="tell-categories">
                                                         @foreach ($merchantSettingsDto->getCategories() as $id => $name)
-                                                            <li class="tell-form-category__item"
+                                                            <li class="tell-form-category__item
+                                                                @if(in_array($name, $merchantSettingsDto->getStoreDisabledCategories(), true)) tell-form-category__disabled @endif"
                                                                 id="{{$id}}">{{$name}}</li>
                                                         @endforeach
                                                     </ul>
@@ -391,62 +393,63 @@
                                     'method' => 'put',
                                     'name' => 'changes-password',
                                     ]) !!}
-                                        <div class="form-line__wrapper form-line__wrapper--min-margin">
-                                            <div class="form-item__wrapper form-item__wrapper--text form-item__wrapper--text-settings">
-                                                <p class="form-item__title">Old password</p>
-                                            </div>
-                                            <div class="form-item__wrapper form-item__wrapper--field form-item__wrapper--field-settings">
-                                                {!! Form::password('old_password', [
-                                                'class' => 'form-item__inp',
-                                                'maxlength' => 25,
-                                                'required',
-                                                ]) !!}
-                                                @if ($errors->has('old_password'))
-                                                    <div class="alert alert-danger" role="alert">
-                                                        <strong>{{ $errors->first('old_password') }}</strong></div>
-                                                @endif
-                                            </div>
+                                    <div class="form-line__wrapper form-line__wrapper--min-margin">
+                                        <div class="form-item__wrapper form-item__wrapper--text form-item__wrapper--text-settings">
+                                            <p class="form-item__title">Old password</p>
                                         </div>
+                                        <div class="form-item__wrapper form-item__wrapper--field form-item__wrapper--field-settings">
+                                            {!! Form::password('old_password', [
+                                            'class' => 'form-item__inp',
+                                            'maxlength' => 25,
+                                            'required',
+                                            ]) !!}
+                                            @if ($errors->has('old_password'))
+                                                <div class="alert alert-danger" role="alert">
+                                                    <strong>{{ $errors->first('old_password') }}</strong></div>
+                                            @endif
+                                        </div>
+                                    </div>
 
-                                        <div class="form-line__wrapper form-line__wrapper--min-margin">
-                                            <div class="form-item__wrapper form-item__wrapper--text form-item__wrapper--text-settings">
-                                                <p class="form-item__title">New password</p>
-                                            </div>
-                                            <div class="form-item__wrapper form-item__wrapper--field form-item__wrapper--field-settings">
-                                                {!! Form::password('new_password', [
-                                                'id' => 'new-pass',
-                                                'class' => 'form-item__inp',
-                                                'maxlength' => 25,
-                                                'required',
-                                                ]) !!}
-                                                @if ($errors->has('new_password'))
-                                                    <div class="alert alert-danger" role="alert">
-                                                        <strong>{{ $errors->first('new_password') }}</strong></div>
-                                                @endif
-                                            </div>
+                                    <div class="form-line__wrapper form-line__wrapper--min-margin">
+                                        <div class="form-item__wrapper form-item__wrapper--text form-item__wrapper--text-settings">
+                                            <p class="form-item__title">New password</p>
                                         </div>
+                                        <div class="form-item__wrapper form-item__wrapper--field form-item__wrapper--field-settings">
+                                            {!! Form::password('new_password', [
+                                            'id' => 'new-pass',
+                                            'class' => 'form-item__inp',
+                                            'maxlength' => 25,
+                                            'required',
+                                            ]) !!}
+                                            @if ($errors->has('new_password'))
+                                                <div class="alert alert-danger" role="alert">
+                                                    <strong>{{ $errors->first('new_password') }}</strong></div>
+                                            @endif
+                                        </div>
+                                    </div>
 
-                                        <div class="form-line__wrapper form-line__wrapper--min-margin">
-                                            <div class="form-item__wrapper form-item__wrapper--text form-item__wrapper--text-settings">
-                                                <p class="form-item__title">Confirm password</p>
-                                            </div>
-                                            <div class="form-item__wrapper form-item__wrapper--field form-item__wrapper--field-settings">
-                                                {!! Form::password('new_password_confirmation', [
-                                                'id' => 'new-pass-confirm',
-                                                'class' => 'form-item__inp',
-                                                'maxlength' => 25,
-                                                'required',
-                                                ]) !!}
-                                                @if ($errors->has('new_password_confirmation'))
-                                                    <div class="alert alert-danger" role="alert">
-                                                        <strong>{{ $errors->first('new_password_confirmation') }}</strong></div>
-                                                @endif
-                                            </div>
+                                    <div class="form-line__wrapper form-line__wrapper--min-margin">
+                                        <div class="form-item__wrapper form-item__wrapper--text form-item__wrapper--text-settings">
+                                            <p class="form-item__title">Confirm password</p>
                                         </div>
+                                        <div class="form-item__wrapper form-item__wrapper--field form-item__wrapper--field-settings">
+                                            {!! Form::password('new_password_confirmation', [
+                                            'id' => 'new-pass-confirm',
+                                            'class' => 'form-item__inp',
+                                            'maxlength' => 25,
+                                            'required',
+                                            ]) !!}
+                                            @if ($errors->has('new_password_confirmation'))
+                                                <div class="alert alert-danger" role="alert">
+                                                    <strong>{{ $errors->first('new_password_confirmation') }}</strong>
+                                                </div>
+                                            @endif
+                                        </div>
+                                    </div>
 
-                                        <div class="t-a-right tabs-form-btn">
-                                            <button class="btn btn--heavy">Save</button>
-                                        </div>
+                                    <div class="t-a-right tabs-form-btn">
+                                        <button class="btn btn--heavy">Save</button>
+                                    </div>
                                     {!! Form::close() !!}
                                 </div>
                             </li><!-- /. end single tab -->

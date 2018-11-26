@@ -24,6 +24,9 @@ class MerchantSettingsDTO
     /** @var array */
     protected $storeCategories;
 
+    /** @var array */
+    protected $storeDisabledCategories;
+
     /** @var GeographyCountry */
     protected $merchantCountry;
 
@@ -112,6 +115,26 @@ class MerchantSettingsDTO
     public function setCategories(array $categories): self
     {
         $this->categories = $categories;
+
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getStoreDisabledCategories(): array
+    {
+        return $this->storeDisabledCategories;
+    }
+
+    /**
+     * @param array $storeDisabledCategories
+     *
+     * @return MerchantSettingsDTO
+     */
+    public function setStoreDisabledCategories(array $storeDisabledCategories): self
+    {
+        $this->storeDisabledCategories = $storeDisabledCategories;
 
         return $this;
     }
