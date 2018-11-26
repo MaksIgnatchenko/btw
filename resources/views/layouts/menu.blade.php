@@ -14,10 +14,10 @@
     </a>
     <ul class="treeview-menu">
         <li class="{{ActiveLink::checkCustomers() ? 'active' : ''}}">
-            <a href="{{route('customers.index')}}"><i class="fa fa-circle-o"></i>Customers</a>
+            <a href="{{route('customers.index')}}"><i class="fa {{ActiveLink::checkCustomers() ? 'fa-circle' : 'fa-circle-o'}}"></i>Customers</a>
         </li>
         <li class="{{ActiveLink::checkMerchants() ? 'active' : ''}}">
-            <a href="{{route('merchants.index')}}"><i class="fa fa-circle-o"></i>Merchants</a>
+            <a href="{{route('merchants.index')}}"><i class="fa {{ActiveLink::checkMerchants() ? 'fa-circle' : 'fa-circle-o'}}"></i>Merchants</a>
         </li>
     </ul>
 </li>
