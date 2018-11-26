@@ -55,8 +55,6 @@ var SelectDecorator = function (element) {
                 if ($.isArray(data)) {
                     $.each(data, function (index, value) {
 
-                        attribute = JSON.parse(value);
-
                         wrapper = document.createElement('div');
                         textWrapper = document.createElement('div');
                         label = document.createElement('p');
@@ -69,18 +67,18 @@ var SelectDecorator = function (element) {
                         $(inputWrapper).addClass('form-item__wrapper form-item__wrapper--field');
 
                         $(input).addClass('form-item__inp');
-                        if (attribute.type === 'digits') {
+                        if (this.type === 'digits') {
                             input.setAttribute('type', 'number');
                         } else {
                             input.setAttribute('type', 'text');
                         }
                         input.setAttribute('required', 'required');
-                        input.setAttribute('name', 'attributes[' + attribute.type + ']' + '[' + attribute.name + ']');
-                        input.setAttribute('data-name', attribute.name);
+                        input.setAttribute('name', 'attributes[' + this.type + ']' + '[' + this.name + ']');
+                        input.setAttribute('data-name', this.name);
                         input.setAttribute('maxlength', 100);
                         input.setAttribute('placeholder', 'Enter the value');
 
-                        label.innerHTML = attribute.name;
+                        label.innerHTML = this.name;
                         wrapper.appendChild(textWrapper);
                         wrapper.appendChild(inputWrapper);
                         textWrapper.appendChild(label);
