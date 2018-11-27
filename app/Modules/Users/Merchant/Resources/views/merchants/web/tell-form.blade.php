@@ -80,7 +80,7 @@
                 <button formaction="{{route('merchant.registration.restore-contact-info')}}"
                         class="tell-form-btn tell-form-btn--uncolor">{{__('merchants.back')}}</button>
 
-                {!! Form::submit('Enter my Store', ['class' => 'tell-form-btn tell-form-btn--color']) !!}
+                {!! Form::submit('Enter my Store', ['class' => 'tell-form-btn tell-form-btn--color submit']) !!}
 
             </div>
             <p class="tell-form-attention">
