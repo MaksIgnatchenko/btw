@@ -293,7 +293,7 @@ window.onload = function () {
             }
         }
 
-        function onProductFormSubmit(event, elements) {
+        function onProductFormSubmit(event, elements, submitButton) {
             event.preventDefault();
             /* Clear disable attribute on input type file before send form */
             for (var i = 0; i < elements.length; i++) {
@@ -325,8 +325,14 @@ window.onload = function () {
             var validator = new Validator(event.target, validationFields);
             if (validator.validate()) {
 
-                $('.create-product.submit').prop('disabled', true);
-                $('.create-product.submit').addClass('loading');
+                if (document.querySelector('.create-product.submit')) {
+                    disableAndAnimate($('.create-product.submit'));
+                }
+
+                if (document.querySelector('.edit-product.submit')) {
+                    disableAndAnimate($('.edit-product.submit'));
+                }
+
 
                 event.target.submit();
             }
@@ -485,6 +491,7 @@ window.onload = function () {
             document.querySelector('form[name="change-store"]').addEventListener('submit', function (event) {
                 event.preventDefault();
                 fileEl.removeAttribute('disabled');
+                disableAndAnimate($('.store-settings.submit'));
                 event.target.submit();
             });
         }
