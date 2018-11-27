@@ -425,11 +425,6 @@ window.onload = function () {
 
             if(sessionPage) {
                 $('li.tabs-item[data-page='+sessionPage+']')[0].click();
-                console.log('here');
-                // setTimeout(function() {
-                //     $('li.tabs-item[data-page='+sessionPage+']')[0].click();
-                // }, 250);
-
             }
         }
     })();
