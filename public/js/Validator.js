@@ -53,6 +53,10 @@ var Validator = function (form, fields) {
             .addClass('alert-danger')
             .attr('role', 'alert');
 
+        if (fieldName == 'main image') {
+            $('.main-image').css('border', 'solid 1px #dc3545');
+        }
+
         if (fieldName == 'category') {
             newElem.append(
                 $('<strong>')
