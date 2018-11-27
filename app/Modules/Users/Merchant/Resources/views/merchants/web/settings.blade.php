@@ -59,24 +59,24 @@
                     <div class="tabs-wrapper clearfix">
                         <!-- Tabs header -->
                         <ul class="tabs-header">
-                            <li class="tabs-item">
-                                <a href="#" class="tabs-link" data-page="account">
+                            <li class="tabs-item" data-page="account">
+                                <a href="#" class="tabs-link">
                                 <span class="tabs-link__icon">
                                     <img src="{{ asset('img/user-icon.svg') }}" alt="user icon">
                                 </span>
                                     My account settings
                                 </a>
                             </li>
-                            <li class="tabs-item">
-                                <a href="#" class="tabs-link" data-page="store">
+                            <li class="tabs-item" data-page="store">
+                                <a href="#" class="tabs-link">
                                 <span class="tabs-link__icon">
                                     <img src="{{ asset('img/store-icon.svg') }}" alt="store icon">
                                 </span>
                                     My store settings
                                 </a>
                             </li>
-                            <li class="tabs-item">
-                                <a href="#" class="tabs-link" data-page="password">
+                            <li class="tabs-item" data-page="password">
+                                <a href="#" class="tabs-link">
                                 <span class="tabs-link__icon">
                                     <img src="{{ asset('img/shield-icon.svg') }}" alt="shield icon">
                                 </span>
@@ -345,10 +345,7 @@
                                                     'multiple',
                                                     'hidden',
                                                     'id' => 'edit-categories']) !!}
-                                                    @if ($errors->has('categories'))
-                                                        <div class="alert alert-danger" role="alert">
-                                                            <strong>{{ $errors->first('categories') }}</strong></div>
-                                                    @endif
+
                                                     <p class="tell-form-category__display" id="category-title">
                                                         Categories</p>
                                                     <ul class="tell-form-category__list tell-form-category__list--close"
@@ -359,6 +356,10 @@
                                                                 id="{{$id}}">{{$name}}</li>
                                                         @endforeach
                                                     </ul>
+                                                    @if ($errors->has('categories'))
+                                                        <div class="alert alert-danger" role="alert">
+                                                            <strong>{{ $errors->first('categories') }}</strong></div>
+                                                    @endif
                                                 </div>
                                                 <div class="edit-labels">
                                                     <ul class="tell-form-list"></ul>

@@ -36,22 +36,6 @@ $(function () {
 
     new PictureUploader($('input[name=avatar]'));
     new PictureUploader($('input[name=background_image]'));
-
-    /* Sync last chosen tab to session storage */
-    $('a:not(.tabs-link)').on('click', function () {
-        sessionStorage.removeItem('page');
-    });
-
-    $('a.tabs-link').on('click', function () {
-        sessionStorage.setItem('page', $(this).data('page'));
-    });
-
-    /* Jump to last chosen tab */
-    var sessionPage = sessionStorage.getItem('page');
-
-    if(sessionPage) {
-        $(`a.tabs-link[data-page=${sessionPage}]`)[0].click();
-    }
 });
 
 

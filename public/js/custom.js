@@ -410,6 +410,27 @@ window.onload = function () {
 
         if (tabsWrapper) {
             initTabs(tabsWrapper);
+
+            /* Sync last chosen tab to session storage */
+            $('a:not(.tabs-link)').on('click', function (e) {
+                sessionStorage.removeItem('page');
+            });
+
+            $('.tabs-header li.tabs-item').on('click', function (e) {
+                sessionStorage.setItem('page', e.currentTarget.dataset.page);
+            });
+
+            /* Jump to last chosen tab */
+            var sessionPage = sessionStorage.getItem('page');
+
+            if(sessionPage) {
+                $('li.tabs-item[data-page='+sessionPage+']')[0].click();
+                console.log('here');
+                // setTimeout(function() {
+                //     $('li.tabs-item[data-page='+sessionPage+']')[0].click();
+                // }, 250);
+
+            }
         }
     })();
 
