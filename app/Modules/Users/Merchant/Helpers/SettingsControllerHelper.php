@@ -40,7 +40,9 @@ abstract class SettingsControllerHelper
         $categoryRepository = app(CategoryRepository::class);
 
         $disabledStoreCategories = $merchant->store->categories()
-            ->whereHas('products')
+            ->whereHas('products', function ($query) use ($merchant) {
+                $query->where('store_id', $merchant->store->id);
+            })
             ->pluck('name', 'categories.id')->toArray();
 
         return (new MerchantSettingsDTO())

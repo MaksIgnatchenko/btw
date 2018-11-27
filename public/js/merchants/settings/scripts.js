@@ -1,11 +1,4 @@
 $(function () {
-    /* Jump to last chosen tab */
-    var sessionPage = sessionStorage.getItem('page');
-
-    if(sessionPage) {
-        $(`a.tabs-link[data-page=${sessionPage}]`)[0].click();
-    }
-
     $('select[name=country]').on('change', OnCountryChange);
     $('select[name=state]').on('change', OnStateChange);
 
@@ -52,6 +45,13 @@ $(function () {
     $('a.tabs-link').on('click', function () {
         sessionStorage.setItem('page', $(this).data('page'));
     });
+
+    /* Jump to last chosen tab */
+    var sessionPage = sessionStorage.getItem('page');
+
+    if(sessionPage) {
+        $(`a.tabs-link[data-page=${sessionPage}]`)[0].click();
+    }
 });
 
 
