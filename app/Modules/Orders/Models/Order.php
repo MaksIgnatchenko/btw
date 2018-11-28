@@ -134,7 +134,8 @@ class Order extends Model
         $mutatedProduct['store']['id'] = $product->store->id;
         $mutatedProduct['store']['name'] = $product->store->name;
         $mutatedProduct['store']['merchant_id'] = $product->store->merchant_id;
-        $mutatedProduct['main_image'] = ImagesPathHelper::getProductThumbPath($product->main_image);
+        $mutatedProduct['main_image'] = ImagesPathHelper::getProductImagePath($product->main_image);
+        $mutatedProduct['main_image_thumb'] = ImagesPathHelper::getProductThumbPath($product->main_image);
         $mutatedProduct['description'] = $product->description;
 
         return (object) $mutatedProduct;
