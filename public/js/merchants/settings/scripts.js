@@ -3,7 +3,6 @@ $(function () {
     $('select[name=state]').on('change', OnStateChange);
 
     function OnCountryChange() {
-        console.log($('select[name=country]'));
         _W.geography.ajaxGetData(
             {
                 parent_id: $(this).find('[selected]').val(),
@@ -36,22 +35,6 @@ $(function () {
 
     new PictureUploader($('input[name=avatar]'));
     new PictureUploader($('input[name=background_image]'));
-
-    /* Sync last chosen tab to session storage */
-    $('a:not(.tabs-link)').on('click', function () {
-        sessionStorage.removeItem('page');
-    });
-
-    $('a.tabs-link').on('click', function () {
-        sessionStorage.setItem('page', $(this).data('page'));
-    });
-
-    /* Jump to last chosen tab */
-    var sessionPage = sessionStorage.getItem('page');
-
-    if(sessionPage) {
-        $(`a.tabs-link[data-page=${sessionPage}]`)[0].click();
-    }
 });
 
 

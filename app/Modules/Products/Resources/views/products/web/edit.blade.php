@@ -228,7 +228,7 @@
                 </div>
 
                 <div class="form-wrapper__btn form-wrapper__btn--ta-r">
-                    {!! Form::submit(__('products.update_submit')) !!}
+                    {!! Form::submit(__('products.update_submit'), ['class' => 'edit-product submit']) !!}
                 </div>
 
             {!! Form::close() !!}<!-- /. end add new -->

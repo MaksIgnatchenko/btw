@@ -8,6 +8,7 @@
     <title>@yield('title')</title>
     <link rel="stylesheet" href="{{asset('css/merchants/style.css')}}">
     <link rel="stylesheet" href="{{asset('css/merchants/app.css')}}">
+    <link rel="stylesheet" href="{{asset('css/loading.css')}}">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
@@ -33,6 +34,7 @@
 
 <script src="{{asset('js/wish.js')}}"></script>
 <script src="{{asset('js/custom.js')}}"></script>
+<script src="{{asset('js/loading.js')}}"></script>
 @yield('script')
 </body>
 </html>

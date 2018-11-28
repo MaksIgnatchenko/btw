@@ -143,7 +143,10 @@ class Merchant extends Authenticatable
         $this->address->update($data);
 
         $merchantRepository = app(MerchantRepository::class);
-        $merchantRepository->update($data, $this->id);
+        $merchantRepository->update(
+            array_merge($data, ['phone' => $data['phone_code'] . $data['phone_number']]),
+            $this->id
+        );
 
         return $this;
     }
