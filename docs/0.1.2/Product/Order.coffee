@@ -26,7 +26,8 @@ HTTP/1.1 200 OK
                             "name": "Test Store",
                             "merchant_id": 2
                         },
-                        "main_image": "http://wish.appus.work/storage/images/products/main_images/original/2/lJeeIh2fuyzUAtZbMm8IaXPDZKLA2R1HzZdwg7BV.jpeg",
+                        "main_image": "http://localhost:8050/storage/images/products/main_images/original/2/lJeeIh2fuyzUAtZbMm8IaXPDZKLA2R1HzZdwg7BV.jpeg",
+                        "main_image_thumb": "http://localhost:8050/storage/images/products/main_images/thumbs/2/lJeeIh2fuyzUAtZbMm8IaXPDZKLA2R1HzZdwg7BV.jpeg",
                         "description": "Test product description"
                     },
                     "quantity": 1,
@@ -47,7 +48,8 @@ HTTP/1.1 200 OK
                             "name": "Test Store",
                             "merchant_id": 2
                         },
-                        "main_image": "http://wish.appus.work/storage/images/products/main_images/original/2/lJeeIh2fuyzUAtZbMm8IaXPDZKLA2R1HzZdwg7BV.jpeg",
+                        "main_image": "http://localhost:8050/storage/images/products/main_images/original/2/lJeeIh2fuyzUAtZbMm8IaXPDZKLA2R1HzZdwg7BV.jpeg",
+                        "main_image_thumb": "http://localhost:8050/storage/images/products/main_images/thumbs/2/lJeeIh2fuyzUAtZbMm8IaXPDZKLA2R1HzZdwg7BV.jpeg",
                         "description": "Test product description"
                     },
                     "quantity": 1,
@@ -94,7 +96,8 @@ HTTP/1.1 200 OK
                              "name": "Test Store",
                              "merchant_id": 2
                          },
-                         "main_image": "http://wish.appus.work/storage/images/products/main_images/original/2/lJeeIh2fuyzUAtZbMm8IaXPDZKLA2R1HzZdwg7BV.jpeg",
+                         "main_image": "http://localhost:8050/storage/images/products/main_images/original/2/lJeeIh2fuyzUAtZbMm8IaXPDZKLA2R1HzZdwg7BV.jpeg",
+                         "main_image_thumb": "http://localhost:8050/storage/images/products/main_images/thumbs/2/lJeeIh2fuyzUAtZbMm8IaXPDZKLA2R1HzZdwg7BV.jpeg",
                          "description": "Test product description"
                      },
                      "quantity": 1,
