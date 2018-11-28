@@ -77,7 +77,7 @@ class IncomeController extends Controller
 
         /** @var Product $product */
         $product = app(Product::class);
-        $product->forceFill((array)$order->product);
+        $product->forceFill(json_decode($order->getOriginal('product'), true));
         $product->amount = CalculatorHelper::orderAmount($order);
 
         return view('income.show')->with(['order' => $order, 'product' => $product]);
