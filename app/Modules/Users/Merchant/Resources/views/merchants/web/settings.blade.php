@@ -39,8 +39,10 @@
                                 'files' => true,
                             ]) !!}
                             <div class="user-component__btn">
-                                <label for="user-avatar" class="user-component__btn-icon">change image</label>
-                                <input id="user-avatar" name="avatar" class="user-component__file" type="file">
+                                <label for="user-avatar" class="user-component__btn-icon
+                                       @if ($merchant->avatar) user-component__btn-icon--del @endif">change image</label>
+                                <input id="user-avatar" name="avatar" class="user-component__file" type="file"
+                                @if ($merchant->avatar) disabled="disabled" @endif>
                             </div>
                             {!! Form::close() !!}
                         </div>
@@ -250,9 +252,11 @@
                                                 ]) !!}
                                                 <p class="tabs-content__title"><span>Profile picture</span></p>
                                                 <div class="edit-photo-wrapper">
-                                                    <label for="edit-photo" class="btn btn--heavy edit-photo-btn">Change
-                                                        photo</label>
+                                                    <label for="edit-photo" class="btn btn--heavy edit-photo-btn">
+                                                        @if ($merchant->background_img) Remove photo @else Add photo @endif
+                                                        </label>
                                                     <input type="file" id="edit-photo" name="background_image"
+                                                           @if ($merchant->background_img) disabled="disabled" @endif
                                                            accept=".jpg, .jpeg, .png">
                                                 </div>
                                                 {!! Form::close() !!}

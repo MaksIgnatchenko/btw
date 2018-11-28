@@ -48,7 +48,6 @@ var PictureUploader = function (input) {
         switch (_self._imputName) {
             case 'avatar':
                 var target = _self._form.parent().siblings('div.user-component__title');
-
                 break;
             case 'background_image':
                 var target = _self._form.parents('.form-container-decor');
@@ -112,7 +111,9 @@ var PictureUploader = function (input) {
                 break;
             case 'background_image':
                 _self._form.parent().css('background-image', '');
+                _self._input.removeAttr('disabled').siblings('label').html('Add photo');
         }
+        _self._input.removeAttr('disabled');
     }
 
     function onUpdateImage(data) {

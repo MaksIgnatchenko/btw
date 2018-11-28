@@ -115,7 +115,7 @@ window.onload = function () {
             var input = document.createElement('INPUT');
 
             /* To combine elements */
-            if(!disabled) {
+            if (!disabled) {
                 span.appendChild(icon);
             }
 
@@ -125,7 +125,7 @@ window.onload = function () {
             input.setAttribute('hidden', 'hidden');
             li.classList.add('tell-form-item');
 
-            if(disabled) {
+            if (disabled) {
                 li.classList.add('tell-form-item__disabled');
             }
 
@@ -230,6 +230,11 @@ window.onload = function () {
     (function () {
         var inputs = document.querySelectorAll('.form-item__inp-file'),
             blocks = document.querySelectorAll('.form-item__block');
+
+        blocks.forEach(function (elem, i) {
+            eventToBlock = clearBlock.bind(null, elem, inputs[i]);
+            elem.addEventListener('click', eventToBlock, false);
+        });
 
         // Check image size
         function validateFileSize(size) {
@@ -429,8 +434,8 @@ window.onload = function () {
             /* Jump to last chosen tab */
             var sessionPage = sessionStorage.getItem('page');
 
-            if(sessionPage) {
-                $('li.tabs-item[data-page='+sessionPage+']')[0].click();
+            if (sessionPage) {
+                $('li.tabs-item[data-page=' + sessionPage + ']')[0].click();
             }
         }
     })();
