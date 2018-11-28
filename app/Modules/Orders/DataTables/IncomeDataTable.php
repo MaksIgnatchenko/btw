@@ -5,7 +5,6 @@ namespace App\Modules\Orders\DataTables;
 use App\Helpers\DateConverter;
 use App\Modules\Orders\Enums\OrderStatusEnum;
 use App\Modules\Orders\Models\Order;
-use App\Modules\Products\Helpers\ImagesPathHelper;
 use Illuminate\Database\Eloquent\Builder;
 use Yajra\DataTables\DataTableAbstract;
 use Yajra\DataTables\EloquentDataTable;
@@ -26,10 +25,7 @@ class IncomeDataTable extends DataTable
 
         return $dataTable->addColumn('action', 'income.datatables_actions')
             ->editColumn('picture', function (Order $order) {
-                $product = $order->product;
-                    $mainImageUrl = ImagesPathHelper::getProductThumbPath($product->main_image);
-
-                return "<img src='{$mainImageUrl}' alt='product image' height='75'>";
+                return "<img src='{$order->product->main_image_thumb}' alt='product image' height='75'>";
             })
             ->editColumn('name', function (Order $order) {
                 return $order->product->name ?? '';
