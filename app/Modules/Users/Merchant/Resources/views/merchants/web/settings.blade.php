@@ -96,6 +96,7 @@
                                     {!! Form::model($merchant, [
                                     'route' => ['merchant.settings.account', 'page' => 'settings'],
                                     'method' => 'put',
+                                    'name' => 'account-settings',
                                     ]) !!}
 
                                     <div class="form-line__wrapper form-line__wrapper--min-margin">
@@ -228,7 +229,7 @@
                                     </div>
 
                                     <div class="t-a-right tabs-form-btn">
-                                        {!! Form::submit('Save', ['class' => 'btn btn--heavy']) !!}
+                                        <button class="account-settings submit btn btn--heavy">Save</button>
                                     </div>
 
                                     {!! Form::close() !!}
@@ -378,7 +379,7 @@
                                     </div>
 
                                     <div class="t-a-right tabs-form-btn">
-                                        <button class="btn btn--heavy">Save</button>
+                                        <button class="store-settings submit btn btn--heavy">Save</button>
                                     </div>
                                     {!! Form::close() !!}
                                 </div>
@@ -448,7 +449,7 @@
                                     </div>
 
                                     <div class="t-a-right tabs-form-btn">
-                                        <button class="btn btn--heavy">Save</button>
+                                        <button class="settings-password submit btn btn--heavy">Save</button>
                                     </div>
                                     {!! Form::close() !!}
                                 </div>

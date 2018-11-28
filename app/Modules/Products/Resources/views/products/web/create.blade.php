@@ -109,7 +109,7 @@
                             </div>
                             <div class="form-item__wrapper form-item__wrapper--files">
                                 <ul class="form-item__list">
-                                    <li class="form-item__block">
+                                    <li class="form-item__block main-image">
                                         <label class="form-item__label">
                                             <span class="form-item__label-decor"></span>
                                             <input class="form-item__inp-file" type="file" name="main_image" accept=".jpg, .jpeg, .png">
