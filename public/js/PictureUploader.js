@@ -22,20 +22,39 @@ var PictureUploader = function (input) {
     });
 
     function imageAdd(e) {
+        clearErrorMsg();
+
         var files = e.target.files;
 
         var formData = new FormData();
 
         switch (_self._imputName) {
             case 'avatar':
+                _self.oldImageUrl =
+                    _self._form.siblings('figure').find('img').attr('src');
                 formData.append(_self._imputName, files[0]);
                 ajaxPostSendImage('settings/avatar', formData);
                 break;
             case 'background_image':
+                _self.oldImageUrl =
+                    _self._form.parent().css('background-image');
                 formData.append(_self._imputName, files[0]);
                 ajaxPostSendImage('settings/background', formData);
                 break;
         }
+    }
+
+    function clearErrorMsg() {
+        switch (_self._imputName) {
+            case 'avatar':
+                var target = _self._form.parent().siblings('div.user-component__title');
+
+                break;
+            case 'background_image':
+                var target = _self._form.parents('.form-container-decor');
+                break;
+        }
+        target.find('.alert.alert-danger').remove();
     }
 
     function ajaxPostSendImage(url, formData) {
@@ -49,7 +68,10 @@ var PictureUploader = function (input) {
             cache: false,
             processData: false,
             contentType: false,
-            error: function(jqXHR) {
+            success: function (data) {
+                onUpdateImage(data);
+            },
+            error: function (jqXHR) {
                 showErrors(jqXHR.responseJSON.errors);
             }
 
@@ -73,9 +95,9 @@ var PictureUploader = function (input) {
                 'X-CSRF-TOKEN': _self._form.find('input[name=_token]').val()
             },
             method: 'DELETE',
-            url: 'settings/avatar',
-            success: function (data, res) {
-                updatePictureContainer(data);
+            url: url,
+            success: function (data) {
+                onRemoveImage(data);
                 if (updateButton) {
                     _self._input.prev().removeClass('user-component__btn-icon--del');
                 }
@@ -83,17 +105,56 @@ var PictureUploader = function (input) {
         });
     }
 
-    function updatePictureContainer(data) {
+    function onRemoveImage(data) {
         switch (_self._input.attr('name')) {
             case 'avatar':
                 _self._form.siblings('figure').find('img').attr('src', data.default_avatar_url);
                 break;
-            case 'edit-photo':
-                _self._form.siblings('div.form-container-decor-abs').css('img').attr('background-image',);
+            case 'background_image':
+                _self._form.parent().css('background-image', '');
         }
     }
 
-    // TODO implement it
+    function onUpdateImage(data) {
+        switch (_self._input.attr('name')) {
+            case 'avatar':
+                _self._form.siblings('figure').find('img').attr('src', data.avatar_url);
+                break;
+            case 'background_image':
+                _self._form.parent().css('background-image', `url(${data.background_img_url})`);
+        }
+    }
+
     function showErrors(errors) {
+        var target = null;
+        switch (_self._imputName) {
+            case 'avatar':
+                target = _self._form.parent().siblings('div.user-component__title');
+                _self._input.removeAttr('disabled').siblings('label').removeClass('user-component__btn-icon--del');
+                if (!_self.oldImageUrl) {
+                    _self.oldImageUrl = _W.defaultImages.merchantAvatar;
+                }
+                _self._form.siblings('figure').find('img').attr('src', _self.oldImageUrl);
+                break;
+            case 'background_image':
+                target = _self._form.parents('.form-container-decor');
+                var labelText = 'Add photo';
+                if (_self.oldImageUrl !== 'none') {
+                    labelText = 'Change photo';
+                }
+                _self._input.removeAttr('disabled').siblings('label').html(labelText);
+                break;
+        }
+        if (target) {
+            target.append($('<div>')
+                .addClass('alert')
+                .addClass('alert-danger')
+                .attr('role', 'alert')
+                .append(
+                    $('<strong>')
+                        .html(errors[_self._imputName][0])
+                )
+            );
+        }
     }
 };

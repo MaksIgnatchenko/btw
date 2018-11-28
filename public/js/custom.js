@@ -484,7 +484,6 @@ window.onload = function () {
         function clearInput() {
             fileEl.previousElementSibling.innerHTML = "Add photo";
             fileEl.value = '';
-            document.querySelector('.form-container-decor-abs').style.backgroundImage = '';
             setTimeout(function () {
                 fileEl.removeAttribute('disabled');
             }, 100);
@@ -496,7 +495,6 @@ window.onload = function () {
                 imgSrc = window.URL.createObjectURL(file),
                 parentEl = document.querySelector('.form-container-decor-abs');
 
-            parentEl.style.backgroundImage = "url(" + imgSrc + ")";
             element.previousElementSibling.innerHTML = "Remove photo";
             element.setAttribute('disabled', 'disabled');
             label.addEventListener('click', clearInput);
@@ -536,7 +534,6 @@ window.onload = function () {
                 label = element.previousElementSibling,
                 img = document.querySelector('.user-component__img');
 
-            img.setAttribute('src', imgSrc);
             element.setAttribute('disabled', 'disabled');
             label.classList.add('user-component__btn-icon--del');
             label.addEventListener('click', clearInput);
