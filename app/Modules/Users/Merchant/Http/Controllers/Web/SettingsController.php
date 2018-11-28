@@ -130,6 +130,7 @@ class SettingsController extends Controller
 
     /**
      * @return \Illuminate\Http\JsonResponse
+     * @throws \Prettus\Validator\Exceptions\ValidatorException
      */
     public function deleteBackgroundImg()
     {
@@ -157,7 +158,7 @@ class SettingsController extends Controller
             $fieldName => $img->hashName(),
         ], $merchant->id);
 
-        return $imgUrl;
+        return Storage::url($imgUrl);
     }
 
     /**

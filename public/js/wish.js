@@ -56,7 +56,13 @@
     this.geography = new Geography();
     this.selectHelper = SelectHelper;
 
+    /** Configs **/
     this.maxFileSize = $('#configs').find('input[name=image_max_size]').data('value');
+
+    this.defaultImages = {
+        merchantAvatar: $('#configs').find('input[name=default_avatar_url]').data('value')
+    };
+    /* -------- */
 
     window._W = this;
 })();

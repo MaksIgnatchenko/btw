@@ -85,3 +85,11 @@ li.tell-form-item__disabled span {
     padding-left: 10px!important;
 }
 
+.user-component__btn {
+    top: 47px!important;
+}
+
+.settings-header .alert.alert-danger {
+    width: 202px;
+}
+
