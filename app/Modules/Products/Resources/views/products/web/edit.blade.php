@@ -153,7 +153,7 @@
                         <div class="form-item__wrapper form-item__wrapper--files">
                             <ul class="form-item__list">
                                 <li class="form-item__block" style="background-image: url({{$product->main_image}});">
-                                    <label class="form-item__label form-item__label--remove">
+                                    <label class="form-item__label">
                                         <span class="form-item__label-decor"></span>
                                         <input class="form-item__inp-file" type="file" name="main_image"
                                                accept=".jpg, .jpeg, .png">
@@ -169,7 +169,7 @@
                                         <label class="form-item__label form-item__label--remove">
                                             <span class="form-item__label-decor"></span>
                                             <input class="form-item__inp-file" type="file" name="product_gallery[]"
-                                                   accept=".jpg, .jpeg, .png">
+                                                   accept=".jpg, .jpeg, .png" disabled="disabled">
                                         </label>
                                     </li>
                                 @endforeach
