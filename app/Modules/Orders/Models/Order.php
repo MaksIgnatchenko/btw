@@ -19,6 +19,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\DB;
+use App\Modules\Products\Helpers\ImagesPathHelper;
 
 class Order extends Model
 {
@@ -133,7 +134,7 @@ class Order extends Model
         $mutatedProduct['store']['id'] = $product->store->id;
         $mutatedProduct['store']['name'] = $product->store->name;
         $mutatedProduct['store']['merchant_id'] = $product->store->merchant_id;
-        $mutatedProduct['main_image'] = $product->main_image;
+        $mutatedProduct['main_image'] = ImagesPathHelper::getProductThumbPath($product->main_image);
         $mutatedProduct['description'] = $product->description;
 
         return (object) $mutatedProduct;
