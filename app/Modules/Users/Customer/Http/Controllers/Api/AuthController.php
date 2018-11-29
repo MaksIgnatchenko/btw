@@ -7,7 +7,9 @@ namespace App\Modules\Users\Customer\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Modules\Users\Customer\DTO\SocialServiceDto;
+use App\Modules\Users\Customer\Events\CustomerCreatedFromFacebookEvent;
 use App\Modules\Users\Customer\Factories\SocialServiceFactory;
+use App\Modules\Users\Customer\Helpers\SocialAuthHelper;
 use App\Modules\Users\Customer\Http\Api\Requests\LoginRequest;
 use App\Modules\Users\Customer\Http\Requests\Api\LoginSocialRequest;
 use App\Modules\Users\Customer\Models\Customer;
@@ -15,6 +17,7 @@ use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Intervention\Image\Facades\Image;
 use Laravel\Socialite\Facades\Socialite;
 
 class AuthController extends Controller
@@ -138,16 +141,35 @@ class AuthController extends Controller
         return $this->respondWithToken($token);
     }
 
+    /**
+     * @param $socialUserData
+     */
     protected function authSocialUser($socialUserData)
     {
-        $customer = Customer::firstOrCreate([
-            'email' => $socialUserData['email'],
-        ], [
-            'email' => $socialUserData['email'],
-            'first_name' => $socialUserData['first_name'],
-            'last_name' => $socialUserData['last_name'],
-            'password' => Hash::make(str_random(30)),
-        ]);
+        $customer = Customer::where('email', $socialUserData['email'])->first();
+
+        if (null === $customer) {
+            if (SocialAuthHelper::isAvatarExists($socialUserData)) {
+                $avatarImageName = SocialAuthHelper::createAvatarImageName('jpeg');
+                $avatarImage = Image::make(file_get_contents(SocialAuthHelper::getAvatarUrl($socialUserData)))
+                    ->encode();
+            }
+
+            $customer = Customer::create([
+                'email' => $socialUserData['email'],
+                'first_name' => $socialUserData['first_name'],
+                'last_name' => $socialUserData['last_name'],
+                'password' => Hash::make(str_random(30)),
+                'avatar' => $avatarImageName ?? null,
+            ]);
+
+            $customerCreatedFromFacebookEvent = app(CustomerCreatedFromFacebookEvent::class);
+            $customerCreatedFromFacebookEvent
+                ->setCustomer($customer)
+                ->setAvatarImageName($avatarImageName ?? null)
+                ->setAvatarImage($avatarImage ?? null);
+            event($customerCreatedFromFacebookEvent);
+        }
 
         return Auth::login($customer);
     }
