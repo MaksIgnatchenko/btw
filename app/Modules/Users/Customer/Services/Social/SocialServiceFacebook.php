@@ -14,7 +14,7 @@ class SocialServiceFacebook extends SocialServiceAbstract implements SocialServi
 {
     protected $fbApp;
 
-    protected const FIELDS = 'id,first_name,last_name,email';
+    protected const FIELDS = 'id,first_name,last_name,email,picture';
 
     /**
      * SocialServiceFacebook constructor.
