@@ -17,13 +17,20 @@ class ChangePasswordRequest extends ChangePasswordRequestAbstract
      */
     public function rules()
     {
-        return parent::rules() + [
-            'old_password' => [
+        $rules = parent::rules();
+
+        $rules['old_password'] = array_merge($rules['old_password'],
+            [
                 new PasswordRule(),
-            ],
-            'new_password' => [
+            ]
+        );
+
+        $rules['new_password'] = array_merge($rules['new_password'],
+            [
                 new PasswordRule(),
-            ],
-        ];
+            ]
+        );
+
+        return $rules;
     }
 }
