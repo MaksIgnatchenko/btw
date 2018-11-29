@@ -86,10 +86,11 @@ class Product extends Model implements Ownable
     protected $hidden = [
         'wishPivot',
         'is_in_wish_list',
+        'store',
     ];
 
     protected $appends = [
-        'is_in_wish_list',
+        'is_in_wish_list', 'merchant_id',
     ];
 
     /**
@@ -115,6 +116,14 @@ class Product extends Model implements Ownable
     public function getIsInWishListAttribute(): bool
     {
         return (bool)$this->customersWishList()->where('customers.id', Auth::id())->count();
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getMerchantIdAttribute()
+    {
+        return $this->store->merchant->id;
     }
 
     /**
