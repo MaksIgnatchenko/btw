@@ -2001,6 +2001,7 @@ textarea::-moz-placeholder, textarea:-moz-placeholder {opacity: 1}
     -ms-flex: 1 0 auto;
     flex: 1 0 auto;
     padding-right: 110px;
+    width: calc(100% - 190px);
 }
 
 .form-item__wrapper--field-settings {
@@ -3524,6 +3525,7 @@ textarea.form-item__area::placeholder {color: #999;}
 
     .form-item__wrapper--field {
         padding-right: 0;
+        width: 100%;
     }
 
     .form-item__descr {
