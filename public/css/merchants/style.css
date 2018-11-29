@@ -2001,6 +2001,9 @@ textarea::-moz-placeholder, textarea:-moz-placeholder {opacity: 1}
     -ms-flex: 1 0 auto;
     flex: 1 0 auto;
     padding-right: 110px;
+}
+
+form[name="changes-password"] .form-item__wrapper--field {
     width: calc(100% - 190px);
 }
 
