@@ -25,7 +25,6 @@ class ProductTableSeeder extends Seeder
                 'main_image' => 'demo.jpeg',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
-                'offer_end' => Carbon::now()->addDays(mt_rand(30, 90)),
             ]);
         }
     }
