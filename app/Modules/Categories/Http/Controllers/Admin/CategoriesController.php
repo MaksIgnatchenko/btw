@@ -37,7 +37,7 @@ class CategoriesController extends Controller
      * CategoriesController constructor.
      *
      * @param CategoryRepository $categoriesRepository
-     * @param Category           $categoryModel
+     * @param Category $categoryModel
      */
     public function __construct(
         CategoryRepository $categoriesRepository,
@@ -71,20 +71,11 @@ class CategoriesController extends Controller
 
 
     /**
-     * @param int $id
-     *
+     * @param Category $category
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector|View
      */
-    public function addSubcategory(int $id)
+    public function addSubcategory(Category $category)
     {
-        try {
-            $category = $this->categoryRepository->find($id);
-        } catch (\Exception $e) {
-            Flash::error('Category not found');
-
-            return redirect(route('categories.index'));
-        }
-
         if ($category->is_final) {
             Flash::error('Category can\'t have subcategories');
 
@@ -127,7 +118,7 @@ class CategoriesController extends Controller
     public function saveSubcategory(SaveSubcategoryRequest $request)
     {
         $attributes = [
-            'name'     => $request->get('name'),
+            'name' => $request->get('name'),
             'is_final' => $request->get('is_final', false),
 
             'parent_category_id' => $request->get('parent_category_id'),
@@ -147,35 +138,11 @@ class CategoriesController extends Controller
     }
 
     /**
-     * @param $attributes
-     *
-     * @return array
-     */
-    protected function attributesToArray(array $attributes): array
-    {
-        $result = [];
-
-        foreach($attributes as $attribute) {
-            $attribute = json_decode($attribute);
-            $result[] = [
-                'name' => $attribute->name,
-                'type' => $attribute->type,
-            ];
-        }
-
-        return $result;
-    }
-
-    /**
-     * @param int $id
-     *
+     * @param Category $category
      * @return $this
-     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      */
-    public function edit(int $id)
+    public function edit(Category $category)
     {
-        $category = $this->checkCategory($id);
-
         return view('categories.admin.edit')
             ->with('category', $category);
     }
@@ -188,12 +155,10 @@ class CategoriesController extends Controller
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      * @throws \Prettus\Validator\Exceptions\ValidatorException
      */
-    public function update(UpdateCategoryRequest $request, int $id)
+    public function update(UpdateCategoryRequest $request, Category $category)
     {
-        $category = $this->checkCategory($id);
-
         $attributes = [
-            'name'     => $request->get('name'),
+            'name' => $request->get('name'),
             'is_final' => $category->is_final,
         ];
 
@@ -210,7 +175,7 @@ class CategoriesController extends Controller
             ];
         }
 
-        $this->categoryRepository->update($attributes, $id);
+        $this->categoryRepository->update($attributes, $category->id);
 
         Flash::success('Category updated successfully');
 
@@ -218,23 +183,18 @@ class CategoriesController extends Controller
     }
 
     /**
-     * @param int $id
-     *
+     * @param Category $category
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
-     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
-     * @throws \Prettus\Validator\Exceptions\ValidatorException
+     * @throws \Exception
      */
-    public function delete(int $id)
+    public function delete(Category $category)
     {
-        $category = $this->checkCategory($id);
-
         if (!$category->products->isEmpty()) {
             Flash::error('This category already has products or subcategories');
 
             return redirect(route('categories.index'));
         }
-
-        $this->categoryRepository->delete($id);
+        $category->delete();
 
         Flash::success('Category deleted successfully');
 
@@ -242,19 +202,22 @@ class CategoriesController extends Controller
     }
 
     /**
-     * @param int $id
+     * @param $attributes
      *
-     * @return Category
-     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     * @return array
      */
-    protected function checkCategory(int $id): Category
+    protected function attributesToArray(array $attributes): array
     {
-        $category = $this->categoryRepository->find($id);
+        $result = [];
 
-        if (!$category) {
-            throw new NotFoundHttpException();
+        foreach ($attributes as $attribute) {
+            $attribute = json_decode($attribute);
+            $result[] = [
+                'name' => $attribute->name,
+                'type' => $attribute->type,
+            ];
         }
 
-        return $category;
+        return $result;
     }
 }

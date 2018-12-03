@@ -14,7 +14,7 @@ class CartTableSeeder extends Seeder
         $products = \App\Modules\Products\Models\Product::all()->toArray();
         $customers = \App\Modules\Users\Customer\Models\Customer::all()->toArray();
 
-        for($i = 0; $i < 20; $i++) {
+        for ($i = 0; $i < 20; $i++) {
             $product = $products[random_int(0, count($products) - 1)];
             $customer = $customers[random_int(0, count($customers) - 1)];
 

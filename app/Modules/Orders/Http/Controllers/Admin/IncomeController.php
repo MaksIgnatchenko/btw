@@ -4,6 +4,7 @@ namespace App\Modules\Orders\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Modules\Orders\DataTables\IncomeDataTable;
+use App\Modules\Orders\Models\Order;
 use App\Modules\Orders\Repositories\OrderRepository;
 use App\Modules\Orders\Requests\UpdateOrderRequest;
 use App\Modules\Products\Helpers\CalculatorHelper;
@@ -59,22 +60,11 @@ class IncomeController extends Controller
     /**
      * Display the specified MerchantReview.
      *
-     * @param  int $id
-     *
+     * @param Order $order
      * @return Response|RedirectResponse
      */
-    public function view(int $id)
+    public function view(Order $order)
     {
-        /** @var OrderRepository $orderRepository */
-        $orderRepository = app(OrderRepository::class);
-        $order = $orderRepository->findWithoutFail($id);
-
-        if (null === $order) {
-            Flash::error('Order not found');
-
-            return redirect(route('payments.income.index'));
-        }
-
         /** @var Product $product */
         $product = app(Product::class);
         $product->forceFill(json_decode($order->getOriginal('product'), true));
@@ -86,23 +76,15 @@ class IncomeController extends Controller
     /**
      * Update the specified MerchantReview in storage.
      *
-     * @param int                $id
+     * @param Order $order
      * @param UpdateOrderRequest $request
      *
      * @return RedirectResponse
      * @throws \Prettus\Validator\Exceptions\ValidatorException
      */
-    public function update(int $id, UpdateOrderRequest $request): RedirectResponse
+    public function update(Order $order, UpdateOrderRequest $request): RedirectResponse
     {
-        $merchantReview = $this->orderRepository->findWithoutFail($id);
-
-        if (null === $merchantReview) {
-            Flash::error('Order not found');
-
-            return redirect(route('payments.income.index'));
-        }
-
-        $this->orderRepository->update(['status' => $request->get('status')], $id);
+        $this->orderRepository->update(['status' => $request->get('status')], $order->id);
 
         Flash::success('Order updated successfully.');
 
