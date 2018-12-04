@@ -12,10 +12,10 @@
                 {!! Form::label('name', 'Name:') !!}
                 {!! $product->name !!}
             </p>
-            <p>
-                {!! Form::label('category_name', 'Category name:') !!}
-                {!! $product->category->name !!}
-            </p>
+            {{--<p>--}}
+                {{--{!! Form::label('category_name', 'Category name:') !!}--}}
+                {{--{!! $product->category->name !!}--}}
+            {{--</p>--}}
             <p>
                 {!! Form::label('quantity', 'Quantity:') !!}
                 {!! $order->quantity !!}
@@ -41,9 +41,9 @@
     <div class="col-md-12">
         <div class="form-group">
             {!! Form::label('description', 'Description:') !!}
-            <p>
+            <div class="product-description">
                 {!! $product->description !!}
-            </p>
+            </div>
         </div>
     </div>
 </div>

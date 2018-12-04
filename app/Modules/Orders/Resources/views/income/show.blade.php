@@ -88,4 +88,5 @@
 
 @section('script')
     {!! Html::script('js/Payments/Income/show.js') !!}
+    {!! Html::style('css/Income/show.css') !!}
 @endsection
