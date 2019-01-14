@@ -19,8 +19,15 @@ trait CartValidatorTrait
     protected function validatorAfter($validator)
     {
         $validator->after(function () use ($validator) {
+
             /** @var Customer $customer */
             $customer = Auth::user();
+
+            if (null === $customer->address) {
+                $validator->errors()->add('address', "No address. Please add your delivery address before purchasing");
+            }
+
+
             /** @var CartRepository $cartRepository */
             $cartRepository = app(CartRepository::class);
 
