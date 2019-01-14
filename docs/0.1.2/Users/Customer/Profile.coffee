@@ -11,7 +11,6 @@
 @apiParam {String} first_name
 @apiParam {String} last_name
 @apiParam {String} email
-@apiParam {String} address Optional
 
 @apiSuccessExample Success-Response:
 HTTP/1.1 200 OK
@@ -35,5 +34,35 @@ HTTP/1.1 200 OK
 HTTP/1.1 200 OK
 {
     "avatar": avatar_full_url
+}
+###
+
+###
+@api {put} /api/customer/profile/address Change customers address
+@apiName Change customers address
+@apiGroup Profile
+@apiPermission Customer
+@apiVersion 0.1.2
+
+@apiHeader {String} Authorization <code><b>token_type</b> <b>access_token</b></code>
+
+@apiParam {string} country Available values: USA
+@apiParam {string} street max 100 symbols
+@apiParam {string} [apartment] min 2 max 100 symbols
+@apiParam {string} city min 2 max 100 symbols
+@apiParam {string} state  max 100 symbols
+@apiParam {integer} zip 5 digits
+@apiParam {string} [notes] max 100 symbols
+
+@apiSuccessExample Success-Response:
+HTTP/1.1 200 OK
+{
+    "country": "USA",
+    "street": "wall street",
+    "apartment": "123 room", // -Apt., Suite, Unit,  can be null
+    "city": "New york",
+    "state": "New york",
+    "zip": "12345",
+    "notes": "text" // can be null
 }
 ###

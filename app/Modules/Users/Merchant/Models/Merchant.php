@@ -11,6 +11,7 @@ use App\Modules\Users\Merchant\Models\Geography\GeographyCountry;
 use App\Modules\Users\Merchant\Repositories\MerchantRepository;
 use App\Modules\Users\Merchant\Repositories\StoreRepository;
 use App\Modules\Users\Merchant\Services\Geography\GeographyServiceInterface;
+use App\Modules\Users\Models\AddressInterface;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Hash;
@@ -19,7 +20,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Facades\Storage;
 use Laratrust\Traits\LaratrustUserTrait;
 
-class Merchant extends Authenticatable
+class Merchant extends Authenticatable implements AddressInterface
 {
     use Notifiable, LaratrustUserTrait;
 

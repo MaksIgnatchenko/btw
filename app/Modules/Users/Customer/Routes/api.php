@@ -36,9 +36,12 @@ $this->group([
 
 $this->post('register', 'RegisterController@register');
 
+
 $this->group([
-    'prefix' => 'profile', 'middleware' => 'auth:customer',
+    'prefix' => 'profile',
+    'middleware' => 'auth:customer',
 ], function () {
-    $this->put('/', 'ProfileController@update');
-    $this->post('/avatar', 'ProfileController@uploadAvatar');
+    $this->put('/', 'Profile\ProfileController@update');
+    $this->post('/avatar', 'Profile\ProfileController@uploadAvatar');
+    $this->put('/address', 'Profile\AddressController@store');
 });

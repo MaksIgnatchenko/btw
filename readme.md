@@ -1,28 +1,34 @@
-## Pitchingon project
+## SkyCart project
 
 Laravel framework uses
 
-To deploy locally you must using docker.
+To deploy locally you must install:
++ docker
++ docker-compose 
++ apidoc (optional. for apidoc generation)
 
-1) Rename file docker-compose.example.yml (locally you can use default settings) 
-2) Execute command:
-
+1) Rename file docker-compose.example.yml and setup your settings
+2) Rename file .env.exanple and setup your settings
+3) Execute command: 
 ```docker-compose up -d```
+4) Enter inside container
 
-For more information visit [repository](https://gitlab.appus.software/web/docker-info)
+```docker exec -ti wish_php /bin/bash```
 
-### Admin panel
+and execute
 
-For admin panel we use [AdminLTE](https://adminlte.io/)
+```composer install```
+
+```sh init_dev.sh```
+
+
 
 ### Api documentation 
-Go [http://localhost:8888/apidoc/](http://localhost:8888/apidoc/) to see api documentation locally
+Go [http://localhost/apidoc/index.html](http://localhost/apidoc/index.html) to see api documentation locally
 Apidoc generation:
 
 ```apidoc -i docs/ -o public/apidoc/```
 
-### Tests
-For tests here used phpunit
 
 ### Conventions
 
