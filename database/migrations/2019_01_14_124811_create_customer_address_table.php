@@ -17,14 +17,11 @@ class CreateCustomerAddressTable extends Migration
             $table->unsignedInteger('customer_id');
             $table->string('country');
             $table->string('street');
-            // TODO !!
-            $table->string('-Apt., Suite, Unit (optional);');
+            $table->string('apartment');
             $table->string('city');
             $table->string('state');
             $table->string('zip');
             $table->string('notes');
-
-
 
             $table->foreign('customer_id')
                 ->references('id')
@@ -41,6 +38,11 @@ class CreateCustomerAddressTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('customer_address');
+        Schema::table('customer_addresses', function (Blueprint $table) {
+            $table->dropForeign('customer_addresses_customer_id_foreign');
+
+        });
+
+        Schema::dropIfExists('customer_addresses');
     }
 }

@@ -13,6 +13,14 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class CustomerAddress extends Model
 {
+
+    /** @var array */
+    protected $hidden = [
+        'id',
+        'created_at',
+        'updated_at',
+    ];
+
     /**
      * Address to merchant relation.
      *

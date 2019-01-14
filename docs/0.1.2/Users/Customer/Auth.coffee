@@ -47,12 +47,22 @@ HTTP/1.1 200 OK
 @apiSuccessExample Success-Response merchant:
 HTTP/1.1 200 OK
 {
-    "id": 2,
-    "first_name": "Appus",
-    "last_name": "Tester",
-    "email": "customer@wish.com",
-    "created_at": "2018-09-20 09:45:37",
-    "updated_at": "2018-09-20 09:45:38"
+    "id": 3,
+    "first_name": "Artem",
+    "last_name": "Petrov",
+    "email": "artempetrovjava@gmail.com",
+    "created_at": "2019-01-14 13:36:36",
+    "updated_at": "2019-01-14 13:36:36",
+    "avatar": null,
+    "address": { // can be null
+        "country": "USA",
+        "street": "Wall street",
+        "apartment": "apt 1", // -Apt., Suite, Unit
+        "city": "New York",
+        "state": "New York",
+        "zip": "12345",
+        "notes": "My bearer will open the door",
+    }
 }
 ###
 
