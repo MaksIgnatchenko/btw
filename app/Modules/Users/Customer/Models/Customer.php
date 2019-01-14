@@ -6,6 +6,8 @@
 namespace App\Modules\Users\Customer\Models;
 
 use App\Modules\Products\Models\Product;
+use App\Modules\Users\Models\AddressInterface;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Tymon\JWTAuth\Contracts\JWTSubject;
@@ -13,7 +15,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Laratrust\Traits\LaratrustUserTrait;
 
-class Customer extends Authenticatable implements JWTSubject
+class Customer extends Authenticatable implements JWTSubject, AddressInterface
 {
     use Notifiable, LaratrustUserTrait;
 
@@ -88,5 +90,15 @@ class Customer extends Authenticatable implements JWTSubject
         return $this->belongsToMany(Product::class, 'wishlists')
             ->as('wishPivot')
             ->withTimestamps();
+    }
+
+    /**
+     * Merchant to address relation.
+     *
+     * @return HasOne
+     */
+    public function address(): HasOne
+    {
+        return $this->hasOne(CustomerAddress::class);
     }
 }

@@ -71,6 +71,8 @@ class AuthController extends Controller
     {
         $user = $this->guard()->user();
 
+        $user->with('customer_address');
+
 
         return response()->json($user);
     }
