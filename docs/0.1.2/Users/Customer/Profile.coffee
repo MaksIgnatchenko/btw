@@ -59,10 +59,10 @@ HTTP/1.1 200 OK
 {
     "country": "USA",
     "street": "wall street",
-    "apartment": "123 room",
+    "apartment": "123 room", // -Apt., Suite, Unit,  can be null
     "city": "New york",
     "state": "New york",
     "zip": "12345",
-    "notes": "text"
+    "notes": "text" // can be null
 }
 ###

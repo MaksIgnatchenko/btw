@@ -57,11 +57,11 @@ HTTP/1.1 200 OK
     "address": { // can be null
         "country": "USA",
         "street": "Wall street",
-        "apartment": "apt 1", // -Apt., Suite, Unit
+        "apartment": "apt 1", // can be null,  -Apt., Suite, Unit
         "city": "New York",
         "state": "New York",
         "zip": "12345",
-        "notes": "My bearer will open the door",
+        "notes": "My bearer will open the door", // can be null
     }
 }
 ###
