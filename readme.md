@@ -24,7 +24,7 @@ and execute
 
 
 ### Api documentation 
-Go [http://localhost/apidoc/](http://localhost/apidoc/) to see api documentation locally
+Go [http://localhost/apidoc/index.html](http://localhost/apidoc/index.html) to see api documentation locally
 Apidoc generation:
 
 ```apidoc -i docs/ -o public/apidoc/```

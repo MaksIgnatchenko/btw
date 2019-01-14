@@ -13,12 +13,25 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class CustomerAddress extends Model
 {
+    /** @var string */
+    protected $primaryKey = 'customer_id';
 
     /** @var array */
     protected $hidden = [
-        'id',
+        'customer_id',
         'created_at',
         'updated_at',
+    ];
+
+    protected $fillable = [
+        'customer_id',
+        'country',
+        'street',
+        'apartment',
+        'city',
+        'state',
+        'zip',
+        'notes',
     ];
 
     /**

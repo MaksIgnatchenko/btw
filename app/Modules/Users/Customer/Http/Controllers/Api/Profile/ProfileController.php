@@ -46,6 +46,10 @@ class ProfileController extends Controller
         ]);
     }
 
+    /**
+     * @param UploadAvatarRequest $request
+     * @return JsonResponse
+     */
     public function uploadAvatar(UploadAvatarRequest $request): JsonResponse
     {
         $avatar = $request->file('avatar');

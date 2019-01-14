@@ -17,11 +17,11 @@ class CreateCustomerAddressTable extends Migration
             $table->unsignedInteger('customer_id');
             $table->string('country');
             $table->string('street');
-            $table->string('apartment');
+            $table->string('apartment')->nullable();
             $table->string('city');
             $table->string('state');
             $table->string('zip');
-            $table->string('notes');
+            $table->string('notes')->nullable();
 
             $table->foreign('customer_id')
                 ->references('id')
