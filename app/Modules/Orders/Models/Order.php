@@ -131,6 +131,7 @@ class Order extends Model
         $mutatedProduct['id'] = $product->id;
         $mutatedProduct['name'] = $product->name;
         $mutatedProduct['price'] = $product->price;
+        $mutatedProduct['delivery_price'] = $product->delivery_price;
         $mutatedProduct['store']['id'] = $product->store->id;
         $mutatedProduct['store']['name'] = $product->store->name;
         $mutatedProduct['store']['merchant_id'] = $product->store->merchant_id;
