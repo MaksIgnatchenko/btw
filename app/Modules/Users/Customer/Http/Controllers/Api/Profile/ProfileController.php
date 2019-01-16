@@ -3,7 +3,7 @@
  * Created by Ilya Kobus, Appus Studio LP on 2.11.2018
  */
 
-namespace App\Modules\Users\Customer\Http\Controllers\Api;
+namespace App\Modules\Users\Customer\Http\Controllers\Api\Profile;
 
 use App\Http\Controllers\Controller;
 use App\Modules\Users\Customer\Http\Requests\Api\UpdateProfileRequest;
