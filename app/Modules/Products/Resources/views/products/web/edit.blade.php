@@ -123,13 +123,13 @@
                                 <div class="form-item__wrapper form-item__wrapper--field">
                                     @if($data['type'] === 'text')
                                         @php $fieldType = 'text'; @endphp
-                                        @else
+                                    @else
                                         @php $fieldType = 'number'; @endphp
                                     @endif
-                                        {!! Form::$fieldType("attributes[{$data['type']}][{$key}]", $data['value'], [
-                                     'placeholder' => __('products.create_attribute_section_placeholder'),
-                                     'class' => 'form-item__inp', 'required']
-                                     ) !!}
+                                    {!! Form::$fieldType("attributes[{$data['type']}][{$key}]", $data['value'], [
+                                 'placeholder' => __('products.create_attribute_section_placeholder'),
+                                 'class' => 'form-item__inp', 'required']
+                                 ) !!}
                                     @if($errors->has("attributes.{$data['type']}.$key"))
                                         <div class="alert alert-danger" role="alert">
                                             <strong>{{ $errors->first("attributes.{$data['type']}.$key") }}</strong>
@@ -220,6 +220,24 @@
                             <p class="form-item__inp-descr">{{__('products.create_price_description')}}</p>
                         </div>
                     </div>
+
+                    <div class="form-line__wrapper form-line__wrapper--min-margin">
+                        <div class="form-item__wrapper form-item__wrapper--text">
+                            <p class="form-item__title">{{__('products.create_delivery_price')}}</p>
+                        </div>
+                        <div class="form-item__wrapper form-item__wrapper--field">
+                            <span class="form-item__currency">$</span>
+                            {!! Form::number('delivery_price', null, ['class' => 'form-item__inp form-item__inp--price', 'min' => 0.01, 'max' => 9999999, 'step' => '.01', 'maxlength' => 9, 'required']) !!}
+                            @if ($errors->has('delivery_price'))
+                                <div class="alert alert-danger" role="alert">
+                                    <strong>{{ $errors->first('delivery_price') }}</strong></div>
+                            @endif
+                            <p class="form-item__inp-descr">{{__('products.create_delivery_price_description')}}
+                                <a href="https://www.epackettracking.com/epacket-shipping-cost-online-calculation/" target="_blank">ePacket</a>
+                            </p>
+                        </div>
+                    </div>
+
                 </div><!-- /. end form container -->
 
                 <div class="form-hr-wrapper">

@@ -44,15 +44,15 @@ class Order extends Model
     ];
 
     protected $casts = [
-        'customer_id'     => 'integer',
-        'merchant_id'     => 'integer',
-        'transaction_id'  => 'string',
+        'customer_id' => 'integer',
+        'merchant_id' => 'integer',
+        'transaction_id' => 'string',
         'delivery_option' => 'string',
 
-        'product'  => 'object',
+        'product' => 'object',
         'quantity' => 'integer',
-        'qr_code'  => 'string',
-        'status'   => 'string',
+        'qr_code' => 'string',
+        'status' => 'string',
     ];
 
     protected $hidden = [
@@ -112,11 +112,13 @@ class Order extends Model
     }
 
     /**
-     * @return int
+     * @return float
      */
-    public function getAmountAttribute(): int
+    public function getAmountAttribute(): float
     {
-        return $this->quantity * $this->product->price;
+        $amount = $this->quantity * ($this->product->price + $this->product->delivery_price);
+
+        return round($amount, 2);
     }
 
     /**
@@ -139,7 +141,7 @@ class Order extends Model
         $mutatedProduct['main_image_thumb'] = ImagesPathHelper::getProductThumbPath($product->main_image);
         $mutatedProduct['description'] = $product->description;
 
-        return (object) $mutatedProduct;
+        return (object)$mutatedProduct;
     }
 
     /**
@@ -165,7 +167,7 @@ class Order extends Model
         return $query->with([
             'customer' => function ($query) {
                 $query->select(['id', 'user_id', 'first_name', 'last_name'])->with([
-                    'user'            => function ($query) {
+                    'user' => function ($query) {
                         $query->select(['id', 'username', 'email']);
                     },
                     'deliveryAddress' => function ($query) {

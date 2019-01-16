@@ -5,7 +5,7 @@
 
 namespace App\Modules\Products\Requests\Web;
 
-class EditProductRequest extends UpdateProductRequestAbstract
+class EditProductRequest extends ProductRequestAbstract
 {
     /**
      * Determine if the user is authorized to make this request.
