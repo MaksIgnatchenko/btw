@@ -51,10 +51,11 @@
 
     </div>
 
-    @if(!OrderViewHelper::isShipped($order))
-
+    @if($order->canBeShipped())
         <div class="t-a-right">
-            <a href="{{ route('web.orders.update', $order->id) }}" class="btn update-order">{{ $orderStatuses[OrderStatusEnum::SHIPPED] }}</a>
+            <a href="{{ route('web.orders.update', $order->id) }}" class="btn update-order">
+                {{__('orders.order_details.shipped')}}
+            </a>
         </div>
         <form id="update-status-form" action="{{ route('web.orders.update', $order->id) }}" method="post"
               style="display: none;">
