@@ -4,36 +4,17 @@
  */
 
 $this->group([
-    'middleware' => ['api'],
-    'prefix'     => 'products',
-], function () {
-    $this->post('/set', 'ProductController@set')->middleware('activeUser');
-    $this->post('/update', 'ProductController@update')->middleware('activeUser');
-
-    $this->get('/get', 'ProductController@get');
-
-    $this->get('/price-breakers', 'ProductController@priceBreakers');
-});
-
-$this->group([
     'middleware' => ['auth:customer'],
     'prefix' => 'products',
 ], function () {
-    $this->get('/price-breakers', 'ProductController@priceBreakers');
     $this->get('/popular', 'ProductController@popular');
     $this->get('/search', 'ProductController@customerSearch');
-    $this->get('/other-merchant-products', 'ProductController@otherMerchantProducts');
-});
-
-$this->group([
-    'prefix'     => 'products',
-], function () {
-    $this->get('/get/{id}', 'ProductController@getSingle');
+    $this->get('/get/{id}', 'ProductController@show');
 });
 
 $this->group([
     'middleware' => ['auth:customer'],
-    'prefix'     => 'cart',
+    'prefix' => 'cart',
 ], function () {
     $this->get('/', 'CartController@getAll');
     $this->post('/', 'CartController@create');
@@ -44,7 +25,7 @@ $this->group([
 
 $this->group([
     'middleware' => ['auth:customer'],
-    'prefix'     => 'transaction',
+    'prefix' => 'transaction',
 ], function () {
     $this->post('/', 'TransactionController@create');
     $this->get('/token', 'TransactionController@generateToken');

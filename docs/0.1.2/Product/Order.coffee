@@ -21,6 +21,7 @@ HTTP/1.1 200 OK
                         "id": 315,
                         "name": "Test product",
                         "price": 3,
+                        "delivery_price": "10.05",
                         "store": {
                             "id": 2,
                             "name": "Test Store",
@@ -43,6 +44,7 @@ HTTP/1.1 200 OK
                         "id": 318,
                         "name": "Test product 2",
                         "price": 4,
+                        "delivery_price": "10.05",
                         "store": {
                             "id": 2,
                             "name": "Test Store",
@@ -91,6 +93,7 @@ HTTP/1.1 200 OK
                          "id": 315,
                          "name": "Test product",
                          "price": 3,
+                         "delivery_price": "10.05",
                          "store": {
                              "id": 2,
                              "name": "Test Store",

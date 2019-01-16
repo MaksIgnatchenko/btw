@@ -15,6 +15,17 @@ HTTP/1.1 200 OK
 {
     "success": true
 }
+
+@apiErrorExample No customer address error:
+HTTP/1.1 422 Unprocessable Entity
+{
+    "message": "The given data was invalid.",
+    "errors": {
+        "address": [
+            "No address. Please add your delivery address before purchasing"
+        ]
+    }
+}
 ###
 
 ###

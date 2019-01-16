@@ -6,14 +6,10 @@
 namespace App\Modules\Orders\Models;
 
 use App\Modules\Orders\Enums\OrderStatusEnum;
-use App\Modules\Orders\Exceptions\WrongOrderStatusException;
-use App\Modules\Orders\Exceptions\WrongReturnDetailsException;
-use App\Modules\Orders\Helpers\OrderChecker;
 use App\Modules\Orders\Repositories\OrderRepository;
 use App\Modules\Products\Models\Transaction;
 use App\Modules\Users\Customer\Models\Customer;
 use App\Modules\Users\Merchant\Models\Merchant;
-use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -77,7 +73,9 @@ class Order extends Model
      */
     public function getAmountAttribute(): float
     {
-        return round($this->quantity * ($this->product->price + $this->product->delivery_price), 2);
+        $amount = $this->quantity * ($this->product->price + $this->product->delivery_price);
+
+        return round($amount, 2);
     }
 
     /**
