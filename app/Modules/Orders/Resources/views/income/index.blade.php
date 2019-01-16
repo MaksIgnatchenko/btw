@@ -38,8 +38,11 @@
                     <div class="box-body">
                         <p><strong>Payments count: </strong>{{$statistic->getCount()}}</p>
                         <p><strong>Payments amount: </strong>{{$statistic->getAmount()}}</p>
-                        <p class="text-yellow"><strong>In Process: </strong>{{$statistic->getInProcess()}}</p>
-                        <p class="text-green"><strong>Shipped: </strong>{{$statistic->getShipped()}}</p>
+                        <p class="text-primary"><strong>In Process: </strong>{{$statistic->getInProcess()}}</p>
+                        <p class="text-warning"><strong>Shipped: </strong>{{$statistic->getShipped()}}</p>
+                        <p class="text-success"><strong>Delivered: </strong>{{$statistic->getDelivered()}}</p>
+                        <p class="text-green"><strong>Picked up: </strong>{{$statistic->getPickedUp()}}</p>
+                        <p class="text-dark"><strong>Closed: </strong>{{$statistic->getClosed()}}</p>
                     </div>
                 </div>
                 <div class="text-center">

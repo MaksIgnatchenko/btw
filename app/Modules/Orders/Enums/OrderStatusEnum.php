@@ -9,6 +9,9 @@ class OrderStatusEnum
 {
     public const IN_PROCESS = 'in_process';
     public const SHIPPED = 'shipped';
+    public const DELIVERED = 'delivered';
+    public const PICKED_UP = 'picked_up';
+    public const CLOSED = 'closed';
 
     /**
      * @return array
@@ -16,8 +19,11 @@ class OrderStatusEnum
     public static function toArray(): array
     {
         return [
-            self::IN_PROCESS   => 'In process',
+            self::IN_PROCESS => 'In process',
             self::SHIPPED => 'Shipped',
+            self::DELIVERED => 'Delivered',
+            self::PICKED_UP => 'Picked up',
+            self::CLOSED => 'Closed',
         ];
     }
 

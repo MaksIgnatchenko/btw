@@ -15,6 +15,12 @@ class IncomeStatisticDto
     protected $inProcess;
     /** @var int */
     protected $shipped;
+    /** @var int */
+    protected $delivered;
+    /** @var int */
+    protected $pickedUp;
+    /** @var int */
+    protected $closed;
 
     /**
      * @return int
@@ -93,6 +99,60 @@ class IncomeStatisticDto
     {
         $this->shipped = $shipped;
 
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getDelivered(): int
+    {
+        return $this->delivered;
+    }
+
+    /**
+     * @param int $delivered
+     * @return IncomeStatisticDto
+     */
+    public function setDelivered(int $delivered): IncomeStatisticDto
+    {
+        $this->delivered = $delivered;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getPickedUp(): int
+    {
+        return $this->pickedUp;
+    }
+
+    /**
+     * @param int $pickedUp
+     * @return IncomeStatisticDto
+     */
+    public function setPickedUp(int $pickedUp): IncomeStatisticDto
+    {
+        $this->pickedUp = $pickedUp;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getClosed(): int
+    {
+        return $this->closed;
+    }
+
+    /**
+     * @param int $closed
+     * @return IncomeStatisticDto
+     */
+    public function setClosed(int $closed): IncomeStatisticDto
+    {
+        $this->closed = $closed;
         return $this;
     }
 }
