@@ -50,6 +50,7 @@ class Product extends Model implements Ownable
         'certificate',
         'return_details',
         'price',
+        'delivery_price',
         'quantity',
         'store_id',
     ];
@@ -75,6 +76,7 @@ class Product extends Model implements Ownable
         'return_details' => 'string',
         'rating' => 'float',
         'price' => 'float',
+        'delivery_price' => 'float',
         'quantity' => 'integer',
         'store_id' => 'integer',
         'attributes' => 'array',
@@ -89,7 +91,8 @@ class Product extends Model implements Ownable
     ];
 
     protected $appends = [
-        'is_in_wish_list', 'merchant_id',
+        'is_in_wish_list',
+        'merchant_id',
     ];
 
     /**
@@ -137,6 +140,7 @@ class Product extends Model implements Ownable
      * @param CustomerSearchDto $customerSearchDto
      *
      * @return Collection|null
+     * @throws \App\Modules\Categories\Exceptions\NotFountCategory
      */
     public function customerSearch(CustomerSearchDto $customerSearchDto): ?Collection
     {
@@ -222,6 +226,7 @@ class Product extends Model implements Ownable
      * @param $request
      *
      * @return mixed
+     * @throws \App\Exceptions\WrongFilterNameException
      */
     public function scopeFilter($query, $data)
     {

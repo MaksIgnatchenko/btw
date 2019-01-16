@@ -14,6 +14,7 @@
                 <div class="table-custom__prod">{{ __('orders.order_details.product') }}</div>
                 <div class="table-custom__purchase">{{ __('orders.order_details.purchase_date') }}</div>
                 <div class="table-custom__price">{{ __('orders.order_details.price') }}</div>
+                <div class="table-custom__delivery-price">{{ __('orders.order_details.delivery_price') }}</div>
                 <div class="table-custom__quantity">{{ __('orders.order_details.quantity') }}</div>
                 <div class="table-custom__amount">{{ __('orders.order_details.amount') }}</div>
                 <div class="table-custom__status">{{ __('orders.order_details.status') }}</div>
@@ -33,6 +34,10 @@
                 <div class="table-custom__price">
                     <p class="table-custom__mobile-title">{{ __('orders.order_details.price') }}</p>
                     ${{ $order->product->price }}
+                </div>
+                <div class="table-custom__delivery-price">
+                    <p class="table-custom__mobile-title">{{ __('orders.order_details.delivery_price') }}</p>
+                    ${{ $order->product->delivery_price }}
                 </div>
                 <div class="table-custom__quantity">
                     <p class="table-custom__mobile-title">{{ __('orders.order_details.quantity') }}</p>

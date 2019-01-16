@@ -31,6 +31,7 @@ return [
         'purchase_date' => 'Purchase date',
         'quantity' => 'Quantity',
         'amount' => 'Amount',
+        'delivery_price' => 'Delivery price',
         'status' => 'Status',
         'change_status_description' => '«Shipped» - You can mark an order as shipped after you transfer it to the customer through the shipping service.',
     ],

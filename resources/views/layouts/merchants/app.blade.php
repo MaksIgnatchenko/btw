@@ -27,7 +27,7 @@
         @each('layouts.merchants.configs', $configs, 'configs')
     </div>
     <div class="container">
-        <p class="footer__copy">&copy; {{date('Y')}} Better than Wish</p>
+        <p class="footer__copy">&copy; {{date('Y')}} SkyCart</p>
     </div>
 </footer><!-- /. footer -->
 @show
