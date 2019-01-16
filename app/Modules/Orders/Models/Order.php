@@ -60,45 +60,6 @@ class Order extends Model
     ];
 
     /**
-     * @throws WrongOrderStatusException
-     * @throws WrongReturnDetailsException
-     */
-    public function updateStatus(): void
-    {
-        /** @var OrderRepository $orderRepository */
-        $orderRepository = app(OrderRepository::class);
-
-        $this->setStatus();
-        $this->redeemed_at = Carbon::now();
-        $orderRepository->save($this);
-    }
-
-    /**
-     * @throws WrongOrderStatusException
-     * @throws WrongReturnDetailsException
-     */
-    protected function setStatus(): void
-    {
-        if (OrderStatusEnum::PENDING === $this->status) {
-            $this->status = OrderStatusEnum::PICKED_UP;
-
-            return;
-        }
-        if (OrderStatusEnum::PICKED_UP === $this->status) {
-
-            if (!OrderChecker::checkReturnDetails($this)) {
-                throw  new WrongReturnDetailsException('Sorry, No return is accepted after the return period');
-            }
-
-            $this->status = OrderStatusEnum::RETURNED;
-
-            return;
-        }
-
-        throw new WrongOrderStatusException('Order should have pending or picked_up status to update');
-    }
-
-    /**
      * @param int $merchantId
      *
      * @return Collection
@@ -112,11 +73,11 @@ class Order extends Model
     }
 
     /**
-     * @return int
+     * @return float
      */
-    public function getAmountAttribute(): int
+    public function getAmountAttribute(): float
     {
-        return $this->quantity * $this->product->price;
+        return round($this->quantity * ($this->product->price + $this->product->delivery_price), 2);
     }
 
     /**
@@ -131,6 +92,7 @@ class Order extends Model
         $mutatedProduct['id'] = $product->id;
         $mutatedProduct['name'] = $product->name;
         $mutatedProduct['price'] = $product->price;
+        $mutatedProduct['delivery_price'] = $product->delivery_price;
         $mutatedProduct['store']['id'] = $product->store->id;
         $mutatedProduct['store']['name'] = $product->store->name;
         $mutatedProduct['store']['merchant_id'] = $product->store->merchant_id;
@@ -202,7 +164,7 @@ class Order extends Model
     {
         return $query->select([
             'orders.*',
-            DB::raw('TRUNCATE(product->\'$."price"\' * quantity, 2) as amount'),
+            DB::raw('TRUNCATE((product->\'$."price"\' + product->\'$."delivery_price"\') * quantity, 2) as amount'),
         ]);
     }
 
