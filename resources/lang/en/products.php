@@ -18,9 +18,12 @@ return [
     'create_price' => 'Price',
     'create_delivery_price' => 'Delivery price',
     'create_price_description' => 'Attention! 15% of the item’s price is transferred to the website.',
-    'create_delivery_price_description' => 'For the accurate delivery price calculation, please check the link: ',
+    'create_delivery_price_description_1' => 'Please get familiar with delivery system restrictions ',
+    'create_delivery_price_description_2' => 'For the accurate delivery price calculation, please check the link: ',
     'create_submit' => 'Create',
     'edit_product_section_title' => 'Edit product',
     'update_submit' => 'Update',
     'edit' => 'Edit',
+    'price' => 'Price: ',
+    'delivery_price' => 'Delivery price: ',
 ];

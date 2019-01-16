@@ -2213,6 +2213,10 @@ textarea.form-item__area::placeholder {color: #999;}
     justify-content: space-between;
 }
 
+.edit-title__container h1 {
+    margin-bottom: 10px;
+}
+
 .edit-title {
     color: #252424;
     font-size: 24px;
@@ -2224,6 +2228,12 @@ textarea.form-item__area::placeholder {color: #999;}
     color: #06974a;
     font-size: 24px;
     font-weight: 900;
+}
+
+.edit-delivery-price {
+    text-align: right;
+    color: #999999;
+    font-size: 16px;
 }
 
 .edit-title-min {
@@ -2872,11 +2882,16 @@ textarea.form-item__area::placeholder {color: #999;}
 
 .table-custom__prod {
     padding-right: 10px;
-    width: 37.8%;
+    width: 27.8%;
 }
 
 .table-custom__price {
     width: 10.1%;
+    padding: 0 5px;
+}
+
+.table-custom__delivery-price {
+    width: 10%;
     padding: 0 5px;
 }
 
@@ -3365,6 +3380,7 @@ textarea.form-item__area::placeholder {color: #999;}
 
     .table-custom__prod,
     .table-custom__price,
+    .table-custom__delivery-price,
     .table-custom__purchase,
     .table-custom__quantity,
     .table-custom__amount {
@@ -3374,8 +3390,7 @@ textarea.form-item__area::placeholder {color: #999;}
         border: 1px dotted #e2e2e2;
     }
 
-    .table-custom__status,
-    .table-custom__amount {
+    .table-custom__status {
         width: 100%;
         padding: 5px 10px;
         text-align: center;
@@ -3603,6 +3618,7 @@ textarea.form-item__area::placeholder {color: #999;}
 
     .table-custom__prod,
     .table-custom__price,
+    .table-custom__delivery-price,
     .table-custom__purchase,
     .table-custom__quantity,
     .table-custom__amount {

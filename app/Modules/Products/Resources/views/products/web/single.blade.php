@@ -27,7 +27,11 @@
 
                 <div class="edit-title__container">
                     <h1 class="edit-title">{{ $product->name }}</h1>
-                    <div class="edit-price">${{ $product->price }}</div>
+                    <div class="edit-price">{{__('products.price')}} ${{ $product->price }}</div>
+                </div>
+
+                <div class="edit-delivery-price">
+                    {{__('products.delivery_price')}} ${{ $product->delivery_price }}
                 </div>
 
                 <hr class="form-hr">

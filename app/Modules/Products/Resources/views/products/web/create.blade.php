@@ -177,11 +177,14 @@
                             </div>
                             <div class="form-item__wrapper form-item__wrapper--field">
                                 <span class="form-item__currency">$</span>
-                                {!! Form::number('delivery_price', null, ['class' => 'form-item__inp form-item__inp--price', 'min' => 0.01, 'max' => 9999999, 'step' => '.01', 'maxlength' => 9, 'required']) !!}
+                                {!! Form::number('delivery_price', null, ['class' => 'form-item__inp form-item__inp--price', 'min' => 0, 'max' => 9999999, 'step' => '.01', 'maxlength' => 9, 'required']) !!}
                                 @if ($errors->has('delivery_price'))
                                     <div class="alert alert-danger" role="alert"><strong>{{ $errors->first('delivery_price') }}</strong></div>
                                 @endif
-                                <p class="form-item__inp-descr">{{__('products.create_delivery_price_description')}}
+                                <p class="form-item__inp-descr">{{__('products.create_delivery_price_description_1')}}
+                                    <a href="https://epacketexpress.com/can-ship-larger-heavier-packages-via-epacket/" target="_blank">here</a>
+                                </p>
+                                <p class="form-item__inp-descr">{{__('products.create_delivery_price_description_2')}}
                                     <a href="https://www.epackettracking.com/epacket-shipping-cost-online-calculation/" target="_blank">ePacket</a>
                                 </p>
                             </div>
