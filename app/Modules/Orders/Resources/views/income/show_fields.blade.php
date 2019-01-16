@@ -12,21 +12,21 @@
                 {!! Form::label('name', 'Name:') !!}
                 {!! $product->name !!}
             </p>
-            {{--<p>--}}
-                {{--{!! Form::label('category_name', 'Category name:') !!}--}}
-                {{--{!! $product->category->name !!}--}}
-            {{--</p>--}}
             <p>
                 {!! Form::label('quantity', 'Quantity:') !!}
                 {!! $order->quantity !!}
             </p>
             <p>
-                {!! Form::label('amount', 'Price:') !!}
+                {!! Form::label('price', 'Price:') !!}
                 {!! $product->price !!} USD
             </p>
             <p>
+                {!! Form::label('delivery_price', 'Delivery price:') !!}
+                {!! $product->delivery_price !!} USD
+            </p>
+            <p>
                 {!! Form::label('amount', 'Amount:') !!}
-                {!! $product->price * $order->quantity !!} USD
+                {!! $order->amount !!} USD
             </p>
             <p>
                 {!! Form::label('status', 'Status:') !!}

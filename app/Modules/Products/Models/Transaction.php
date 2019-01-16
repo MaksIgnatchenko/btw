@@ -35,7 +35,7 @@ class Transaction extends Model
     ];
 
     /**
-     * @param int   $customerId
+     * @param int $customerId
      * @param float $amount
      *
      * @return Transaction
@@ -53,7 +53,7 @@ class Transaction extends Model
         $transaction->fill([
             'customer_id' => $customerId,
 
-            'cart'   => $carts->toJson(),
+            'cart' => $carts->toJson(),
             'status' => TransactionStatusEnum::PENDING,
             'amount' => $amount,
         ]);
@@ -70,7 +70,6 @@ class Transaction extends Model
     {
         return $this->status === TransactionStatusEnum::PENDING;
     }
-
 
     /**
      * @return IncomeStatisticDto
@@ -92,12 +91,24 @@ class Transaction extends Model
         $shipped = $orders->filter(function ($item) {
             return OrderStatusEnum::SHIPPED === $item->status;
         });
+        $delivered = $orders->filter(function ($item) {
+            return OrderStatusEnum::DELIVERED === $item->status;
+        });
+        $pickedUp = $orders->filter(function ($item) {
+            return OrderStatusEnum::PICKED_UP === $item->status;
+        });
+        $closed = $orders->filter(function ($item) {
+            return OrderStatusEnum::CLOSED === $item->status;
+        });
 
         $incomePaymentStatisticDto
             ->setCount($orders->count())
             ->setAmount($transactions->sum('amount'))
             ->setInProcess($inProcess->count())
-            ->setShipped($shipped->count());
+            ->setShipped($shipped->count())
+            ->setDelivered($delivered->count())
+            ->setPickedup($pickedUp->count())
+            ->setClosed($closed->count());
 
         return $incomePaymentStatisticDto;
     }

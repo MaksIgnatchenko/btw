@@ -58,6 +58,11 @@ class OrderRepository extends BaseRepository
             ->get();
     }
 
+    /**
+     * @param int $customerId
+     * @param int $offset
+     * @return Collection
+     */
     public function getShipped(int $customerId, int $offset): Collection
     {
         return Order::where([
@@ -70,12 +75,52 @@ class OrderRepository extends BaseRepository
             ->get();
     }
 
+    /**
+     * @param int $customerId
+     * @param int $offset
+     * @return Collection
+     */
     public function getInProcess(int $customerId, int $offset): Collection
     {
         return Order::where([
             'customer_id' => $customerId,
             'status'      => OrderStatusEnum::IN_PROCESS,
         ])
+            ->offset($offset)
+            ->limit(Order::PAGE_LIMIT)
+            ->orderBy('created_at', 'DESC')
+            ->get();
+    }
+
+    /**
+     * @param int $customerId
+     * @param int $offset
+     * @return Collection
+     */
+    public function getDelivered(int $customerId, int $offset): Collection
+    {
+        return Order::where([
+            'customer_id' => $customerId,
+            'status'      => OrderStatusEnum::DELIVERED,
+        ])
+            ->offset($offset)
+            ->limit(Order::PAGE_LIMIT)
+            ->orderBy('created_at', 'DESC')
+            ->get();
+    }
+
+    /**
+     * @param int $customerId
+     * @param int $offset
+     * @return Collection
+     */
+    public function getPickedUp(int $customerId, int $offset): Collection
+    {
+        return Order::where('customer_id', $customerId)
+            ->whereIn('status', [
+                OrderStatusEnum::PICKED_UP,
+                OrderStatusEnum::CLOSED,
+            ])
             ->offset($offset)
             ->limit(Order::PAGE_LIMIT)
             ->orderBy('created_at', 'DESC')

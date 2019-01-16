@@ -25,6 +25,7 @@ return [
         'status' => 'Status',
     ],
     'order_details' => [
+        'shipped' => 'Shipped',
         'order' => ' Order',
         'product' => 'Product',
         'price' => 'Price',

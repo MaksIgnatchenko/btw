@@ -6,14 +6,10 @@
 namespace App\Modules\Orders\Models;
 
 use App\Modules\Orders\Enums\OrderStatusEnum;
-use App\Modules\Orders\Exceptions\WrongOrderStatusException;
-use App\Modules\Orders\Exceptions\WrongReturnDetailsException;
-use App\Modules\Orders\Helpers\OrderChecker;
 use App\Modules\Orders\Repositories\OrderRepository;
 use App\Modules\Products\Models\Transaction;
 use App\Modules\Users\Customer\Models\Customer;
 use App\Modules\Users\Merchant\Models\Merchant;
-use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -58,45 +54,6 @@ class Order extends Model
     protected $hidden = [
         'customer_id',
     ];
-
-    /**
-     * @throws WrongOrderStatusException
-     * @throws WrongReturnDetailsException
-     */
-    public function updateStatus(): void
-    {
-        /** @var OrderRepository $orderRepository */
-        $orderRepository = app(OrderRepository::class);
-
-        $this->setStatus();
-        $this->redeemed_at = Carbon::now();
-        $orderRepository->save($this);
-    }
-
-    /**
-     * @throws WrongOrderStatusException
-     * @throws WrongReturnDetailsException
-     */
-    protected function setStatus(): void
-    {
-        if (OrderStatusEnum::PENDING === $this->status) {
-            $this->status = OrderStatusEnum::PICKED_UP;
-
-            return;
-        }
-        if (OrderStatusEnum::PICKED_UP === $this->status) {
-
-            if (!OrderChecker::checkReturnDetails($this)) {
-                throw  new WrongReturnDetailsException('Sorry, No return is accepted after the return period');
-            }
-
-            $this->status = OrderStatusEnum::RETURNED;
-
-            return;
-        }
-
-        throw new WrongOrderStatusException('Order should have pending or picked_up status to update');
-    }
 
     /**
      * @param int $merchantId
@@ -205,7 +162,7 @@ class Order extends Model
     {
         return $query->select([
             'orders.*',
-            DB::raw('TRUNCATE(product->\'$."price"\' * quantity, 2) as amount'),
+            DB::raw('TRUNCATE((product->\'$."price"\' + product->\'$."delivery_price"\') * quantity, 2) as amount'),
         ]);
     }
 
@@ -231,5 +188,13 @@ class Order extends Model
     public function transaction(): BelongsTo
     {
         return $this->belongsTo(Transaction::class);
+    }
+
+    /**
+     * @return bool
+     */
+    public function canBeShipped(): bool
+    {
+        return $this->status === OrderStatusEnum::IN_PROCESS;
     }
 }

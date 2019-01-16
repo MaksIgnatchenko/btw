@@ -41,13 +41,4 @@ class OrderViewHelper
     {
         return (!$orders->isEmpty() || null !== $searchText);
     }
-
-    /**
-     * @param Order $order
-     * @return bool
-     */
-    public static function isShipped(Order $order): bool
-    {
-        return $order->status === OrderStatusEnum::SHIPPED;
-    }
 }
