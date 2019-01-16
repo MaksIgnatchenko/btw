@@ -7,7 +7,7 @@
 
 @apiHeader {String} Authorization <code><b>token_type</b> <b>access_token</b></code>
 
-@apiParam {String} filter Required. Available filters: all, in_process, shipped
+@apiParam {String} filter Required. Available filters: all, in_process, shipped, delivered, picked_up
 
 @apiSuccessExample Success-Response:
 HTTP/1.1 200 OK
@@ -66,7 +66,7 @@ HTTP/1.1 422 Unprocessable Entity
     "message": "The given data was invalid.",
     "errors": {
         "filter": [
-            "Wrong value. Available values - in_process,shipped,all"
+            "Wrong value. Available values - in_process,shipped,delivered,picked_up,all"
         ]
     }
 }

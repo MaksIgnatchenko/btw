@@ -9,6 +9,8 @@ class OrderFilterEnum
 {
     public const IN_PROCESS = 'in_process';
     public const SHIPPED = 'shipped';
+    public const DELIVERED = 'delivered';
+    public const PICKED_UP = 'picked_up';
     public const ALL = 'all';
 
     /**
@@ -19,6 +21,8 @@ class OrderFilterEnum
         return [
             self::IN_PROCESS,
             self::SHIPPED,
+            self::DELIVERED,
+            self::PICKED_UP,
             self::ALL,
         ];
     }
@@ -28,6 +32,6 @@ class OrderFilterEnum
      */
     public static function toString(): string
     {
-        return self::IN_PROCESS . ',' . self::SHIPPED . ',' . self::ALL;
+        return self::IN_PROCESS . ',' . self::SHIPPED . ',' . self::DELIVERED . ',' .  self::PICKED_UP . ',' . self::ALL;
     }
 }
