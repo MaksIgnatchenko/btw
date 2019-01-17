@@ -190,6 +190,7 @@ return [
         App\Modules\Orders\Providers\OrderApiRouteServiceProvider::class,
         App\Modules\Orders\Providers\OrderAdminRouteServiceProvider::class,
         App\Modules\Orders\Providers\OrderWebRoutesServiceProvider::class,
+        App\Modules\Orders\Providers\OrderServiceProvider::class,
 
 //        Edujugon\PushNotification\Providers\PushNotificationServiceProvider::class,
 //        Maatwebsite\Excel\ExcelServiceProvider::class,
@@ -214,7 +215,6 @@ return [
 
         Laravel\Socialite\SocialiteServiceProvider::class,
         Illuminate\Pagination\PaginationServiceProvider::class,
-
     ],
 
     /*
