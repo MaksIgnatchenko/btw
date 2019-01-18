@@ -13,6 +13,9 @@ class Shipping
     /** @var string */
     protected $status;
 
+    /** @var string */
+    protected $trackingNumber;
+
     /**
      * @return string
      */
@@ -28,6 +31,24 @@ class Shipping
     public function setStatus(string $status): Shipping
     {
         $this->status = $status;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTrackingNumber(): string
+    {
+        return $this->trackingNumber;
+    }
+
+    /**
+     * @param string $trackingNumber
+     * @return Shipping
+     */
+    public function setTrackingNumber(string $trackingNumber): Shipping
+    {
+        $this->trackingNumber = $trackingNumber;
         return $this;
     }
 }

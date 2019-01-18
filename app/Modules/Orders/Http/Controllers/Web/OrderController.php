@@ -10,15 +10,17 @@ use App\Modules\Orders\Enums\OrderStatusEnum;
 use App\Modules\Orders\Helpers\OrderViewHelper;
 use App\Modules\Orders\Models\Order;
 use App\Modules\Orders\Repositories\OrderRepository;
+use App\Modules\Orders\Requests\Web\UpdateOrderRequest;
+use App\Modules\Orders\Shipping\ShippingServiceInterface;
 use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
-    /**
-     * @var OrderRepository
-     */
+    /** @var OrderRepository */
     protected $orderRepository;
 
+    /** @var ShippingServiceInterface */
+    protected $shippingService;
     /**
      * @return mixed
      */
@@ -36,6 +38,7 @@ class OrderController extends Controller
     {
         $this->orderRepository = $orderRepository;
         $this->middleware('owns:order', ['only' => ['show', 'update']]);
+        $this->shippingService = app(ShippingServiceInterface::class);
     }
 
     /**
@@ -64,12 +67,14 @@ class OrderController extends Controller
     }
 
     /**
+     * @param UpdateOrderRequest $request
      * @param Order $order
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function update(Order $order)
+    public function update(UpdateOrderRequest $request, Order $order)
     {
-        $this->orderRepository->changeOrderStatusToShipped($order);
+        $shipping = $this->shippingService->find($request->get('tracking_number'));
+        $this->orderRepository->changeOrderStatusToShipped($order, $shipping);
 
         return redirect(route('web.orders.show', $order->id));
     }

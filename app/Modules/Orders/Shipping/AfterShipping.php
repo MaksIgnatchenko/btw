@@ -38,7 +38,7 @@ class AfterShipping implements ShippingServiceInterface
         $shipping = app(Shipping::class);
 
         $status = $response['data']['tracking']['status'];
-        return $shipping->setStatus($status);
+        return $shipping->setStatus($status)->setTrackingNumber($trackingNumber);
     }
 
     /**
