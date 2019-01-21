@@ -13,6 +13,9 @@ class OrderStatusEnum
     public const PICKED_UP = 'picked_up';
     public const CLOSED = 'closed';
 
+    public const PENDING = 'pending';
+
+
     /**
      * @return array
      */

@@ -20,7 +20,8 @@ class AfterShipping implements ShippingServiceInterface
 
     /**
      * AfterShipping constructor.
-     * @throws \AfterShip\AfterShipException
+     * @param string $key
+     * @throws AfterShipException
      */
     public function __construct(string $key)
     {
@@ -28,6 +29,7 @@ class AfterShipping implements ShippingServiceInterface
     }
 
     // TODO maybe it doesn't needed
+
     /**
      * @param string $trackingNumber
      * @return Shipping|null
@@ -63,7 +65,6 @@ class AfterShipping implements ShippingServiceInterface
         /** @var $shipping Shipping */
         $shipping = app(Shipping::class);
 
-        dd($response);
         $status = $response['data']['tracking']['tag'];
         return $shipping->setStatus($status)->setTrackingNumber($trackingNumber);
     }
