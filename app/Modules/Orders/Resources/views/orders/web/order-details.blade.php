@@ -57,20 +57,10 @@
     </div>
 
     @if($order->canBeShipped())
-        {{--<div class="t-a-right">--}}
-            {{--<a href="{{ route('web.orders.update', $order->id) }}" class="btn update-order">--}}
-                {{--{{__('orders.order_details.shipped')}}--}}
-            {{--</a>--}}
-        {{--</div>--}}
         {!! Form::model(null, ['route' => ['web.orders.update', $order->id], 'class' => 'create-product form', 'method' => 'POST','id'=>'shipp-order']) !!}
-
-        {{--<form id="update-status-form" action="{{ route('web.orders.update', $order->id) }}" method="post"--}}
-        {{--style="display: none;">--}}
-        {{--<input type="input" name="tracking_number" value=""/>--}}
 
         {!! Form::text('tracking_number') !!}
 
-        {{--        {!! Form::input('tracking_number', null, ['class' => 'form-item__inp form-item__inp--price', 'required']) !!}--}}
         @if ($errors->has('tracking_number'))
             <div class="alert alert-danger" role="alert"><strong>{{ $errors->first('tracking_number') }}</strong></div>
         @endif
@@ -78,11 +68,10 @@
         <input type="hidden" name="_method" value="put"/>
         {!! csrf_field() !!}
 
-        {!! Form::submit(__('хуйнуть!'), ['class' => 'edit-product submit']) !!}
+        {!! Form::submit(__('orders.order_details.shipped', ['class' => 'edit-product submit']) !!}
 
 
         {!! Form::close() !!}
-        {{--</form>--}}
         <div class="t-a-center">
             <p class="order-hint">{{ __('orders.order_details.change_status_description') }}</p>
         </div>
