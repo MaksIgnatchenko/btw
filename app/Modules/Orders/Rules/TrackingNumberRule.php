@@ -23,7 +23,7 @@ class TrackingNumberRule implements Rule
     public function passes($attribute, $value)
     {
         // ePacket tracking number is a 13-digit tracking code starting with letter "LQ/LK/LM/LN/LX/LS/AG" and ending with "CN". eg. LS123456789CN.
-        return preg_match('/^(?:(LQ|LK|LM|LN|LX|LS|AG)+[0-9]{9}+CN)$/', $value);
+        return preg_match('/^(?:(LT|LQ|LK|LM|LN|LX|LS|AG)+[0-9]{9}+CN)$/', $value);
     }
 
     /**

@@ -28,6 +28,7 @@ class UpdateOrderRequest extends FormRequest
                 'required',
                 'string',
                 'max:255',
+                'unique:orders,tracking_number',
                 new TrackingNumberRule(),
             ],
         ];

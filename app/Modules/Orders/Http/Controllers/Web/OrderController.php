@@ -11,6 +11,7 @@ use App\Modules\Orders\Helpers\OrderViewHelper;
 use App\Modules\Orders\Models\Order;
 use App\Modules\Orders\Repositories\OrderRepository;
 use App\Modules\Orders\Requests\Web\UpdateOrderRequest;
+use App\Modules\Orders\Shipping\ShippingException;
 use App\Modules\Orders\Shipping\ShippingServiceInterface;
 use Illuminate\Support\Facades\Auth;
 
@@ -21,6 +22,7 @@ class OrderController extends Controller
 
     /** @var ShippingServiceInterface */
     protected $shippingService;
+
     /**
      * @return mixed
      */
@@ -73,7 +75,16 @@ class OrderController extends Controller
      */
     public function update(UpdateOrderRequest $request, Order $order)
     {
-        $shipping = $this->shippingService->find($request->get('tracking_number'));
+        $trackingNumber = $request->get('tracking_number');
+        try {
+            $shipping = $this->shippingService->set($trackingNumber);
+        } catch (ShippingException $e) {
+
+            return redirect(route('web.orders.show', $order->id))
+                ->withErrors(['tracking_number' => 'Current tracking number is already exists'])
+                ->withInput();
+        }
+
         $this->orderRepository->changeOrderStatusToShipped($order, $shipping);
 
         return redirect(route('web.orders.show', $order->id));
