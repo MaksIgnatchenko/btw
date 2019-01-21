@@ -7,6 +7,7 @@ namespace App\Modules\Orders\Repositories;
 
 use App\Modules\Orders\Enums\OrderStatusEnum;
 use App\Modules\Orders\Models\Order;
+use App\Modules\Orders\Shipping\Shipping;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -179,11 +180,12 @@ class OrderRepository extends BaseRepository
     /**
      * @param Order $order
      */
-    public function changeOrderStatusToShipped(Order $order):void
+    public function changeOrderStatusToShipped(Order $order, Shipping $shipping):void
     {
         if ($order->status === OrderStatusEnum::IN_PROCESS) {
             $order->update([
-                'status' => OrderStatusEnum::SHIPPED
+                'status' => OrderStatusEnum::SHIPPED,
+                'tracking_number' => $shipping->getTrackingNumber(),
             ]);
         }
     }

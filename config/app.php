@@ -166,33 +166,27 @@ return [
         /*
          * Application Service Providers...
          */
-//        App\Modules\Users\Providers\AuthServiceProvider::class,
-//        App\Modules\Users\Providers\ApiRouteServiceProvider::class,
-//        App\Modules\Categories\Providers\CategoriesApiRouteServiceProvider::class,
         Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
         Laracasts\Flash\FlashServiceProvider::class,
-//        Prettus\Repository\Providers\RepositoryServiceProvider::class,
-//        \InfyOm\Generator\InfyOmGeneratorServiceProvider::class,
+
         \InfyOm\AdminLTETemplates\AdminLTETemplatesServiceProvider::class,
-//        App\Modules\Users\Providers\WebRouteServiceProvider::class,
         App\Modules\Content\Providers\ContentAdminRouteServiceProvider::class,
         App\Modules\Content\Providers\ContentApiRouteServiceProvider::class,
         App\Modules\Categories\Providers\CategoriesAdminRouteServiceProvider::class,
         App\Modules\Categories\Providers\CategoriesApiRouteServiceProvider::class,
         App\Modules\Products\Providers\ProductApiRouteServiceProvider::class,
-//        \Cviebrock\ImageValidator\ImageValidatorServiceProvider::class,
 
         App\Modules\Products\Providers\ProductEventServiceProvider::class,
         App\Modules\Products\Providers\BraintreeServiceProvider::class,
-//        App\Modules\Orders\Providers\OrderEventServiceProvider::class,
         App\Modules\Orders\Providers\OrderEventServiceProvider::class,
         App\Modules\Orders\Providers\OrderApiRouteServiceProvider::class,
         App\Modules\Orders\Providers\OrderAdminRouteServiceProvider::class,
         App\Modules\Orders\Providers\OrderWebRoutesServiceProvider::class,
+        App\Modules\Orders\Providers\OrderServiceProvider::class,
+        App\Modules\Orders\Providers\OrderWebhookRouteServiceProvider::class,
 
 //        Edujugon\PushNotification\Providers\PushNotificationServiceProvider::class,
-//        Maatwebsite\Excel\ExcelServiceProvider::class,
 //        App\Modules\Users\Providers\UsersEventServiceProvider::class
 
         App\Modules\Users\Admin\Providers\RouteServiceProvider::class,
@@ -214,7 +208,6 @@ return [
 
         Laravel\Socialite\SocialiteServiceProvider::class,
         Illuminate\Pagination\PaginationServiceProvider::class,
-
     ],
 
     /*

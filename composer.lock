@@ -4,8 +4,57 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ec6a3ba0fdceb99d064cd7e47ea48d98",
+    "content-hash": "470d5cf0d79c6d71da2736cdfcfcb642",
     "packages": [
+        {
+            "name": "aftership/aftership-php-sdk",
+            "version": "5.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/AfterShip/aftership-sdk-php.git",
+                "reference": "c931c6706d602bfa65394f38117eb697b2cc0288"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/AfterShip/aftership-sdk-php/zipball/c931c6706d602bfa65394f38117eb697b2cc0288",
+                "reference": "c931c6706d602bfa65394f38117eb697b2cc0288",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~6.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "AfterShip\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "AfterShip",
+                    "email": "support@aftership.com"
+                }
+            ],
+            "description": "The PHP SDK of AfterShip API",
+            "keywords": [
+                "FedEx",
+                "aftership",
+                "dhl",
+                "shipping",
+                "track",
+                "tracking",
+                "ups",
+                "usps"
+            ],
+            "time": "2017-08-21T04:42:51+00:00"
+        },
         {
             "name": "braintree/braintree_php",
             "version": "3.35.0",
