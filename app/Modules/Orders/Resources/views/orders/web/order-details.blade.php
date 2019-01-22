@@ -68,7 +68,7 @@
         <input type="hidden" name="_method" value="put"/>
         {!! csrf_field() !!}
 
-        {!! Form::submit(__('orders.order_details.shipped', ['class' => 'edit-product submit']) !!}
+        {!! Form::submit(__('orders.order_details.shipped', ['class' => 'edit-product submit'])) !!}
 
 
         {!! Form::close() !!}
