@@ -20,7 +20,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Facades\Storage;
 use Laratrust\Traits\LaratrustUserTrait;
 
-class Merchant extends Authenticatable implements AddressInterface
+class Merchant extends Authenticatable
 {
     use Notifiable, LaratrustUserTrait;
 

@@ -27,11 +27,9 @@ class Order extends Model
         'transaction_id',
         'product',
         'quantity',
-        'qr_code',
         'status',
         'created_at',
         'updated_at',
-        'delivery_option',
     ];
 
     protected $dates = [
@@ -43,11 +41,9 @@ class Order extends Model
         'customer_id' => 'integer',
         'merchant_id' => 'integer',
         'transaction_id' => 'string',
-        'delivery_option' => 'string',
 
         'product' => 'object',
         'quantity' => 'integer',
-        'qr_code' => 'string',
         'status' => 'string',
     ];
 

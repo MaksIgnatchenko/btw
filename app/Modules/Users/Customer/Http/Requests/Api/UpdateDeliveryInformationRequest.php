@@ -11,7 +11,7 @@ namespace App\Modules\Users\Customer\Http\Requests\Api;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class UpdateAddressRequest extends FormRequest
+class UpdateDeliveryInformationRequest extends FormRequest
 {
     /**
      * @return bool
@@ -37,6 +37,7 @@ class UpdateAddressRequest extends FormRequest
             'state' => 'required|string|max:100',
             'zip' => 'required|digits:5',
             'notes' => 'nullable|string|max:100',
+            'phone' => 'required|digits:11',
         ];
     }
 
