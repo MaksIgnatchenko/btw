@@ -34,7 +34,8 @@ HTTP/1.1 200 OK
                     "quantity": 1,
                     "created_at": "2018-11-16 16:06:30",
                     "updated_at": "2018-11-16 16:06:30",
-                    "status": "in_process"
+                    "status": "in_process",
+                    "tracking_number": "LT148041302CN" // can be null
                 },
                 {
                     "id": 6,
@@ -57,7 +58,8 @@ HTTP/1.1 200 OK
                     "quantity": 1,
                     "created_at": "2018-11-16 16:06:30",
                     "updated_at": "2018-11-21 13:56:48",
-                    "status": "shipped"
+                    "status": "shipped",
+                    "tracking_number": "LT148041302CN" // can be null
                 }
     ]
 }
@@ -106,7 +108,8 @@ HTTP/1.1 200 OK
                      "quantity": 1,
                      "created_at": "2018-11-16 16:06:30",
                      "updated_at": "2018-11-16 16:06:30",
-                     "status": "in_process"
+                     "status": "in_process",
+                     "tracking_number": "LT148041302CN" // can be null
                  }
 }
 
