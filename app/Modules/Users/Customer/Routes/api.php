@@ -43,5 +43,5 @@ $this->group([
 ], function () {
     $this->put('/', 'Profile\ProfileController@update');
     $this->post('/avatar', 'Profile\ProfileController@uploadAvatar');
-    $this->put('/address', 'Profile\AddressController@store');
+    $this->put('/delivery-information', 'Profile\DeliveryInformationController@store');
 });

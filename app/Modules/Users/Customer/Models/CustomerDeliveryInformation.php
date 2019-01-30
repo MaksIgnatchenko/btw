@@ -11,8 +11,10 @@ namespace App\Modules\Users\Customer\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class CustomerAddress extends Model
+class CustomerDeliveryInformation extends Model
 {
+    /** @var $table */
+    protected $table = 'customer_delivery_information';
     /** @var string */
     protected $primaryKey = 'customer_id';
 
@@ -32,14 +34,15 @@ class CustomerAddress extends Model
         'state',
         'zip',
         'notes',
+        'phone',
     ];
 
     /**
-     * Address to merchant relation.
+     * Address to customer relation.
      *
      * @return BelongsTo
      */
-    public function merchant(): BelongsTo
+    public function customer(): BelongsTo
     {
         return $this->belongsTo(Customer::class);
     }

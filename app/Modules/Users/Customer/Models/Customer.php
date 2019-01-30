@@ -15,7 +15,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Laratrust\Traits\LaratrustUserTrait;
 
-class Customer extends Authenticatable implements JWTSubject, AddressInterface
+class Customer extends Authenticatable implements JWTSubject
 {
     use Notifiable, LaratrustUserTrait;
 
@@ -28,7 +28,6 @@ class Customer extends Authenticatable implements JWTSubject, AddressInterface
         'password',
         'first_name',
         'last_name',
-        'address',
         'avatar',
     ];
 
@@ -93,12 +92,12 @@ class Customer extends Authenticatable implements JWTSubject, AddressInterface
     }
 
     /**
-     * Merchant to address relation.
+     * Merchant to delivery information relation.
      *
      * @return HasOne
      */
-    public function address(): HasOne
+    public function deliveryInformation(): HasOne
     {
-        return $this->hasOne(CustomerAddress::class);
+        return $this->hasOne(CustomerDeliveryInformation::class);
     }
 }

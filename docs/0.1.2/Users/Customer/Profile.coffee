@@ -38,8 +38,8 @@ HTTP/1.1 200 OK
 ###
 
 ###
-@api {put} /api/customer/profile/address Change customers address
-@apiName Change customers address
+@api {put} /api/customer/profile/delivery-information Change customers delivery information
+@apiName Change customers delivery information
 @apiGroup Profile
 @apiPermission Customer
 @apiVersion 0.1.2

@@ -9,23 +9,23 @@
 namespace App\Modules\Users\Customer\Http\Controllers\Api\Profile;
 
 use App\Http\Controllers\Controller;
-use App\Modules\Users\Customer\Http\Requests\Api\UpdateAddressRequest;
-use App\Modules\Users\Customer\Models\CustomerAddress;
+use App\Modules\Users\Customer\Http\Requests\Api\UpdateDeliveryInformationRequest;
+use App\Modules\Users\Customer\Models\CustomerDeliveryInformation;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 
-class AddressController extends Controller
+class DeliveryInformationController extends Controller
 {
     /**
-     * @param UpdateAddressRequest $request
+     * @param UpdateDeliveryInformationRequest $request
      * @return JsonResponse
      */
-    public function store(UpdateAddressRequest $request)
+    public function store(UpdateDeliveryInformationRequest $request)
     {
         $attributes = [
             'customer_id' => Auth::id(),
         ];
-        $address = CustomerAddress::firstOrNew($attributes);
+        $address = CustomerDeliveryInformation::firstOrNew($attributes);
         $address->fill($request->all());
         $address->customer_id = Auth::id();
         $address->save();

@@ -54,7 +54,7 @@ HTTP/1.1 200 OK
     "created_at": "2019-01-14 13:36:36",
     "updated_at": "2019-01-14 13:36:36",
     "avatar": null,
-    "address": { // can be null
+    "delivery_information": { // can be null
         "country": "USA",
         "street": "Wall street",
         "apartment": "apt 1", // can be null,  -Apt., Suite, Unit
@@ -62,6 +62,7 @@ HTTP/1.1 200 OK
         "state": "New York",
         "zip": "12345",
         "notes": "My bearer will open the door", // can be null
+        "phone": "12312312312"
     }
 }
 ###
