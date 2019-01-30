@@ -53,6 +53,7 @@ HTTP/1.1 200 OK
 @apiParam {string} state  max 100 symbols
 @apiParam {integer} zip 5 digits
 @apiParam {string} [notes] max 100 symbols
+@apiParam {string} phone max 5 digits
 
 @apiSuccessExample Success-Response:
 HTTP/1.1 200 OK
@@ -63,6 +64,7 @@ HTTP/1.1 200 OK
     "city": "New york",
     "state": "New york",
     "zip": "12345",
-    "notes": "text" // can be null
+    "notes": "text", // can be null
+    "phone": "12312312312"
 }
 ###
