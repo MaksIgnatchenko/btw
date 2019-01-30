@@ -93,3 +93,92 @@ li.tell-form-item__disabled span {
     width: 202px;
 }
 
+.o-popup-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #000;
+    background-color: rgba(0, 0, 0, 0.55);
+    display: none;
+}
+
+.o-popup-wrapper * {
+    box-sizing: border-box;
+}
+
+.o-popup-cont {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 96%;
+    max-width: 280px;
+    padding: 38px 26px;
+    background-color: #fff;
+    border-radius: 5px;
+    font-family: 'Lato', sans-serif;
+}
+
+.o-popup-close {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 34px;
+    height: 34px;
+    padding: 0;
+    text-indent: -9999px;
+    border: none;
+    background: transparent url('/img/plus.svg') no-repeat center center;
+    background-size: contain;
+    cursor: pointer;
+}
+
+.o-popup-close:focus {
+    outline: none;
+}
+
+.o-popup-form {
+    padding: 20px 0;
+    text-align: center;
+}
+
+.o-popup-form input {
+    padding: 11px 8px 10px;
+    width: 100%;
+    font-size: 14px;
+    line-height: 1;
+    text-align: left;
+    border: 1px solid #4783ff;
+    border-radius: 6px;
+}
+
+.o-form-line p {
+    margin: 0;
+    margin-bottom: 14px;
+}
+
+.o-form-error {
+    color: #c03535;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.o-form-title {
+    color: #333;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.o-form-btn {
+    width: 170px;
+    padding: 10px 35px;
+    color: #2b2b2b;
+    font-size: 16px;
+    font-weight: bold;
+    background-color: #f3dc06;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+}

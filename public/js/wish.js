@@ -11,7 +11,7 @@
                 '/service/geography/get',
                 params,
                 callback
-                );
+            );
         }).bind(this);
 
         this.ajaxGetCountryPhoneCode = (function (params, callback) {
@@ -68,7 +68,7 @@
 })();
 
 $(function () {
-    var searchSubmitCallback = function(event) {
+    var searchSubmitCallback = function (event) {
         event.preventDefault();
 
         var searchText = $(this).find('input[name="search"]').val();
@@ -103,11 +103,11 @@ $(function () {
         searchForm.append(resetButton);
     }
 
-    $('.reset-search.products').on('click', function() {
+    $('.reset-search.products').on('click', function () {
         document.location.href = '/products';
     });
 
-    $('.reset-search.orders').on('click', function() {
+    $('.reset-search.orders').on('click', function () {
         document.location.href = '/orders';
     });
 });
@@ -115,6 +115,19 @@ $(function () {
 $(function () {
     $('.update-order').on('click', function (event) {
         event.preventDefault();
-        document.getElementById('update-status-form').submit();
+        $('.o-popup-wrapper').css('display', 'block')
     })
+});
+
+$(function () {
+    $('.o-popup-close').on('click', function (event) {
+        event.preventDefault();
+        $('.o-popup-wrapper').css('display', 'none')
+    })
+});
+
+$(function () {
+    if (!!$('.o-form-error').text().trim().length) {
+        $('.o-popup-wrapper').css('display', 'block')
+    }
 });

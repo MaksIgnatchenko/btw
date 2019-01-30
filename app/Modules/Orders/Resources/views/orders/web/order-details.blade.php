@@ -57,23 +57,40 @@
     </div>
 
     @if($order->canBeShipped())
-        {!! Form::model(null, ['route' => ['web.orders.update', $order->id], 'class' => 'create-product form', 'method' => 'POST','id'=>'shipp-order']) !!}
 
-        {!! Form::text('tracking_number') !!}
-
-        @if ($errors->has('tracking_number'))
-            <div class="alert alert-danger" role="alert"><strong>{{ $errors->first('tracking_number') }}</strong></div>
-        @endif
-
-        <input type="hidden" name="_method" value="put"/>
-        {!! csrf_field() !!}
-
-        {!! Form::submit(__('orders.order_details.shipped', ['class' => 'edit-product submit'])) !!}
-
-
-        {!! Form::close() !!}
+        <div class="t-a-right">
+            <a class="btn update-order">{{__('orders.order_details.shipped')}}</a>
+        </div>
         <div class="t-a-center">
             <p class="order-hint">{{ __('orders.order_details.change_status_description') }}</p>
+        </div>
+
+        <div class="o-popup-wrapper">
+            <div class="o-popup-cont">
+                <button class="o-popup-close" id="o-btn-close">Close</button>
+
+                {!! Form::model(null, ['route' => ['web.orders.update', $order->id], 'class' => 'o-popup-form', 'method' => 'POST','id'=>'shipp-order']) !!}
+
+                <div class="o-form-line">
+                    <p class="o-form-title">{{__('orders.order_details.enter_tracking_number')}}</p>
+                </div>
+
+                <div class="o-form-line">
+                    <p>{!! Form::text('tracking_number', null,  ['class' => 'o-form-title']) !!}</p>
+                    @if ($errors->has('tracking_number'))
+                        <p class="o-form-error">{{ $errors->first('tracking_number') }}</p>
+                    @endif
+                </div>
+
+                <input type="hidden" name="_method" value="put"/>
+                {!! csrf_field() !!}
+
+                <div class="o-form-line">
+                    <button class="o-form-btn">{{__('orders.order_details.done')}}</button>
+                </div>
+
+                {!! Form::close() !!}
+            </div>
         </div>
 
     @endif

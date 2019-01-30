@@ -35,5 +35,7 @@ return [
         'delivery_price' => 'Delivery price',
         'status' => 'Status',
         'change_status_description' => '«Shipped» - You can mark an order as shipped after you transfer it to the customer through the shipping service.',
+        'enter_tracking_number' => 'Enter tracking number',
+        'done' => 'Done',
     ],
 ];

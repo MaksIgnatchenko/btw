@@ -18,7 +18,7 @@ class MerchantTableSeeder extends Seeder
             'first_name' => 'Appus Merchant',
             'last_name' => 'Tester',
             'email' => 'merchant@wish.com',
-            'password' => Hash::make('Qwerty1221!'),
+            'password' => 'Qwerty1221!',
             'phone' => '123456789'
         ]);
 

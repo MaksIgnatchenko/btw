@@ -36,13 +36,13 @@ body {
     font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
 }
 
-.pagination>.active>a,
-.pagination>.active>a:focus,
-.pagination>.active>a:hover,
-.pagination>.active>span,
-.pagination>.active>span:focus,
-.pagination>.active>span:hover {
-    background-color: initial!important;
+.pagination > .active > a,
+.pagination > .active > a:focus,
+.pagination > .active > a:hover,
+.pagination > .active > span,
+.pagination > .active > span:focus,
+.pagination > .active > span:hover {
+    background-color: initial !important;
 }
 
 #wrapper .dataTables_info {
@@ -76,17 +76,17 @@ select:not([multiple]) {
     height: 2.5em !important;
 }
 
-#sidebar-menu > ul > li.active>a {
+#sidebar-menu > ul > li.active > a {
     color: #1d1e3a;
 }
 
 #dataTableBuilder th.sorting_asc,
 #dataTableBuilder th.sorting_desc,
-#dataTableBuilder th.sorting  {
+#dataTableBuilder th.sorting {
     background-position-x: 0px;
     padding-left: 20px;
 }
 
 ol.breadcrumb {
-    background-color: transparent!important;
+    background-color: transparent !important;
 }

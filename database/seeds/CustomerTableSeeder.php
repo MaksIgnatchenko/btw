@@ -15,7 +15,6 @@ class CustomerTableSeeder extends Seeder
             'first_name' => 'Appus',
             'last_name' => 'Tester',
             'email' => 'customer@wish.com',
-            'address' => '86 Marshall Drive Bluffton, SC 29910',
             'password' => Hash::make('Qweqwe1!'),
         ]);
     }
