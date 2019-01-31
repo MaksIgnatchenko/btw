@@ -7,6 +7,7 @@ namespace App\Modules\Users\Merchant\Models;
 
 use App\Modules\Products\Models\Product;
 use App\Modules\Users\Merchant\Helpers\GeographyHelper;
+use App\Modules\Users\Merchant\Mails\ResetPasswordMail;
 use App\Modules\Users\Merchant\Models\Geography\GeographyCountry;
 use App\Modules\Users\Merchant\Repositories\MerchantRepository;
 use App\Modules\Users\Merchant\Repositories\StoreRepository;
@@ -188,5 +189,17 @@ class Merchant extends Authenticatable
         $store->categories()->attach($data['categories']);
 
         return $merchant;
+    }
+
+    /**
+     * Sends the password reset notification.
+     *
+     * @param  string $token
+     *
+     * @return void
+     */
+    public function sendPasswordResetNotification($token)
+    {
+        $this->notify(new ResetPasswordMail($token, $this));
     }
 }
