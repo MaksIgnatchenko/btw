@@ -6,7 +6,7 @@
 namespace App\Modules\Users\Customer\Models;
 
 use App\Modules\Products\Models\Product;
-use App\Modules\Users\Models\AddressInterface;
+use App\Modules\Users\Customer\Mails\ResetPasswordMail;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
@@ -99,5 +99,17 @@ class Customer extends Authenticatable implements JWTSubject
     public function deliveryInformation(): HasOne
     {
         return $this->hasOne(CustomerDeliveryInformation::class);
+    }
+
+    /**
+     * Sends the password reset notification.
+     *
+     * @param  string $token
+     *
+     * @return void
+     */
+    public function sendPasswordResetNotification($token)
+    {
+        $this->notify(new ResetPasswordMail($token, $this));
     }
 }

@@ -4,11 +4,9 @@
  */
 
 Route::group([
-    'middleware' => 'web',
-    'prefix' => 'auth',
+    'prefix' => 'customer',
 ], function () {
-    $this->get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request');
-    $this->get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.reset');
-    $this->post('password/reset', 'Auth\ResetPasswordController@reset');
-    $this->get('password/success', 'Auth\ResetPasswordController@success');
+    $this->get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('customer.password.reset');
+    $this->post('password/reset', 'Auth\ResetPasswordController@reset')->name('customer.password.restore');
+    $this->get('password/success', 'Auth\ResetPasswordController@success')->name('customer.password.success');
 });
