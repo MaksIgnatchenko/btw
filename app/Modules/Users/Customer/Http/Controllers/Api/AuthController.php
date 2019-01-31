@@ -70,7 +70,7 @@ class AuthController extends Controller
     public function me(): JsonResponse
     {
         $user = $this->guard()->user();
-        $user->address;
+        $user->deliveryInformation;
 
         return response()->json($user);
     }
