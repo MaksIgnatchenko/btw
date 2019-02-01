@@ -23,8 +23,8 @@ trait CartValidatorTrait
             /** @var Customer $customer */
             $customer = Auth::user();
 
-            if (null === $customer->address) {
-                $validator->errors()->add('address', "No address. Please add your delivery address before purchasing");
+            if (null === $customer->deliveryInformation) {
+                $validator->errors()->add('delivery_information', "No delivery information. Please add before purchasing");
             }
 
 
