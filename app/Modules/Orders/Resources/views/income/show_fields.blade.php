@@ -33,6 +33,10 @@
                 {!! OrderStatusEnum::toArray()[$order->status] !!}
             </p>
             <p>
+                {!! Form::label('tracking_number', 'Tracking number:') !!}
+                {!! $order->tracking_number !!}
+            </p>
+            <p>
                 {!! Form::label('created_at', 'Purchase date:') !!}
                 {!! DateConverter::date($order->created_at) !!}
             </p>

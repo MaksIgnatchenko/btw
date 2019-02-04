@@ -22,11 +22,67 @@
     </p>
 </div>
 
-<!-- Address Field -->
+<!-- Street Field -->
 <div class="form-group">
     <p>
-        {!! Form::label('address', 'Address:') !!}
-        {!! $customer->address !!}
+        {!! Form::label('street', 'Street:') !!}
+        {!! optional($customer->deliveryInformation)->street !!}
+    </p>
+</div>
+
+<!-- Apartment Field -->
+<div class="form-group">
+    <p>
+        {!! Form::label('apartment', 'Apt, Suite, Unit:') !!}
+        {!! optional($customer->deliveryInformation)->apartment !!}
+    </p>
+</div>
+
+<!-- City Field -->
+<div class="form-group">
+    <p>
+        {!! Form::label('city', 'City/Town:') !!}
+        {!! optional($customer->deliveryInformation)->city !!}
+    </p>
+</div>
+
+<!-- State Field -->
+<div class="form-group">
+    <p>
+        {!! Form::label('state', 'State:') !!}
+        {!! optional($customer->deliveryInformation)->state !!}
+    </p>
+</div>
+
+<!-- Zip Field -->
+<div class="form-group">
+    <p>
+        {!! Form::label('zip', 'zip:') !!}
+        {!! optional($customer->deliveryInformation)->zip !!}
+    </p>
+</div>
+
+<!-- Country Field -->
+<div class="form-group">
+    <p>
+        {!! Form::label('country', 'Country:') !!}
+        {!! optional($customer->deliveryInformation)->country !!}
+    </p>
+</div>
+
+<!-- Phone Field -->
+<div class="form-group">
+    <p>
+        {!! Form::label('phone', 'Phone:') !!}
+        {!! optional($customer->deliveryInformation)->phone !!}
+    </p>
+</div>
+
+<!-- Notes Field -->
+<div class="form-group">
+    <p>
+        {!! Form::label('notes', 'Notes:') !!}
+        {!! optional($customer->deliveryInformation)->notes !!}
     </p>
 </div>
 
