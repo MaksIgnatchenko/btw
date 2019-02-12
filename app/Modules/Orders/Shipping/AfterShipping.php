@@ -10,6 +10,7 @@ namespace App\Modules\Orders\Shipping;
 
 use AfterShip\AfterShipException;
 use AfterShip\Trackings;
+use Illuminate\Support\Facades\Log;
 
 class AfterShipping implements ShippingServiceInterface
 {
@@ -66,6 +67,8 @@ class AfterShipping implements ShippingServiceInterface
         $shipping = app(Shipping::class);
 
         $status = $response['data']['tracking']['tag'];
+
+        Log::info('aftership response', $response);
         return $shipping->setStatus($status)->setTrackingNumber($trackingNumber);
     }
 

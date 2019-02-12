@@ -30,6 +30,7 @@ class Order extends Model
         'status',
         'created_at',
         'updated_at',
+        'tracking_number',
     ];
 
     protected $dates = [
