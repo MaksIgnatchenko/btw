@@ -17,6 +17,9 @@ use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\DB;
 use App\Modules\Products\Helpers\ImagesPathHelper;
 
+/**
+ * @property int id
+ */
 class Order extends Model
 {
     public const PAGE_LIMIT = 50;
@@ -31,6 +34,7 @@ class Order extends Model
         'created_at',
         'updated_at',
         'tracking_number',
+        'rated'
     ];
 
     protected $dates = [

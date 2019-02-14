@@ -10,6 +10,7 @@ use App\Modules\Products\Filters\ProductFilter;
 use App\Modules\Products\Helpers\AttributesHelper;
 use App\Modules\Products\Repositories\ProductImageRepository;
 use App\Modules\Products\Repositories\ProductRepository;
+use App\Modules\Reviews\Models\ProductReview;
 use App\Modules\Users\Merchant\Models\Store;
 use App\Modules\Users\Customer\Models\Customer;
 use App\Modules\Users\Merchant\Repositories\MerchantRepository;
@@ -209,6 +210,16 @@ class Product extends Model implements Ownable
     public function store(): BelongsTo
     {
         return $this->belongsTo(Store::class);
+    }
+
+    /**
+     * Merchant reviews
+     *
+     * @return HasMany
+     */
+    public function reviews() : HasMany
+    {
+        return $this->hasMany(ProductReview::class);
     }
 
     /**

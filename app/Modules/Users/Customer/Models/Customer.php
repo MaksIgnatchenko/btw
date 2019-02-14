@@ -15,6 +15,9 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Laratrust\Traits\LaratrustUserTrait;
 
+/**
+ * @property int id
+ */
 class Customer extends Authenticatable implements JWTSubject
 {
     use Notifiable, LaratrustUserTrait;
