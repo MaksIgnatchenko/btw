@@ -8,7 +8,7 @@ namespace App\Modules\Reviews\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Modules\Orders\Repositories\OrderRepository;
 use App\Modules\Products\Models\Product;
-use App\Modules\Reviews\Dto\ReviewDto;
+
 use App\Modules\Reviews\Repositories\MerchantReviewRepository;
 use App\Modules\Reviews\Repositories\ProductReviewRepository;
 use App\Modules\Reviews\Requests\CreateReviewRequest;
