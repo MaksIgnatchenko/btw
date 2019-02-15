@@ -6,6 +6,8 @@
 namespace App\Modules\Users\Merchant\Models;
 
 use App\Modules\Products\Models\Product;
+use App\Modules\Reviews\Models\MerchantReview;
+use App\Modules\Reviews\Traits\ComputedRatingTrait;
 use App\Modules\Users\Merchant\Helpers\GeographyHelper;
 use App\Modules\Users\Merchant\Mails\ResetPasswordMail;
 use App\Modules\Users\Merchant\Models\Geography\GeographyCountry;
@@ -13,6 +15,7 @@ use App\Modules\Users\Merchant\Repositories\MerchantRepository;
 use App\Modules\Users\Merchant\Repositories\StoreRepository;
 use App\Modules\Users\Merchant\Services\Geography\GeographyServiceInterface;
 use App\Modules\Users\Models\AddressInterface;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Hash;
@@ -23,7 +26,7 @@ use Laratrust\Traits\LaratrustUserTrait;
 
 class Merchant extends Authenticatable
 {
-    use Notifiable, LaratrustUserTrait;
+    use Notifiable, LaratrustUserTrait, ComputedRatingTrait;
 
     /**
      * The attributes that are mass assignable.
@@ -44,6 +47,7 @@ class Merchant extends Authenticatable
         'password', 'remember_token',
     ];
 
+    protected $appends = ['rating'];
     /**
      * Password attribute mutator.
      *
@@ -91,6 +95,7 @@ class Merchant extends Authenticatable
         return null;
     }
 
+
     /**
      * @param $value
      *
@@ -115,6 +120,15 @@ class Merchant extends Authenticatable
         return $this->hasOne(Address::class);
     }
 
+    /**
+     * Merchant reviews
+     *
+     * @return HasMany
+     */
+    public function reviews() : HasMany
+    {
+        return $this->hasMany(MerchantReview::class);
+    }
     /**
      * Merchant to company relation.
      *

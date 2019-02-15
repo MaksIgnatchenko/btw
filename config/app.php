@@ -208,6 +208,8 @@ return [
 
         Laravel\Socialite\SocialiteServiceProvider::class,
         Illuminate\Pagination\PaginationServiceProvider::class,
+
+        App\Modules\Reviews\Providers\ReviewApiRoutesServiceProvider::class,
     ],
 
     /*

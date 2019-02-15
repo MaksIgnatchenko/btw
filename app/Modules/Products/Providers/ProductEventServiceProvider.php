@@ -5,7 +5,6 @@
 
 namespace App\Modules\Products\Providers;
 
-use App\Modules\Products\Listeners\CreateProductSubscriber;
 use App\Modules\Products\Listeners\TransactionCompletedSubscriber;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider;
 
