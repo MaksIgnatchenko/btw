@@ -12,13 +12,25 @@ use App\Modules\Users\Merchant\Models\Merchant;
 use Illuminate\Support\Collection;
 use InfyOm\Generator\Common\BaseRepository;
 
+/**
+ * Class MerchantReviewRepository
+ * @package App\Modules\Reviews\Repositories
+ */
 class MerchantReviewRepository extends BaseRepository implements ReviewRepositoryInterface
 {
+    /**
+     * @return string
+     */
     public function model() : string
     {
         return MerchantReview::class;
     }
 
+    /**
+     * @param int $merchantId
+     * @param int $offset
+     * @return Collection|null
+     */
     public function getActiveReviews(int $merchantId, int $offset) : ?Collection
     {
         $merchant = Merchant::find($merchantId);
@@ -33,6 +45,11 @@ class MerchantReviewRepository extends BaseRepository implements ReviewRepositor
             ->get();
     }
 
+    /**
+     * @param int $merchantId
+     * @param int $offset
+     * @return Collection|null
+     */
     public function getInactiveReviews(int  $merchantId, int $offset) : ?Collection
     {
         $merchant = Merchant::find($merchantId);
@@ -47,19 +64,30 @@ class MerchantReviewRepository extends BaseRepository implements ReviewRepositor
             ->get();
     }
 
+    /**
+     * @param MerchantReview $review
+     */
     public function activateReview(MerchantReview $review) : void
     {
         $review->status = ReviewStatusEnum::ACTIVE;
         $review->save();
     }
 
+    /**
+     * @param MerchantReview $review
+     */
     public function deactivateReview(MerchantReview $review) : void
     {
         $review->status = ReviewStatusEnum::INACTIVE;
         $review->save();
     }
 
-    public function createReview(Order $order, int $rating, string $comment = null) : MerchantReview
+    /**
+     * @param Order $order
+     * @param int $rating
+     * @param string|null $comment
+     */
+    public function createReview(Order $order, int $rating, string $comment = null) : void
     {
         $review = new MerchantReview();
         $review->order_id = $order->id;
@@ -68,7 +96,5 @@ class MerchantReviewRepository extends BaseRepository implements ReviewRepositor
         $review->rating = $rating;
         $review->comment = $comment;
         $review->save();
-
-        return $review;
     }
 }

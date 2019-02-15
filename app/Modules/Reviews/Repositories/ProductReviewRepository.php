@@ -14,14 +14,26 @@ use App\Modules\Users\Merchant\Models\Merchant;
 use Illuminate\Support\Collection;
 use InfyOm\Generator\Common\BaseRepository;
 
+/**
+ * Class ProductReviewRepository
+ * @package App\Modules\Reviews\Repositories
+ */
 class ProductReviewRepository extends BaseRepository implements ReviewRepositoryInterface
 {
+    /**
+     * @return string
+     */
     public function model() : string
     {
         return ProductReview::class;
     }
 
-    public function getActiveReviews(int $productId, int $offset) : Collection
+    /**
+     * @param int $productId
+     * @param int $offset
+     * @return Collection|null
+     */
+    public function getActiveReviews(int $productId, int $offset) : ?Collection
     {
         $product = Product::find($productId);
 
@@ -35,7 +47,12 @@ class ProductReviewRepository extends BaseRepository implements ReviewRepository
             ->get();
     }
 
-    public function getInactiveReviews(int $productId, int $offset) : Collection
+    /**
+     * @param int $productId
+     * @param int $offset
+     * @return Collection|null
+     */
+    public function getInactiveReviews(int $productId, int $offset) : ?Collection
     {
         $product = Product::find($productId);
 
@@ -49,19 +66,30 @@ class ProductReviewRepository extends BaseRepository implements ReviewRepository
             ->get();
     }
 
+    /**
+     * @param ProductReview $review
+     */
     public function activateReview(ProductReview $review) : void
     {
         $review->status = ReviewStatusEnum::ACTIVE;
         $review->save();
     }
 
+    /**
+     * @param ProductReview $review
+     */
     public function deactivateReview(ProductReview $review) : void
     {
         $review->status = ReviewStatusEnum::INACTIVE;
         $review->save();
     }
 
-    public function createReview(Order $order, int $rating, string $comment = null) : ProductReview
+    /**
+     * @param Order $order
+     * @param int $rating
+     * @param string|null $comment
+     */
+    public function createReview(Order $order, int $rating, string $comment = null) : void
     {
         $review = new ProductReview();
         $review->order_id = $order->id;
@@ -70,7 +98,5 @@ class ProductReviewRepository extends BaseRepository implements ReviewRepository
         $review->rating = $rating;
         $review->comment = $comment;
         $review->save();
-
-        return $review;
     }
 }

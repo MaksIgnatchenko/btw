@@ -35,7 +35,7 @@ class Order extends Model
         'created_at',
         'updated_at',
         'tracking_number',
-        'rated'
+        'rated',
     ];
 
     protected $dates = [
@@ -55,7 +55,7 @@ class Order extends Model
     ];
 
     protected $appends = [
-        'is_rated'
+        'is_rated',
     ];
 
     protected $hidden = [

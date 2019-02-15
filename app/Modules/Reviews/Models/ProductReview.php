@@ -9,6 +9,7 @@ use App\Modules\Products\Models\Product;
 use App\Modules\Reviews\Traits\CommonReviewTrait;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Query\Builder;
 
 /**
  * @property string status
@@ -17,6 +18,9 @@ class ProductReview extends Model
 {
     use CommonReviewTrait;
 
+    /**
+     * @var array
+     */
     protected $fillable = [
         'rating',
         'comment',
@@ -26,13 +30,11 @@ class ProductReview extends Model
         'product_id',
     ];
 
+    /**
+     * @var array
+     */
     protected $hidden = [
-        'status'
-    ];
-
-    protected $dates = [
-        'created_at',
-        'updated_at',
+        'status',
     ];
 
 
@@ -42,10 +44,5 @@ class ProductReview extends Model
     public function product() : BelongsTo
     {
         return $this->belongsTo(Product::class);
-    }
-
-    public function scopeOfProduct($query, $product)
-    {
-        return $query->where('product_id', $product->id);
     }
 }

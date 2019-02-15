@@ -4,8 +4,15 @@
  */
 namespace App\Modules\Reviews\Traits;
 
+/**
+ * Trait ComputedRatingTrait
+ * @package App\Modules\Reviews\Traits
+ */
 trait ComputedRatingTrait
 {
+    /**
+     * @return float|int
+     */
     public function getRatingAttribute()
     {
         $merchantReviews = $this->reviews()->active()->get(['rating']);

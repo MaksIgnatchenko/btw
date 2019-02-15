@@ -9,8 +9,17 @@ use App\Modules\Orders\Enums\OrderStatusEnum;
 use App\Modules\Orders\Models\Order;
 use Illuminate\Contracts\Validation\Rule;
 
+/**
+ * Class PickedUpOrderRule
+ * @package App\Modules\Reviews\Rules
+ */
 class PickedUpOrderRule implements Rule
 {
+    /**
+     * @param string $attribute
+     * @param mixed $value
+     * @return bool
+     */
     public function passes($attribute, $value) : bool
     {
         return Order::where('id', $value)
@@ -18,6 +27,9 @@ class PickedUpOrderRule implements Rule
             ->exists();
     }
 
+    /**
+     * @return bool
+     */
     public function message() : bool
     {
         return 'Order must be picked up';

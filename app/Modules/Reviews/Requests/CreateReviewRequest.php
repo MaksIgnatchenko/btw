@@ -31,6 +31,9 @@ class CreateReviewRequest extends FormRequest
         return true;
     }
 
+    /**
+     * @return array
+     */
     public function rules(): array
     {
         return [

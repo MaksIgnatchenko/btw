@@ -10,6 +10,10 @@ use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvi
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Route;
 
+/**
+ * Class ReviewApiRoutesServiceProvider
+ * @package App\Modules\Reviews\Providers
+ */
 class ReviewApiRoutesServiceProvider extends ServiceProvider
 {
     /**

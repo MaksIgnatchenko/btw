@@ -21,6 +21,9 @@ class MerchantReview extends Model
 
     public const PER_PAGE = 10;
 
+    /**
+     * @var array
+     */
     protected $fillable = [
         'rating',
         'comment',
@@ -29,14 +32,13 @@ class MerchantReview extends Model
         'merchant_id',
     ];
 
+    /**
+     * @var array
+     */
     protected $hidden = [
-        'status'
+        'status',
     ];
 
-    protected $dates = [
-        'created_at',
-        'updated_at',
-    ];
 
     /**
      * @return BelongsTo
@@ -44,10 +46,5 @@ class MerchantReview extends Model
     public function merchant() : BelongsTo
     {
         return $this->belongsTo(Merchant::class);
-    }
-
-    public function scopeOfMerchant($query, $merchant)
-    {
-        return $query->where('merchant_id', $merchant->id);
     }
 }
