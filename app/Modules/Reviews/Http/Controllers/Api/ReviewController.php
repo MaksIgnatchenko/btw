@@ -70,7 +70,6 @@ class ReviewController extends Controller
             Auth::user()->id
         );
 
-
         $this->merchantReviewRepository->createReview(
             $order,
             $request->merchant_rating,
@@ -82,6 +81,7 @@ class ReviewController extends Controller
             $request->product_rating,
             $request->product_comment
         );
+
         $order->update(['rated' => true]);
 
         return response()->json(['success' => true]);

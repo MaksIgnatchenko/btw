@@ -7,6 +7,7 @@ namespace App\Modules\Users\Merchant\Models;
 
 use App\Modules\Products\Models\Product;
 use App\Modules\Reviews\Models\MerchantReview;
+use App\Modules\Reviews\Traits\ComputedRatingTrait;
 use App\Modules\Users\Merchant\Helpers\GeographyHelper;
 use App\Modules\Users\Merchant\Mails\ResetPasswordMail;
 use App\Modules\Users\Merchant\Models\Geography\GeographyCountry;
@@ -25,7 +26,7 @@ use Laratrust\Traits\LaratrustUserTrait;
 
 class Merchant extends Authenticatable
 {
-    use Notifiable, LaratrustUserTrait;
+    use Notifiable, LaratrustUserTrait, ComputedRatingTrait;
 
     /**
      * The attributes that are mass assignable.
@@ -46,6 +47,7 @@ class Merchant extends Authenticatable
         'password', 'remember_token',
     ];
 
+    protected $appends = ['rating'];
     /**
      * Password attribute mutator.
      *

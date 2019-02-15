@@ -11,6 +11,7 @@ use App\Modules\Products\Helpers\AttributesHelper;
 use App\Modules\Products\Repositories\ProductImageRepository;
 use App\Modules\Products\Repositories\ProductRepository;
 use App\Modules\Reviews\Models\ProductReview;
+use App\Modules\Reviews\Traits\ComputedRatingTrait;
 use App\Modules\Users\Merchant\Models\Store;
 use App\Modules\Users\Customer\Models\Customer;
 use App\Modules\Users\Merchant\Repositories\MerchantRepository;
@@ -26,6 +27,7 @@ use Laratrust\Contracts\Ownable;
 
 class Product extends Model implements Ownable
 {
+    use ComputedRatingTrait;
 
     public const PRODUCTS_PAGE_LIMIT = 20;
     public const REVIEWS_PAGE_LIMIT = 3;
@@ -94,6 +96,7 @@ class Product extends Model implements Ownable
     protected $appends = [
         'is_in_wish_list',
         'merchant_id',
+        'rating',
     ];
 
     /**
