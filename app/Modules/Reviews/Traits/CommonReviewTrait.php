@@ -8,14 +8,24 @@ use App\Modules\Orders\Models\Order;
 use App\Modules\Reviews\Enums\ReviewStatusEnum;
 use App\Modules\Users\Customer\Models\Customer;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-trait CommonReviewsScopesTrait
+trait CommonReviewTrait
 {
+    public function order() : BelongsTo
+    {
+        return $this->belongsTo(Order::class);
+    }
+
+    public function isActive() : bool
+    {
+        return $this->status === ReviewStatusEnum::ACTIVE;
+    }
+
     public function scopeOfOrder(Builder $query, Order $order) : Builder
     {
         return $query->where('order_id', $order->id);
     }
-
 
     public function scopeOfCustomer(Builder $query, Customer $customer) : Builder
     {

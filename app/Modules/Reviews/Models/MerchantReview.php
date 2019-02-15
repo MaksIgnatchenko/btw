@@ -5,9 +5,7 @@
 
 namespace App\Modules\Reviews\Models;
 
-use App\Modules\Orders\Models\Order;
-use App\Modules\Reviews\Enums\ReviewStatusEnum;
-use App\Modules\Reviews\Traits\CommonReviewsScopesTrait;
+use App\Modules\Reviews\Traits\CommonReviewTrait;
 use App\Modules\Users\Merchant\Models\Merchant;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -19,7 +17,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  */
 class MerchantReview extends Model
 {
-    use CommonReviewsScopesTrait;
+    use CommonReviewTrait;
 
     public const PER_PAGE = 10;
 
@@ -28,7 +26,7 @@ class MerchantReview extends Model
         'comment',
         'order_id',
         'customer_id',
-        'merchant_id'
+        'merchant_id',
     ];
 
     protected $hidden = [
@@ -36,7 +34,8 @@ class MerchantReview extends Model
     ];
 
     protected $dates = [
-        'created_at'
+        'created_at',
+        'updated_at',
     ];
 
     /**
@@ -46,17 +45,6 @@ class MerchantReview extends Model
     {
         return $this->belongsTo(Merchant::class);
     }
-
-    public function order() : BelongsTo
-    {
-        return $this->belongsTo(Order::class);
-    }
-
-    public function isActive() : bool
-    {
-        return $this->status === ReviewStatusEnum::ACTIVE;
-    }
-
 
     public function scopeOfMerchant($query, $merchant)
     {

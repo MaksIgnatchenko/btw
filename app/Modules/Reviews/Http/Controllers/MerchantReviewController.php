@@ -25,17 +25,13 @@ class MerchantReviewController extends Controller
         $this->merchantReviewRepository = $merchantReviewRepository;
     }
 
-
+    public function index(Request $request)
+    {
+       //TODO implement in admin tickets
+    }
 
     public function show(MerchantReview $review)
     {
         return view('reviews.merchant.show', compact('review'));
-    }
-
-    public function index(Request $request)
-    {
-        $reviews = $this->merchantReviewRepository->getActiveReviews($request->get('offset', 0));
-
-        return view('reviews.merchant.list', compact('reviews'));
     }
 }

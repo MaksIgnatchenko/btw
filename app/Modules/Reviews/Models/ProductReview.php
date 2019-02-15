@@ -5,10 +5,8 @@
 
 namespace App\Modules\Reviews\Models;
 
-use App\Modules\Orders\Models\Order;
 use App\Modules\Products\Models\Product;
-use App\Modules\Reviews\Enums\ReviewStatusEnum;
-use App\Modules\Reviews\Traits\CommonReviewsScopesTrait;
+use App\Modules\Reviews\Traits\CommonReviewTrait;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
@@ -17,7 +15,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  */
 class ProductReview extends Model
 {
-    use CommonReviewsScopesTrait;
+    use CommonReviewTrait;
 
     protected $fillable = [
         'rating',
@@ -25,24 +23,18 @@ class ProductReview extends Model
         'status',
         'customer_id',
         'order_id',
-        'product_id'
+        'product_id',
+    ];
+
+    protected $hidden = [
+        'status'
     ];
 
     protected $dates = [
-        'created_at'
+        'created_at',
+        'updated_at',
     ];
 
-
-
-    public function order() : BelongsTo
-    {
-        return $this->belongsTo(Order::class);
-    }
-
-    public function isActive() : bool
-    {
-        return $this->status === ReviewStatusEnum::ACTIVE;
-    }
 
     /**
      * @return BelongsTo

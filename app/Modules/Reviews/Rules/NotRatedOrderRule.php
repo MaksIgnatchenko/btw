@@ -12,9 +12,11 @@ class NotRatedOrderRule implements Rule
 {
     public function passes($attribute, $value) : bool
     {
-        return Order::where('id', $value)
-            ->where('rated', false)
-            ->exists();
+        $order = Order::find($value);
+        if (null === $order) {
+            return false;
+        }
+        return !$order->rated;
     }
 
     public function message() : bool

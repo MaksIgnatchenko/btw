@@ -12,6 +12,10 @@ class ReviewPolicy
 {
     public function create(Customer $customer) : bool
     {
-        return $customer->id === optional(Order::find(request('order_id')))->customer_id;
+        $order = Order::find(request('order_id'), ['customer_id']);
+        if (null === $order) {
+            return false;
+        }
+        return $customer->id === $order->customer_id;
     }
 }

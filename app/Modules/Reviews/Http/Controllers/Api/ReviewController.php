@@ -26,6 +26,9 @@ class ReviewController extends Controller
      * @var OrderRepository
      */
     private $orderRepository;
+    /**
+     * @var ProductReviewRepository
+     */
     private $productReviewsRepository;
 
 
@@ -39,24 +42,30 @@ class ReviewController extends Controller
         $this->productReviewsRepository = $productReviewRepository;
     }
 
-    public function showMerchantReviews(Request $request, Merchant $merchant)
+    public function showReviews(Request $request, string $type, int $id)
     {
-        $reviews = $this->merchantReviewRepository->getActiveReviews(
-            $merchant,
+        switch ($type) {
+            case 'merchant':
+                $repository = $this->merchantReviewRepository;
+                break;
+            case 'product':
+                $repository = $this->productReviewsRepository;
+                break;
+            default:
+                return abort(404);
+        }
+
+        $reviews = $repository->getActiveReviews(
+            $id,
             $request->get('offset', 0)
         );
 
-        return response()->json([
-            'reviews' => $reviews
-        ]);
-    }
-
-    public function showProductReviews(Request $request, Product $product)
-    {
-        $reviews = $this->productReviewsRepository->getActiveReviews(
-            $product,
-            $request->get('offset', 0)
-        );
+        if (null === $reviews) {
+            return response()->json([
+                'success' => false,
+                'errors' => "$type with id=$id not found"
+            ], 404);
+        }
 
         return response()->json([
             'reviews' => $reviews
@@ -81,8 +90,6 @@ class ReviewController extends Controller
             $request->product_rating,
             $request->product_comment
         );
-
-        $order->update(['rated' => true]);
 
         return response()->json(['success' => true]);
     }

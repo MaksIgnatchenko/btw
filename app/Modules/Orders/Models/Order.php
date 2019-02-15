@@ -8,6 +8,7 @@ namespace App\Modules\Orders\Models;
 use App\Modules\Orders\Enums\OrderStatusEnum;
 use App\Modules\Orders\Repositories\OrderRepository;
 use App\Modules\Products\Models\Transaction;
+use App\Modules\Reviews\Models\ProductReview;
 use App\Modules\Users\Customer\Models\Customer;
 use App\Modules\Users\Merchant\Models\Merchant;
 use Illuminate\Database\Eloquent\Collection;
@@ -50,6 +51,11 @@ class Order extends Model
         'product' => 'object',
         'quantity' => 'integer',
         'status' => 'string',
+        'is_dated' => 'bool',
+    ];
+
+    protected $appends = [
+        'is_rated'
     ];
 
     protected $hidden = [
@@ -69,6 +75,13 @@ class Order extends Model
         return $orderRepository->findMerchantNotPaidOrders($merchantId);
     }
 
+    /**
+     * @return bool
+     */
+    public function getRatedAttribute() : bool
+    {
+        return ProductReview::where('order_id', $this->id)->exists();
+    }
     /**
      * @return float
      */

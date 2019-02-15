@@ -34,11 +34,11 @@ class CreateReviewRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'merchant_rating'        => 'required|numeric|min:1|max:5',
-            'product_rating'        => 'required|numeric|min:1|max:5',
-            'order_id'      => [
+            'merchant_rating' => 'required|integer|min:1|max:5',
+            'product_rating'  => 'required|integer|min:1|max:5',
+            'order_id'        => [
                 'required',
-                'numeric',
+                'integer',
                 new NotRatedOrderRule(),
                 new PickedUpOrderRule()
             ]
