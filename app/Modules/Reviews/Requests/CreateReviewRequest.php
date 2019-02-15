@@ -43,7 +43,7 @@ class CreateReviewRequest extends FormRequest
                 'required',
                 'integer',
                 new NotRatedOrderRule(),
-                new PickedUpOrderRule()
+                new PickedUpOrderRule(),
             ]
         ];
     }
