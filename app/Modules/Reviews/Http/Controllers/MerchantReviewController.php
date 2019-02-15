@@ -5,7 +5,6 @@
 
 namespace App\Modules\Reviews\Http\Controllers;
 
-
 use App\Http\Controllers\Controller;
 use App\Modules\Products\Models\Product;
 use App\Modules\Reviews\Models\MerchantReview;

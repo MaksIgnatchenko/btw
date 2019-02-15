@@ -5,7 +5,6 @@
 
 namespace App\Modules\Reviews\Rules;
 
-
 use App\Modules\Orders\Enums\OrderStatusEnum;
 use App\Modules\Orders\Models\Order;
 use Illuminate\Contracts\Validation\Rule;
@@ -23,5 +22,4 @@ class PickedUpOrderRule implements Rule
     {
         return 'Order must be picked up';
     }
-
 }

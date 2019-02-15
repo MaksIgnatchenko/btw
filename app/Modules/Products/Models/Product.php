@@ -132,6 +132,7 @@ class Product extends Model implements Ownable
         return $this->store->merchant->id;
     }
 
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
@@ -224,7 +225,7 @@ class Product extends Model implements Ownable
     {
         return $this->hasMany(ProductReview::class);
     }
-
+    
     /**
      * @param $query
      *

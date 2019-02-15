@@ -5,7 +5,6 @@
 
 namespace App\Modules\Reviews\Rules;
 
-
 use App\Modules\Orders\Models\Order;
 use Illuminate\Contracts\Validation\Rule;
 

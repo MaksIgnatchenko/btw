@@ -15,7 +15,7 @@ trait ComputedRatingTrait
         }
 
         return $merchantReviews->reduce(function ($collector, $item) {
-                return $collector + $item->rating;
+            return $collector + $item->rating;
         }, 0) / $merchantReviews->count();
     }
 }

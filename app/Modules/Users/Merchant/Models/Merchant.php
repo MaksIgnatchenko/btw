@@ -40,7 +40,7 @@ class Merchant extends Authenticatable
         'password',
         'phone',
         'avatar',
-        'background_img',
+        'background_img'
     ];
 
     protected $hidden = [
@@ -94,6 +94,7 @@ class Merchant extends Authenticatable
 
         return null;
     }
+
 
     /**
      * @param $value

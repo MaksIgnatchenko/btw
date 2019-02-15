@@ -5,11 +5,9 @@
 
 namespace App\Modules\Reviews\Requests;
 
-
 use App\Modules\Orders\Models\Order;
 use App\Modules\Reviews\Rules\NotRatedOrderRule;
 use App\Modules\Reviews\Rules\PickedUpOrderRule;
-use App\Modules\Reviews\Rules\RelatedMerchantAndProductOrderRule;
 use Illuminate\Foundation\Http\FormRequest;
 
 /**

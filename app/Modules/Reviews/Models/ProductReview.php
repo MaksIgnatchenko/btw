@@ -5,7 +5,6 @@
 
 namespace App\Modules\Reviews\Models;
 
-
 use App\Modules\Orders\Models\Order;
 use App\Modules\Products\Models\Product;
 use App\Modules\Reviews\Enums\ReviewStatusEnum;

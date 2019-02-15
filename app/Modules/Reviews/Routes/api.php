@@ -7,7 +7,6 @@ $this->group([
     'middleware' => ['auth:customer'],
     'prefix' => 'reviews',
 ], function () {
-
     $this->get('merchant/{merchant}', 'ReviewController@showMerchantReviews');
     $this->get('product/{product}', 'ReviewController@showProductReviews');
 
