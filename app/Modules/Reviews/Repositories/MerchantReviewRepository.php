@@ -31,7 +31,7 @@ class MerchantReviewRepository extends BaseRepository implements ReviewRepositor
      * @param int $offset
      * @return Collection|null
      */
-    public function getActiveReviews(int $merchantId, int $offset) : ?Collection
+    public function getActiveReviewsByOwnerId(int $merchantId, int $offset) : ?Collection
     {
         $merchant = Merchant::find($merchantId);
 
@@ -50,7 +50,7 @@ class MerchantReviewRepository extends BaseRepository implements ReviewRepositor
      * @param int $offset
      * @return Collection|null
      */
-    public function getInactiveReviews(int  $merchantId, int $offset) : ?Collection
+    public function getInactiveReviewsByOwnerId(int  $merchantId, int $offset) : ?Collection
     {
         $merchant = Merchant::find($merchantId);
 
@@ -96,5 +96,10 @@ class MerchantReviewRepository extends BaseRepository implements ReviewRepositor
         $review->rating = $rating;
         $review->comment = $comment;
         $review->save();
+    }
+
+    public function getReview(int $id)
+    {
+        return MerchantReview::find($id);
     }
 }

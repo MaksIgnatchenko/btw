@@ -7,7 +7,7 @@ $this->group([
     'middleware' => ['auth:customer'],
     'prefix' => 'reviews',
 ], function () {
-    $this->get('{type}/{merchant}', 'ReviewController@showReviews');
+    $this->get('{type}/{id}', 'ReviewController@showReviews');
 
     $this->post('/', 'ReviewController@create')->middleware('can:review.create');
 });

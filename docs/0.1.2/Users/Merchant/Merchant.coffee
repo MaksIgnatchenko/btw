@@ -17,6 +17,7 @@ HTTP/1.1 200 OK
         "updated_at": "2018-10-22 13:46:00",
         "avatar": null,
         "background_img": null,
+        "rating": 2,
         "store": {
             "id": 1,
             "name": "gfhgfhgfhg",

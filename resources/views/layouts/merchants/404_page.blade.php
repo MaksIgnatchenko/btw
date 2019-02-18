@@ -46,4 +46,4 @@
     </div><!-- /. end main -->
 @endsection
 
-@section('footer', '');
+@section('footer', '')

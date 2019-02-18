@@ -38,7 +38,9 @@ class CreateReviewRequest extends FormRequest
     {
         return [
             'merchant_rating' => 'required|integer|min:1|max:5',
+            'merchant_comment' => 'max:500',
             'product_rating'  => 'required|integer|min:1|max:5',
+            'product_comment' => 'max:500',
             'order_id'        => [
                 'required',
                 'integer',

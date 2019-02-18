@@ -8,11 +8,37 @@ namespace App\Modules\Reviews\Repositories;
 use App\Modules\Orders\Models\Order;
 use Illuminate\Support\Collection;
 
+/**
+ * Interface ReviewRepositoryInterface
+ * @package App\Modules\Reviews\Repositories
+ */
 interface ReviewRepositoryInterface
 {
-    public function getActiveReviews(int $ownerId, int $offset) : ?Collection;
+    /**
+     * @param int $ownerId
+     * @param int $offset
+     * @return Collection|null
+     */
+    public function getActiveReviewsByOwnerId(int $ownerId, int $offset) : ?Collection;
 
-    public function getInactiveReviews(int $ownerId, int $offset) : ?Collection;
+    /**
+     * @param int $ownerId
+     * @param int $offset
+     * @return Collection|null
+     */
+    public function getInactiveReviewsByOwnerId(int $ownerId, int $offset) : ?Collection;
 
+    /**
+     * @param Order $order
+     * @param int $rating
+     * @param string $comment
+     * @return mixed
+     */
     public function createReview(Order $order, int $rating, string $comment);
+
+    /**
+     * @param int $id
+     * @return mixed
+     */
+    public function getReview(int $id);
 }
