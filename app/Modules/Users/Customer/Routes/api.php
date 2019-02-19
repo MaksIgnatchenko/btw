@@ -45,3 +45,12 @@ $this->group([
     $this->post('/avatar', 'Profile\ProfileController@uploadAvatar');
     $this->put('/delivery-information', 'Profile\DeliveryInformationController@store');
 });
+
+$this->group([
+    'prefix' => 'recently-viewed',
+    'middleware' => 'auth:customer',
+], function () {
+    $this->get('/', 'RecentlyViewedController@get');
+    $this->delete('/{product}', 'RecentlyViewedController@remove');
+    $this->delete('/', 'RecentlyViewedController@clear');
+});

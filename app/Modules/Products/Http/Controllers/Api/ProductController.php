@@ -23,6 +23,7 @@ use App\Modules\Products\Requests\Api\GetProductsRequest;
 use App\Modules\Products\Requests\Api\OtherMerchantProductsRequest;
 use App\Modules\Products\Requests\Api\SetProductRequest;
 use App\Modules\Products\Requests\Api\UpdateProductRequest;
+use App\Modules\Users\Customer\Models\Customer;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 
@@ -36,6 +37,10 @@ class ProductController extends Controller
     protected $product;
     /** @var  ProductImage */
     protected $productImage;
+    /**
+     * @var Customer
+     */
+    private $customer;
 
     /**
      * ContentController constructor.
@@ -50,14 +55,14 @@ class ProductController extends Controller
         ProductImageRepository $productImageRepository,
         Product $product,
         ProductImage $productImage
-    )
-    {
+    ) {
         parent::__construct();
         $this->productRepository = $productRepository;
         $this->productImageRepository = $productImageRepository;
 
         $this->product = $product;
         $this->productImage = $productImage;
+        $this->customer = Auth::user();
     }
 
     /**
@@ -114,6 +119,7 @@ class ProductController extends Controller
             ]);
         }
 
+        $this->customer->viewProduct($product);
         return response()->json([
             'product' => $product,
         ]);
