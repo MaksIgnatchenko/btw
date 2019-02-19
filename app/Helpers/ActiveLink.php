@@ -14,6 +14,10 @@ use App\Modules\Users\Customer\Http\Controllers\Admin\CustomerController;
 use App\Modules\Users\Merchant\Http\Controllers\Admin\MerchantController;
 use Illuminate\Support\Facades\Request;
 
+/**
+ * Class ActiveLink
+ * @package App\Helpers
+ */
 class ActiveLink
 {
     /**
@@ -104,6 +108,9 @@ class ActiveLink
         return false;
     }
 
+    /**
+     * @return bool
+     */
     public static function checkReviews() : bool
     {
         $controller = self::getControllerInstance();
@@ -111,6 +118,9 @@ class ActiveLink
         return $controller instanceof ReviewController;
     }
 
+    /**
+     * @return bool
+     */
     public static function checkMerchantReviews() : bool
     {
         if (!self::checkReviews()) {
@@ -120,6 +130,9 @@ class ActiveLink
         return Request::route('reviewType') === 'merchant';
     }
 
+    /**
+     * @return bool
+     */
     public static function checkProductReviews() : bool
     {
         if (!self::checkReviews()) {

@@ -45,7 +45,7 @@ class ReviewController extends Controller
      * @param string $type
      * @return mixed
      */
-    public function index(Request $request, string $type)
+    public function index(string $type)
     {
         $dataTable = $this->reviewDataTableFactory->getDataTableByType($type);
 
@@ -58,7 +58,7 @@ class ReviewController extends Controller
      * @param int $id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function show(Request $request, string $type, int $id)
+    public function show(string $type, int $id)
     {
         $review = $this->reviewRepositoryFactory
            ->getRepository($type)
