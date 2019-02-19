@@ -19,7 +19,7 @@ class RecentlyViewedRequest extends FormRequest
     {
         return [
             'offset' => 'sometimes|integer',
-            'kyeword' => 'sometimes|string|max:100',
+            'keyword' => 'sometimes|string|max:100',
         ];
     }
 

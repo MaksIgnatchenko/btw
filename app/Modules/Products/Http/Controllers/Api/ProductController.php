@@ -23,6 +23,7 @@ use App\Modules\Products\Requests\Api\GetProductsRequest;
 use App\Modules\Products\Requests\Api\OtherMerchantProductsRequest;
 use App\Modules\Products\Requests\Api\SetProductRequest;
 use App\Modules\Products\Requests\Api\UpdateProductRequest;
+use App\Modules\Users\Customer\Events\CustomerWatchedProductEvent;
 use App\Modules\Users\Customer\Models\Customer;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
@@ -119,7 +120,8 @@ class ProductController extends Controller
             ]);
         }
 
-        $this->customer->viewProduct($product);
+        event(new CustomerWatchedProductEvent($this->customer, $product));
+
         return response()->json([
             'product' => $product,
         ]);

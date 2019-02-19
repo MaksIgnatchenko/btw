@@ -134,21 +134,4 @@ class Customer extends Authenticatable implements JWTSubject
             ->as('recentlyViewedPivot')
             ->withTimestamps();
     }
-
-    /**
-     * @param Product $product
-     */
-    public function viewProduct(Product $product)
-    {
-        $recently = $this->recentlyViewed()->find($product->id);
-
-        if (null === $recently) {
-            $this->recentlyViewed()->attach($product);
-        } else {
-            $this->recentlyViewed()
-                ->updateExistingPivot($product->id, [
-                'updated_at' => now()
-                ]);
-        }
-    }
 }
