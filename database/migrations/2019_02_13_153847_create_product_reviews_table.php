@@ -20,7 +20,7 @@ class CreateProductReviewsTable extends Migration
             $table->unsignedInteger('product_id');
             $table->integer('rating');
             $table->text('comment')->nullable();
-            $table->enum('status', ['inactive', 'active']);
+            $table->string('status')->default('inactive');
 
             $table->foreign('order_id')
                 ->references('id')
