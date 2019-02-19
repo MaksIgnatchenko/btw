@@ -1,14 +1,15 @@
 <?php
 /**
- * Created by Ilya Kobus, Appus Studio LP on 11.10.2018
+ * Created by Viacheslav Bilohlazov, Appus Studio LP on 19.02.2019
  */
 
 namespace App\Modules\Users\Customer\Http\Requests\Api;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class WishListRequest extends FormRequest
+class RecentlyViewedRequest extends FormRequest
 {
+
     /**
      * Get the password reset validation rules.
      *
@@ -18,7 +19,7 @@ class WishListRequest extends FormRequest
     {
         return [
             'offset' => 'sometimes|integer',
-            'keyword' => 'sometimes|string|max:100'
+            'keyword' => 'sometimes|string|max:100',
         ];
     }
 

@@ -91,6 +91,7 @@ class Product extends Model implements Ownable
     protected $hidden = [
         'wishPivot',
         'is_in_wish_list',
+        'recentlyViewedPivot',
     ];
 
     protected $appends = [
