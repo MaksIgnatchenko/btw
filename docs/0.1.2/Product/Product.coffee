@@ -195,6 +195,7 @@ HTTP/1.1 200 OK
         "created_at": "2018-10-08 16:26:41",
         "updated_at": "2018-10-08 16:26:41",
         "is_in_wish_list": false,
+        "rating": 3.5,
         "images": [],
         "category": {
             "id": 7,

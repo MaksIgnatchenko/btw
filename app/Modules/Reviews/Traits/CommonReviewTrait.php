@@ -7,6 +7,7 @@ namespace App\Modules\Reviews\Traits;
 use App\Modules\Orders\Models\Order;
 use App\Modules\Reviews\Enums\ReviewStatusEnum;
 use App\Modules\Users\Customer\Models\Customer;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
@@ -68,5 +69,10 @@ trait CommonReviewTrait
     public function scopeInactive(Builder $query) : Builder
     {
         return $query->where('status', ReviewStatusEnum::INACTIVE);
+    }
+
+    public function getCreatedAtAttribute($date)
+    {
+        return Carbon::createFromFormat('Y-m-d H:i:s', $date)->format('d M Y');
     }
 }

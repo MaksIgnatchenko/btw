@@ -8,11 +8,16 @@ namespace App\Helpers;
 use App\Modules\Categories\Http\Controllers\Admin\CategoriesController;
 use App\Modules\Content\Http\Controllers\Admin\ContentController;
 use App\Modules\Orders\Http\Controllers\Admin\IncomeController;
+use App\Modules\Reviews\Http\Controllers\Admin\ReviewController;
 use App\Modules\Users\Admin\Http\Controllers\DashboardController;
 use App\Modules\Users\Customer\Http\Controllers\Admin\CustomerController;
 use App\Modules\Users\Merchant\Http\Controllers\Admin\MerchantController;
 use Illuminate\Support\Facades\Request;
 
+/**
+ * Class ActiveLink
+ * @package App\Helpers
+ */
 class ActiveLink
 {
     /**
@@ -103,6 +108,38 @@ class ActiveLink
         return false;
     }
 
+    /**
+     * @return bool
+     */
+    public static function checkReviews() : bool
+    {
+        $controller = self::getControllerInstance();
+
+        return $controller instanceof ReviewController;
+    }
+
+    /**
+     * @return bool
+     */
+    public static function checkMerchantReviews() : bool
+    {
+        if (!self::checkReviews()) {
+            return false;
+        }
+
+        return Request::route('reviewType') === 'merchant';
+    }
+
+    /**
+     * @return bool
+     */
+    public static function checkProductReviews() : bool
+    {
+        if (!self::checkReviews()) {
+            return false;
+        }
+        return Request::route('reviewType') === 'product';
+    }
     /**
      * @return mixed
      */

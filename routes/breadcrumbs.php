@@ -96,3 +96,20 @@ Breadcrumbs::register('outcome-payment', function ($breadcrumbs, $outcome) {
     $breadcrumbs->parent('outcome-payments');
     $breadcrumbs->push('Outcome details', route('outcome.edit', ['id' => $outcome->id]));
 });
+Breadcrumbs::register('reviews', function ($breadcrumbs, $type) {
+    $breadcrumbs->parent('admin');
+    $breadcrumbs->push(
+        \App\Modules\Reviews\Enums\ReviewTypesEnum::toArray()[$type] . ' reviews',
+        route('reviews.index', ['type' => $type])
+    );
+});
+Breadcrumbs::register('reviews-edit', function ($breadcrumbs, $type, $review) {
+    $breadcrumbs->parent('reviews', $type);
+    $name = '';
+    if (\App\Modules\Reviews\Enums\ReviewTypesEnum::PRODUCT === $type) {
+        $name = $review->product->name;
+    } elseif (\App\Modules\Reviews\Enums\ReviewTypesEnum::MERCHANT === $type) {
+        $name = $review->merchant->full_name;
+    }
+    $breadcrumbs->push($name, route('reviews.show', ['type' => $type, 'id' => $review->id]));
+});

@@ -33,7 +33,7 @@ class ProductReviewRepository extends BaseRepository implements ReviewRepository
      * @param int $offset
      * @return Collection|null
      */
-    public function getActiveReviews(int $productId, int $offset) : ?Collection
+    public function getActiveReviewsByOwnerId(int $productId, int $offset) : ?Collection
     {
         $product = Product::find($productId);
 
@@ -52,7 +52,7 @@ class ProductReviewRepository extends BaseRepository implements ReviewRepository
      * @param int $offset
      * @return Collection|null
      */
-    public function getInactiveReviews(int $productId, int $offset) : ?Collection
+    public function getInactiveReviewsByOwnerId(int $productId, int $offset) : ?Collection
     {
         $product = Product::find($productId);
 
@@ -98,5 +98,10 @@ class ProductReviewRepository extends BaseRepository implements ReviewRepository
         $review->rating = $rating;
         $review->comment = $comment;
         $review->save();
+    }
+
+    public function getReview(int $id)
+    {
+        return ProductReview::find($id);
     }
 }

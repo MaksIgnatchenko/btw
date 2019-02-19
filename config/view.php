@@ -25,6 +25,7 @@ return [
         app_path('Modules/Orders/Resources/views'),
         app_path('Modules/Users/Merchant/Resources/views'),
         app_path('Modules/Products/Resources/views'),
+        app_path('Modules/Reviews/Resources/views'),
 
     ],
 

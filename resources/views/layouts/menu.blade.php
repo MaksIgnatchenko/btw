@@ -21,7 +21,23 @@
         </li>
     </ul>
 </li>
-
+{{-- Reviews --}}
+<li class="treeview {{ActiveLink::checkReviews() ? 'active' : ''}}">
+    <a href="#" class="treeview-toggle"><i class="fa fa-table"></i><span>Reviews</span>
+        <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+    </a>
+    <ul class="treeview-menu">
+        <li class="{{ActiveLink::checkProductReviews() ? 'active' : ''}}">
+            <a href="{{route('reviews.index', ['type' => 'product'])}}"><i class="fa {{ActiveLink::checkProductReviews() ? 'fa-circle' : 'fa-circle-o'}}"></i>Products</a>
+        </li>
+        <li class="{{ActiveLink::checkMerchantReviews() ? 'active' : ''}}">
+            <a href="{{route('reviews.index', ['type'=> 'merchant'])}}"><i class="fa {{ActiveLink::checkMerchantReviews() ? 'fa-circle' : 'fa-circle-o'}}"></i>Merchants</a>
+        </li>
+    </ul>
+</li>
+{{-- End Reviews --}}
 <li class="{{ActiveLink::checkIncome() ? 'active' : ''}}">
     <a href="{{route('payments.income.index')}}"><i class="fa fa-sign-in"></i> <span>Income</span></a>
 </li>

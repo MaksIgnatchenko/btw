@@ -5,7 +5,6 @@
 
 namespace App\Modules\Reviews\Providers;
 
-use App\Modules\Reviews\Policies\ReviewPolicy;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Route;
