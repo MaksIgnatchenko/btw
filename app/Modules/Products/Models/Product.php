@@ -6,6 +6,7 @@ use App\Modules\Categories\Models\Category;
 use App\Modules\Products\Dto\CustomerSearchDto;
 use App\Modules\Products\Enums\ProductFiltersEnum;
 use App\Modules\Products\Enums\ProductOrdersEnum;
+use App\Modules\Products\Enums\ProductStatusEnum;
 use App\Modules\Products\Filters\ProductFilter;
 use App\Modules\Products\Helpers\AttributesHelper;
 use App\Modules\Products\Repositories\ProductImageRepository;
@@ -20,6 +21,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -56,6 +58,7 @@ class Product extends Model implements Ownable
         'delivery_price',
         'quantity',
         'store_id',
+        'status',
     ];
 
     /**
@@ -463,6 +466,11 @@ class Product extends Model implements Ownable
         $productsPerPage = config('wish.store.pagination');
 
         return $productRepository->findStoreProductsBySearchTextWithPagination($storeId, $searchText, $productsPerPage);
+    }
+
+    public function scopeOfStatus(Builder $query, string $status)
+    {
+        return $query->where('status', $status);
     }
 }
 

@@ -7,12 +7,15 @@ namespace App\Modules\Products\Http\Controllers\Web;
 
 use App\Modules\Categories\Repositories\CategoryRepository;
 use App\Modules\Categories\Models\Category;
+use App\Modules\Products\Enums\ProductStatusEnum;
 use App\Modules\Products\Helpers\ProductsViewHelper;
 use App\Modules\Products\Models\Product;
 use App\Modules\Products\Repositories\ProductRepository;
 use App\Modules\Products\Requests\Web\CreateProductRequest;
 use App\Http\Controllers\Controller;
 use App\Modules\Products\Requests\Web\EditProductRequest;
+use App\Modules\Products\Requests\Web\FilterProductRequest;
+use http\Env\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 use Laracasts\Flash\Flash;
@@ -49,15 +52,21 @@ class ProductController extends Controller
     /**
      * Show products list.
      *
+     * @param FilterProductRequest $request
      * @return View
      */
-    public function index(): View
+    public function index(FilterProductRequest $request): View
     {
-        $products = Auth::user()
+        $productQuery = Auth::user()
             ->products()
-            ->orderBy('updated_at', 'DESC')
-            ->paginate(config('wish.store.pagination'));
+            ->orderBy('updated_at', 'DESC');
+        $status = $request->get('filter')['product-status'];
 
+        if (in_array($status, ProductStatusEnum::getValues(), true)) {
+            $productQuery->OfStatus($status);
+        }
+
+        $products = $productQuery->paginate(config('wish.store.pagination'));
         ProductsViewHelper::storeTemplateToSession();
 
         return view('products.web.index', ['products' => $products]);

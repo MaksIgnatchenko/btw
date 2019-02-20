@@ -8,4 +8,5 @@ Route::get('/', function () {
 });
 
 Route::get('products/search', 'SearchController@index')->middleware(['auth:merchant'])->name('products.search');
+Route::get('products/filter', 'SearchController@index')->middleware(['auth:merchant'])->name('products.filter');
 Route::resource('products', 'ProductController')->middleware(['auth:merchant']);

@@ -11,6 +11,7 @@ return [
     'create_quantity' => 'Quantity',
     'create_color' => 'Color',
     'create_size' => 'Size',
+    'create_status' => 'Status',
     'create_material' => 'Material',
     'create_attribute_section_placeholder' => 'Enter the value',
     'create_photo_section_title' => 'Product photo',

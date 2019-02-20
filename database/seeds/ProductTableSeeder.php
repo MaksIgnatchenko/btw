@@ -25,6 +25,7 @@ class ProductTableSeeder extends Seeder
                 'main_image' => 'demo.jpeg',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
+                'store_id' => 1,
             ]);
         }
     }
