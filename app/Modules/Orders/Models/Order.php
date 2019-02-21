@@ -77,7 +77,7 @@ class Order extends Model
     /**
      * @return bool
      */
-    public function getRatedAttribute() : bool
+    public function getIsRatedAttribute() : bool
     {
         return ProductReview::where('order_id', $this->id)->exists();
     }
