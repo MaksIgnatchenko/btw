@@ -98,6 +98,7 @@ class Product extends Model implements Ownable
         'is_in_wish_list',
         'merchant_id',
         'rating',
+        'review_count',
     ];
 
     /**
