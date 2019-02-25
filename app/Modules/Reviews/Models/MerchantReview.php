@@ -50,7 +50,7 @@ class MerchantReview extends Model
      * @var array
      */
     protected $appends = [
-        'customer_name',
+        'customer_full_name',
     ];
 
     /**

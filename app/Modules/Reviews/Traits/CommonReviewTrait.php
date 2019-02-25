@@ -81,7 +81,7 @@ trait CommonReviewTrait
     /**
      * @return string
      */
-    public function getCustomerNameAttribute()
+    public function getCustomerFullNameAttribute()
     {
         return $this->customer->full_name;
     }
