@@ -79,15 +79,6 @@ trait CommonReviewTrait
     }
 
     /**
-     * @param $date
-     * @return string
-     */
-    public function getCreatedAtAttribute($date)
-    {
-        return Carbon::createFromFormat('Y-m-d H:i:s', $date)->format('d M Y');
-    }
-
-    /**
      * @return string
      */
     public function getCustomerNameAttribute()
