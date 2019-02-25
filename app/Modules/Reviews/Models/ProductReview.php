@@ -35,8 +35,15 @@ class ProductReview extends Model
      */
     protected $hidden = [
         'status',
+        'customer',
     ];
 
+    /**
+     * @var array
+     */
+    protected $appends = [
+        'customer_full_name',
+    ];
 
     /**
      * @return BelongsTo

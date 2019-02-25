@@ -24,6 +24,13 @@ trait CommonReviewTrait
     {
         return $this->belongsTo(Order::class);
     }
+ /**
+     * @return BelongsTo
+     */
+    public function customer() : BelongsTo
+    {
+        return $this->belongsTo(Customer::class);
+    }
 
     /**
      * @return bool
@@ -69,5 +76,13 @@ trait CommonReviewTrait
     public function scopeInactive(Builder $query) : Builder
     {
         return $query->where('status', ReviewStatusEnum::INACTIVE);
+    }
+
+    /**
+     * @return string
+     */
+    public function getCustomerFullNameAttribute()
+    {
+        return $this->customer->full_name;
     }
 }
