@@ -6,9 +6,5 @@
 
 @section('script')
     @include('layouts.datatables_js')
-    <script>
-
-
-    </script>
     {!! $dataTable->scripts() !!}
 @endsection
