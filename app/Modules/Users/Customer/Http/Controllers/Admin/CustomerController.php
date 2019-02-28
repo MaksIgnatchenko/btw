@@ -48,6 +48,12 @@ class CustomerController extends Controller
         return view('customers.admin.show')->with('customer', $customer);
     }
 
+    /**
+     * @param Request $request
+     * @param Customer $customer
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Prettus\Validator\Exceptions\ValidatorException
+     */
     public function update(Request $request, Customer $customer)
     {
         $this->customerRepository->update($request->all(), $customer->id);

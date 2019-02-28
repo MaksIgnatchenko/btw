@@ -47,6 +47,12 @@ class MerchantController extends Controller
         return view('merchants.admin.show')->with('merchant', $merchant);
     }
 
+    /**
+     * @param Request $request
+     * @param Merchant $merchant
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Prettus\Validator\Exceptions\ValidatorException
+     */
     public function update(Request $request, Merchant $merchant)
     {
         $this->merchantRepository->update($request->all(), $merchant->id);
