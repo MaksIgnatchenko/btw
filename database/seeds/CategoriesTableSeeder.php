@@ -14,7 +14,7 @@ class CategoriesTableSeeder extends Seeder
     {
         // root categories
         $category1 = new Category();
-        $category1->id = 1;
+        $category1->id = 21;
         $category1->name = 'Shop';
         $category1->parent_category_id = null;
         $category1->save();

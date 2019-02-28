@@ -4,7 +4,7 @@
  */
 
 $this->group([
-    'middleware' => ['auth:customer'],
+    'middleware' => ['auth:customer', 'active'],
 ], function () {
     Route::apiResource('orders', 'OrderController', ['only' => ['index', 'show']]);
 });
