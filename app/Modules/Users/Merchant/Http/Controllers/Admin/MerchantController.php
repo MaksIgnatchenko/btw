@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use App\Modules\Users\Merchant\DataTables\MerchantDataTable;
 use App\Modules\Users\Merchant\Models\Merchant;
 use App\Modules\Users\Merchant\Repositories\MerchantRepository;
+use Illuminate\Http\Request;
 use Laracasts\Flash\Flash;
 
 class MerchantController extends Controller
@@ -44,5 +45,13 @@ class MerchantController extends Controller
         $merchant->load('address', 'store', 'store.categories');
 
         return view('merchants.admin.show')->with('merchant', $merchant);
+    }
+
+    public function update(Request $request, Merchant $merchant)
+    {
+        $this->merchantRepository->update($request->all(), $merchant->id);
+        Flash::success('Merchant updated successfully');
+
+        return response()->json(['success' => true]);
     }
 }

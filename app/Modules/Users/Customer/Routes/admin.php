@@ -4,5 +4,5 @@
  */
 
 Route::group(['middleware' => ['auth:admin']], function () {
-    Route::resource('customers', 'CustomerController')->only(['index', 'show']);
+    Route::resource('customers', 'CustomerController')->only(['index', 'show', 'update']);
 });

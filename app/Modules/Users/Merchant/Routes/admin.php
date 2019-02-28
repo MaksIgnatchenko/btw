@@ -4,5 +4,5 @@
  */
 
 Route::group(['middleware' => ['auth:admin']], function () {
-    Route::resource('merchants', 'MerchantController')->only(['index', 'show']);
+    Route::resource('merchants', 'MerchantController')->only(['index', 'show', 'update']);
 });

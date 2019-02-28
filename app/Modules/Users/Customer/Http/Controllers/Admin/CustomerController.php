@@ -10,6 +10,7 @@ use App\Modules\Users\Customer\DataTables\CustomerDataTable;
 use App\Modules\Users\Customer\Models\Customer;
 use App\Modules\Users\Customer\Repositories\CustomerRepository;
 use Flash;
+use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 class CustomerController extends Controller
@@ -45,5 +46,13 @@ class CustomerController extends Controller
     public function show(Customer $customer)
     {
         return view('customers.admin.show')->with('customer', $customer);
+    }
+
+    public function update(Request $request, Customer $customer)
+    {
+        $this->customerRepository->update($request->all(), $customer->id);
+        Flash::success('Customer updated successfully');
+
+        return response()->json(['success' => true]);
     }
 }
