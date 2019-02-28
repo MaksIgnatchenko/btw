@@ -27,7 +27,7 @@ $this->group([
 });
 
 $this->group([
-    'prefix' => 'wishlist', 'middleware' => 'auth:customer',
+    'prefix' => 'wishlist', 'middleware' => ['auth:customer', 'active'],
 ], function () {
     $this->get('/', 'WishController@get');
     $this->post('add/{product}', 'WishController@add');
@@ -39,7 +39,7 @@ $this->post('register', 'RegisterController@register');
 
 $this->group([
     'prefix' => 'profile',
-    'middleware' => 'auth:customer',
+    'middleware' => ['auth:customer', 'active'],
 ], function () {
     $this->put('/', 'Profile\ProfileController@update');
     $this->post('/avatar', 'Profile\ProfileController@uploadAvatar');
@@ -48,7 +48,7 @@ $this->group([
 
 $this->group([
     'prefix' => 'recently-viewed',
-    'middleware' => 'auth:customer',
+    'middleware' => ['auth:customer', 'active'],
 ], function () {
     $this->get('/', 'RecentlyViewedController@get');
     $this->delete('/{product}', 'RecentlyViewedController@remove');
