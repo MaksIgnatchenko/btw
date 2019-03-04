@@ -210,6 +210,7 @@ return [
         Illuminate\Pagination\PaginationServiceProvider::class,
 
         App\Modules\Reviews\Providers\ReviewApiRoutesServiceProvider::class,
+        App\Modules\Reviews\Providers\ReviewWebRoutesServiceProvider::class,
         App\Modules\Reviews\Providers\ReviewServiceProvider::class,
         App\Modules\Reviews\Providers\ReviewAdminRoutesServiceProvider::class,
     ],
@@ -283,6 +284,7 @@ return [
         'Image' => Intervention\Image\Facades\Image::class,
         'ProductsViewHelper' => App\Modules\Products\Helpers\ProductsViewHelper::class,
         'ProductsViewTemplateEnum' => App\Modules\Products\Enums\ProductsViewTemplateEnum::class,
+        'ProductStatusEnum' => App\Modules\Products\Enums\ProductStatusEnum::class,
         'OrderViewHelper' => App\Modules\Orders\Helpers\OrderViewHelper::class,
         'SocialAuthHelper' => App\Modules\Users\Customer\Helpers\SocialAuthHelper::class,
     ],

@@ -52,7 +52,7 @@ class ReviewController extends Controller
      * @param int $id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function showReviews(Request $request, string $type, int $id) : JsonResponse
+    public function showReviews(Request $request, string $type, $id) : JsonResponse
     {
         $reviews = $this->reviewRepositoryFactory
             ->getRepository($type)

@@ -5,6 +5,7 @@ return [
     'add_new_products' => 'Add Products',
     'my_products' => 'My Products',
     'my_orders' => 'My orders',
+    'my_reviews' => 'My reviews',
     'settings' => 'Settings',
     'no_active_ads' => 'You have no products yet, click on the add product button.',
     'logout' => 'Log out',

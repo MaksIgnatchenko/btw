@@ -15,7 +15,7 @@
         <div class="clearfix"></div>
         <div class="box">
             <div class="box-body">
-                @include('reviews.table')
+                @include('reviews.admin.table')
             </div>
         </div>
     </div>

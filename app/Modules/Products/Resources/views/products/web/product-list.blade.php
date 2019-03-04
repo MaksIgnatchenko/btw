@@ -3,3 +3,21 @@
         @include('products.web.product', ['product' => $product])
     @endforeach
 </ul><!-- /. end product list -->
+<script type="text/javascript">
+    $(function(){
+        $('a[data-name="change-product-status"]').click(function(e){
+            e.preventDefault();
+            var token = "{{csrf_token()}}";
+            $.ajax($(this).attr('href'), {
+                method: 'POST',
+                data: {
+                    _method: 'PUT',
+                    _token: token
+                },
+                success: function(response) {
+                    location.reload();
+                }
+            });
+        })
+    });
+</script>
