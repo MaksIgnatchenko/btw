@@ -179,7 +179,7 @@ class ProductController extends Controller
      * @param Product $product
      * @return \Illuminate\Http\JsonResponse
      */
-    public function toggleProductStatus(Product $product)
+    public function toggleStatus(Product $product)
     {
         $status = $product->status === ProductStatusEnum::ACTIVE
            ? ProductStatusEnum::ARCHIVED

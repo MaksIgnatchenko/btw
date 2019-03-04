@@ -9,6 +9,6 @@ Route::get('/', function () {
 
 Route::get('products/search', 'SearchController@index')->middleware(['auth:merchant'])->name('products.search');
 Route::get('products/filter', 'SearchController@index')->middleware(['auth:merchant'])->name('products.filter');
-Route::put('products/{product}/toggle', 'ProductController@toggleProductStatus')
+Route::put('products/{product}/toggle', 'ProductController@toggleStatus')
     ->middleware(['auth:merchant'])->name('products.toggle-status');
 Route::resource('products', 'ProductController')->middleware(['auth:merchant']);
