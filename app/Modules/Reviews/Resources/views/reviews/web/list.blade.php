@@ -30,9 +30,9 @@
                 <h6 class="p-title">My rating:</h6>
                 <div class="rating-wr">
                     <div class="rating__grade">
-                       {{Auth::user()->rating}}
+                       {{$merchant->rating}}
                     </div>
-                    @include('reviews.web.rating', ['owner' => Auth::user()])
+                    @include('reviews.web.rating', ['owner' => $merchant])
                 </div>
                 @endif
                 @foreach($reviews as $review)

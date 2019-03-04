@@ -44,13 +44,11 @@ class ReviewController extends Controller
      * @param int $id
      * @return View
      */
-    public function showReviews(string $type, int $id) : View
+    public function showReviews(string $type, $id) : View
     {
         $reviews = $this->reviewRepositoryFactory
             ->getRepository($type)
-            ->getActiveReviewsByOwnerIdPaginated(
-                $id
-            );
+            ->getActiveReviewsByOwnerIdPaginated($id);
 
         if (null === $reviews) {
             return abort(404);
@@ -59,6 +57,7 @@ class ReviewController extends Controller
         return view('reviews.web.list', [
             'reviews' => $reviews,
             'type' => $type,
+            'merchant' => Auth::user()
         ]);
     }
 }
