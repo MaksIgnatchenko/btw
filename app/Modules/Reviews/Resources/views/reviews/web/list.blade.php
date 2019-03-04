@@ -26,6 +26,15 @@
     <!-- Main shop wrapper -->
         <div class="main-shop-wrapper">
             <div class="container">
+                @if('merchant' === $type && isset($merchant))
+                <h6 class="p-title">My rating:</h6>
+                <div class="rating-wr">
+                    <div class="rating__grade">
+                       {{Auth::user()->rating}}
+                    </div>
+                    @include('reviews.web.rating', ['owner' => Auth::user()])
+                </div>
+                @endif
                 @foreach($reviews as $review)
                     @include('reviews.web.review')
                 @endforeach
