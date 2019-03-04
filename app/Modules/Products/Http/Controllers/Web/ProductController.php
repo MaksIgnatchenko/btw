@@ -174,4 +174,22 @@ class ProductController extends Controller
 
         return redirect()->route('products.show', ['product' => $product]);
     }
+
+    /**
+     * @param Product $product
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function toggleProductStatus(Product $product)
+    {
+        $status = $product->status === ProductStatusEnum::ACTIVE
+           ? ProductStatusEnum::ARCHIVED
+           : ProductStatusEnum::ACTIVE;
+        $product->updateProduct(['status' => $status]);
+
+        return response()->json([
+            'success' => true,
+            'status' => $status,
+            'text' => ProductStatusEnum::toArray()[$product->status]
+        ]);
+    }
 }
