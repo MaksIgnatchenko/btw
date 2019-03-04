@@ -11,6 +11,7 @@ use App\Modules\Reviews\Enums\ReviewStatusEnum;
 use App\Modules\Reviews\Models\MerchantReview;
 use App\Modules\Reviews\Models\ProductReview;
 use App\Modules\Users\Merchant\Models\Merchant;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 use InfyOm\Generator\Common\BaseRepository;
 
@@ -45,6 +46,23 @@ class ProductReviewRepository extends BaseRepository implements ReviewRepository
             ->take(MerchantReview::PER_PAGE)
             ->skip($offset)
             ->get();
+    }
+
+    /**
+     * @param int $productId
+     * @param int $offset
+     * @return Collection|null
+     */
+    public function getActiveReviewsByOwnerIdPaginated(int $productId) : ?LengthAwarePaginator
+    {
+        $product = Product::find($productId);
+        if (null === $product) {
+            return null;
+        }
+
+        return $product->reviews()->active()
+            ->latest()
+            ->paginate(config('wish.store.pagination'));
     }
 
     /**

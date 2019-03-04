@@ -22,5 +22,12 @@
                 ">
             <a href="{{ route('merchant.settings') }}" class="nav-line__link">{{__('store.settings')}}</a>
         </li>
+        <li class="nav-line__item
+        @if(isset($active) && $active === 'reviews')
+        {{'nav-line__link--active'}}
+        @endif
+                ">
+            <a href="{{ route('reviews.list', ['type' => 'merchant', 'id' => Auth::user()->id]) }}" class="nav-line__link">{{__('store.my_reviews')}}</a>
+        </li>
     </ul>
 </div><!-- /. end navigate link -->

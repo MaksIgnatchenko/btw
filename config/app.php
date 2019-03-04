@@ -210,6 +210,7 @@ return [
         Illuminate\Pagination\PaginationServiceProvider::class,
 
         App\Modules\Reviews\Providers\ReviewApiRoutesServiceProvider::class,
+        App\Modules\Reviews\Providers\ReviewWebRoutesServiceProvider::class,
         App\Modules\Reviews\Providers\ReviewServiceProvider::class,
         App\Modules\Reviews\Providers\ReviewAdminRoutesServiceProvider::class,
     ],

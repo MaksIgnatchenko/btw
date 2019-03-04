@@ -150,6 +150,7 @@ class ProductController extends Controller
     {
         return view('products.web.single', [
             'product' => $product,
+            'review' =>  $product->reviews()->active()->latest()->first(),
         ]);
     }
 
