@@ -6,6 +6,7 @@
 namespace App\Modules\Reviews\Repositories;
 
 use App\Modules\Orders\Models\Order;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 
 /**
@@ -20,6 +21,13 @@ interface ReviewRepositoryInterface
      * @return Collection|null
      */
     public function getActiveReviewsByOwnerId(int $ownerId, int $offset) : ?Collection;
+
+    /**
+     * @param int $ownerId
+     * @param int $offset
+     * @return Collection|null
+     */
+    public function getActiveReviewsByOwnerIdPaginated(int $ownerId) : ?LengthAwarePaginator;
 
     /**
      * @param int $ownerId

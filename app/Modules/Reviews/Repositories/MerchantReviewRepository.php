@@ -9,6 +9,7 @@ use App\Modules\Orders\Models\Order;
 use App\Modules\Reviews\Enums\ReviewStatusEnum;
 use App\Modules\Reviews\Models\MerchantReview;
 use App\Modules\Users\Merchant\Models\Merchant;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 use InfyOm\Generator\Common\BaseRepository;
 
@@ -40,9 +41,28 @@ class MerchantReviewRepository extends BaseRepository implements ReviewRepositor
         }
 
         return $merchant->reviews()->active()
+            ->latest()
             ->take(MerchantReview::PER_PAGE)
             ->skip($offset)
             ->get();
+    }
+
+    /**
+     * @param int $merchantId
+     * @param int $offset
+     * @return Collection|null
+     */
+    public function getActiveReviewsByOwnerIdPaginated(int $merchantId) : ?LengthAwarePaginator
+    {
+        $merchant = Merchant::find($merchantId);
+
+        if (null === $merchant) {
+            return null;
+        }
+
+        return $merchant->reviews()->active()
+            ->latest()
+            ->paginate(config('wish.store.pagination'));
     }
 
     /**
