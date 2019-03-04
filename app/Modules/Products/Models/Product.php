@@ -468,6 +468,11 @@ class Product extends Model implements Ownable
         return $productRepository->findStoreProductsBySearchTextWithPagination($storeId, $searchText, $productsPerPage);
     }
 
+    /**
+     * @param Builder $query
+     * @param string $status
+     * @return Builder
+     */
     public function scopeOfStatus(Builder $query, string $status)
     {
         return $query->where('status', $status);
