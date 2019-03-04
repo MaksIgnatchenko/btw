@@ -9,7 +9,10 @@
 @section('header')
     @include('layouts.merchants.header', ['header_class' => 'header-black'])
 @endsection
+@section('script')
+    <script src="{{asset('js/merchants/products/statusFilter.js')}}"></script>
 
+@endsection
 @section('content')
     <!-- Main -->
     <div class="main-shop">

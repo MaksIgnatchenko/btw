@@ -1,7 +1,7 @@
 <div class="shop-top-settings">
 
     @include('products.web.search')
-
+    @include('products.web.status-filter')
     @if(!ProductsViewHelper::isSearchResults() || !$products->isEmpty())
         <div class="shop-top-settings__change">
             <a href="{{ ProductsViewHelper::getViewTemplateSwitcherLink(ProductsViewTemplateEnum::GALLERY, $products) }}"{{ ProductsViewHelper::getTemplateSwitcherClass(ProductsViewTemplateEnum::GALLERY) }}>{{ __('store.view_gallery') }}</a>
