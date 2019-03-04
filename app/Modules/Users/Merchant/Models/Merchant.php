@@ -48,7 +48,10 @@ class Merchant extends Authenticatable
         'password', 'remember_token',
     ];
 
-    protected $appends = ['rating'];
+    protected $appends = [
+        'rating',
+        'review_count',
+        ];
     /**
      * Password attribute mutator.
      *

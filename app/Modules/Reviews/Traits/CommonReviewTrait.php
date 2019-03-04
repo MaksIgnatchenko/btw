@@ -24,6 +24,13 @@ trait CommonReviewTrait
     {
         return $this->belongsTo(Order::class);
     }
+ /**
+     * @return BelongsTo
+     */
+    public function customer() : BelongsTo
+    {
+        return $this->belongsTo(Customer::class);
+    }
 
     /**
      * @return bool
@@ -71,8 +78,11 @@ trait CommonReviewTrait
         return $query->where('status', ReviewStatusEnum::INACTIVE);
     }
 
-    public function getCreatedAtAttribute($date)
+    /**
+     * @return string
+     */
+    public function getCustomerFullNameAttribute()
     {
-        return Carbon::createFromFormat('Y-m-d H:i:s', $date)->format('d M Y');
+        return $this->customer->full_name;
     }
 }
