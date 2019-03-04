@@ -16,7 +16,13 @@ return [
         'administrators' => 'Administrators',
         'categories' => 'Categories',
     ],
-
+    'flash' => [
+        'merchant' => [
+            'update' => [
+                'success' => 'Merchant updated successfully',
+            ],
+        ],
+    ],
     'title' => [
         'dashboard' => 'Dashboard',
 

@@ -41,6 +41,7 @@ class Merchant extends Authenticatable
         'phone',
         'avatar',
         'background_img',
+        'status',
     ];
 
     protected $hidden = [

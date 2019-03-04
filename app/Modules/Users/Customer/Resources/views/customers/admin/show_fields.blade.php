@@ -21,7 +21,17 @@
         {!! $customer->email !!}
     </p>
 </div>
-
+<div class="form-group">
+    <p>
+        {!! Form::label('status', 'Status:') !!}
+        {{Form::select(
+        'user_status_select',
+         ['active' => 'Active', 'pending' => 'Pending', 'inactive' => 'Inactive'],
+          $customer->status,
+          ['id' => 'user_status_select', 'data-user-url' => route('customers.update', $customer->id)]
+      )}}
+    </p>
+</div>
 <!-- Street Field -->
 <div class="form-group">
     <p>

@@ -13,7 +13,7 @@ class ProductTableSeeder extends Seeder
 
     public function run()
     {
-        $categorieIds = [12, 6, 7, 8, 9];
+        $categorieIds = range(1,12);
 
         for ($i = 1; $i <= 20; $i++) {
             DB::table('products')->insert([
@@ -25,6 +25,7 @@ class ProductTableSeeder extends Seeder
                 'main_image' => 'demo.jpeg',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
+                'attributes' => '{"test" : {"type" : "text" , "value" : "test"}}',
                 'store_id' => 1,
             ]);
         }

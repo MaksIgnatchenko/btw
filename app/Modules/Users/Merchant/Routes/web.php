@@ -32,7 +32,7 @@ Route::group([
 
 /* --- Settings --- */
 Route::group([
-    'middleware' => ['web', 'auth:merchant'],
+    'middleware' => ['web', 'auth:merchant', 'active'],
     'prefix' => 'settings',
 ], function () {
     $this->get('/', 'SettingsController@index')->name('merchant.settings');

@@ -10,7 +10,7 @@
   @apiParam {Integer} order_id Order ID
   @apiParam {Integer} merchant_rating Merchant rating. Min: 1, Max: 5
   @apiParam {String}  merchant_comment Optional. Merchant comment
-  @apiParam {Integer} merchant_rating Product rating. Min: 1, Max: 5
+  @apiParam {Integer} product_rating Product rating. Min: 1, Max: 5
   @apiParam {String}  product_comment Optional. Product comment
 
   @apiSuccessExample Success-Response:

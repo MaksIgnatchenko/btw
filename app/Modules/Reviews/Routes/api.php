@@ -4,7 +4,7 @@
  */
 
 $this->group([
-    'middleware' => ['auth:customer'],
+    'middleware' => ['auth:customer', 'active'],
     'prefix' => 'reviews',
 ], function () {
     $this->get('{type}/{id}', 'ReviewController@showReviews');
