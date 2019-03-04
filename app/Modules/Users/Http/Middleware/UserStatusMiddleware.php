@@ -32,13 +32,11 @@ class UserStatusMiddleware
         }
 
         if ($this->isInactive($user)) {
-            Flash::error('You are banned');
             Auth::logout();
             return redirect('/login');
         }
 
         if ($this->isPending($user) && !$this->isGet($request)) {
-            Flash::success('test');
             return redirect()->back();
         }
 
@@ -58,7 +56,7 @@ class UserStatusMiddleware
      * @param Authenticatable $user
      * @return bool
      */
-    public function isPending(Authenticatable $user) : bool
+    protected function isPending(Authenticatable $user) : bool
     {
         return 'pending' === $user->status;
     }
@@ -67,7 +65,7 @@ class UserStatusMiddleware
      * @param Request $request
      * @return bool
      */
-    public function isGet(Request $request) : bool
+    protected function isGet(Request $request) : bool
     {
         return 'GET' === $request->getMethod();
     }

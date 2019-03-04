@@ -56,7 +56,7 @@ class MerchantController extends Controller
     public function update(Request $request, Merchant $merchant)
     {
         $this->merchantRepository->update($request->all(), $merchant->id);
-        Flash::success('Merchant updated successfully');
+        Flash::success(__('admin.flash.merchant.update.success'));
 
         return response()->json(['success' => true]);
     }

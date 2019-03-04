@@ -98,9 +98,4 @@ class MerchantDataTable extends DataTable
     {
         return 'merchantsdatatable_' . time();
     }
-
-    protected function scripts() : string
-    {
-
-    }
 }
