@@ -33,14 +33,17 @@ class UserStatusMiddleware
 
         if ($this->isInactive($user)) {
             Auth::logout();
+
             if ($request->ajax()) {
                 return response()->json([
-                   'message' => __('auth.account_inactive'),
+                    'message' => __('auth.account_inactive'),
                 ], 403);
-            } else {
-                Flash::info(__('auth.account_inactive'));
-                return redirect('/login');
             }
+
+            Flash::info(__('auth.account_inactive'));
+
+            return redirect('/login');
+
 
         }
 
@@ -49,10 +52,10 @@ class UserStatusMiddleware
                 return response()->json([
                     'message' => __('auth.account_pending'),
                 ], 403);
-            } else {
-                Flash::info(__('auth.account_pending'));
-                return redirect()->back();
             }
+            Flash::info(__('auth.account_pending'));
+
+            return redirect()->back();
         }
 
         return $next($request);
