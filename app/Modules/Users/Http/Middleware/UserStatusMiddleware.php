@@ -6,6 +6,8 @@
 namespace App\Modules\Users\Http\Middleware;
 
 use App\Modules\Users\Admin\Models\Admin;
+use App\Modules\Users\Customer\Models\Customer;
+use App\Modules\Users\Merchant\Models\Merchant;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -34,7 +36,7 @@ class UserStatusMiddleware
         if ($this->isInactive($user)) {
             Auth::logout();
 
-            if ($request->ajax()) {
+            if ($this->isCustomer($user)) {
                 return response()->json([
                     'message' => __('auth.account_inactive'),
                 ], 403);
@@ -48,7 +50,7 @@ class UserStatusMiddleware
         }
 
         if ($this->isPending($user) && !$this->isGet($request)) {
-            if ($request->ajax()) {
+            if ($this->isCustomer($user)) {
                 return response()->json([
                     'message' => __('auth.account_pending'),
                 ], 403);
@@ -61,6 +63,14 @@ class UserStatusMiddleware
         return $next($request);
     }
 
+    /**
+     * @param Merchant|Customer $user
+     * @return bool
+     */
+    protected function isCustomer($user)
+    {
+        return $user instanceof Customer;
+    }
     /**
      * @param Authenticatable $user
      * @return bool
