@@ -61,8 +61,7 @@ class MerchantReviewDataTable extends DataTable
      */
     public function query(MerchantReview $model): Builder
     {
-        return $model->newQuery()
-            ->latest();
+        return $model->query();
     }
 
     /**
