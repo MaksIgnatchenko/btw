@@ -61,8 +61,7 @@ class ProductReviewDataTable extends DataTable
      */
     public function query(ProductReview $model): Builder
     {
-        return $model->newQuery()
-            ->latest();
+        return $model->query();
     }
 
     /**
@@ -80,9 +79,9 @@ class ProductReviewDataTable extends DataTable
                 'dom' => 'tp<"#status-filter"><"payment-search"f>',
                 'bInfo' => false,
                 'order' => [
-                    0, // here is the column number
-                    'asc',
-                ],
+                    5, // here is the column number
+                    'desc'
+                ]
             ]);
     }
 
