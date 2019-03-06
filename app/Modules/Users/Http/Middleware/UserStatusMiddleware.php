@@ -57,7 +57,7 @@ class UserStatusMiddleware
             }
             Flash::info(__('auth.account_pending'));
 
-            return redirect()->back();
+            return redirect()->back(403);
         }
 
         return $next($request);
