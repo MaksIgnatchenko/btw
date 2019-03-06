@@ -47,7 +47,7 @@ class MerchantReviewDataTable extends DataTable
                 return DateConverter::date($review->created_at);
             })
             ->addColumn('action', function (MerchantReview $review) {
-                return view('reviews.datatables_actions', [
+                return view('reviews.admin.datatables_actions', [
                     'type' => 'merchant',
                     'id' => $review->id,
                     ]);
