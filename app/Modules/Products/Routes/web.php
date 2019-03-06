@@ -7,5 +7,11 @@ Route::get('/', function () {
     return redirect()->route('products.index');
 });
 
-Route::get('products/search', 'SearchController@index')->middleware(['auth:merchant'])->name('products.search');
-Route::resource('products', 'ProductController')->middleware(['auth:merchant']);
+Route::get('products/search', 'SearchController@index')
+    ->middleware(['auth:merchant', 'active'])->name('products.search');
+Route::get('products/filter', 'SearchController@index')
+    ->middleware(['auth:merchant', 'active'])->name('products.filter');
+Route::put('products/{product}/toggle', 'ProductController@toggleStatus')
+    ->middleware(['auth:merchant', 'active'])->name('products.toggle-status');
+Route::resource('products', 'ProductController')
+    ->middleware(['auth:merchant', 'active']);

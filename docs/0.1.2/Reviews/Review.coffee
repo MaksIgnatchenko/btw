@@ -10,7 +10,7 @@
   @apiParam {Integer} order_id Order ID
   @apiParam {Integer} merchant_rating Merchant rating. Min: 1, Max: 5
   @apiParam {String}  merchant_comment Optional. Merchant comment
-  @apiParam {Integer} merchant_rating Product rating. Min: 1, Max: 5
+  @apiParam {Integer} product_rating Product rating. Min: 1, Max: 5
   @apiParam {String}  product_comment Optional. Product comment
 
   @apiSuccessExample Success-Response:
@@ -43,7 +43,8 @@
             "comment": "product review test 1",
             "status": "active",
             "created_at": "2019-02-15 10:38:59",
-            "updated_at": "2019-02-15 10:38:59"
+            "updated_at": "2019-02-22 13:46:11",
+            "customer_full_name": "Appus Tester"
         },
         {
             "id": 17,
@@ -54,7 +55,8 @@
             "comment": "product review test 2",
             "status": "active",
             "created_at": "2019-02-15 10:39:19",
-            "updated_at": "2019-02-15 10:39:19"
+            "updated_at": "2019-02-22 13:46:11",
+            "customer_full_name": "Appus Tester"
         }
     ]
   }
@@ -82,7 +84,8 @@
             "rating": 2,
             "comment": "test merchant comment",
             "created_at": "2019-02-15 10:38:59",
-            "updated_at": "2019-02-15 10:38:59"
+            "updated_at": "2019-02-22 13:46:11",
+            "customer_full_name": "Appus Tester"
         },
         {
             "id": 30,
@@ -92,7 +95,8 @@
             "rating": 5,
             "comment": "test merchant comment",
             "created_at": "2019-02-15 10:39:19",
-            "updated_at": "2019-02-15 10:39:19"
+            "updated_at": "2019-02-22 13:46:11",
+            "customer_full_name": "Appus Tester"
         }
     ]
   }

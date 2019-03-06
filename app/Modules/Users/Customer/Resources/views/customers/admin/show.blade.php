@@ -29,4 +29,22 @@
         </div>
 
     </div>
+    <script>
+        $(function() {
+            $('#user_status_select').on('change', function () {
+                console.log('ping')
+                $.ajax($(this).data('userUrl'), {
+                    method : 'POST',
+                    data : {
+                        _method: 'PUT',
+                        _token: '{{csrf_token()}}',
+                        status : $('option:selected', this).val()
+                    },
+                    success: function(){
+                        location.reload();
+                    }
+                })
+            });
+        });
+    </script>
 @endsection

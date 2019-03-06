@@ -25,4 +25,12 @@ trait ComputedRatingTrait
             return $collector + $item->rating;
         }, 0) / $merchantReviews->count();
     }
+
+    /**
+     * @return integer
+     */
+    public function getReviewCountAttribute()
+    {
+        return $this->reviews()->active()->count();
+    }
 }

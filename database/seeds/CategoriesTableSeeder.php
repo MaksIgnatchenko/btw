@@ -12,13 +12,6 @@ class CategoriesTableSeeder extends Seeder
      */
     public function run()
     {
-        // root categories
-        $category1 = new Category();
-        $category1->id = 1;
-        $category1->name = 'Shop';
-        $category1->parent_category_id = null;
-        $category1->save();
-
         $category2 = new Category();
         $category2->id = 2;
         $category2->name = 'Activities';

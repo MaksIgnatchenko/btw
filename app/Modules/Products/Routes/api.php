@@ -4,7 +4,7 @@
  */
 
 $this->group([
-    'middleware' => ['auth:customer'],
+    'middleware' => ['auth:customer', 'active'],
     'prefix' => 'products',
 ], function () {
     $this->get('/popular', 'ProductController@popular');
@@ -13,7 +13,7 @@ $this->group([
 });
 
 $this->group([
-    'middleware' => ['auth:customer'],
+    'middleware' => ['auth:customer', 'active'],
     'prefix' => 'cart',
 ], function () {
     $this->get('/', 'CartController@getAll');
@@ -24,7 +24,7 @@ $this->group([
 });
 
 $this->group([
-    'middleware' => ['auth:customer'],
+    'middleware' => ['auth:customer', 'active'],
     'prefix' => 'transaction',
 ], function () {
     $this->post('/', 'TransactionController@create');

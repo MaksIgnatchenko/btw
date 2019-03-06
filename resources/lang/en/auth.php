@@ -32,4 +32,6 @@ return [
     'send_password_button' => 'Send Password Reset Link',
     'reset_password_desc' => 'Enter your Email and instructions will be sent to you!',
     'reset_password_btn' => 'Reset Password',
+    'account_inactive' => 'Your account status was changed to "Inactive". Please contact admin to get more details.',
+    'account_pending' => 'Your account status was changed to “Pending”. Please contact admin to get more details.',
 ];

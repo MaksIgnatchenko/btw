@@ -66,6 +66,20 @@
                             @endif
                         </div>
                     </div>
+                    <div class="form-line__wrapper">
+                        <div class="form-item__wrapper form-item__wrapper--text">
+                            <p class="form-item__title">{{__('products.create_status')}}</p>
+                        </div>
+                        <div class="form-item__wrapper form-item__wrapper--field">
+                            <div class="custom-select">
+                                {{ Form::select('status', ['Status'] + ProductStatusEnum::toArray(), $product->status, ['name' => 'status', 'id' => 'product_status']) }}
+                            </div>
+                            @if ($errors->has('status'))
+                                <div class="alert alert-danger" role="alert">
+                                    <strong>{{ $errors->first('status') }}</strong></div>
+                            @endif
+                        </div>
+                    </div>
                 </div><!-- /. end form container -->
 
                 <hr class="form-hr">

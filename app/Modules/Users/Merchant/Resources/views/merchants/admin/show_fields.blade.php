@@ -15,6 +15,16 @@
         {!! Form::label('email', 'Email:') !!}
         {!! $merchant->email !!}
     </p>
+</div><div class="form-group">
+    <p>
+        {!! Form::label('status', 'Status:') !!}
+        {{Form::select(
+        'user_status_select',
+         ['active' => 'Active', 'pending' => 'Pending', 'inactive' => 'Inactive'],
+          $merchant->status,
+          ['id' => 'user_status_select', 'data-user-url' => route('merchants.update', $merchant->id)]
+      )}}
+    </p>
 </div>
 <div class="form-group">
     <p>

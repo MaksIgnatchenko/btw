@@ -7,7 +7,10 @@ namespace App\Modules\Users\Customer\Models;
 
 use App\Modules\Products\Models\Product;
 use App\Modules\Users\Customer\Mails\ResetPasswordMail;
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Tymon\JWTAuth\Contracts\JWTSubject;
@@ -22,16 +25,23 @@ class Customer extends Authenticatable implements JWTSubject
 {
     use Notifiable, LaratrustUserTrait;
 
+    /**
+     * @var array
+     */
     protected $hidden = [
         'password',
     ];
 
+    /**
+     * @var array
+     */
     protected $fillable = [
         'email',
         'password',
         'first_name',
         'last_name',
         'avatar',
+        'status',
     ];
 
     /**
@@ -114,5 +124,15 @@ class Customer extends Authenticatable implements JWTSubject
     public function sendPasswordResetNotification($token)
     {
         $this->notify(new ResetPasswordMail($token, $this));
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function recentlyViewed() : BelongsToMany
+    {
+        return $this->belongsToMany(Product::class, 'recently_viewed_products')
+            ->as('recentlyViewedPivot')
+            ->withTimestamps();
     }
 }

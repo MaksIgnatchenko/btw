@@ -41,13 +41,17 @@ class Merchant extends Authenticatable
         'phone',
         'avatar',
         'background_img',
+        'status',
     ];
 
     protected $hidden = [
         'password', 'remember_token',
     ];
 
-    protected $appends = ['rating'];
+    protected $appends = [
+        'rating',
+        'review_count',
+        ];
     /**
      * Password attribute mutator.
      *

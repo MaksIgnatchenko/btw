@@ -6,6 +6,7 @@
 namespace App\Modules\Users\Customer\Providers;
 
 use App\Modules\Users\Customer\Listeners\CustomerCreatedFromFacebookSubscriber;
+use App\Modules\Users\Customer\Listeners\CustomerWatchedProductSubscriber;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider;
 
 class CustomerEventServiceProvider extends EventServiceProvider
@@ -17,5 +18,6 @@ class CustomerEventServiceProvider extends EventServiceProvider
      */
     protected $subscribe = [
         CustomerCreatedFromFacebookSubscriber::class,
+        CustomerWatchedProductSubscriber::class,
     ];
 }

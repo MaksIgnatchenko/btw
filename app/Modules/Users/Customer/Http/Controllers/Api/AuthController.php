@@ -55,7 +55,9 @@ class AuthController extends Controller
 
         if ($token = $this->guard()->attempt($credentials)) {
             $user = $this->guard()->user();
-
+            if ($user->status === 'inactive') {
+                return abort(403, __('auth.account_inactive'));
+            }
             return $this->respondWithToken($token);
         }
 
