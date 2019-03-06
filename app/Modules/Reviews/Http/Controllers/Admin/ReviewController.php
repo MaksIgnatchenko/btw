@@ -49,7 +49,7 @@ class ReviewController extends Controller
     {
         $dataTable = $this->reviewDataTableFactory->getDataTableByType($type);
 
-        return $dataTable->render('reviews.index', ['type' => $type,]);
+        return $dataTable->render('reviews.admin.index', ['type' => $type,]);
     }
 
     /**
@@ -64,7 +64,7 @@ class ReviewController extends Controller
            ->getRepository($type)
            ->getReview($id);
 
-        return view('reviews.show', compact('type', 'review'));
+        return view('reviews.admin.show', compact('type', 'review'));
     }
 
     /**
