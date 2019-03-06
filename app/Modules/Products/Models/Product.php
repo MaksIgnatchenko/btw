@@ -104,6 +104,16 @@ class Product extends Model implements Ownable
         'review_count',
     ];
 
+    protected static function boot()
+    {
+        parent::boot();
+        if (Auth::user() instanceof Customer) {
+            static::addGlobalScope('status', function (Builder $builder) {
+                $builder->where('status', '=', 'active');
+            });
+        }
+    }
+
     /**
      * @param mixed $owner
      *
