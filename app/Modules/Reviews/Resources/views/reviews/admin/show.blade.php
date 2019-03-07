@@ -22,7 +22,7 @@
                         <h3 class="box-title">Merchant details</h3>
                     </div>
                     <div class="box-body">
-                        @include('reviews.show_fields', ['review' => $review])
+                        @include('reviews.admin.show_fields', ['review' => $review])
                     </div>
                 </div>
             </div>

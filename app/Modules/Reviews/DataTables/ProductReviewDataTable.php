@@ -47,7 +47,7 @@ class ProductReviewDataTable extends DataTable
                 return DateConverter::date($review->created_at);
             })
             ->addColumn('action', function (ProductReview $review) {
-                return view('reviews.datatables_actions', [
+                return view('reviews.admin.datatables_actions', [
                     'type' => 'product',
                     'id' => $review->id,
                     ]);
@@ -61,8 +61,7 @@ class ProductReviewDataTable extends DataTable
      */
     public function query(ProductReview $model): Builder
     {
-        return $model->newQuery()
-            ->latest();
+        return $model->query();
     }
 
     /**
@@ -80,9 +79,9 @@ class ProductReviewDataTable extends DataTable
                 'dom' => 'tp<"#status-filter"><"payment-search"f>',
                 'bInfo' => false,
                 'order' => [
-                    0, // here is the column number
-                    'asc',
-                ],
+                    5, // here is the column number
+                    'desc'
+                ]
             ]);
     }
 
