@@ -42,9 +42,7 @@ class UserStatusMiddleware
                 ], 403);
             }
 
-            Flash::error(__('auth.account_inactive'));
-
-            return redirect('/login', 401)->withErrors(__('auth.account_inactive'));
+            return redirect('/login')->withErrors(__('auth.account_inactive'));
 
 
         }
@@ -55,7 +53,6 @@ class UserStatusMiddleware
                     'message' => __('auth.account_pending'),
                 ], 403);
             }
-            Flash::info(__('auth.account_pending'));
 
             return redirect()->back()->withErrors(__('auth.account_pending'));
         }

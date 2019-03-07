@@ -135,4 +135,9 @@ class Customer extends Authenticatable implements JWTSubject
             ->as('recentlyViewedPivot')
             ->withTimestamps();
     }
+
+    public function isPending()
+    {
+        return 'pending' === $this->status;
+    }
 }

@@ -220,4 +220,9 @@ class Merchant extends Authenticatable
     {
         $this->notify(new ResetPasswordMail($token, $this));
     }
+
+    public function isPending()
+    {
+        return 'pending' === $this->status;
+    }
 }

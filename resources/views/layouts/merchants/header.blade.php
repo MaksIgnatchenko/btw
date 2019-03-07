@@ -35,7 +35,7 @@
                         </div>
 
                     </div>
-                        @if('pending' === $merchant->status)
+                        @if($merchant->isPending())
                             <div class="user__status">
                                 <span class="user__status-text">{{__('auth.account_pending')}}</span>
                             </div>
