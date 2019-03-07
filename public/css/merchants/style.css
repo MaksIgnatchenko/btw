@@ -860,6 +860,16 @@ textarea::-moz-placeholder, textarea:-moz-placeholder {opacity: 1}
     border-bottom-color: #fff;
     transform: translateY(-50%);
 }
+.user__status {
+    border: 1px solid #ffe447;
+    border-radius: 5px;
+    padding:5px 15px;
+    height:54px;
+}
+.user__status>.user__status-text {
+    color: #ffe447;
+    font-size: 16px;
+}
 
 .user__logout {
     display: none;
