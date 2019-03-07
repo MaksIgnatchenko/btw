@@ -14,7 +14,6 @@
                                class="shop-header__btn"><i></i>{{__('store.add_new_products')}}</a>
                         </div>
                     @endif
-
                     <div class="header-shop__user-info">
                         <div class="user__icon">
                             <figure class="user-icon__figure">
@@ -34,7 +33,13 @@
                                 </form>
                             </div>
                         </div>
+
                     </div>
+                        @if($merchant->isPending())
+                            <div class="user__status">
+                                <span class="user__status-text">{{__('auth.account_pending')}}</span>
+                            </div>
+                        @endif
                 @endauth
 
                 @guest

@@ -802,6 +802,9 @@ textarea::-moz-placeholder, textarea:-moz-placeholder {opacity: 1}
     margin: 0 16px;
 }
 
+.header-shop__add {
+    flex-basis: 30%;
+}
 .user__icon {
     margin-right: 16px;
 }
@@ -859,6 +862,15 @@ textarea::-moz-placeholder, textarea:-moz-placeholder {opacity: 1}
     border-top-color: transparent;
     border-bottom-color: #fff;
     transform: translateY(-50%);
+}
+.user__status {
+    border: 1px solid #ffe447;
+    border-radius: 5px;
+    padding:5px 15px;
+}
+.user__status>.user__status-text {
+    color: #ffe447;
+    font-size: 16px;
 }
 
 .user__logout {
