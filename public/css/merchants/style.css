@@ -867,7 +867,6 @@ textarea::-moz-placeholder, textarea:-moz-placeholder {opacity: 1}
     border: 1px solid #ffe447;
     border-radius: 5px;
     padding:5px 15px;
-    height:54px;
 }
 .user__status>.user__status-text {
     color: #ffe447;
