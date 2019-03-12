@@ -35,11 +35,6 @@
                         </div>
 
                     </div>
-                        @if($merchant->isPending())
-                            <div class="user__status">
-                                <span class="user__status-text">{{__('auth.account_pending')}}</span>
-                            </div>
-                        @endif
                 @endauth
 
                 @guest
@@ -57,5 +52,12 @@
 
             </div>
         </div>
+        @auth('merchant')
+        @if($merchant->isPending())
+            <div class="user__status">
+                <span class="user__status-text">{{__('auth.account_pending')}}</span>
+            </div>
+        @endif
+        @endauth
     </div>
 </header><!-- /. end header -->
