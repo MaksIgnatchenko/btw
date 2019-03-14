@@ -95,9 +95,11 @@ class MerchantReviewDataTable extends DataTable
         return [
             'customer_name' => [
                 'title' => 'Customer Name',
+                'orderable' => false,
             ],
             'merchant_name' => [
                 'title' => 'Merchant Name',
+                'orderable' => false,
             ],
             [
                 'name' => 'rating',

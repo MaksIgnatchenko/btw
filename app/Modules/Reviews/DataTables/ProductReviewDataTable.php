@@ -95,9 +95,11 @@ class ProductReviewDataTable extends DataTable
         return [
             'customer_name' => [
                 'title' => 'Customer Name',
+                'orderable' => false,
             ],
             'product_name' => [
                 'title' => 'product Name',
+                'orderable' => false,
             ],
             [
                 'name' => 'rating',
