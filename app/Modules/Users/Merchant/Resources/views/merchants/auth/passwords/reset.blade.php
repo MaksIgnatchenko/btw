@@ -5,7 +5,32 @@
 @section('footer-class', 'footer')
 
 @section('header')
-    @include('layouts.merchants.header')
+    <header class="@isset($header_class) {{$header_class}} @endisset header">
+        <div class="container">
+            <div class="header__cont">
+                <div class="header__logo">
+                    <a href="{{route('index')}}">Logotype BTW</a>
+                </div>
+                <div class="header__info">
+                    <div class="header__lang">English<span>EN</span></div>
+
+                    @guest
+                        <nav class="navigation">
+                            @if (Route::currentRouteName() !== 'index')
+                                <a href="{{ url('products/') }}">{{__('merchants.home')}}</a>
+                            @endif
+
+                            <a target="_blank"
+                               href="{{ route('merchant.content', ['content' => 'terms_and_conditions']) }}">
+                                {{__('merchants.terms_and_conditions')}}
+                            </a>
+                        </nav>
+                    @endguest
+
+                </div>
+            </div>
+        </div>
+    </header><!-- /. end header -->
 @stop
 
 @section('content')
