@@ -6,6 +6,7 @@
 namespace App\Modules\Users\Customer\Http\Controllers\Web\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Rules\PasswordRule;
 use Illuminate\Foundation\Auth\ResetsPasswords;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Password;
@@ -38,10 +39,17 @@ class ResetPasswordController extends Controller
      */
     protected function rules()
     {
+
         return [
             'token' => 'required',
             'email' => 'required|email',
-            'password' => 'required|confirmed|min:6|max:50',
+            'password' => [
+                'required',
+                'confirmed',
+                'min:6',
+                'max:50',
+                new PasswordRule(),
+            ],
         ];
     }
 
