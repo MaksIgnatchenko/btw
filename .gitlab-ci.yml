@@ -8,6 +8,9 @@ build:
   image: composer
   script:
     - composer install -on --ignore-platform-reqs --no-progress --no-dev
+  cache:
+    paths:
+      - vendor/
   artifacts:
     paths:
       - vendor/
