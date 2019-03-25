@@ -35,10 +35,8 @@ js_build:
 
 deploy:
   stage: deploy
+  image: dinofizz/rsync-ssh
   script:
-    - apt-get update && apt-get install -y
-      ssh
-      rsync
 
     - mkdir -p ~/.ssh
     - echo -e "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
