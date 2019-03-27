@@ -15,7 +15,11 @@
                     _token: token
                 },
                 success: function(response) {
-                    location.reload();
+                    if(response.error){
+                        alert(response.error)
+                    } else {
+                        location.reload();
+                    }
                 }
             });
         })

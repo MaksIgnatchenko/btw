@@ -14,8 +14,31 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Laracasts\Flash\Flash;
 
+/**
+ * Class UserStatusMiddleware
+ * @package App\Modules\Users\Http\Middleware
+ */
 class UserStatusMiddleware
 {
+
+    /**
+     *
+     */
+    protected const INACTIVE = 'inactive';
+    /**
+     *
+     */
+    protected const PENDING = 'pending';
+    /**
+     *
+     */
+    protected const ACTIVE = 'active';
+    /**
+     * @var array
+     */
+    protected $filterRoutes = [
+        'transaction.token',
+    ];
     /**
      * Handle an incoming request.
      *
@@ -27,52 +50,74 @@ class UserStatusMiddleware
     public function handle(Request $request, Closure $next)
     {
         $user = Auth::user();
-
+        if (!$user) {
+            return $next($request);
+        }
         if ($user instanceof Admin) {
             return $next($request);
         }
 
-        if ($user->isInactive()) {
-            Auth::logout();
-
-            if ($this->isCustomer($user)) {
-                return response()->json([
-                    'message' => __('auth.account_inactive'),
-                ], 403);
-            }
-
-            return redirect('/login')->withErrors(__('auth.account_inactive'));
-
-
+        switch ($user->status) {
+            case self::INACTIVE:
+                return $this->inactiveResponse($user);
+            /** @noinspection PhpMissingBreakStatementInspection */
+            case self::PENDING:
+                if (!$this->requestAllowed($request)) {
+                    return $this->pendingResponse($user);
+                }
+            // no break
+            default:
+                return $next($request);
         }
-
-        if ($user->isPending() && !$this->isGet($request)) {
-            if ($this->isCustomer($user)) {
-                return response()->json([
-                    'message' => __('auth.account_pending'),
-                ], 403);
-            }
-
-            return redirect()->back()->withErrors(__('auth.account_pending'));
-        }
-
-        return $next($request);
     }
 
     /**
-     * @param Merchant|Customer $user
-     * @return bool
+     * @param $user
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    protected function isCustomer($user)
+    protected function inactiveResponse($user)
     {
-        return $user instanceof Customer;
+        Auth::logout();
+
+        if ($user instanceof Customer) {
+            return response()->json([
+                'message' => __('auth.account_inactive'),
+            ], 403);
+        }
+
+        return redirect('/login')->withErrors(__('auth.account_inactive'));
     }
+
+    /**
+     * @param $user
+     * @return \Illuminate\Http\JsonResponse|void
+     */
+    protected function pendingResponse($user)
+    {
+        if ($user instanceof Customer) {
+            return response()->json([
+                'message' => __('auth.account_pending'),
+            ], 403);
+        }
+
+        return abort(403, __('auth.account_pending'));
+    }
+
     /**
      * @param Request $request
      * @return bool
      */
-    protected function isGet(Request $request) : bool
+    protected function requestAllowed(Request $request) : bool
     {
-        return 'GET' === $request->getMethod();
+        $routeName = $request->route()->getAction()['as'] ?? '';
+        if (in_array($routeName, $this->filterRoutes, true)) {
+            return false;
+        }
+
+        if ('GET' !== $request->getMethod()) {
+            return false;
+        }
+
+        return true;
     }
 }
