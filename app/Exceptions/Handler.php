@@ -2,11 +2,13 @@
 
 namespace App\Exceptions;
 
+use App\Modules\Users\Merchant\Models\Merchant;
 use Exception;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Support\Facades\Auth;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Tymon\JWTAuth\Exceptions\TokenExpiredException;
 use Tymon\JWTAuth\Exceptions\TokenInvalidException;
@@ -81,6 +83,17 @@ class Handler extends ExceptionHandler
             return response()->view('layouts.merchants.404_page', [
                 'merchant' => $merchant,
             ], 404);
+        }
+
+        if ($e instanceof HttpException && 403 === $e->getStatusCode()) {
+            $merchant = Auth::user();
+            if ($request->ajax()) {
+                return response()->json(['error' => 'Not Allowed', 403]);
+            }
+
+            return response()->view('layouts.merchants.403_page', [
+                'merchant' => $merchant,
+            ], 403);
         }
 
         if ($e instanceof ModelNotFoundException) {
