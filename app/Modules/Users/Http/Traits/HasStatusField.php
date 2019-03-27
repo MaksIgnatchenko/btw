@@ -7,13 +7,18 @@ namespace App\Modules\Users\Http\Traits;
 
 trait HasStatusField
 {
-
-    public function isPending()
+    /**
+     * @return bool
+     */
+    public function isPending() : bool
     {
         return 'pending' === $this->status;
     }
 
-    public function isInactive()
+    /**
+     * @return bool
+     */
+    public function isInactive() : bool
     {
         return 'inactive' === $this->status;
     }
