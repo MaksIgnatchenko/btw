@@ -19,13 +19,15 @@ class ChangePasswordRequest extends ChangePasswordRequestAbstract
     {
         $rules = parent::rules();
 
-        $rules['old_password'] = array_merge($rules['old_password'],
+        $rules['old_password'] = array_merge(
+            $rules['old_password'],
             [
                 new PasswordRule(),
             ]
         );
 
-        $rules['new_password'] = array_merge($rules['new_password'],
+        $rules['new_password'] = array_merge(
+            $rules['new_password'],
             [
                 new PasswordRule(),
             ]

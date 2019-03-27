@@ -15,6 +15,7 @@ use App\Modules\Users\Merchant\Repositories\MerchantRepository;
 use App\Modules\Users\Merchant\Repositories\StoreRepository;
 use App\Modules\Users\Merchant\Services\Geography\GeographyServiceInterface;
 use App\Modules\Users\Models\AddressInterface;
+use App\Modules\Users\Http\Traits\HasStatusField;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Notifications\Notifiable;
@@ -26,7 +27,7 @@ use Laratrust\Traits\LaratrustUserTrait;
 
 class Merchant extends Authenticatable
 {
-    use Notifiable, LaratrustUserTrait, ComputedRatingTrait;
+    use Notifiable, LaratrustUserTrait, ComputedRatingTrait, HasStatusField;
 
     /**
      * The attributes that are mass assignable.
@@ -219,10 +220,5 @@ class Merchant extends Authenticatable
     public function sendPasswordResetNotification($token)
     {
         $this->notify(new ResetPasswordMail($token, $this));
-    }
-
-    public function isPending()
-    {
-        return 'pending' === $this->status;
     }
 }

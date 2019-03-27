@@ -28,12 +28,11 @@ class UserStatusMiddleware
     {
         $user = Auth::user();
 
-
         if ($user instanceof Admin) {
             return $next($request);
         }
 
-        if ($this->isInactive($user)) {
+        if ($user->isInactive()) {
             Auth::logout();
 
             if ($this->isCustomer($user)) {
@@ -47,7 +46,7 @@ class UserStatusMiddleware
 
         }
 
-        if ($this->isPending($user) && !$this->isGet($request)) {
+        if ($user->isPending() && !$this->isGet($request)) {
             if ($this->isCustomer($user)) {
                 return response()->json([
                     'message' => __('auth.account_pending'),
@@ -68,24 +67,6 @@ class UserStatusMiddleware
     {
         return $user instanceof Customer;
     }
-    /**
-     * @param Authenticatable $user
-     * @return bool
-     */
-    protected function isInactive(Authenticatable $user): bool
-    {
-        return 'inactive' === $user->status;
-    }
-
-    /**
-     * @param Authenticatable $user
-     * @return bool
-     */
-    protected function isPending(Authenticatable $user) : bool
-    {
-        return 'pending' === $user->status;
-    }
-
     /**
      * @param Request $request
      * @return bool

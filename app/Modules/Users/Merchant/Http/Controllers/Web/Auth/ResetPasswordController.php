@@ -6,6 +6,7 @@
 namespace App\Modules\Users\Merchant\Http\Controllers\Web\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Modules\Users\Merchant\Rules\PasswordRule;
 use App\Modules\Users\Models\User;
 use Illuminate\Foundation\Auth\ResetsPasswords;
 use Illuminate\Http\Request;
@@ -59,7 +60,14 @@ class ResetPasswordController extends Controller
         return [
             'token'    => 'required',
             'email'    => 'required|email',
-            'password' => 'required|confirmed|min:6|max:50',
+            'password' => [
+                'required',
+                'confirmed',
+                'min:6',
+                'max:50',
+               new PasswordRule(),
+            ],
+
         ];
     }
 
