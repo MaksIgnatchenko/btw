@@ -38,7 +38,6 @@ class UserStatusMiddleware
      */
     protected $filterRoutes = [
         'transaction.token',
-        'products.show',
     ];
     /**
      * Handle an incoming request.
