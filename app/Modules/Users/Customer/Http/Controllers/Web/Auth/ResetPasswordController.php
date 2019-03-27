@@ -61,7 +61,8 @@ class ResetPasswordController extends Controller
     protected function validationErrorMessages()
     {
         return [
-            'password.regex' => 'Invalid format. Password should contain at least 8 symbols of combination of digits and characters and special characters'];
+            'password.regex' => 'Invalid format. Password should contain at least 8 symbols of combination of digits and characters and special characters'
+        ];
     }
 
     /**

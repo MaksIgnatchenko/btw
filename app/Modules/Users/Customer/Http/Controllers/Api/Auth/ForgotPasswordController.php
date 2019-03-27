@@ -32,7 +32,6 @@ class ForgotPasswordController extends Controller
         $this->middleware('guest');
     }
 
-
     /**
      * Get the response for a successful password reset link.
      *
