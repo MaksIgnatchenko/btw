@@ -22,6 +22,7 @@ class PasswordRule implements Rule
      */
     public function passes($attribute, $value)
     {
+        dd((bool)preg_match($this->pattern, $value));
         return (bool)preg_match($this->pattern, $value);
     }
 

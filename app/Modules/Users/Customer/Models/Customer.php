@@ -7,6 +7,7 @@ namespace App\Modules\Users\Customer\Models;
 
 use App\Modules\Products\Models\Product;
 use App\Modules\Users\Customer\Mails\ResetPasswordMail;
+use App\Modules\Users\Http\Traits\HasStatusField;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -23,7 +24,7 @@ use Laratrust\Traits\LaratrustUserTrait;
  */
 class Customer extends Authenticatable implements JWTSubject
 {
-    use Notifiable, LaratrustUserTrait;
+    use Notifiable, LaratrustUserTrait, HasStatusField;
 
     /**
      * @var array
@@ -136,8 +137,4 @@ class Customer extends Authenticatable implements JWTSubject
             ->withTimestamps();
     }
 
-    public function isPending()
-    {
-        return 'pending' === $this->status;
-    }
 }

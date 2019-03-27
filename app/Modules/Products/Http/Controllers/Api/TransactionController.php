@@ -79,6 +79,15 @@ class TransactionController extends Controller
      */
     public function generateToken(): JsonResponse
     {
+        if (Auth::user()->isInactive()) {
+            Auth::logout();
+            abort(403, __('auth.account_inactive'));
+        }
+
+        if (Auth::user()->isPending()) {
+            abort(403, __('auth.account_pending'));
+        }
+
         $token = $this->gateway->clientToken()->generate();
 
         return response()->json([
