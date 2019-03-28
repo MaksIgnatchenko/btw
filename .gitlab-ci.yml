@@ -1,4 +1,12 @@
+include:
+  template: SAST.gitlab-ci.yml
+
+sast:
+  variables:
+    CI_DEBUG_TRACE: "true"
+
 stages:
+  - sast
   - build
   - js_build
   - deploy
