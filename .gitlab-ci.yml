@@ -1,11 +1,7 @@
 stages:
-  - test
   - build
   - js_build
   - deploy
-
-include:
-  template: SAST.gitlab-ci.yml
 
 build:
   stage: build
