@@ -28,5 +28,5 @@ $this->group([
     'prefix' => 'transaction',
 ], function () {
     $this->post('/', 'TransactionController@create');
-    $this->get('/token', 'TransactionController@generateToken');
+    $this->get('/token', 'TransactionController@generateToken')->name('transaction.token');
 });

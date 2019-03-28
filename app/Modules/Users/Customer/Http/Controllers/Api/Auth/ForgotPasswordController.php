@@ -7,6 +7,7 @@ namespace App\Modules\Users\Customer\Http\Controllers\Api\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
+use Illuminate\Http\Request;
 
 class ForgotPasswordController extends Controller
 {
@@ -31,7 +32,6 @@ class ForgotPasswordController extends Controller
         $this->middleware('guest');
     }
 
-
     /**
      * Get the response for a successful password reset link.
      *
@@ -41,6 +41,7 @@ class ForgotPasswordController extends Controller
     {
         return response()->json(['success' => true]);
     }
+
 
     /**
      * Get the response for a failed password reset link.
