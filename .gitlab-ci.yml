@@ -40,8 +40,6 @@ js_build:
     - develop
     - with-tests
 phpunit:
-  services:
-    - mysql:5.7
   stage: tests
   image: appusdev/docker
   script:
