@@ -41,7 +41,7 @@ js_build:
     - with-tests
 phpunit:
   stage: tests
-  image: appusdev/docker
+  image: docker
   script:
     - service docker start
     - docker-compose -f docker-compose.yml.test up -d --force-recreate --remove-orphans
