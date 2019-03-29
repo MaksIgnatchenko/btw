@@ -39,22 +39,20 @@ js_build:
   only:
     - develop
     - with-tests
-services:
-  - mysql:latest
 phpunit:
+  services:
+    - mysql:5.7
   stage: tests
-  image: edbizarro/gitlab-ci-pipeline-php
+  image: appusdev/docker
   script:
-    - composer install --prefer-dist --no-ansi --no-interaction --no-progress
-    - cp .env.test.example .env
-    - php artisan key:generate
-    - php artisan migrate:refresh --seed
-    - ./vendor/phpunit/phpunit/phpunit -v --coverage-text --colors=never --stderr
+    - service docker start
+    - docker-compose -f docker-compose.yml.test up -d --force-recreate --remove-orphans
+    - docker exec socialapp_web_test sh ./init_test.sh
   artifacts:
     paths:
       - ./storage/logs # for debugging
     expire_in: 1 days
-    when: on_failure
+  when: on_failure
   only:
     - with-tests
 deploy:
