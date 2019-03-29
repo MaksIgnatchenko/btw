@@ -25,7 +25,6 @@ build:
   only:
     - develop
     - with-tests
-
 js_build:
   stage: js_build
   image: node:8.11.2
@@ -40,10 +39,10 @@ js_build:
   only:
     - develop
     - with-tests
+services:
+  - mysql:latest
 phpunit:
   stage: tests
-  services:
-    - mysql:5.7
   image: edbizarro/gitlab-ci-pipeline-php
   script:
     - composer install --prefer-dist --no-ansi --no-interaction --no-progress
