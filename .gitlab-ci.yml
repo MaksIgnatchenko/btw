@@ -24,7 +24,7 @@ build:
     expire_in: 1h
   only:
     - develop
-    - with-test
+    - with-tests
 
 js_build:
   stage: js_build
@@ -39,7 +39,7 @@ js_build:
     expire_in: 1h
   only:
     - develop
-    - with-test
+    - with-tests
 phpunit:
   stage: tests
   services:
@@ -57,7 +57,7 @@ phpunit:
     expire_in: 1 days
     when: on_failure
   only:
-    - with-test
+    - with-tests
 deploy:
   stage: deploy
   image: dinofizz/rsync-ssh
