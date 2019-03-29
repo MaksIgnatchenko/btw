@@ -43,7 +43,6 @@ phpunit:
   stage: tests
   image: docker
   script:
-    - service docker start
     - docker-compose -f docker-compose.yml.test up -d --force-recreate --remove-orphans
     - docker exec socialapp_web_test sh ./init_test.sh
   artifacts:
