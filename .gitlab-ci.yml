@@ -50,7 +50,7 @@ phpunit:
     paths:
       - ./storage/logs # for debugging
     expire_in: 1 days
-  when: on_failure
+    when: on_failure
   only:
     - with-tests
 deploy:
