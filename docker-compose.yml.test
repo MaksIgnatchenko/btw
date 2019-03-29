@@ -2,6 +2,7 @@ version: '3'
 
 services:
   test_db:
+    privileged: true
     image: "mysql:5.7"
     tmpfs: /var/lib/mysql
     environment:
@@ -18,4 +19,5 @@ services:
     environment:
       ENV: production
     depends_on:
+    privileged: true
       - test_db
