@@ -44,7 +44,7 @@ phpunit:
   image: appusdev/docker
   script:
     - docker-compose -f docker-compose.yml.test up -d --force-recreate --remove-orphans
-    - docker exec socialapp_web_test sh ./init_test.sh
+    - docker exec wish_php_tests sh ./init_test.sh
   artifacts:
     paths:
       - ./storage/logs # for debugging
