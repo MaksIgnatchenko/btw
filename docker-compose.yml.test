@@ -14,7 +14,7 @@ services:
     build: .
     container_name: wish_php_tests
     volumes:
-      - ./:/var/www/html
+      - ./:/var/www
     environment:
       ENV: production
     depends_on:
