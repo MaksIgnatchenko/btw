@@ -11,4 +11,4 @@ cp .env.testing .env
 rm -f ./public/storage
 ln -s ../storage/app/public/ ./public/storage
 
-php phpunit.phar
+php phpunit.phar -c ./phpunit.xml
