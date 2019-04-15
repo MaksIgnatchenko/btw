@@ -34,7 +34,8 @@ HTTP/1.1 200 OK
             "created_at": "2018-10-08 16:26:41",
             "updated_at": "2018-10-08 16:26:41",
             "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-            "is_in_wish_list": false
+            "is_in_wish_list": false,
+            "purchases_count" : 10
         },
         {
             "id": 22,
@@ -57,7 +58,8 @@ HTTP/1.1 200 OK
             "created_at": "2018-10-08 16:26:41",
             "updated_at": "2018-10-08 16:26:41",
             "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
-            "is_in_wish_list": false
+            "is_in_wish_list": false,
+            "purchases_count" : 10
         },
         {
             "id": 23,
@@ -70,7 +72,8 @@ HTTP/1.1 200 OK
             "created_at": "2018-10-08 16:26:41",
             "updated_at": "2018-10-08 16:26:41",
             "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-            "is_in_wish_list": false
+            "is_in_wish_list": false,
+            "purchases_count" : 10
         }
     ]
 }
@@ -118,7 +121,8 @@ HTTP/1.1 200 OK
             "main_image": "demo.jpeg",
             "created_at": "2018-10-08 16:26:41",
             "updated_at": "2018-10-08 16:26:41",
-            "is_in_wish_list": false
+            "is_in_wish_list": false,
+            "purchases_count" : 10
         },
         {
             "id": 22,
@@ -141,7 +145,8 @@ HTTP/1.1 200 OK
             "main_image": "demo.jpeg",
             "created_at": "2018-10-08 16:26:41",
             "updated_at": "2018-10-08 16:26:41",
-            "is_in_wish_list": true
+            "is_in_wish_list": true,
+            "purchases_count" : 10
         },
         {
             "id": 23,
@@ -196,6 +201,7 @@ HTTP/1.1 200 OK
         "updated_at": "2018-10-08 16:26:41",
         "is_in_wish_list": false,
         "rating": 3.5,
+        "purchases_count" : 10,
         "images": [],
         "category": {
             "id": 7,

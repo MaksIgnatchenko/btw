@@ -6,7 +6,6 @@ use App\Modules\Categories\Models\Category;
 use App\Modules\Products\Dto\CustomerSearchDto;
 use App\Modules\Products\Enums\ProductFiltersEnum;
 use App\Modules\Products\Enums\ProductOrdersEnum;
-use App\Modules\Products\Enums\ProductStatusEnum;
 use App\Modules\Products\Filters\ProductFilter;
 use App\Modules\Products\Helpers\AttributesHelper;
 use App\Modules\Products\Repositories\ProductImageRepository;
@@ -27,6 +26,10 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Laratrust\Contracts\Ownable;
 
+/**
+ * Class Product
+ * @package App\Modules\Products\Models
+ */
 class Product extends Model implements Ownable
 {
     use ComputedRatingTrait;
@@ -34,6 +37,8 @@ class Product extends Model implements Ownable
     public const PRODUCTS_PAGE_LIMIT = 20;
     public const REVIEWS_PAGE_LIMIT = 3;
     public const DEFAULT_RADIUS = 100;
+
+    public const PURCHASES_MULTIPLIER = 10;
 
     protected $productImageModel;
 
@@ -102,6 +107,7 @@ class Product extends Model implements Ownable
         'merchant_id',
         'rating',
         'review_count',
+        'purchases_count',
     ];
 
     protected static function boot()
@@ -487,6 +493,28 @@ class Product extends Model implements Ownable
     public function scopeOfStatus(Builder $query, string $status)
     {
         return $query->where('status', $status);
+    }
+
+    /**
+     * @param int $quantity
+     */
+    public function updatePurchaseCounter(int $quantity)
+    {
+        $this->attributes['purchases_count'] += $quantity;
+        $this->save();
+    }
+
+    /**
+     * @return int
+     */
+    public function getPurchasesCountAttribute() : int
+    {
+        $multipliedCount = $this->attributes['purchases_count'] * self::PURCHASES_MULTIPLIER; // Multiply count
+
+        if (100 < $multipliedCount) {
+            $multipliedCount = floor($multipliedCount / 100) * 100 + 100; // show only hundreds
+        }
+        return intval($multipliedCount);
     }
 }
 
