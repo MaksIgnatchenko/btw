@@ -38,6 +38,8 @@ class Product extends Model implements Ownable
     public const REVIEWS_PAGE_LIMIT = 3;
     public const DEFAULT_RADIUS = 100;
 
+    const PURCHASES_MULTIPLIER = 10;
+
     protected $productImageModel;
 
     /** @var array */
@@ -507,12 +509,11 @@ class Product extends Model implements Ownable
      */
     public function getPurchasesCountAttribute() : int
     {
-        $multipliedCount = $this->attributes['purchases_count'] * 10; // Multiply count by 10
+        $multipliedCount = $this->attributes['purchases_count'] * self::PURCHASES_MULTIPLIER; // Multiply count
 
-        if (10 < $this->attributes['purchases_count']) {
-            $multipliedCount = floor($this->attributes['purchases_count'] / 10) * 100 + 100; // show only hundreds
+        if (100 < $multipliedCount) {
+            $multipliedCount = floor($multipliedCount / 100) * 100 + 100; // show only hundreds
         }
-
         return intval($multipliedCount);
     }
 }

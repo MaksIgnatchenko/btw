@@ -8,6 +8,7 @@ namespace App\Modules\Orders\Listener;
 
 use App\Modules\Orders\Events\OrderClosedEvent;
 use App\Modules\Products\Models\Product;
+use Illuminate\Support\Facades\Log;
 
 /**
  * Class OrderClosedSubscriber
@@ -32,10 +33,12 @@ class OrderClosedSubscriber
     {
         $order = $event->getOrder();
         $orderProduct = $order->product;
-        if (null !== ($dbProduct = Product::where('id', $orderProduct->id)
+        $dbProduct = Product::where('id', $orderProduct->id)
             ->where('store_id', $orderProduct->store['id'])
-            ->where('name', $orderProduct->name)
-            ->first())) {
+            ->first();
+        if (null === $dbProduct) {
+           Log::info("Product {$orderProduct->id} from order {$order->id} does not exists in database");
+        } else {
             $dbProduct->updatePurchaseCounter($order->quantity);
             $dbProduct->refresh();
         }
