@@ -38,7 +38,7 @@ class Product extends Model implements Ownable
     public const REVIEWS_PAGE_LIMIT = 3;
     public const DEFAULT_RADIUS = 100;
 
-    const PURCHASES_MULTIPLIER = 10;
+    public const PURCHASES_MULTIPLIER = 10;
 
     protected $productImageModel;
 
