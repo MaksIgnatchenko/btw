@@ -9,7 +9,7 @@ $this->group([
 ], function () {
     $this->get('/popular', 'ProductController@popular');
     $this->get('/search', 'ProductController@customerSearch');
-    $this->get('/get/{id}', 'ProductController@show');
+    $this->get('/get/{id}', 'ProductController@show')->name('api.product.show');
 });
 
 $this->group([

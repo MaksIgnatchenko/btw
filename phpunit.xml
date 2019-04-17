@@ -23,14 +23,15 @@
         </whitelist>
     </filter>
     <php>
-        <env name="APP_ENV" value="testing"/>
+        <env name="APP_ENV" value="local"/>
         <env name="CACHE_DRIVER" value="array"/>
         <env name="SESSION_DRIVER" value="array"/>
         <env name="QUEUE_DRIVER" value="sync"/>
         <env name="DB_HOST" value="database_host"/>
         <env name="DB_PORT" value="3306"/>
-        <env name="DB_DATABASE" value="pitchingon"/>
-        <env name="DB_USERNAME" value="root"/>
-        <env name="DB_PASSWORD" value="root"/>
+        <env name="DB_DATABASE" value="test"/>
+        <env name="DB_USERNAME" value="test"/>
+        <env name="DB_PASSWORD" value="test"/>
+        <env name="APP_URL" value="http://localhost"/>
     </php>
 </phpunit>
