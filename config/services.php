@@ -48,4 +48,8 @@ return [
         'redirect' => '/api/customer/auth/google/callback',
     ],
 
+    'intercom' => [
+        'app_id' => env('INTERCOM_APP_ID'),
+    ],
+
 ];
