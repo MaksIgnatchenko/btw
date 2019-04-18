@@ -282,6 +282,10 @@ class Product extends Model implements Ownable
                 return $query->orderBy('price', 'desc');
             case ProductOrdersEnum::PRICE_LOWEST:
                 return $query->orderBy('price');
+            case ProductOrdersEnum::RATING_HIGHEST:
+                return $query->orderBy('rating', 'desc');
+            case ProductOrdersEnum::RATING_LOWEST:
+                return $query->orderBy('rating');
         }
     }
 
