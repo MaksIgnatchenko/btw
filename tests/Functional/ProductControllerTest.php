@@ -6,6 +6,7 @@ use App\Modules\Products\Models\Product;
 use App\Modules\Users\Customer\Models\Customer;
 use App\Modules\Users\Merchant\Models\Merchant;
 use App\Modules\Users\Merchant\Models\Store;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Log;
 use Tests\TestCase;
 
@@ -22,19 +23,50 @@ class ProductControllerTest extends TestCase
      */
     public function show()
     {
-        $customer = factory(Customer::class)->create();
-        $authToken = auth()->guard('customer')->login($customer);
         $product = $this->mockProduct();
         $this->assertDatabaseHas('products', ['id' => $product->id]);
-        $response = $this->get( route('api.product.show', ['id' => $product->id]), [
-            'Accept' => 'application/json',
-            'Authorization' => 'Bearer ' . $authToken,
-        ]);
+        $response = $this->jsonAuthorized('GET', route('api.product.show', ['id' => $product->id]));
         $response->assertStatus(200)->assertJson([
             'product' => $product->toArray()
         ]);
     }
 
+
+
+    /**
+     * @test
+     */
+    public function customerSearch()
+    {
+        $lessPrice = 50;
+        $priceMedian = 100;
+        $greaterPrice = 150;
+        $lessPriceProduct = $this->mockProduct([
+            'price' => $lessPrice,
+            'created_at' => Carbon::now()->subDays(3),
+        ]);
+        $greaterPriceProduct = $this->mockProduct(['price' => $greaterPrice]);
+        //Test price less than filter
+        $response = $this->jsonAuthorized('GET', route('api.product.search'), ['fplt' => $priceMedian]);
+        $response->assertStatus(200)
+            ->assertJson([
+                'products' => [$lessPriceProduct->toArray()]
+            ]);
+        //Test price greater than
+        $response = $this->jsonAuthorized('GET', route('api.product.search'), ['fpgt' => $priceMedian]);
+        $response->assertStatus(200)
+            ->assertJson([
+                'products' => [$greaterPriceProduct->toArray()]
+            ]);
+        //Test days from adding less than
+        $response = $this->jsonAuthorized('GET', route('api.product.search'), ['ffcd' => 2]);
+        $response->assertStatus(200)
+            ->assertJson([
+                'products' => [$greaterPriceProduct->toArray()]
+            ]);
+
+
+    }
     /**
      * @param array $attr
      * @return Product

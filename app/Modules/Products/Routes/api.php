@@ -8,7 +8,7 @@ $this->group([
     'prefix' => 'products',
 ], function () {
     $this->get('/popular', 'ProductController@popular');
-    $this->get('/search', 'ProductController@customerSearch');
+    $this->get('/search', 'ProductController@customerSearch')->name('api.product.search');
     $this->get('/get/{id}', 'ProductController@show')->name('api.product.show');
 });
 
