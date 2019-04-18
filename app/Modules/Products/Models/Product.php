@@ -23,6 +23,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Laratrust\Contracts\Ownable;
 
@@ -282,6 +283,30 @@ class Product extends Model implements Ownable
                 return $query->orderBy('price', 'desc');
             case ProductOrdersEnum::PRICE_LOWEST:
                 return $query->orderBy('price');
+            case ProductOrdersEnum::RATING_HIGHEST:
+                return $query->leftJoin('product_reviews', function($join) {
+                    $join->on(
+                        'product_reviews.product_id',
+                        '=',
+                        'products.id');
+                    $join->where('product_reviews.status', '=', 'active');
+                }
+                )->select([
+                    'products.*',
+                    DB::raw('COALESCE(AVG(product_reviews.rating), 0) as rating'),
+                ])->groupBy('products.id')->orderBy('rating', 'desc');
+            case ProductOrdersEnum::RATING_LOWEST:
+                return $query->leftJoin('product_reviews', function($join) {
+                    $join->on(
+                        'product_reviews.product_id',
+                        '=',
+                        'products.id');
+                    $join->where('product_reviews.status', '=', 'active');
+                }
+                )->select([
+                    'products.*',
+                    DB::raw('COALESCE(AVG(product_reviews.rating), 0) as rating'),
+                ])->groupBy('products.id')->orderBy('rating');
         }
     }
 
