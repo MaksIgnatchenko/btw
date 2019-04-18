@@ -93,7 +93,7 @@ HTTP/1.1 200 OK
 @apiParam {Integer} ffcd Optional. Filter <b>Days from adding less than</b>
 @apiParam {Decimal} fplt Optional. Filter <b>Price less than</b>
 @apiParam {Decimal} fpgt Optional. Filter <b>Price greater than</b>
-@apiParam {String} order Optional. Available values: <code>lowest_price</code>, <code>highest_price</code>
+@apiParam {String} order Optional. Available values: <code>lowest_price</code>, <code>highest_price</code>, <code>lowest_rating</code>, <code>highest_rating</code>,
 @apiParam {Array} category[] Optional. Category IDs. One root category or many final categories can be set
 
 @apiSuccessExample Success-Response:
