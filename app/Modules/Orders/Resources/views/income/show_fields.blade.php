@@ -21,7 +21,7 @@
                 {!! $product->price !!} USD
             </p>
             <p>
-                {!! Form::label('delivery_price', 'Delivery price:') !!}
+                {!! Form::label('delivery_price', 'Shipping price:') !!}
                 {!! $product->delivery_price !!} USD
             </p>
             <p>
