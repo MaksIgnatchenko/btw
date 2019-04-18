@@ -15,6 +15,9 @@ trait ComputedRatingTrait
      */
     public function getRatingAttribute()
     {
+        if (isset($this->attributes['rating'])) {
+           return round($this->attributes['rating'], 1);
+        }
         $merchantReviews = $this->reviews()->active()->get(['rating']);
 
         if (1 > $merchantReviews->count()) {
