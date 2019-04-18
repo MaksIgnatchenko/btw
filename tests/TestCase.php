@@ -11,7 +11,7 @@ abstract class TestCase extends BaseTestCase
 {
     use CreatesApplication;
     use RefreshDatabase;
-//    use DatabaseTransactions;
+    //use DatabaseTransactions;
 
 
     protected function requestAuthorized(string $method, string $url, array $attr = [], $files = [], array $headers = [], string $token = null)

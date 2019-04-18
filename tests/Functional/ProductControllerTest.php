@@ -3,11 +3,9 @@
 
 use App\Modules\Categories\Models\Category;
 use App\Modules\Products\Models\Product;
-use App\Modules\Users\Customer\Models\Customer;
 use App\Modules\Users\Merchant\Models\Merchant;
 use App\Modules\Users\Merchant\Models\Store;
 use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\Log;
 use Tests\TestCase;
 
 /**
@@ -31,50 +29,28 @@ class ProductControllerTest extends TestCase
         ]);
     }
 
-
-
     /**
      * @test
+     * @dataProvider customerSearchProvider
      */
-    public function customerSearch()
+    public function customerSearch(array $input, array $expected)
     {
-        $lessPrice = 50;
-        $priceMedian = 100;
-        $greaterPrice = 150;
-        $lessPriceProduct = $this->mockProduct([
-            'price' => $lessPrice,
-            'created_at' => Carbon::now()->subDays(3),
-        ]);
-        $greaterPriceProduct = $this->mockProduct(['price' => $greaterPrice]);
-        //Test price less than filter
-        $response = $this->jsonAuthorized('GET', route('api.product.search'), ['fplt' => $priceMedian]);
-        $response->assertStatus(200)
-            ->assertJson([
-                'products' => [$lessPriceProduct->toArray()]
-            ]);
-        //Test price greater than
-        $response = $this->jsonAuthorized('GET', route('api.product.search'), ['fpgt' => $priceMedian]);
-        $response->assertStatus(200)
-            ->assertJson([
-                'products' => [$greaterPriceProduct->toArray()]
-            ]);
-        //Test days from adding less than
-        $response = $this->jsonAuthorized('GET', route('api.product.search'), ['ffcd' => 2]);
-        $response->assertStatus(200)
-            ->assertJson([
-                'products' => [$greaterPriceProduct->toArray()]
-            ]);
+        $product = $this->mockProduct($input['product']);
 
-
+        $response = $this->jsonAuthorized('GET', route('api.product.search'), $input['request']);
+        $response->assertStatus(200)
+            ->assertJson($expected);
     }
+
+
+
     /**
      * @param array $attr
      * @return Product
      */
     public function mockProduct(array $attr = [])
     {
-        $merchant = factory(Merchant::class)->create();
-
+        $merchant = factory(App\Modules\Users\Merchant\Models\Merchant::class)->create();
         $store = factory(Store::class)->create([
             'merchant_id' => $merchant->id,
         ]);
@@ -87,5 +63,88 @@ class ProductControllerTest extends TestCase
         return factory(Product::class)->create($attr);
     }
 
-    
+    /**
+     * @return array
+     */
+    public function customerSearchProvider()
+    {
+        $lessPrice = 50;
+        $greaterPrice = 150;
+
+        return [
+            'fplt' => [
+              'input' => [
+                  'product' => [
+                      'price' => $lessPrice,
+                  ],
+                  'request' => [
+                      'fplt' => $lessPrice + 1,
+                  ]
+
+              ],
+               'expected' => [
+                       'products' => [
+                           [
+                               'price' => $lessPrice
+                           ]
+                       ]
+               ]
+            ],
+            'fpgt' => [
+                'input' => [
+                    'product' => [
+                        'price' => $greaterPrice,
+                    ],
+                    'request' => [
+                        'fpgt' => $greaterPrice - 1,
+                    ]
+
+                ],
+                'expected' => [
+                    'products' => [
+                        [
+                            'price' => $greaterPrice
+                        ]
+                    ]
+                ]
+            ],
+            'ffcd 0' => [
+                'input' => [
+                    'product' => [
+                        'price' => $greaterPrice,
+                        'created_at' => Carbon::now()->subDays(3)
+                    ],
+                    'request' => [
+                        'ffcd' => 1,
+                    ]
+
+                ],
+                'expected' => [
+                    'products' => [
+
+                    ]
+                ]
+            ],
+            'ffcd 1' => [
+                'input' => [
+                    'product' => [
+                        'price' => $greaterPrice,
+                        'created_at' => Carbon::now()->subDays(3)
+                    ],
+                    'request' => [
+                        'ffcd' => 4,
+                    ]
+
+                ],
+                'expected' => [
+                    'products' => [
+                        [
+                            'price' => $greaterPrice,
+                            'created_at' => Carbon::now()->subDays(3),
+                        ]
+                    ]
+                ]
+            ],
+        ];
+    }
 }

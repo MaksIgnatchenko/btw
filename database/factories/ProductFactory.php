@@ -31,6 +31,7 @@ $factory->define(App\Modules\Products\Models\Product::class, function (Faker $fa
         'main_image' => 'no-image.png',
         'description' => $faker->text(200),
         'status' => 'active',
+        'purchases_count' => 0,
         //category_id and store_id need to be provided in factory call
     ];
 });
