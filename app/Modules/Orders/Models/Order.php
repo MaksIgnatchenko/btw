@@ -20,6 +20,8 @@ use App\Modules\Products\Helpers\ImagesPathHelper;
 
 /**
  * @property int id
+ * @property \stdClass product
+ * @property int quantity
  */
 class Order extends Model
 {

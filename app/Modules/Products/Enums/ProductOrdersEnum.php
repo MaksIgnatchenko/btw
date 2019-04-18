@@ -9,6 +9,8 @@ class ProductOrdersEnum
 {
     public const PRICE_LOWEST = 'lowest_price';
     public const PRICE_HIGHEST = 'highest_price';
+    public const RATING_LOWEST = 'lowest_rating';
+    public const RATING_HIGHEST = 'highest_rating';
 
     /**
      * @return array
@@ -18,6 +20,8 @@ class ProductOrdersEnum
         return [
             self::PRICE_LOWEST,
             self::PRICE_HIGHEST,
+            self::RATING_LOWEST,
+            self::RATING_HIGHEST,
         ];
     }
 }

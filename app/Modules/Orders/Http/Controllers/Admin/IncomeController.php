@@ -4,6 +4,7 @@ namespace App\Modules\Orders\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Modules\Orders\DataTables\IncomeDataTable;
+use App\Modules\Orders\Events\OrderClosedEvent;
 use App\Modules\Orders\Models\Order;
 use App\Modules\Orders\Repositories\OrderRepository;
 use App\Modules\Orders\Requests\UpdateOrderRequest;
@@ -85,6 +86,11 @@ class IncomeController extends Controller
     public function update(Order $order, UpdateOrderRequest $request): RedirectResponse
     {
         $this->orderRepository->update(['status' => $request->get('status')], $order->id);
+        $order->refresh();
+
+        if ('closed' === $order->status) {
+           event(new OrderClosedEvent($order));
+        }
 
         Flash::success('Order updated successfully.');
 

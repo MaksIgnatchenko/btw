@@ -32,7 +32,7 @@ return [
         'purchase_date' => 'Purchase date',
         'quantity' => 'Quantity',
         'amount' => 'Amount',
-        'delivery_price' => 'Delivery price',
+        'delivery_price' => 'Shipping price',
         'status' => 'Status',
         'change_status_description' => '«Shipped» - You can mark an order as shipped after you transfer it to the customer through the shipping service.',
         'enter_tracking_number' => 'Enter tracking number',

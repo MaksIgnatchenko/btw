@@ -5,6 +5,7 @@
 
 namespace App\Modules\Orders\Providers;
 
+use App\Modules\Orders\Listener\OrderClosedSubscriber;
 use App\Modules\Orders\Subscribers\CompletedTransactionOrdersSubscriber;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider;
 
@@ -17,5 +18,6 @@ class OrderEventServiceProvider extends EventServiceProvider
      */
     protected $subscribe = [
         CompletedTransactionOrdersSubscriber::class,
+        OrderClosedSubscriber::class,
     ];
 }
