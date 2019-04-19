@@ -534,6 +534,7 @@ class Product extends Model implements Ownable
      */
     public function getPurchasesCountAttribute() : int
     {
+
         $multipliedCount = $this->attributes['purchases_count'] * self::PURCHASES_MULTIPLIER; // Multiply count
 
         if (100 < $multipliedCount) {

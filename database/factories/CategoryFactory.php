@@ -19,7 +19,7 @@ use Faker\Generator as Faker;
 $factory->define(App\Modules\Categories\Models\Category::class, function (Faker $faker) {
     return [
         'name' => $faker->words(rand(1,4), true),
-        'is_final' => 0,
+        'is_final' => 1,
         'icon' => 'no-icon.png',
         'attributes' => json_encode(['color' => [
             'type' => 'text',

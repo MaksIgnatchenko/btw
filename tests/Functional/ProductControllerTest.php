@@ -2,9 +2,11 @@
 
 
 use App\Modules\Categories\Models\Category;
+use App\Modules\Products\Enums\ProductOrdersEnum;
 use App\Modules\Products\Models\Product;
 use App\Modules\Users\Merchant\Models\Merchant;
 use App\Modules\Users\Merchant\Models\Store;
+use Illuminate\Foundation\Testing\RefreshDatabaseState;
 use Illuminate\Support\Carbon;
 use Tests\TestCase;
 
@@ -19,11 +21,11 @@ class ProductControllerTest extends TestCase
     /**
      * @test
      */
-    public function show()
+    public function showPositive()
     {
-        $product = $this->mockProduct();
+        $product = $this->mockProduct()[0];
         $this->assertDatabaseHas('products', ['id' => $product->id]);
-        $response = $this->jsonAuthorized('GET', route('api.product.show', ['id' => $product->id]));
+        $response = $this->jsonAuthorized('GET', route('api.products.show', ['id' => $product->id]));
         $response->assertStatus(200)->assertJson([
             'product' => $product->toArray()
         ]);
@@ -31,37 +33,43 @@ class ProductControllerTest extends TestCase
 
     /**
      * @test
-     * @dataProvider customerSearchProvider
      */
-    public function customerSearch(array $input, array $expected)
+    public function showNegative()
     {
-        $product = $this->mockProduct($input['product']);
+        $product = $this->mockProduct()[0];
+        $this->assertDatabaseHas('products', ['id' => $product->id]);
+        $response = $this->jsonAuthorized('GET', route('api.products.show', ['id' => $product->id + 1]));
+        $response->assertStatus(404);
+    }
 
-        $response = $this->jsonAuthorized('GET', route('api.product.search'), $input['request']);
+    /**
+     * @test
+     */
+    public function popular()
+    {
+        $products = $this->mockProduct([], 5);
+        $response = $this->jsonAuthorized('GET', route('api.products.popular'));
+        $response->assertStatus(200)
+            ->assertJson([
+                'products' => $products->toArray()
+            ]);
+    }
+    /**
+     * @test
+     * @dataProvider customerSearchProvider
+     * @param array $input
+     * @param array $expected
+     */
+    public function customerSearchPositive(array $input, array $expected)
+    {
+        $product = $this->mockProduct($input['product'])[0];
+        $response = $this->jsonAuthorized('GET', route('api.products.search'), $input['request']);
+        if($response->getStatusCode() !== 200)
+            dd($input, $expected, $response->getContent());
         $response->assertStatus(200)
             ->assertJson($expected);
     }
 
-
-
-    /**
-     * @param array $attr
-     * @return Product
-     */
-    public function mockProduct(array $attr = [])
-    {
-        $merchant = factory(App\Modules\Users\Merchant\Models\Merchant::class)->create();
-        $store = factory(Store::class)->create([
-            'merchant_id' => $merchant->id,
-        ]);
-        $category = factory(Category::class)->create();
-
-        $attr = array_merge($attr, [
-            'store_id' => $store->id,
-            'category_id' => $category->id,
-        ]);
-        return factory(Product::class)->create($attr);
-    }
 
     /**
      * @return array
@@ -139,6 +147,70 @@ class ProductControllerTest extends TestCase
                 'expected' => [
                     'products' => [
                         [
+                            'price' => $greaterPrice,
+                            'created_at' => Carbon::now()->subDays(3),
+                        ]
+                    ]
+                ]
+            ],
+            'category ids' => [
+                'input' => [
+                    'product' => [
+                        'price' => $greaterPrice,
+                        'created_at' => Carbon::now()->subDays(3),
+                        'category_id' => 8,
+                    ],
+                    'request' => [
+                        'category' => [8],
+                    ]
+
+                ],
+                'expected' => [
+                    'products' => [
+                        [
+                            'price' => $greaterPrice,
+                            'created_at' => Carbon::now()->subDays(3),
+                            'category_id' => 8,
+                        ]
+                    ]
+                ]
+            ],
+            'order' => [
+                'input' => [
+                    'product' => [
+                        'price' => $greaterPrice,
+                        'created_at' => Carbon::now()->subDays(3)
+                    ],
+                    'request' => [
+                        'order' => ProductOrdersEnum::RATING_LOWEST,
+                    ]
+
+                ],
+                'expected' => [
+                    'products' => [
+                        [
+                            'price' => $greaterPrice,
+                            'created_at' => Carbon::now()->subDays(3),
+                        ]
+                    ]
+                ]
+            ],
+            'keywords' => [
+                'input' => [
+                    'product' => [
+                        'name' => 'Test product',
+                        'price' => $greaterPrice,
+                        'created_at' => Carbon::now()->subDays(3),
+                    ],
+                    'request' => [
+                        'keyword' => 'test',
+                    ]
+
+                ],
+                'expected' => [
+                    'products' => [
+                        [
+                            'name' => 'Test product',
                             'price' => $greaterPrice,
                             'created_at' => Carbon::now()->subDays(3),
                         ]
