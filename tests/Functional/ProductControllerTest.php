@@ -108,7 +108,7 @@ class ProductControllerTest extends TestCase
                     ]
                 ]
             ],
-            'ffcd 0' => [
+            'ffcd empty result' => [
                 'input' => [
                     'product' => [
                         'price' => $greaterPrice,
@@ -125,7 +125,7 @@ class ProductControllerTest extends TestCase
                     ]
                 ]
             ],
-            'ffcd 1' => [
+            'ffcd with product' => [
                 'input' => [
                     'product' => [
                         'price' => $greaterPrice,
