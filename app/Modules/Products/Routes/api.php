@@ -27,6 +27,6 @@ $this->group([
     'middleware' => ['auth:customer', 'active'],
     'prefix' => 'transaction',
 ], function () {
-    $this->post('/', 'TransactionController@create');
+    $this->post('/', 'TransactionController@create')->name('api.transaction.create');
     $this->get('/token', 'TransactionController@generateToken')->name('transaction.token');
 });

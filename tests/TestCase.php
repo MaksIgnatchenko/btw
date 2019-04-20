@@ -66,11 +66,15 @@ abstract class TestCase extends BaseTestCase
         $files = $this->extractFilesFromDataArray($data);
         $content = json_encode($data);
 
+        if (null === $token) {
+            $token = $this->apiAuthToken();
+        }
+
         $headers = array_merge([
             'CONTENT_LENGTH' => mb_strlen($content, '8bit'),
             'CONTENT_TYPE' => 'application/json',
             'Accept' => 'application/json',
-            'Authorization' => "Bearer {$this->apiAuthToken()}"
+            'Authorization' => "Bearer {$token}"
         ], $headers);
         return $this->call(
             $method, $url, [], [], $files, $this->transformHeadersToServerVars($headers), $content
