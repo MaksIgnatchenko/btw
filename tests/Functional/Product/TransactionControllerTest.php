@@ -53,18 +53,19 @@ class TransactionControllerTest extends TestCase
 
     /**
      * @dataProvider createProvider
+     * @param $fixture
+     * @param $expected
      */
     public function testCreate($fixture, $expected)
     {
         $response = $this->jsonAuthorized('POST', route('api.transaction.create'), $fixture);
-
-
+        
         $this->assertDatabaseHas('transactions', $expected['row']);
         $response->assertStatus($expected['response']['status'])->assertJson($expected['response']['json']);
     }
 
 
-    public function createProvider()
+    public function createProvider() : array
     {
         return [
             'positive set' => [

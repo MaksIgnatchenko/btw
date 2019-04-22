@@ -8,6 +8,10 @@ namespace Tests\Functional;
 use App\Modules\Products\Models\Cart;
 use Tests\TestCase;
 
+/**
+ * Class CartControllerTest
+ * @package Tests\Functional
+ */
 class CartControllerTest extends TestCase
 {
 
@@ -151,6 +155,9 @@ class CartControllerTest extends TestCase
         ]);
     }
 
+    /**
+     * @throws \Exception
+     */
     public function testGetAll()
     {
         $carts = factory(Cart::class, random_int(1, 5))->make([
@@ -165,6 +172,9 @@ class CartControllerTest extends TestCase
             ->assertJson(['cart' => $carts->toArray()]);
     }
 
+    /**
+     * @return array
+     */
     public function updateDataProvider()
     {
         return [

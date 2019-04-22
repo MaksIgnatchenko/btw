@@ -87,8 +87,8 @@ class Handler extends ExceptionHandler
 
         if ($e instanceof HttpException && 403 === $e->getStatusCode()) {
             $merchant = Auth::user();
-            if ($request->ajax()) {
-                return response()->json(['error' => 'Not Allowed', 403]);
+            if ($request->isJson()) {
+                return response()->json(['error' => 'Not Allowed'], 403);
             }
 
             return response()->view('layouts.merchants.403_page', [

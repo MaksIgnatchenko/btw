@@ -6,10 +6,10 @@
 $this->group([
     'prefix' => 'auth',
 ], function () {
-    $this->post('login', 'AuthController@login');
-    $this->post('logout', 'AuthController@logout');
-    $this->post('refresh', 'AuthController@refresh');
-    $this->post('me', 'AuthController@me');
+    $this->post('login', 'AuthController@login')->name('api.customer.login');
+    $this->post('logout', 'AuthController@logout')->name('api.customer.logout');
+    $this->post('refresh', 'AuthController@refresh')->name('api.customer.refresh');
+    $this->post('me', 'AuthController@me')->name('api.customer.me');
     /* --- Uses only as debug for server side social login --- */
     if (\Illuminate\Support\Facades\App::environment(['local'])) {
         $this->get('{service}/login', 'AuthController@redirectToProvider')->where(['service' => '^(facebook|google)$']);
@@ -34,7 +34,7 @@ $this->group([
     $this->delete('remove/{product}', 'WishController@remove');
 });
 
-$this->post('register', 'RegisterController@register');
+$this->post('register', 'RegisterController@register')->name('api.customer.register');
 
 
 $this->group([
