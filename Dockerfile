@@ -57,6 +57,10 @@ RUN docker-php-ext-install mysqli pdo pdo_mysql && docker-php-ext-enable pdo_mys
 
 RUN docker-php-ext-install zip
 
+RUN docker-php-ext-install exif \
+    && docker-php-ext-enable exif
+
+
 #####################################
 # Final Touch:
 #####################################
