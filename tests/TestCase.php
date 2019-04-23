@@ -12,6 +12,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 use Illuminate\Foundation\Testing\TestResponse;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Storage;
 
 /**
  * Class TestCase
@@ -34,7 +35,7 @@ abstract class TestCase extends BaseTestCase
     protected function setUp()
     {
         parent::setUp();
-
+        Storage::fake('public');
         $this->authCustomer = factory(Customer::class)->create();
         $this->authCustomer->deliveryInformation()->create([
             'country' => 'en',

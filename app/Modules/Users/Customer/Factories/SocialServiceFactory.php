@@ -16,19 +16,26 @@ class SocialServiceFactory
 
     /**
      * @param $service
-     * @param $token
-     *
+     * @param SocialServiceDto $socialService
      * @return SocialServiceFacebook|SocialServiceGoogle
      * @throws SocialServiceFactoryException
-     * @throws \Facebook\Exceptions\FacebookSDKException
      */
     public static function getSocialServiceInstance($service, SocialServiceDto $socialService)
     {
         switch ($service) {
             case SocialServiceEnum::SERVICE_FACEBOOK:
-                return new SocialServiceFacebook($socialService->getToken());
+                $service = app(SocialServiceFacebook::class);
+                $service->setData([
+                    'token' => $socialService->getToken()
+                ]);
+                return $service;
             case  SocialServiceEnum::SERVICE_GOOGLE:
-                return new SocialServiceGoogle($socialService->getToken(), $socialService->getDevice());
+                $service = app(SocialServiceGoogle::class);
+                $service->setData([
+                    'token' => $socialService->getToken(),
+                    'device' => $socialService->getDevice(),
+                ]);
+                return $service;
             default:
                 throw new SocialServiceFactoryException("Illegal service name: $service");
         }

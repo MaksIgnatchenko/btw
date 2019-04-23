@@ -8,11 +8,14 @@ namespace App\Modules\Users\Customer\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Modules\Users\Customer\DTO\SocialServiceDto;
 use App\Modules\Users\Customer\Events\CustomerCreatedFromFacebookEvent;
+use App\Modules\Users\Customer\Exceptions\SocialServiceException;
+use App\Modules\Users\Customer\Exceptions\SocialServiceFactoryException;
 use App\Modules\Users\Customer\Factories\SocialServiceFactory;
 use App\Modules\Users\Customer\Helpers\SocialAuthHelper;
 use App\Modules\Users\Customer\Http\Api\Requests\LoginRequest;
 use App\Modules\Users\Customer\Http\Requests\Api\LoginSocialRequest;
 use App\Modules\Users\Customer\Models\Customer;
+use Facebook\Exceptions\FacebookSDKException;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
@@ -127,6 +130,14 @@ class AuthController extends Controller
             ->redirect();
     }
 
+    /**
+     * @param LoginSocialRequest $request
+     * @param $service
+     * @return JsonResponse
+     * @throws SocialServiceException
+     * @throws SocialServiceFactoryException
+     * @throws FacebookSDKException
+     */
     public function socialLogin(LoginSocialRequest $request, $service)
     {
         $socialServiceDto = new SocialServiceDto(

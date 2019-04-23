@@ -7,11 +7,14 @@ namespace Tests\Functional\Customer;
 
 
 use App\Modules\Users\Customer\Models\Customer;
+use App\Modules\Users\Customer\Services\Social\SocialServiceFacebook;
+use App\Modules\Users\Customer\Services\Social\SocialServiceGoogle;
 use Illuminate\Support\Facades\Hash;
 use Tests\TestCase;
 
 class AuthenticationTest extends TestCase
 {
+
     /**
      * @param $fixture
      * @param $expected
@@ -48,9 +51,14 @@ class AuthenticationTest extends TestCase
     public function testLogout()
     {
         $token = $this->apiAuthToken();
-        $response = $this->jsonAuthorized('POST', route('api.customer.logout'), [], [], $token);
+        $response = $this->jsonAuthorized(
+            'POST',
+            route('api.customer.logout'),
+            [], [], $token
+        );
 
-        $response->assertStatus(200)->assertJson(['message' => 'Successfully logged out']);
+        $response->assertStatus(200)
+            ->assertJson(['message' => 'Successfully logged out']);
 
         $this->assertFalse(auth()->guard('customer')->check($token));
     }
@@ -58,10 +66,94 @@ class AuthenticationTest extends TestCase
     public function testRefresh()
     {
         $token = $this->apiAuthToken();
-        $response = $this->jsonAuthorized('POST', route('api.customer.refresh'), [], [], $token);
+        $response = $this->jsonAuthorized('POST',
+            route('api.customer.refresh'),
+            [], [], $token
+        );
 
         $response->assertStatus(200);
 
+    }
+
+    public function testSocialLogin()
+    {
+        $this->mockSocialProviders();
+        $response = $this->jsonAuthorized(
+            'POST',
+            route('api.customer.social.login', ['service' => 'facebook']),
+            ['token' => 'test_token', 'device' => 'android']
+        );
+        $response->assertStatus(200);
+
+        $response = $this->jsonAuthorized(
+            'POST',
+            route('api.customer.social.login', ['service' => 'google']),
+            ['token' => 'test_token', 'device' => 'ios']
+        );
+        $response->assertStatus(200);
+
+    }
+
+    protected function mockSocialProviders(){
+        $this->mockFacebookService();
+        $this->mockGoogleService();
+    }
+
+    protected function mockGoogleService()
+    {
+        $this->app->bind(SocialServiceGoogle::class, function($app) {
+            return new class {
+                public $test = true;
+                public $data = [];
+                public function setData(array $data)
+                {
+                    $this->data = $data;
+                }
+                public function getUserData() : array
+                {
+                    return [
+                        'email' => 'test@email.test',
+                        'first_name' => 'Test',
+                        'last_name' => 'User',
+                        'password' => 'passworD123$',
+                        'picture' => [
+                            'data' => [
+                                'url' => public_path('/img/test/picture.jpeg'),
+                                'is_silhouette' => false,
+                            ]
+                        ]
+                    ];
+                }
+            };
+        });
+    }
+    protected function mockFacebookService()
+    {
+        $this->app->bind(SocialServiceFacebook::class, function($app) {
+            return new class {
+                public $test = true;
+                public $data = [];
+                public function setData(array $data)
+                {
+                    $this->data = $data;
+                }
+                public function getUserData() : array
+                {
+                    return [
+                        'email' => 'test@email.test',
+                        'first_name' => 'Test',
+                        'last_name' => 'User',
+                        'password' => 'passworD123$',
+                        'picture' => [
+                            'data' => [
+                                'url' => public_path('/img/test/picture.jpeg'),
+                                'is_silhouette' => false,
+                            ]
+                        ]
+                    ];
+                }
+            };
+        });
     }
     /**
      * @return array

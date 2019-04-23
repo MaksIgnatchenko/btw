@@ -16,7 +16,7 @@ $this->group([
         $this->get('{service}/callback', 'AuthController@handleProviderCallback');
     }
     /* -------------------------------------------------------- */
-    $this->post('login/{service}', 'AuthController@socialLogin')->where(['service' => '^(facebook|google)$']);
+    $this->post('login/{service}', 'AuthController@socialLogin')->where(['service' => '^(facebook|google)$'])->name('api.customer.social.login');
 });
 
 $this->group([
@@ -29,9 +29,9 @@ $this->group([
 $this->group([
     'prefix' => 'wishlist', 'middleware' => ['auth:customer', 'active'],
 ], function () {
-    $this->get('/', 'WishController@get');
-    $this->post('add/{product}', 'WishController@add');
-    $this->delete('remove/{product}', 'WishController@remove');
+    $this->get('/', 'WishController@get')->name('api.customer.wish.list');
+    $this->post('add/{product}', 'WishController@add')->name('api.customer.wish.add');
+    $this->delete('remove/{product}', 'WishController@remove')->name('api.customer.wish.remove');
 });
 
 $this->post('register', 'RegisterController@register')->name('api.customer.register');
@@ -50,7 +50,7 @@ $this->group([
     'prefix' => 'recently-viewed',
     'middleware' => ['auth:customer', 'active'],
 ], function () {
-    $this->get('/', 'RecentlyViewedController@get');
-    $this->delete('/{product}', 'RecentlyViewedController@remove');
-    $this->delete('/', 'RecentlyViewedController@clear');
+    $this->get('/', 'RecentlyViewedController@get')->name('api.customer.recently-viewed.list');
+    $this->delete('/{product}', 'RecentlyViewedController@remove')->name('api.customer.recently-viewed.remove');
+    $this->delete('/', 'RecentlyViewedController@clear')->name('api.customer.recently-viewed.clear');
 });

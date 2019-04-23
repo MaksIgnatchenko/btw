@@ -42,6 +42,9 @@ js_build:
 phpunit:
   stage: tests
   image: appusdev/docker
+  cache:
+    paths:
+      - vendor/
   script:
     - docker-compose -f docker-compose.yml.test up -d --force-recreate --remove-orphans
     - docker exec wish_php_tests sh ./init_test.sh

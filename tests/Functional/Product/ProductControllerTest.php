@@ -47,7 +47,7 @@ class ProductControllerTest extends TestCase
      */
     public function popular()
     {
-        $products = $this->mockProduct([], 5);
+        $products = $this->mockProduct([], 5)->reverse();
         $response = $this->jsonAuthorized('GET', route('api.products.popular'));
         $response->assertStatus(200)
             ->assertJson([
