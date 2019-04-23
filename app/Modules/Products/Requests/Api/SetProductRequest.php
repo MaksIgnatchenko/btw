@@ -116,12 +116,12 @@ class SetProductRequest extends FormRequest
             $data = $input->getData();
 
             if (!isset($data['local_delivery']) || !isset($data['store_delivery'])) {
-                $validator->errors()->add('local_delivery', 'One of delivery types should be true');
+                $validator->errors()->add('local_delivery', 'One of shipping types should be true');
                 return;
             }
 
             if (false === $data['local_delivery'] && false === $data['store_delivery']) {
-                $validator->errors()->add('local_delivery', 'One of delivery types should be true');
+                $validator->errors()->add('local_delivery', 'One of shipping types should be true');
             }
         });
 
