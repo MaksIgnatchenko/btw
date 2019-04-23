@@ -124,8 +124,8 @@ class ProductImage extends Model
     {
         $image = $this->imageManager->make($image)->orientate()->encode();
 
-        Storage::disk('public')->put($originalPath . '/' . $storeId .'/' . $imageName, $image);
-        Storage::disk('public')->put($thumbnailPath . '/' . $storeId . '/' . $imageName, $thumbnail);
+        Storage::put($originalPath . '/' . $storeId .'/' . $imageName, $image);
+        Storage::put($thumbnailPath . '/' . $storeId . '/' . $imageName, $thumbnail);
     }
 
     /**
