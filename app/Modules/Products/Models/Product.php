@@ -255,7 +255,7 @@ class Product extends Model implements Ownable
      */
     public function scopeActive($query)
     {
-        return $query->where('offer_end', '>', Carbon::now());
+        return $query->where('products.offer_end', '>', Carbon::now());
     }
 
     /**
@@ -517,7 +517,7 @@ class Product extends Model implements Ownable
      */
     public function scopeOfStatus(Builder $query, string $status)
     {
-        return $query->where('status', $status);
+        return $query->where('products.status', $status);
     }
 
     /**
