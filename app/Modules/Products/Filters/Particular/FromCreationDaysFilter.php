@@ -13,7 +13,7 @@ class FromCreationDaysFilter implements ParticularFilterInterface
 {
     public function filter(Builder $builder, $value): Builder
     {
-        return $builder->where('created_at', '>=', Carbon::now()->subDays($value));
+        return $builder->where('products.created_at', '>=', Carbon::now()->subDays($value));
     }
 
 }

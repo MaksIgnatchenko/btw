@@ -12,7 +12,7 @@ class PriceGtFilter implements ParticularFilterInterface
 {
     public function filter(Builder $builder, $value): Builder
     {
-        return $builder->where('price' , '>', $value);
+        return $builder->where('products.price' , '>', $value);
     }
 
 }
