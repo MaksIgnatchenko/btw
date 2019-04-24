@@ -19,7 +19,7 @@ return [
     'create_price' => 'Price',
     'create_delivery_price' => 'Shipping price',
     'create_price_description' => 'Attention! 15% of the item’s price is transferred to the website.',
-    'create_delivery_price_description_1' => 'Please get familiar with delivery system restrictions ',
+    'create_delivery_price_description_1' => 'Please get familiar with shipping system restrictions ',
     'create_delivery_price_description_2' => 'For the accurate shipping price calculation, please check the link: ',
     'create_submit' => 'Create',
     'edit_product_section_title' => 'Edit product',

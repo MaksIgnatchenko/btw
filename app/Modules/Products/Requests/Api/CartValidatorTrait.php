@@ -24,7 +24,7 @@ trait CartValidatorTrait
             $customer = Auth::user();
 
             if (null === $customer->deliveryInformation) {
-                $validator->errors()->add('delivery_information', "No delivery information. Please add before purchasing");
+                $validator->errors()->add('delivery_information', "No shipping information. Please add before purchasing");
             }
 
 

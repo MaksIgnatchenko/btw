@@ -65,7 +65,7 @@ class ProductImage extends Model
      */
     public function createImageThumbnail(UploadedFile $image): Image
     {
-        $thumbnail = $this->imageManager->make($image->path());
+        $thumbnail = $this->imageManager->make($image->path())->orientate();
 
         $thumbnail->resize(
             config('wish.storage.products.image_thumb_width'),
@@ -93,7 +93,6 @@ class ProductImage extends Model
         foreach ($images as $image) {
             $imageName = $image->hashName();
             $imageThumbnail = $this->createImageThumbnail($image);
-
             $this->saveImageWithThumbnail(
                 config('wish.storage.products.gallery_images_path'),
                 config('wish.storage.products.gallery_images_thumb_path'),
@@ -123,8 +122,10 @@ class ProductImage extends Model
      */
     public function saveImageWithThumbnail(string $originalPath, string $thumbnailPath, string $imageName, Image $thumbnail, int $storeId, UploadedFile $image): void
     {
-        Storage::putFileAs($originalPath . '/' . $storeId, $image, $imageName);
-        Storage::disk('public')->put($thumbnailPath . '/' . $storeId . '/' . $imageName, $thumbnail);
+        $image = $this->imageManager->make($image)->orientate()->encode();
+
+        Storage::put($originalPath . '/' . $storeId .'/' . $imageName, $image);
+        Storage::put($thumbnailPath . '/' . $storeId . '/' . $imageName, $thumbnail);
     }
 
     /**

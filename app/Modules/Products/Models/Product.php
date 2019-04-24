@@ -116,7 +116,7 @@ class Product extends Model implements Ownable
         parent::boot();
         if (Auth::user() instanceof Customer) {
             static::addGlobalScope('status', function (Builder $builder) {
-                $builder->where('status', '=', 'active');
+                $builder->where('products.status', '=', 'active');
             });
         }
     }
