@@ -13,7 +13,7 @@ class RecentlyViewedControllerTest extends TestCase
 
     public function testGet()
     {
-        $product = $this->mockProduct()[0];
+        $product = $this->mockProducts()[0];
 
         $this->viewProduct($product);
         $getRecentlyViewed = $this->jsonAuthorized(
@@ -34,7 +34,7 @@ class RecentlyViewedControllerTest extends TestCase
 
     public function testRemove()
     {
-        $product = $this->mockProduct()[0];
+        $product = $this->mockProducts()[0];
 
         $this->viewProduct($product);
 
@@ -62,7 +62,7 @@ class RecentlyViewedControllerTest extends TestCase
 
     public function testClear()
     {
-        $product = $this->mockProduct()[0];
+        $product = $this->mockProducts()[0];
 
         $this->viewProduct($product);
 

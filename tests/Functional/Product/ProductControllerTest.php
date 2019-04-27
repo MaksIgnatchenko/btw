@@ -23,7 +23,7 @@ class ProductControllerTest extends TestCase
      */
     public function showPositive()
     {
-        $product = $this->mockProduct()[0];
+        $product = $this->mockProducts()[0];
         $this->assertDatabaseHas('products', ['id' => $product->id]);
         $response = $this->jsonAuthorized('GET', route('api.products.show', ['id' => $product->id]));
         $response->assertStatus(200)->assertJson([
@@ -36,7 +36,7 @@ class ProductControllerTest extends TestCase
      */
     public function showNegative()
     {
-        $product = $this->mockProduct()[0];
+        $product = $this->mockProducts()[0];
         $this->assertDatabaseHas('products', ['id' => $product->id]);
         $response = $this->jsonAuthorized('GET', route('api.products.show', ['id' => $product->id + 1]));
         $response->assertStatus(404);
@@ -47,7 +47,7 @@ class ProductControllerTest extends TestCase
      */
     public function popular()
     {
-        $products = $this->mockProduct([], 5)->reverse();
+        $products = $this->mockProducts([], 5);
         $response = $this->jsonAuthorized('GET', route('api.products.popular'));
         $response->assertStatus(200)
             ->assertJson([
@@ -62,7 +62,7 @@ class ProductControllerTest extends TestCase
      */
     public function customerSearchPositive(array $input, array $expected)
     {
-        $product = $this->mockProduct($input['product'])[0];
+        $product = $this->mockProducts($input['product'])[0];
         $response = $this->jsonAuthorized('GET', route('api.products.search'), $input['request']);
         if($response->getStatusCode() !== 200)
             dd($input, $expected, $response->getContent());

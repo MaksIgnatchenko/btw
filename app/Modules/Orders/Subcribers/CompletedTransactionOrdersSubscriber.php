@@ -9,6 +9,7 @@ use App\Modules\Orders\Enums\OrderStatusEnum;
 use App\Modules\Orders\Models\Order;
 use App\Modules\Orders\Repositories\OrderRepository;
 use App\Modules\Products\Events\TransactionCompletedEvent;
+use App\Modules\Products\Models\Product;
 use App\Modules\Products\Repositories\ProductRepository;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -51,7 +52,7 @@ class CompletedTransactionOrdersSubscriber
         foreach ($carts as $cart) {
             /** @var Order $order */
             $order = app(Order::class);
-
+            /** @var Product $product */
             $product = $productRepository->find($cart->product_id);
             $merchant = $product->store->merchant;
 
@@ -59,9 +60,7 @@ class CompletedTransactionOrdersSubscriber
                 'transaction_id' => $transaction->id,
                 'customer_id'    => $customer->id,
                 'merchant_id'    => $merchant->id,
-
-                // TODO make it not so ugly
-                'product'  => array_merge($product->toArray(), ['main_image' => $product->getOriginal('main_image')]),
+                'product'  => $product->toArrayWithOrigins(['main_image']),
                 'quantity' => $cart->quantity,
                 'status'   => OrderStatusEnum::IN_PROCESS,
 

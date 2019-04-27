@@ -47,6 +47,8 @@ abstract class TestCase extends BaseTestCase
             'notes' => 'Notes',
             'phone' => '88005553535',
         ]);
+
+        $this->fakeBraintree();
     }
 
     /**
@@ -93,9 +95,7 @@ abstract class TestCase extends BaseTestCase
     {
         $files = $this->extractFilesFromDataArray($data);
         $content = json_encode($data);
-        $headers = $this->transformHeadersToServerVars(
-            $this->addJsonHeaders($headers)
-        );
+        $headers = $this->addJsonHeaders($headers);
         return $this->requestAuthorized(
             $method, $url, [], $files, $headers, $content, $token
         );
@@ -107,7 +107,7 @@ abstract class TestCase extends BaseTestCase
      * @param int $count
      * @return Collection
      */
-    protected function mockProduct(array $attr = [], int $count = 1) : Collection
+    protected function mockProducts(array $attr = [], int $count = 1) : Collection
     {
 
         $merchant = factory(Merchant::class)->create();
@@ -153,4 +153,36 @@ abstract class TestCase extends BaseTestCase
         return array_merge(['Authorization' => "Bearer {$token}"], $headers);
     }
 
+    //bind fake transaction provider instead of braintree
+    public function fakeBraintree()
+    {
+        $this->app->bind(\Braintree_Gateway::class, function($app) {
+            return new class {
+                public function clientToken()
+                {
+                    return new class {
+                        public function generate()
+                        {
+                            return 'test token';
+                        }
+                    };
+                }
+
+                public function transaction()
+                {
+                    return new class {
+                        public function sale($data)
+                        {
+                            $result = new \StdClass;
+                            $result->transaction = new \StdClass;
+                            $result->transaction->id = random_int(1, 999);
+                            $result->message = 'Test message';
+                            $result->success = $data['paymentMethodNonce'] === 'success';
+                            return $result;
+                        }
+                    };
+                }
+            };
+        });
+    }
 }

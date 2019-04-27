@@ -17,7 +17,7 @@ class CartControllerTest extends TestCase
 
     public function testCreatePositive()
     {
-        $productId = $this->mockProduct()[0]->id;
+        $productId = $this->mockProducts()[0]->id;
         $quantity = 5;
 
         $response = $this->jsonAuthorized(
@@ -39,7 +39,7 @@ class CartControllerTest extends TestCase
 
     public function testCreateNegativeCartAlreadyCreated()
     {
-        $productId = $this->mockProduct()[0]->id;
+        $productId = $this->mockProducts()[0]->id;
         $quantity = 5;
         $cart = factory(Cart::class)->create([
             'product_id' => $productId,
@@ -66,7 +66,7 @@ class CartControllerTest extends TestCase
     {
 
         $quantity = 5;
-        $productId = $this->mockProduct(['quantity' => $quantity - 1])[0]->id;
+        $productId = $this->mockProducts(['quantity' => $quantity - 1])[0]->id;
         $response = $this->jsonAuthorized(
             'POST',
             route('api.carts.create'),
@@ -84,7 +84,7 @@ class CartControllerTest extends TestCase
 
     public function testCheck()
     {
-        $productId = $this->mockProduct()[0]->id;
+        $productId = $this->mockProducts()[0]->id;
         $quantity = 5;
 
         $cart = factory(Cart::class)->create([
@@ -110,7 +110,7 @@ class CartControllerTest extends TestCase
      */
     public function testUpdate($productQuantity, $cartQuantity, $updateCartQuantity, $expected)
     {
-        $productId = $this->mockProduct(['quantity' => $productQuantity])[0]->id;
+        $productId = $this->mockProducts(['quantity' => $productQuantity])[0]->id;
         $cart = factory(Cart::class)->create([
             'product_id' => $productId,
             'quantity' => $cartQuantity,
@@ -127,7 +127,7 @@ class CartControllerTest extends TestCase
 
     public function testDelete()
     {
-        $productId = $this->mockProduct()[0]->id;
+        $productId = $this->mockProducts()[0]->id;
         $quantity = 5;
 
         $cart = factory(Cart::class)->create([
@@ -163,7 +163,7 @@ class CartControllerTest extends TestCase
         $carts = factory(Cart::class, random_int(1, 5))->make([
             'customer_id' => $this->authCustomer->id,
         ])->each(function($cart) {
-            $cart->product_id = $this->mockProduct()[0]->id;
+            $cart->product_id = $this->mockProducts()[0]->id;
             $cart->save();
         });
         $response = $this->jsonAuthorized('GET', route('api.carts.get'), [], [], $this->apiAuthToken());

@@ -12,7 +12,7 @@ class WishControllerTest extends TestCase
 {
     public function testAdd()
     {
-        $product = $this->mockProduct()[0];
+        $product = $this->mockProducts()[0];
 
         $response = $this->jsonAuthorized(
             'POST',
@@ -31,7 +31,7 @@ class WishControllerTest extends TestCase
 
     public function testRemove()
     {
-        $product = $this->mockProduct()[0];
+        $product = $this->mockProducts()[0];
 
         $this->addProductToWishList($product);
 
@@ -62,7 +62,7 @@ class WishControllerTest extends TestCase
         if (isset($fixture['product'])) {
             $attr = $fixture['product'];
         }
-        $product = $this->mockProduct($attr)[0];
+        $product = $this->mockProducts($attr)[0];
         $this->addProductToWishList($product);
 
         $response = $this->jsonAuthorized(

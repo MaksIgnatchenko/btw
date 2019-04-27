@@ -41,9 +41,9 @@ $this->group([
     'prefix' => 'profile',
     'middleware' => ['auth:customer', 'active'],
 ], function () {
-    $this->put('/', 'Profile\ProfileController@update');
-    $this->post('/avatar', 'Profile\ProfileController@uploadAvatar');
-    $this->put('/delivery-information', 'Profile\DeliveryInformationController@store');
+    $this->put('/', 'Profile\ProfileController@update')->name('api.customer.profile.update');
+    $this->post('/avatar', 'Profile\ProfileController@uploadAvatar')->name('api.customer.avatar.upload');
+    $this->put('/delivery-information', 'Profile\DeliveryInformationController@store')->name('api.customer.delivery.update');
 });
 
 $this->group([

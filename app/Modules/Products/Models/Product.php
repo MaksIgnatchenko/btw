@@ -542,5 +542,14 @@ class Product extends Model implements Ownable
         }
         return intval($multipliedCount);
     }
+
+    public function toArrayWithOrigins(array $attr = [])
+    {
+        $originals = [];
+        foreach($attr as $attribute) {
+            $originals[$attribute] = $this->getOriginal($attribute);
+        }
+        return array_merge($this->toArray(), $originals);
+    }
 }
 
