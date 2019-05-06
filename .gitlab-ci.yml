@@ -54,6 +54,7 @@ phpunit:
       - ./public/phpunit
     expire_in: 1 days
   only:
+    - develop
     - with-tests
 deploy:
   stage: deploy
