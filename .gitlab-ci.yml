@@ -53,6 +53,7 @@ phpunit:
       - ./storage/logs # for debugging
       - ./public/phpunit
     expire_in: 1 days
+    when: always
   only:
     - develop
     - with-tests

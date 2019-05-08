@@ -10,6 +10,7 @@ use App\Modules\Users\Customer\Models\Customer;
 use App\Modules\Users\Customer\Services\Social\SocialServiceFacebook;
 use App\Modules\Users\Customer\Services\Social\SocialServiceGoogle;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Tests\TestCase;
 
 class AuthenticationTest extends TestCase
@@ -56,7 +57,9 @@ class AuthenticationTest extends TestCase
             route('api.customer.logout'),
             [], [], $token
         );
-
+        if($response->getStatusCode() !== 200) {
+            Log::error($response->getContent());
+        }
         $response->assertStatus(200)
             ->assertJson(['message' => 'Successfully logged out']);
 
