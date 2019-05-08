@@ -9,4 +9,4 @@ composer dump-autoload
 rm -f ./public/storage
 ln -s ../storage/app/public/ ./public/storage
 
-php phpunit.phar -c ./phpunit.xml
+vendor/bin/phpunit -c ./phpunit.xml
