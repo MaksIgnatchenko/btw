@@ -150,7 +150,7 @@ abstract class TestCase extends BaseTestCase
             $token = $this->apiAuthToken();
         }
 
-        return array_merge(['Authorization' => "Bearer {$token}"], $headers);
+        return array_merge(['Authorization' => "Bearer " . $token], $headers);
     }
 
     //bind fake transaction provider instead of braintree
