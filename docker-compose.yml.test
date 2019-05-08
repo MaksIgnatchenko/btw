@@ -1,0 +1,25 @@
+version: '3'
+
+services:
+  test_db:
+    image: "mysql:5.7"
+    ports:
+      - "3306:3306"
+    tmpfs: /var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: test
+      MYSQL_PASSWORD: test
+      MYSQL_DATABASE: test
+    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_general_ci --init-connect='SET NAMES utf8mb4;'
+  web:
+    build: .
+    container_name: wish_php_tests
+    volumes:
+      - ./:/var/www
+    environment:
+      ENV: production
+    depends_on:
+      - test_db
+    links:
+        - test_db:database_host

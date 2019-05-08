@@ -7,26 +7,26 @@ $this->group([
     'middleware' => ['auth:customer', 'active'],
     'prefix' => 'products',
 ], function () {
-    $this->get('/popular', 'ProductController@popular');
-    $this->get('/search', 'ProductController@customerSearch');
-    $this->get('/get/{id}', 'ProductController@show');
+    $this->get('/popular', 'ProductController@popular')->name('api.products.popular');
+    $this->get('/search', 'ProductController@customerSearch')->name('api.products.search');
+    $this->get('/get/{id}', 'ProductController@show')->name('api.products.show');
 });
 
 $this->group([
     'middleware' => ['auth:customer', 'active'],
     'prefix' => 'cart',
 ], function () {
-    $this->get('/', 'CartController@getAll');
-    $this->post('/', 'CartController@create');
-    $this->put('/{id}', 'CartController@update');
-    $this->delete('/{id}', 'CartController@delete');
-    $this->get('/check', 'CartController@check');
+    $this->get('/', 'CartController@getAll')->name('api.carts.get');
+    $this->post('/', 'CartController@create')->name('api.carts.create');
+    $this->put('/{id}', 'CartController@update')->name('api.carts.update');
+    $this->delete('/{id}', 'CartController@delete')->name('api.carts.delete');
+    $this->get('/check', 'CartController@check')->name('api.carts.check');
 });
 
 $this->group([
     'middleware' => ['auth:customer', 'active'],
     'prefix' => 'transaction',
 ], function () {
-    $this->post('/', 'TransactionController@create');
+    $this->post('/', 'TransactionController@create')->name('api.transaction.create');
     $this->get('/token', 'TransactionController@generateToken')->name('transaction.token');
 });

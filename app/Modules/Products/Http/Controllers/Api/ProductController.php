@@ -114,12 +114,6 @@ class ProductController extends Controller
         $product = $this->productRepository->getById((int)$id);
         $product->category->setVisible(['id', 'name']);
 
-        if (null === $product) {
-            return response()->json([
-                'product' => new \stdClass(),
-            ]);
-        }
-
         event(new CustomerWatchedProductEvent($this->customer, $product));
 
         return response()->json([

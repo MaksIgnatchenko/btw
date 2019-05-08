@@ -534,12 +534,22 @@ class Product extends Model implements Ownable
      */
     public function getPurchasesCountAttribute() : int
     {
+
         $multipliedCount = $this->attributes['purchases_count'] * self::PURCHASES_MULTIPLIER; // Multiply count
 
         if (100 < $multipliedCount) {
             $multipliedCount = floor($multipliedCount / 100) * 100 + 100; // show only hundreds
         }
         return intval($multipliedCount);
+    }
+
+    public function toArrayWithOrigins(array $attr = [])
+    {
+        $originals = [];
+        foreach($attr as $attribute) {
+            $originals[$attribute] = $this->getOriginal($attribute);
+        }
+        return array_merge($this->toArray(), $originals);
     }
 }
 

@@ -23,10 +23,8 @@ class SocialServiceFacebook extends SocialServiceAbstract implements SocialServi
      *
      * @throws \Facebook\Exceptions\FacebookSDKException
      */
-    public function __construct($token)
+    public function __construct()
     {
-        parent::__construct($token);
-
         $this->credentials = [
             'appId' => config('services.facebook.client_id'),
             'appSecret' => config('services.facebook.client_secret'),
@@ -49,4 +47,5 @@ class SocialServiceFacebook extends SocialServiceAbstract implements SocialServi
 
         return $response->getDecodedBody();
     }
+
 }

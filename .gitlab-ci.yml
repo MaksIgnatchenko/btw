@@ -1,8 +1,14 @@
 stages:
+  - tests
   - build
   - js_build
   - deploy
-
+variables:
+  MYSQL_ROOT_PASSWORD: root
+  MYSQL_USER: homestead
+  MYSQL_PASSWORD: secret
+  MYSQL_DATABASE: homestead
+  DB_HOST: mysql
 build:
   stage: build
   image: composer
@@ -18,7 +24,7 @@ build:
     expire_in: 1h
   only:
     - develop
-
+    - with-tests
 js_build:
   stage: js_build
   image: node:8.11.2
@@ -32,7 +38,25 @@ js_build:
     expire_in: 1h
   only:
     - develop
-
+    - with-tests
+phpunit:
+  stage: tests
+  image: appusdev/docker
+  cache:
+    paths:
+      - vendor/
+  script:
+    - docker-compose -f docker-compose.yml.test up -d --force-recreate --remove-orphans
+    - docker exec wish_php_tests sh ./init_test.sh
+  artifacts:
+    paths:
+      - ./storage/logs # for debugging
+      - ./public/phpunit
+    expire_in: 1 days
+    when: always
+  only:
+    - develop
+    - with-tests
 deploy:
   stage: deploy
   image: dinofizz/rsync-ssh

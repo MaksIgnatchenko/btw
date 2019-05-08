@@ -23,24 +23,6 @@ class SocialServiceGoogle extends SocialServiceAbstract implements SocialService
 
     protected $client;
 
-    public function __construct($token, $device)
-    {
-        parent::__construct($token);
-
-        $this->device = $device;
-
-        $clientID =
-            (SocialServiceDeviceEnum::DEVICE_ANDROID === $this->device) ?
-                config('services.google.client_id') :
-                config('services.google.client_id_ios');
-
-        $this->credentials = [
-            'client_id' => $clientID,
-        ];
-
-        $this->client = new \Google_Client($this->credentials);
-    }
-
     /**
      * @return array
      * @throws SocialServiceException
@@ -55,4 +37,30 @@ class SocialServiceGoogle extends SocialServiceAbstract implements SocialService
 
         throw new SocialServiceGoogleException('Token ID verification failed');
     }
+
+    public function setData(array $data)
+    {
+        parent::setData($data);
+
+        $this->device = $data['device'];
+
+        $clientID =
+            (SocialServiceDeviceEnum::DEVICE_ANDROID === $this->device) ?
+                config('services.google.client_id') :
+                config('services.google.client_id_ios');
+
+        $this->setClientId($clientID);
+
+    }
+
+    protected function setClientId($clientId)
+    {
+        $this->credentials = [
+            'client_id' => $clientId,
+        ];
+
+        $this->client = new \Google_Client($this->credentials);
+    }
+
+
 }
