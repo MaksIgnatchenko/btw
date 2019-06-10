@@ -70,7 +70,7 @@
         </div>
 
         <footer class="footer">
-            {{date('Y')}} Wish
+            {{date('Y')}} SkyCart
         </footer>
 
     </div>
