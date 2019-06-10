@@ -19,4 +19,9 @@ class MerchantRepository extends BaseRepository
     {
         return Merchant::class;
     }
+
+    public function getAllCount() : int
+    {
+        return $this->model()::count();
+    }
 }

@@ -64,6 +64,13 @@ class Order extends Model
     ];
 
     /**
+     * The table associated with the model.
+     *
+     * @var string
+     */
+    protected $table = 'orders';
+
+    /**
      * @param int $merchantId
      *
      * @return Collection
@@ -179,6 +186,14 @@ class Order extends Model
             'orders.*',
             DB::raw('TRUNCATE((product->\'$."price"\' + product->\'$."delivery_price"\') * quantity, 2) as amount'),
         ]);
+    }
+
+    /**
+     * @return float
+     */
+    public function getTotalAmount() : float
+    {
+        return DB::select('SELECT SUM(TRUNCATE((product->\'$."price"\' + product->\'$."delivery_price"\') * quantity, 2)) as amount from orders')[0]->amount ?? 0;
     }
 
     /**

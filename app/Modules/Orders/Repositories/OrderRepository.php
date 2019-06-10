@@ -12,6 +12,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 use InfyOm\Generator\Common\BaseRepository;
 
 class OrderRepository extends BaseRepository
@@ -313,5 +314,23 @@ class OrderRepository extends BaseRepository
                 (new Carbon($dateDto->getDateTo()))->addDay(),
             ])
             ->get();
+    }
+
+    /**
+     * @return int
+     */
+    public function getAllCount() : int
+    {
+        return $this->model::count();
+    }
+
+
+
+    /**
+     * @return float
+     */
+    public function getTotalIncome() : float
+    {
+        return $this->model->getTotalAmount();
     }
 }
