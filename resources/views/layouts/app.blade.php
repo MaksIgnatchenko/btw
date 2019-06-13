@@ -98,7 +98,7 @@
 <script src="{{ URL::asset('js/admin-change-password.js') }}"></script>
 <script src="{{ URL::asset('js/menu.js') }}"></script>
 <script src="{{ URL::asset('js/AdminLte/jquery-jvectormap-2.0.3.min.js') }}"></script>
-<script src="{{ URL::asset('js/AdminLte/jquery-jvectormap-world-mill.js') }}"></script>
+<script src="{{ URL::asset('js/AdminLte/jquery-jvectormap-us-aea.js') }}"></script>
 
 <link rel="stylesheet" href="{{ URL::asset('css/app.css') }}"/>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jvectormap/2.0.4/jquery-jvectormap.css"/>

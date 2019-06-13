@@ -13,6 +13,11 @@ class ImprovedHomeStatisticDto extends HomeStatisticDto
     protected $ordersCount;
 
     /**
+     * @var array
+     */
+    protected $ordersCountByRegions;
+
+    /**
      * @param int $value
      * @return ImprovedHomeStatisticDto
      */
@@ -28,5 +33,23 @@ class ImprovedHomeStatisticDto extends HomeStatisticDto
     public function getOrdersCount() : int
     {
         return $this->ordersCount;
+    }
+
+    /**
+     * @param array $regions
+     * @return ImprovedHomeStatisticDto
+     */
+    public function setOrdersCountByRegions(array $regions) : self
+    {
+        $this->ordersCountByRegions = $regions;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getOrdersCountByRegions() : string
+    {
+        return json_encode($this->ordersCountByRegions);
     }
 }

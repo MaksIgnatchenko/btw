@@ -47,6 +47,50 @@
                 </div>
             </div>
         </div>
+
+
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="card m-b-20">
+                <div class="card-block">
+
+                    <h4 class="mt-0 header-title"><i class="fa fa-globe-stand"></i>Orders map</h4>
+
+                    <div id="map" style="height: 400px">
+                    </div>
+
+                </div>
+            </div>
+        </div> <!-- end col -->
     </div>
+
+    <script>
+        $(function () {
+
+            var regionsStatistic = {!! $statistic->getOrdersCountByRegions() !!};
+
+            map = new jvm.Map({
+                map: 'us_aea',
+                container: $('#map'),
+                backgroundColor: 'white',
+                series: {
+                    regions: [{
+                        attribute: 'fill',
+                        values: regionsStatistic,
+                        scale: ['#C8EEFF', '#0071A4'],
+                        normalizeFunction: 'linear'
+                    }]
+                },
+                regionStyle: {
+                    initial: { fill: '#d2d6de' },
+                    hover: { fill: '#A0D1DC' }
+                },
+                onRegionTipShow: function(e, el, code){
+                    let value = code in regionsStatistic ? regionsStatistic[code] : 0;
+                    el.html(el.html()+' (Orders - ' + value + ')');
+                }
+            });
+        })
+    </script>
 
 @endsection

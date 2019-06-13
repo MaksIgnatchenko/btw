@@ -324,13 +324,29 @@ class OrderRepository extends BaseRepository
         return $this->model::count();
     }
 
-
-
     /**
      * @return float
      */
     public function getTotalIncome() : float
     {
         return $this->model->getTotalAmount();
+    }
+
+    /**
+     * @param string $countryName
+     * @return array
+     */
+    public function getOrdersCountByStatesForCountry(string $countryName) : array
+    {
+        return $this->model::query()
+            ->select([
+                DB::raw('count(*) as totalOrders'),
+                'customer_delivery_information.state'
+            ])
+            ->leftJoin('customer_delivery_information', 'orders.customer_id', '=', 'customer_delivery_information.customer_id')
+            ->where('customer_delivery_information.country', $countryName)
+            ->groupBy('state')
+            ->pluck('totalOrders', 'state')
+            ->toArray();
     }
 }

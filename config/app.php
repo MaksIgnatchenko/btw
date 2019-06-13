@@ -1,5 +1,6 @@
 <?php
 
+
 return [
 
     /*
@@ -213,6 +214,7 @@ return [
         App\Modules\Reviews\Providers\ReviewWebRoutesServiceProvider::class,
         App\Modules\Reviews\Providers\ReviewServiceProvider::class,
         App\Modules\Reviews\Providers\ReviewAdminRoutesServiceProvider::class,
+        App\Modules\Users\Admin\Providers\OrdersCountByRegionsProvider::class,
     ],
 
     /*
