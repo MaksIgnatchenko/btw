@@ -69,7 +69,7 @@ class OrderRepository extends BaseRepository
     {
         return Order::where([
             'customer_id' => $customerId,
-            'status'      => OrderStatusEnum::SHIPPED,
+            'status' => OrderStatusEnum::SHIPPED,
         ])
             ->offset($offset)
             ->limit(Order::PAGE_LIMIT)
@@ -86,7 +86,7 @@ class OrderRepository extends BaseRepository
     {
         return Order::where([
             'customer_id' => $customerId,
-            'status'      => OrderStatusEnum::IN_PROCESS,
+            'status' => OrderStatusEnum::IN_PROCESS,
         ])
             ->offset($offset)
             ->limit(Order::PAGE_LIMIT)
@@ -103,7 +103,7 @@ class OrderRepository extends BaseRepository
     {
         return Order::where([
             'customer_id' => $customerId,
-            'status'      => OrderStatusEnum::DELIVERED,
+            'status' => OrderStatusEnum::DELIVERED,
         ])
             ->offset($offset)
             ->limit(Order::PAGE_LIMIT)
@@ -181,7 +181,7 @@ class OrderRepository extends BaseRepository
     /**
      * @param Order $order
      */
-    public function changeOrderStatusToShipped(Order $order, Shipping $shipping):void
+    public function changeOrderStatusToShipped(Order $order, Shipping $shipping): void
     {
         if ($order->status === OrderStatusEnum::IN_PROCESS) {
             $order->update([
@@ -199,13 +199,13 @@ class OrderRepository extends BaseRepository
     public function findMerchantOrdersBySearchTextWithPagination(int $merchantId, string $searchText): LengthAwarePaginator
     {
         return Order::with('customer')
-        ->where('merchant_id', $merchantId)
-        ->join('customers', 'orders.customer_id', '=', 'customers.id')
-        ->where(function ($query) use ($searchText) {
-            $query->where('orders.id', 'LIKE', '%' . $searchText . '%');
-            $query->orWhere('customers.first_name', 'LIKE', '%' . $searchText . '%');
-            $query->orWhere('customers.last_name', 'LIKE', '%' . $searchText . '%');
-        })
+            ->where('merchant_id', $merchantId)
+            ->join('customers', 'orders.customer_id', '=', 'customers.id')
+            ->where(function ($query) use ($searchText) {
+                $query->where('orders.id', 'LIKE', '%' . $searchText . '%');
+                $query->orWhere('customers.first_name', 'LIKE', '%' . $searchText . '%');
+                $query->orWhere('customers.last_name', 'LIKE', '%' . $searchText . '%');
+            })
             ->select('orders.*', 'customers.first_name', 'last_name')
             ->paginate(config('wish.orders.pagination'));
     }
@@ -252,7 +252,7 @@ class OrderRepository extends BaseRepository
     {
         return Order::where([
             'customer_id' => $customerId,
-            'id'          => $orderId,
+            'id' => $orderId,
         ])->first();
     }
 
@@ -317,36 +317,71 @@ class OrderRepository extends BaseRepository
     }
 
     /**
+     * @param string|null $country
      * @return int
      */
-    public function getAllCount() : int
+    public function getAllCount(?string $country = null): int
     {
-        return $this->model::count();
+        $query = $this->model->query();
+
+        if ($country) {
+            $query->forCountry($country);
+        }
+        return $query->count();
+
     }
 
     /**
+     * @param string|null $country
      * @return float
      */
-    public function getTotalIncome() : float
+    public function getTotalIncome(?string $country = null): float
     {
-        return $this->model->getTotalAmount();
+        return $this->model->getTotalAmount($country);
     }
 
     /**
-     * @param string $countryName
+     * @param string|null $country
      * @return array
      */
-    public function getOrdersCountByStatesForCountry(string $countryName) : array
+    public function getOrdersCountByStatesForCountry(?string $country = null): array
     {
-        return $this->model::query()
+        $query = $this->model::query()
             ->select([
                 DB::raw('count(*) as totalOrders'),
                 'customer_delivery_information.state'
-            ])
-            ->leftJoin('customer_delivery_information', 'orders.customer_id', '=', 'customer_delivery_information.customer_id')
-            ->where('customer_delivery_information.country', $countryName)
-            ->groupBy('state')
+            ]);
+        if ($country) {
+            $query->leftJoin('customer_delivery_information', 'orders.customer_id', '=', 'customer_delivery_information.customer_id')
+                ->where('customer_delivery_information.country', $country);
+        }
+        return $query->groupBy('state')
             ->pluck('totalOrders', 'state')
+            ->toArray();
+    }
+
+    /**
+     * @param string|null $country
+     * @param int|null $year
+     * @return array
+     */
+    public function getMonthlySalesAnalytics(?string $country = null, ?int $year = null): array
+    {
+        $year = $year ?? date('Y');
+        $query = $this->model::query()
+            ->select([
+                DB::raw('count(id) as orders'),
+                DB::raw('count(distinct orders.customer_id) as customers'),
+                DB::raw('MONTH(orders.created_at) as month'),
+            ])
+            ->whereRaw('YEAR(orders.created_at) = ' . $year);
+
+        if ($country) {
+            $query->leftJoin('customer_delivery_information', 'orders.customer_id', '=', 'customer_delivery_information.customer_id')
+                ->where('customer_delivery_information.country', 'USA');
+        }
+        return $query->groupBy(['month'])
+            ->get()
             ->toArray();
     }
 }

@@ -10,6 +10,7 @@ use App\Modules\Orders\Repositories\OrderRepository;
 use App\Modules\Products\Models\Transaction;
 use App\Modules\Reviews\Models\ProductReview;
 use App\Modules\Users\Customer\Models\Customer;
+use App\Modules\Users\Customer\Models\CustomerDeliveryInformation;
 use App\Modules\Users\Merchant\Models\Merchant;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
@@ -188,12 +189,20 @@ class Order extends Model
         ]);
     }
 
+
     /**
+     * @param string|null $country
      * @return float
      */
-    public function getTotalAmount() : float
+    public function getTotalAmount(?string $country = null) : float
     {
-        return DB::select('SELECT SUM(TRUNCATE((product->\'$."price"\' + product->\'$."delivery_price"\') * quantity, 2)) as amount from orders')[0]->amount ?? 0;
+        $query = DB::table($this->table)
+            ->select(DB::raw('SUM(TRUNCATE((product->\'$."price"\' + product->\'$."delivery_price"\') * quantity, 2)) as amount'));
+        if ($country) {
+            $query->leftJoin('customer_delivery_information', 'orders.customer_id', '=', 'customer_delivery_information.customer_id')
+                ->where('customer_delivery_information.country', $country);
+        }
+        return $query->get()[0]->amount ?? 0;
     }
 
     /**
@@ -226,5 +235,25 @@ class Order extends Model
     public function canBeShipped(): bool
     {
         return $this->status === OrderStatusEnum::IN_PROCESS;
+    }
+
+    /**
+     * @return BelongsTo
+     */
+    public function customerDeliveryInformation() : BelongsTo
+    {
+        return $this->belongsTo(CustomerDeliveryInformation::class, 'customer_id', 'customer_id');
+    }
+
+    /**
+     * @param $query
+     * @param $country
+     * @return mixed
+     */
+    public function scopeForCountry($query, $country)
+    {
+        return $query->whereHas('customerDeliveryInformation', function ($query) use ($country) {
+            $query->where('country', $country);
+        });
     }
 }

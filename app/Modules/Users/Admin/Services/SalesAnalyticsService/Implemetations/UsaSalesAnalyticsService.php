@@ -4,9 +4,9 @@
  *
  */
 
-namespace App\Modules\Users\Admin\Services\OrdersCountByRegionsService\Implemetations;
+namespace App\Modules\Users\Admin\Services\SalesAnalyticsService\Implemetations;
 
-class UsaOrdersCountByRegionsService extends AbstractOrdersCountByRegionsServiceInterface
+class UsaSalesAnalyticsService extends AbstractSalesAnalyticsService
 {
     /**
      * @return string

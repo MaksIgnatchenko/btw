@@ -7,3 +7,7 @@ $this->group([
     Route::resource('orders', 'OrderController', ['as' => 'web'])
         ->only(['index', 'show', 'update']);
 });
+
+
+
+

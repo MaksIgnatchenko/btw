@@ -19,8 +19,8 @@
           type="text/css">
     <link href="{{ asset('assets/admin/' . config('admin.main.thema_color') . '/css/style.css') }}" rel="stylesheet"
           type="text/css">
-    <link href="{{ asset('css/style.css') }}" rel="stylesheet"
-          type="text/css">
+    <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/style.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="{{asset('css/loading.css')}}">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
@@ -34,8 +34,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/iCheck/1.0.2/skins/square/_all.css">
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker-standalone.css">
-    <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.css">
+    
 
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
@@ -45,6 +44,9 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.bundle.min.js"></script>
+
+    <script src="{{ URL::asset('js/d3.min.js') }}"></script>
+    <script src="{{ URL::asset('js/c3.min.js') }}"></script>
 
     @yield('css')
 
@@ -99,6 +101,8 @@
 <script src="{{ URL::asset('js/menu.js') }}"></script>
 <script src="{{ URL::asset('js/AdminLte/jquery-jvectormap-2.0.3.min.js') }}"></script>
 <script src="{{ URL::asset('js/AdminLte/jquery-jvectormap-us-aea.js') }}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
+
 
 <link rel="stylesheet" href="{{ URL::asset('css/app.css') }}"/>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jvectormap/2.0.4/jquery-jvectormap.css"/>

@@ -1,6 +1,8 @@
 <?php
 
 
+use App\Modules\Users\Admin\Providers\SalesAnalyticsServiceProvider;
+
 return [
 
     /*
@@ -187,6 +189,9 @@ return [
         App\Modules\Orders\Providers\OrderServiceProvider::class,
         App\Modules\Orders\Providers\OrderWebhookRouteServiceProvider::class,
 
+        App\Modules\Users\Admin\Providers\SalesAnalyticsServiceProvider::class,
+
+
 //        Edujugon\PushNotification\Providers\PushNotificationServiceProvider::class,
 //        App\Modules\Users\Providers\UsersEventServiceProvider::class
 
@@ -196,7 +201,6 @@ return [
         App\Modules\Users\Customer\Providers\WebRouteServiceProvider::class,
         App\Modules\Users\Customer\Providers\AdminRouteServiceProvider::class,
         App\Modules\Users\Customer\Providers\CustomerEventServiceProvider::class,
-
         App\Modules\Users\Merchant\Providers\AdminRouteServiceProvider::class,
         App\Modules\Users\Merchant\Providers\WebRouteServiceProvider::class,
         App\Modules\Users\Merchant\Providers\GeographyServiceProvider::class,
@@ -214,7 +218,7 @@ return [
         App\Modules\Reviews\Providers\ReviewWebRoutesServiceProvider::class,
         App\Modules\Reviews\Providers\ReviewServiceProvider::class,
         App\Modules\Reviews\Providers\ReviewAdminRoutesServiceProvider::class,
-        App\Modules\Users\Admin\Providers\OrdersCountByRegionsProvider::class,
+
     ],
 
     /*

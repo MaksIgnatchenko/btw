@@ -3,30 +3,31 @@
 namespace App\Modules\Users\Admin\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Modules\Orders\Repositories\OrderRepository;
 use App\Modules\Users\Admin\Dto\ImprovedHomeStatisticDto;
-use App\Modules\Users\Admin\Services\GeographicalAnalyzerOfOrdersService\Implementations\UsaGeographicalAnalyzerOfOrdersService;
-use App\Modules\Users\Admin\Services\GeographicalAnalyzerOfOrdersService\Interfaces\GeographicalAnalyzerOfOrdersServiceInterface;
-use App\Modules\Users\Admin\Services\OrdersCountByRegionsService\Interfaces\OrdersCountByRegionsServiceInterface;
+use App\Modules\Users\Admin\Services\SalesAnalyticsService\Interfaces\SalesAnalyticsInterface;
 use App\Modules\Users\Merchant\Repositories\MerchantRepository;
 
 class DashboardController extends Controller
 {
+
     /**
      * @var \Illuminate\Foundation\Application|mixed
      */
-    public $orderRepository;
+    public $salesAnalyticsService;
 
+    /**
+     * @var \Illuminate\Foundation\Application|mixed
+     */
     public $merchantsRepository;
 
-    public $ordersCountByRegionsService;
-
+    /**
+     * DashboardController constructor.
+     */
     public function __construct()
     {
         parent::__construct();
-        $this->orderRepository = app(OrderRepository::class);
+        $this->salesAnalyticsService = app(SalesAnalyticsInterface::class);
         $this->merchantsRepository = app(MerchantRepository::class);
-        $this->ordersCountByRegionsService = app(OrdersCountByRegionsServiceInterface::class);
     }
 
     /**
@@ -36,10 +37,10 @@ class DashboardController extends Controller
     {
         $statistic = new ImprovedHomeStatisticDto();
 
-        $statistic->setOrdersCount($this->orderRepository->getAllCount())
-            ->setOrdersCountByRegions($this->ordersCountByRegionsService->getStatesStatistic())
+        $statistic->setOrdersCount($this->salesAnalyticsService->getAllOrdersCount())
+            ->setOrdersCountByRegions($this->salesAnalyticsService->getStatesStatistic())
             ->setMerchantsCount($this->merchantsRepository->getAllCount())
-            ->setOverallIncome($this->orderRepository->getTotalIncome());
+            ->setOverallIncome($this->salesAnalyticsService->getTotalIncome());
 
         return view('home', ['statistic' => $statistic]);
     }

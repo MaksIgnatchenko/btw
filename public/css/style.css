@@ -90,3 +90,50 @@ select:not([multiple]) {
 ol.breadcrumb {
     background-color: transparent !important;
 }
+
+.def-oi {
+    position: relative;
+    min-width:100%;
+    max-width:100%;
+    margin-bottom: 20px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    padding-left: 30px !important;
+    padding-right: 30px !important;
+}
+.def-oi::after {
+    content: '';
+    z-index: 1;
+    position: absolute;
+    top: 0;
+    left: 15px;
+    right: 15px;
+    bottom: 0;
+    background-color:#fff;
+}
+.def-oi > * {
+    position: relative;
+    z-index: 2;
+}
+@media screen and (min-width: 768px) {
+    .def-oi {
+        min-width:50%;
+        max-width:50%;
+    }
+
+}
+
+.top-chart-flex-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.detail-content {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 5;
+    background-color: white;
+    width: 100%;
+}
